@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 
 function Slider() {
     useEffect(() => {
-        $('.slick-2')
+        let sliderHome = $('.slick-2')
             .slick({
                 dots: true,
                 infinite: true,
@@ -17,7 +17,7 @@ function Slider() {
             })
             .slickAnimation();
         return () => {
-            $('.slick-2').slick('unslick');
+            sliderHome.slick('unslick');
         };
     }, []);
 
