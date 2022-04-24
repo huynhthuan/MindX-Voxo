@@ -11,62 +11,7 @@ $('.slick-1')
     })
     .slickAnimation();
 
-$('.slick-2')
-    .slick({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        arrows: false,
-        autoplay: false,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        nextArrow: '<div class="custom-arrow next"><span>Next</span><i class="fas fa-chevron-right ms-3"></i></div>',
-        prevArrow: '<div class="custom-arrow prev"><i class="fas fa-chevron-left me-3"></i><span>Prev</span></div>',
-    })
-    .slickAnimation();
 
-$('.insta-slider').slick({
-    dots: true,
-    infinite: true,
-    speed: 500,
-    arrows: false,
-    slidesToShow: 5,
-    slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 1630,
-            settings: {
-                slidesToShow: 4,
-            },
-        },
-        {
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 3,
-            },
-        },
-        {
-            breakpoint: 900,
-            settings: {
-                slidesToShow: 2,
-            },
-        },
-        {
-            breakpoint: 576,
-            settings: {
-                slidesToShow: 2,
-            },
-        },
-        {
-            breakpoint: 420,
-            settings: {
-                slidesToShow: 1,
-                centerMode: true,
-                centerPadding: '20px',
-            },
-        },
-    ],
-});
 
 $('.insta-slider1').slick({
     dots: true,
@@ -566,41 +511,6 @@ $('.category-slider').slick({
                 slidesToShow: 1,
                 fade: true,
                 speed: 800,
-            },
-        },
-    ],
-});
-
-$('.category-slider1').slick({
-    dots: false,
-    infinite: true,
-    arrows: true,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 1425,
-            settings: {
-                slidesToShow: 3,
-            },
-        },
-        {
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 3,
-            },
-        },
-        {
-            breakpoint: 768,
-            settings: {
-                slidesToShow: 2,
-            },
-        },
-        {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                fade: true,
             },
         },
     ],

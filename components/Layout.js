@@ -2,10 +2,11 @@ import Footer from './Footer';
 import Navbar from './Navbar';
 import Head from 'next/head';
 import Script from 'next/script';
+import { Fragment } from 'react';
 
 export default function Layout({ children }) {
     return (
-        <>
+        <Fragment>
             <Head>
                 <link rel="icon" href="/images/favicon/2.png" type="image/x-icon" />
                 <link rel="apple-touch-icon" href="/images/favicon/2.png" />
@@ -51,13 +52,11 @@ export default function Layout({ children }) {
 
             <Script src="/js/newsletter.js" strategy="afterInteractive"></Script>
 
-            <Script src="/js/cart_modal_resize.js" strategy="afterInteractive"></Script>
-
-            <Script src="/js/cart_modal_resize.js" strategy="afterInteractive"></Script>
+            {/* <Script src="/js/cart_modal_resize.js" strategy="afterInteractive"></Script> */}
 
             <Script src="/js/bootstrap/bootstrap-notify.min.js" strategy="afterInteractive"></Script>
 
             <Script src="/js/script.js" strategy="afterInteractive"></Script>
-        </>
+        </Fragment>
     );
 }
