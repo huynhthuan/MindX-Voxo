@@ -1,8 +1,10 @@
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import SmallCart from './MenuRight/SmallCart';
 import WisList from './MenuRight/WisList';
 
 function MenuRight() {
+    const { data: session, status } = useSession();
     return (
         <div className="menu-right">
             <ul>
@@ -13,20 +15,42 @@ function MenuRight() {
                 </li>
                 <li className="onhover-dropdown">
                     <div className="cart-media">
-                        <i data-feather="user"></i>
+                        <i data-feather="user"></i> {status === 'authenticated' && session.user.infor.username}
                     </div>
                     <div className="onhover-div profile-dropdown">
                         <ul>
-                            <li>
-                                <Link href="/login">
-                                    <a className="d-block">Login</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/sign-up">
-                                    <a className="d-block">Register</a>
-                                </Link>
-                            </li>
+                            {status === 'authenticated' ? (
+                                <>
+                                    <li>
+                                        <Link href="/user-dashboard">
+                                            <a className="d-block">My account</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <a
+                                            className="d-block"
+                                            onClick={() => {
+                                                signOut();
+                                            }}
+                                        >
+                                            Logout
+                                        </a>
+                                    </li>
+                                </>
+                            ) : (
+                                <>
+                                    <li>
+                                        <Link href="/login">
+                                            <a className="d-block">Login</a>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="/sign-up">
+                                            <a className="d-block">Register</a>
+                                        </Link>
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </div>
                 </li>

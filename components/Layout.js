@@ -18,9 +18,9 @@ export default function Layout({ children }) {
                 <meta name="msapplication-TileColor" content="#FFFFFF" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <link rel="preconnect" href="https://fonts.googleapis.com/" />
-                <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+                <link rel="preconnect" href="https://fonts.gstatic.com/" crossOrigin="true" />
                 <link rel="preconnect" href="https://fonts.googleapis.com/" />
-                <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+                <link rel="preconnect" href="https://fonts.gstatic.com/" crossOrigin="true" />
 
                 <meta httpEquiv="Content-Type" content="text/html; charset=UTF-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

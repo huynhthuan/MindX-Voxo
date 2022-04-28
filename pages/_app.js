@@ -1,5 +1,6 @@
+import { SessionProvider } from 'next-auth/react';
+
 import Layout from '../components/Layout';
-import { useEffect } from 'react';
 
 import '../styles/vendors/bootstrap.css';
 import '../styles/vendors/font-awesome.css';
@@ -11,11 +12,13 @@ import '../styles/vendors/slick/slick-theme.css';
 import '../styles/demo2.css';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
     return (
-        <Layout>
-            <Component {...pageProps} />
-        </Layout>
+        <SessionProvider session={session}>
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+        </SessionProvider>
     );
 }
 
