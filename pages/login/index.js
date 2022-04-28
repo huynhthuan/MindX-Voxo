@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import axios from 'axios';
+import { GENERATE_AUTH_JWT } from '../../utils/api';
 
 function Login() {
     const router = useRouter();
@@ -60,12 +62,26 @@ function Login() {
             redirect: false,
         });
 
+        console.log(res);
+
         setIsLoading(false);
 
         if (res.error && res.error !== null && res.error !== '') {
+            let err = '';
+            switch (res.error) {
+                case '[jwt_auth] incorrect_password':
+                    err = 'The password you entered for the email address  is incorrect.';
+                    break;
+                case '[jwt_auth] invalid_email':
+                    err = 'The email address is not registered on this site.';
+                    break;
+                default:
+                    err = 'An error occurred, please try again';
+                    break;
+            }
             Swal.fire({
                 title: 'Error!',
-                text: res.error,
+                html: err,
                 icon: 'error',
                 confirmButtonText: 'Close',
             });

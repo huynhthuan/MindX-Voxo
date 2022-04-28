@@ -1,7 +1,7 @@
 import axios from 'axios';
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
-import { GENERATE_AUTH_COOKIE, GET_CURRENT_USER } from '../../../utils/api';
+import { GENERATE_AUTH_JWT, GET_CURRENT_USER } from '../../../utils/api';
 
 export default NextAuth({
     providers: [
@@ -17,26 +17,19 @@ export default NextAuth({
             },
             authorize: async (credentials, req) => {
                 // database look up
-                let res = await axios.get(GENERATE_AUTH_COOKIE, {
-                    params: {
-                        email: credentials.email,
+                try {
+                    let res = await axios.post(GENERATE_AUTH_JWT, {
+                        username: credentials.email,
                         password: credentials.password,
-                    },
-                });
+                    });
 
-                let data = res.data;
+                    let data = res.data;
 
-                // console.log(data);
+                    console.log(data);
 
-                if (data.status === 'ok') {
-                    return {
-                        infor: data.user,
-                        cookie: data.cookie,
-                    };
-                }
-
-                if (data.status === 'error') {
-                    throw new Error(data.error);
+                    return res.data;
+                } catch (error) {
+                    throw new Error(error.response.data.code);
                 }
             },
         }),

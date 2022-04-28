@@ -5,6 +5,7 @@ import WisList from './MenuRight/WisList';
 
 function MenuRight() {
     const { data: session, status } = useSession();
+    console.log(session);
     return (
         <div className="menu-right">
             <ul>
@@ -15,7 +16,8 @@ function MenuRight() {
                 </li>
                 <li className="onhover-dropdown">
                     <div className="cart-media">
-                        <i data-feather="user"></i> {status === 'authenticated' && session.user.infor.username}
+                        <i data-feather="user"></i>
+                        {status === 'authenticated' && session.user.user_nicename}
                     </div>
                     <div className="onhover-div profile-dropdown">
                         <ul>
