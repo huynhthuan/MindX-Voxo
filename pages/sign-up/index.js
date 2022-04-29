@@ -58,9 +58,20 @@ function SignUp() {
         setIsLoading(true);
 
         try {
-            let res = await axios.post(REGISTER_ACCOUNT, {
-                username: data.username,
-                password: data.password,
+            let resNonce = await axios.get(GET_NONE, {
+                params: {
+                    controller: 'user',
+                    method: 'register',
+                },
+            });
+            console.log(resNonce);
+            let res = await axios.get(REGISTER_ACCOUNT, {
+                params: {
+                    username: data.username,
+                    email: data.email,
+                    password: data.password,
+                    nonce: resNonce.data.nonce,
+                },
             });
 
             console.log(res);
