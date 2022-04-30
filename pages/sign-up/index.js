@@ -64,38 +64,40 @@ function SignUp() {
                     method: 'register',
                 },
             });
-            console.log(resNonce);
+
             let res = await axios.get(REGISTER_ACCOUNT, {
                 params: {
                     username: data.username,
                     email: data.email,
-                    password: data.password,
+                    user_pass: data.password,
                     nonce: resNonce.data.nonce,
                 },
             });
 
-            console.log(res);
+            console.log(res.data);
 
             setIsLoading(false);
 
-            // if (res.error && res.error !== null && res.error !== '') {
-            //     Swal.fire({
-            //         title: 'Error!',
-            //         text: res.error,
-            //         icon: 'error',
-            //         confirmButtonText: 'Close',
-            //     });
-            //     return;
-            // }
+            let dataResRegister = res.data;
 
-            // Swal.fire({
-            //     title: `Login success!`,
-            //     text: 'Welcome back VOXO SHOP',
-            //     icon: 'success',
-            //     showConfirmButton: false,
-            // });
+            if (dataResRegister.error && dataResRegister.error !== null && dataResRegister.error !== '') {
+                Swal.fire({
+                    title: 'Error!',
+                    text: dataResRegister.error,
+                    icon: 'error',
+                    confirmButtonText: 'Close',
+                });
+                return;
+            }
 
-            // router.push('/login');
+            Swal.fire({
+                title: `Register success!`,
+                text: 'Welcome to VOXO SHOP',
+                icon: 'success',
+                showConfirmButton: false,
+            });
+
+            router.push('/login');
         } catch (error) {
             Swal.fire({
                 title: 'Error!',
@@ -112,8 +114,8 @@ function SignUp() {
         <>
             {/* Sign Up Section Start */}
             <div className="login-section">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="materialContainer">
+                <div className="materialContainer">
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="box">
                             <div className="login-title">
                                 <h2>Register</h2>
@@ -140,7 +142,7 @@ function SignUp() {
                                 <label htmlFor="email">Email Address</label>
                                 <input
                                     id="email"
-                                    type="email"
+                                    type="text"
                                     {...register('email', {
                                         required: true,
                                         pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -223,8 +225,8 @@ function SignUp() {
                                 </Link>
                             </p>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             {/*  Sign Up Section End*/}
         </>

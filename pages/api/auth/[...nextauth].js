@@ -1,36 +1,35 @@
 import axios from 'axios';
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
-import { GENERATE_AUTH_JWT, GET_CURRENT_USER } from '../../../utils/api';
+import { GENERATE_AUTH_COOKIE } from '../../../utils/api';
 
 export default NextAuth({
     providers: [
         CredentialProvider({
             name: 'credentials',
-            credentials: {
-                email: {
-                    label: 'Email',
-                    type: 'text',
-                    placeholder: 'johndoe@test.com',
-                },
-                password: { label: 'Password', type: 'password' },
-            },
             authorize: async (credentials, req) => {
                 // database look up
-                try {
-                    let res = await axios.post(GENERATE_AUTH_JWT, {
-                        username: credentials.email,
+                let resLogin = await axios.get(GENERATE_AUTH_COOKIE, {
+                    params: {
+                        email: credentials.email,
                         password: credentials.password,
-                    });
+                    },
+                });
 
-                    let data = res.data;
+                let dataLogin = resLogin.data;
 
-                    console.log(data);
-
-                    return res.data;
-                } catch (error) {
-                    throw new Error(error.response.data.code);
+                if (dataLogin.status === 'ok') {
+                    return {
+                        ...dataLogin.user,
+                        cookie: dataLogin.cookie,
+                    };
                 }
+
+                if (dataLogin.status === 'error') {
+                    throw new Error(dataLogin.error);
+                }
+
+                return null;
             },
         }),
     ],

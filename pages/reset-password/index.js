@@ -1,12 +1,13 @@
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { SEND_CODE_EMAIL_RESET_PASSWORD } from '../../utils/api';
+import { RESET_PASSWORD, VALIDATE_CODE } from '../../utils/api';
 
-function ForgotPassword() {
+function ResetPassword() {
     const router = useRouter();
+    const { email: emailReset } = router.query;
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -49,28 +50,39 @@ function ForgotPassword() {
         register,
         handleSubmit,
         reset,
+        getValues,
         formState: { errors },
     } = useForm();
 
     const onSubmit = async (data) => {
         setIsLoading(true);
+
         try {
-            let res = await axios.post(SEND_CODE_EMAIL_RESET_PASSWORD, {
-                email: data.email,
+            let res = await axios.post(VALIDATE_CODE, {
+                email: emailReset,
+                code: data.code,
             });
+
+            console.log(res.data);
+
+            let resSetNewPass = await axios.post(RESET_PASSWORD, {
+                email: emailReset,
+                password: data.password,
+                code: data.code,
+            });
+
+            console.log(resSetNewPass.data);
+
+            setIsLoading(false);
 
             Swal.fire({
                 title: `Reset password success!`,
-                html: `We send code veryfi to email <b>${data.email}</b>. Please check your email`,
+                text: 'Please login account with new password.',
                 icon: 'success',
                 showConfirmButton: false,
             });
 
-            router.push('/reset-password', {
-                query: {
-                    email: data.email,
-                },
-            });
+            router.push('/login');
         } catch (error) {
             setIsLoading(false);
             if (error.response) {
@@ -99,22 +111,52 @@ function ForgotPassword() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="box">
                             <div className="login-title">
-                                <h2>Forgot Password</h2>
+                                <h2>Reset Password</h2>
                             </div>
                             <div className="input">
-                                <label htmlFor="email">Enter Email Address</label>
+                                <label htmlFor="code">Enter code </label>
                                 <input
                                     type="text"
-                                    id="email"
-                                    {...register('email', {
+                                    id="code"
+                                    {...register('code', {
                                         required: true,
-                                        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                                     })}
                                 />
                                 <span className="spin"></span>
                             </div>
-                            {errors.email?.type === 'required' && <div className="valid-feedback d-block text-danger">Please fill the email.</div>}
-                            {errors.email?.type === 'pattern' && <div className="valid-feedback d-block text-danger">Email format incorrect.</div>}
+                            {errors.code?.type === 'required' && <div className="valid-feedback d-block text-danger">Please fill the code.</div>}
+
+                            <div className="input">
+                                <label htmlFor="password">Enter new password </label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    {...register('password', {
+                                        required: true,
+                                        minLength: 6,
+                                    })}
+                                />
+                                <span className="spin"></span>
+                            </div>
+                            {errors.password?.type === 'required' && <div className="valid-feedback d-block text-danger">Please fill the password.</div>}
+                            {errors.password?.type === 'minLength' && <div className="valid-feedback d-block text-danger">Minimum password length is 6 characters.</div>}
+
+                            <div className="input">
+                                <label htmlFor="repassword">Re-enter new password </label>
+                                <input
+                                    type="password"
+                                    id="repassword"
+                                    {...register('repassword', {
+                                        required: true,
+                                        validate: {
+                                            mathPassword: (v) => v === getValues('password'),
+                                        },
+                                    })}
+                                />
+                                <span className="spin"></span>
+                            </div>
+                            {errors.repassword?.type === 'required' && <div className="valid-feedback d-block text-danger">Please fill the re-password.</div>}
+                            {errors.repassword?.type === 'mathPassword' && <div className="valid-feedback d-block text-danger">Re password not match password.</div>}
 
                             <div className="button login button-1">
                                 <button>
@@ -123,7 +165,7 @@ function ForgotPassword() {
                                             <span className="sr-only">Loading...</span>
                                         </div>
                                     ) : (
-                                        <span className="m-0">Send code verify</span>
+                                        <span className="m-0">Reset password</span>
                                     )}
                                 </button>
                             </div>
@@ -136,4 +178,4 @@ function ForgotPassword() {
     );
 }
 
-export default ForgotPassword;
+export default ResetPassword;
