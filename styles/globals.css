@@ -17,3 +17,7 @@ header .category-menu .btn i {
     vertical-align: middle;
     padding-left: 5px;
 }
+
+.filter-options .grid-options li:hover {
+    cursor: pointer;
+}

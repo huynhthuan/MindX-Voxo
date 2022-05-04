@@ -2,8 +2,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { RESET_PASSWORD, VALIDATE_CODE } from '../../utils/api';
+import userApi from '../../src/api/userApi';
 
 function ResetPassword() {
     const router = useRouter();
@@ -56,22 +55,17 @@ function ResetPassword() {
 
     const onSubmit = async (data) => {
         setIsLoading(true);
-
         try {
-            let res = await axios.post(VALIDATE_CODE, {
+            await userApi.ValidateCodeReset({
                 email: emailReset,
                 code: data.code,
             });
 
-            console.log(res.data);
-
-            let resSetNewPass = await axios.post(RESET_PASSWORD, {
+            await userApi.ResetPassword({
                 email: emailReset,
                 password: data.password,
                 code: data.code,
             });
-
-            console.log(resSetNewPass.data);
 
             setIsLoading(false);
 

@@ -2,8 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
-import axios from 'axios';
-import { SEND_CODE_EMAIL_RESET_PASSWORD } from '../../utils/api';
+import userApi from '../../src/api/userApi';
 
 function ForgotPassword() {
     const router = useRouter();
@@ -55,7 +54,7 @@ function ForgotPassword() {
     const onSubmit = async (data) => {
         setIsLoading(true);
         try {
-            let res = await axios.post(SEND_CODE_EMAIL_RESET_PASSWORD, {
+            await userApi.SendCodeResetPass({
                 email: data.email,
             });
 
@@ -66,7 +65,8 @@ function ForgotPassword() {
                 showConfirmButton: false,
             });
 
-            router.push('/reset-password', {
+            router.push({
+                pathname: '/reset-password',
                 query: {
                     email: data.email,
                 },

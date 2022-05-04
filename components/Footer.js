@@ -573,24 +573,6 @@ function Footer() {
             </div>
             {/* Newsletter modal end */}
 
-            {/* Coockie Section Start */}
-            <div className="cookie-bar-section">
-                <img src="/images/cookie.png" alt="" />
-                <div className="content">
-                    <h3>Cookies Consent</h3>
-                    <p className="font-light">This website use cookies to ensure you get the best experience on our website.</p>
-                    <div className="cookie-buttons">
-                        <button className="btn btn-solid-default" id="button">
-                            I understand
-                        </button>
-                        <a href="undefined" className="btn default-light1">
-                            Learn more
-                        </a>
-                    </div>
-                </div>
-            </div>
-            {/* Coockie Section End */}
-
             {/* tap to top Section Start */}
             <div className="tap-to-top">
                 <a href="#home">

@@ -1,4 +1,4 @@
-const BASE_URL_API = 'https://voxohub.xyz/';
+const BASE_URL_API = 'https://voxohub.xyz';
 
 const GENERATE_AUTH_COOKIE = BASE_URL_API + 'api/user/generate_auth_cookie';
 const REGISTER_ACCOUNT = BASE_URL_API + 'api/user/register/';

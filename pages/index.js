@@ -10,7 +10,6 @@ import Slider from '../components/Home/Slider';
 
 export default function Home() {
     useEffect(() => {
-        feather.replace();
         (function ($) {
             'use strict';
             $('.bg-top').parent().addClass('b-top');
@@ -37,6 +36,7 @@ export default function Home() {
                 el.hide();
             });
         })(jQuery);
+        feather.replace();
     }, []);
 
     return (

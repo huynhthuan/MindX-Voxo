@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import authApi from '../../src/api/authApi';
+import { loginSuccess } from '../../store/auth/authSlice';
+import wooApi from '../../src/api/woocommerce/wooApi';
 
 function Login() {
     const router = useRouter();
-    const { data: session, status } = useSession();
     const [isLoading, setIsLoading] = useState(false);
 
+    const { cookie } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+
     useEffect(() => {
-        if (session) {
+        if (cookie) {
             router.push('/');
         }
-    }, [session]);
+    }, [cookie]);
 
     useEffect(() => {
         $(function () {
@@ -60,33 +65,63 @@ function Login() {
     } = useForm();
 
     const onSubmit = async (data) => {
-        setIsLoading(true);
-        let res = await signIn('credentials', {
-            email: data.email,
-            password: data.password,
-            redirect: false,
-        });
+        try {
+            const { email, password } = data;
+            setIsLoading(true);
 
-        setIsLoading(false);
+            let res = await authApi.GenerateAuthCookie({
+                email,
+                password,
+            });
 
-        if (res.error && res.error !== null && res.error !== '') {
+            if (res.error && res.error !== null && res.error !== '') {
+                reset('password');
+                Swal.fire({
+                    title: 'Error!',
+                    text: res.error,
+                    icon: 'error',
+                    confirmButtonText: 'Close',
+                });
+                setIsLoading(false);
+                return;
+            }
+
+            let { cookie_name, cookie, user, cookie_expiration } = res;
+
+            let resWishList = await wooApi.getWishList(user.id);
+
+            setIsLoading(false);
+
+            const { share_key } = resWishList.data[0];
+
+            dispatch(
+                loginSuccess({
+                    cookie,
+                    cookie_expiration,
+                    cookie_name,
+                    user,
+                    share_key,
+                })
+            );
+
+            Swal.fire({
+                title: `Login success!`,
+                text: 'Welcome back VOXO SHOP',
+                icon: 'success',
+                showConfirmButton: false,
+            });
+
+            router.push('/');
+        } catch (error) {
             Swal.fire({
                 title: 'Error!',
-                text: res.error,
+                text: error,
                 icon: 'error',
                 confirmButtonText: 'Close',
             });
-            return;
+
+            setIsLoading(false);
         }
-
-        Swal.fire({
-            title: `Login success!`,
-            text: 'Welcome back VOXO SHOP',
-            icon: 'success',
-            showConfirmButton: false,
-        });
-
-        router.push('/');
     };
 
     return (
@@ -106,13 +141,22 @@ function Login() {
                                     type="text"
                                     {...register('email', {
                                         required: true,
-                                        pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                        pattern:
+                                            /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
                                     })}
                                 />
                                 <span className="spin"></span>
                             </div>
-                            {errors.email?.type === 'required' && <div className="valid-feedback d-block text-danger">Please fill the email.</div>}
-                            {errors.email?.type === 'pattern' && <div className="valid-feedback d-block text-danger">Email format incorrect.</div>}
+                            {errors.email?.type === 'required' && (
+                                <div className="valid-feedback d-block text-danger">
+                                    Please fill the email.
+                                </div>
+                            )}
+                            {errors.email?.type === 'pattern' && (
+                                <div className="valid-feedback d-block text-danger">
+                                    Email format incorrect.
+                                </div>
+                            )}
 
                             <div className="input">
                                 <label htmlFor="password">Password</label>
@@ -126,17 +170,28 @@ function Login() {
                                 />
                                 <span className="spin"></span>
                             </div>
-                            {errors.password?.type === 'required' && <div className="valid-feedback d-block text-danger">Please fill the password.</div>}
+                            {errors.password?.type === 'required' && (
+                                <div className="valid-feedback d-block text-danger">
+                                    Please fill the password.
+                                </div>
+                            )}
 
                             <Link href="/forgot-password">
-                                <a className="pass-forgot">Forgot your password?</a>
+                                <a className="pass-forgot">
+                                    Forgot your password?
+                                </a>
                             </Link>
 
                             <div className="button login">
                                 <button type="submit">
                                     {isLoading ? (
-                                        <div className="spinner-border text-light spinner-border-sm" role="status">
-                                            <span className="sr-only">Loading...</span>
+                                        <div
+                                            className="spinner-border text-light spinner-border-sm"
+                                            role="status"
+                                        >
+                                            <span className="sr-only">
+                                                Loading...
+                                            </span>
                                         </div>
                                     ) : (
                                         <span className="m-0">Log In</span>
@@ -152,7 +207,11 @@ function Login() {
                                 <div className="col-md-6">
                                     <a href="www.facebook.html">
                                         <div className="social-media fb-media">
-                                            <img src="/images/inner-page/facebook.png" className="img-fluid blur-up lazyload" alt="" />
+                                            <img
+                                                src="/images/inner-page/facebook.png"
+                                                className="img-fluid blur-up lazyload"
+                                                alt=""
+                                            />
                                             <h6>Facebook</h6>
                                         </div>
                                     </a>
@@ -160,7 +219,11 @@ function Login() {
                                 <div className="col-md-6">
                                     <a href="www.gmail.html">
                                         <div className="social-media google-media">
-                                            <img src="/images/inner-page/google.png" className="img-fluid blur-up lazyload" alt="" />
+                                            <img
+                                                src="/images/inner-page/google.png"
+                                                className="img-fluid blur-up lazyload"
+                                                alt=""
+                                            />
                                             <h6>Google</h6>
                                         </div>
                                     </a>
@@ -183,4 +246,3 @@ function Login() {
 }
 
 export default Login;
-``;

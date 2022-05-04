@@ -7,6 +7,10 @@ import MenuRight from './NavBar/MenuRight';
 import SearchBar from './NavBar/SearchBar';
 
 function Navbar() {
+    useEffect(() => {
+        feather.replace();
+    }, []);
+
     return (
         <>
             {/* header start */}

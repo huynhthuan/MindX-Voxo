@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 function MainMenu() {
     return (
         <nav>
@@ -27,15 +29,24 @@ function MainMenu() {
                                                 <div className="opensubmegamenu">
                                                     <ul>
                                                         <li>
-                                                            <a href="index.html" className="megamenu-image">
-                                                                <img src="/images/demo-image/fashion.jpg" className="img-fluid blur-up lazyload" alt="" />
+                                                            <a
+                                                                href="index.html"
+                                                                className="megamenu-image"
+                                                            >
+                                                                <img
+                                                                    src="/images/demo-image/fashion.jpg"
+                                                                    className="img-fluid blur-up lazyload"
+                                                                    alt=""
+                                                                />
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
 
                                                 <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">Fashion Demo</h5>
+                                                    <h5 className="mb-0">
+                                                        Fashion Demo
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -44,14 +55,23 @@ function MainMenu() {
                                                 <div className="opensubmegamenu">
                                                     <ul>
                                                         <li>
-                                                            <a href="flower-demo.html" className="megamenu-image">
-                                                                <img src="/images/demo-image/flower.jpg" className="img-fluid blur-up lazyload" alt="" />
+                                                            <a
+                                                                href="flower-demo.html"
+                                                                className="megamenu-image"
+                                                            >
+                                                                <img
+                                                                    src="/images/demo-image/flower.jpg"
+                                                                    className="img-fluid blur-up lazyload"
+                                                                    alt=""
+                                                                />
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">Flowers Demo</h5>
+                                                    <h5 className="mb-0">
+                                                        Flowers Demo
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -60,14 +80,23 @@ function MainMenu() {
                                                 <div className="opensubmegamenu">
                                                     <ul>
                                                         <li>
-                                                            <a href="furniture-demo.html" className="megamenu-image">
-                                                                <img src="/images/demo-image/furniture.jpg" className="img-fluid blur-up lazyload" alt="" />
+                                                            <a
+                                                                href="furniture-demo.html"
+                                                                className="megamenu-image"
+                                                            >
+                                                                <img
+                                                                    src="/images/demo-image/furniture.jpg"
+                                                                    className="img-fluid blur-up lazyload"
+                                                                    alt=""
+                                                                />
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">Furniture Demo</h5>
+                                                    <h5 className="mb-0">
+                                                        Furniture Demo
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -76,14 +105,23 @@ function MainMenu() {
                                                 <div className="opensubmegamenu">
                                                     <ul>
                                                         <li>
-                                                            <a href="electronic-demo.html" className="megamenu-image">
-                                                                <img src="/images/demo-image/electonic.jpg" className="img-fluid blur-up lazyload" alt="" />
+                                                            <a
+                                                                href="electronic-demo.html"
+                                                                className="megamenu-image"
+                                                            >
+                                                                <img
+                                                                    src="/images/demo-image/electonic.jpg"
+                                                                    className="img-fluid blur-up lazyload"
+                                                                    alt=""
+                                                                />
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">Electronic Demo</h5>
+                                                    <h5 className="mb-0">
+                                                        Electronic Demo
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -92,14 +130,23 @@ function MainMenu() {
                                                 <div className="opensubmegamenu">
                                                     <ul>
                                                         <li>
-                                                            <a href="shoes-demo.html" className="megamenu-image">
-                                                                <img src="/images/demo-image/shoes.jpg" className="img-fluid blur-up lazyload" alt="" />
+                                                            <a
+                                                                href="shoes-demo.html"
+                                                                className="megamenu-image"
+                                                            >
+                                                                <img
+                                                                    src="/images/demo-image/shoes.jpg"
+                                                                    className="img-fluid blur-up lazyload"
+                                                                    alt=""
+                                                                />
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">Shoes Demo</h5>
+                                                    <h5 className="mb-0">
+                                                        Shoes Demo
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -108,14 +155,23 @@ function MainMenu() {
                                                 <div className="opensubmegamenu">
                                                     <ul>
                                                         <li>
-                                                            <a href="vegetables-demo.html" className="megamenu-image">
-                                                                <img src="/images/demo-image/vagetables.jpg" className="img-fluid blur-up lazyload" alt="" />
+                                                            <a
+                                                                href="vegetables-demo.html"
+                                                                className="megamenu-image"
+                                                            >
+                                                                <img
+                                                                    src="/images/demo-image/vagetables.jpg"
+                                                                    className="img-fluid blur-up lazyload"
+                                                                    alt=""
+                                                                />
                                                             </a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">Vegetables Demo</h5>
+                                                    <h5 className="mb-0">
+                                                        Vegetables Demo
+                                                    </h5>
                                                 </div>
                                             </div>
                                         </div>
@@ -129,13 +185,19 @@ function MainMenu() {
                             </a>
                             <ul className="nav-submenu menu-content">
                                 <li>
-                                    <a href="shop-canvas-filter.html">Shop Canvas Filter</a>
+                                    <a href="shop-canvas-filter.html">
+                                        Shop Canvas Filter
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="shop-category-slider.html">Shop Category Filter</a>
+                                    <a href="shop-category-slider.html">
+                                        Shop Category Filter
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="shop-filter-hide.html">Shop Filter Hide</a>
+                                    <a href="shop-filter-hide.html">
+                                        Shop Filter Hide
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="shop-left-sidebar.html">
@@ -144,61 +206,90 @@ function MainMenu() {
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="shop-list-infinite.html">Shop List Infinite</a>
+                                    <a href="shop-list-infinite.html">
+                                        Shop List Infinite
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="shop-list.html">Shop List</a>
                                 </li>
                                 <li>
-                                    <a href="shop-no-sidebar.html">Shop No Sidebar</a>
+                                    <a href="shop-no-sidebar.html">
+                                        Shop No Sidebar
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="shop-right-sidebar.html">Shop Right Sidebar</a>
+                                    <a href="shop-right-sidebar.html">
+                                        Shop Right Sidebar
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="shop-top-filter.html">Shop Top Filter</a>
+                                    <a href="shop-top-filter.html">
+                                        Shop Top Filter
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="shop-with-category.html">
-                                        Shop With Category <span className="tren-budge">New</span>
+                                        Shop With Category{' '}
+                                        <span className="tren-budge">New</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                         <li className="dropdown">
-                            <a href="undefined" className="nav-link menu-title">
-                                product
-                            </a>
+                            <Link href="/product-category">
+                                <a className="nav-link menu-title">product</a>
+                            </Link>
                             <ul className="nav-submenu menu-content">
                                 <li>
-                                    <a href="product-4-image.html">Product 4 Images</a>
+                                    <Link href="/product-category/123">
+                                        <a>Product 4 Images</a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="product-360-view.html">Product 360 View</a>
+                                    <a href="product-360-view.html">
+                                        Product 360 View
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="product-bundle.html">Product Bundle</a>
+                                    <a href="product-bundle.html">
+                                        Product Bundle
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="product-left-sidebar.html">Product Left Sidebar</a>
+                                    <a href="product-left-sidebar.html">
+                                        Product Left Sidebar
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="product-left-thumbnail.html">Product Left thumbnail</a>
+                                    <a href="product-left-thumbnail.html">
+                                        Product Left thumbnail
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="product-no-sidebar.html">Product No Sidebar</a>
+                                    <a href="product-no-sidebar.html">
+                                        Product No Sidebar
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="product-right-sidebar.html">Product Right Sidebar</a>
+                                    <a href="product-right-sidebar.html">
+                                        Product Right Sidebar
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="product-right-thumbnail.html">Product Right thumbnail</a>
+                                    <a href="product-right-thumbnail.html">
+                                        Product Right thumbnail
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="product-sticky.html">Product Sticky</a>
+                                    <a href="product-sticky.html">
+                                        Product Sticky
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="product-video-thumbnail.html">Product Video Thumbnail</a>
+                                    <a href="product-video-thumbnail.html">
+                                        Product Video Thumbnail
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -217,25 +308,40 @@ function MainMenu() {
                                                 <div className="submenu-content opensubmegamenu">
                                                     <ul className="list">
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/abandonment-email.html">Abandonment Email</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/abandonment-email.html">
+                                                                Abandonment
+                                                                Email
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/black-friday.html">Black Fridday</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/black-friday.html">
+                                                                Black Fridday
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/email-template-1.html">Email Template 1</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/email-template-1.html">
+                                                                Email Template 1
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/email-template-2.html">Email Template 2</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/email-template-2.html">
+                                                                Email Template 2
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/offer.html">Offer Template</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/offer.html">
+                                                                Offer Template
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/order-success-1.html">Order Success 1</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/order-success-1.html">
+                                                                Order Success 1
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/order-success-2.html">Order Success 2</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/order-success-2.html">
+                                                                Order Success 2
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -249,13 +355,19 @@ function MainMenu() {
                                                 <div className="submenu-content opensubmegamenu">
                                                     <ul className="list">
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/product-review.html">Product Review</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/product-review.html">
+                                                                Product Review
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/reset-password.html">Reset Password</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/reset-password.html">
+                                                                Reset Password
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/welcome.html">Welcome Template</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/email-template/welcome.html">
+                                                                Welcome Template
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -267,13 +379,22 @@ function MainMenu() {
                                                 <div className="submenu-content opensubmegamenu">
                                                     <ul className="list">
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/invoice/invoice-1.html">Invoice 1 Template</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/invoice/invoice-1.html">
+                                                                Invoice 1
+                                                                Template
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/invoice/invoice-2.html">Invoice 2 Template</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/invoice/invoice-2.html">
+                                                                Invoice 2
+                                                                Template
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="https://themes.pixelstrap.com/voxo/invoice/invoice-3.html">Invoice 3 Template</a>
+                                                            <a href="https://themes.pixelstrap.com/voxo/invoice/invoice-3.html">
+                                                                Invoice 3
+                                                                Template
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -288,25 +409,43 @@ function MainMenu() {
                                                 <div className="submenu-content opensubmegamenu">
                                                     <ul className="list">
                                                         <li>
-                                                            <a href="portfolio-2-grid.html">Portfolio 2 Grid</a>
+                                                            <a href="portfolio-2-grid.html">
+                                                                Portfolio 2 Grid
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="portfolio-2-masonary.html">Portfolio 2 Masonary</a>
+                                                            <a href="portfolio-2-masonary.html">
+                                                                Portfolio 2
+                                                                Masonary
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="portfolio-3-grid.html">Portfolio 3 Grid</a>
+                                                            <a href="portfolio-3-grid.html">
+                                                                Portfolio 3 Grid
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="portfolio-3-masonary.html">Portfolio 3 Masonary</a>
+                                                            <a href="portfolio-3-masonary.html">
+                                                                Portfolio 3
+                                                                Masonary
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="portfolio-4-grid.html">Portfolio 4 Grid</a>
+                                                            <a href="portfolio-4-grid.html">
+                                                                Portfolio 4 Grid
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="portfolio-4-masonary.html">Portfolio 4 Masonary</a>
+                                                            <a href="portfolio-4-masonary.html">
+                                                                Portfolio 4
+                                                                Masonary
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="portfolio-no-space.html">Portfolio No Space</a>
+                                                            <a href="portfolio-no-space.html">
+                                                                Portfolio No
+                                                                Space
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -321,25 +460,42 @@ function MainMenu() {
                                                 <div className="submenu-content opensubmegamenu">
                                                     <ul className="list">
                                                         <li>
-                                                            <a href="element-button.html">Element Button</a>
+                                                            <a href="element-button.html">
+                                                                Element Button
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="element-category.html">Element Category</a>
+                                                            <a href="element-category.html">
+                                                                Element Category
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="element-collection-banner.html">Element Collection Banner</a>
+                                                            <a href="element-collection-banner.html">
+                                                                Element
+                                                                Collection
+                                                                Banner
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="element-deal-banner.html">Element Deal Banner</a>
+                                                            <a href="element-deal-banner.html">
+                                                                Element Deal
+                                                                Banner
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="element-header.html">Element Header</a>
+                                                            <a href="element-header.html">
+                                                                Element Header
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="element-home.html">Element Home</a>
+                                                            <a href="element-home.html">
+                                                                Element Home
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="element-product.html">Element Product</a>
+                                                            <a href="element-product.html">
+                                                                Element Product
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -354,13 +510,19 @@ function MainMenu() {
                                                 <div className="submenu-content opensubmegamenu">
                                                     <ul className="list">
                                                         <li>
-                                                            <a href="furniture-demo.html">Bottom</a>
+                                                            <a href="furniture-demo.html">
+                                                                Bottom
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="electronic-demo.html">Bottom Left</a>
+                                                            <a href="electronic-demo.html">
+                                                                Bottom Left
+                                                            </a>
                                                         </li>
                                                         <li>
-                                                            <a href="index.html">Bottom Right</a>
+                                                            <a href="index.html">
+                                                                Bottom Right
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -373,7 +535,9 @@ function MainMenu() {
                                                 <div className="submenu-content opensubmegamenu">
                                                     <ul className="list">
                                                         <li>
-                                                            <a href="vegetables-demo.html">Ajax Search</a>
+                                                            <a href="vegetables-demo.html">
+                                                                Ajax Search
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -421,10 +585,14 @@ function MainMenu() {
                                     <a href="faq.html">faq</a>
                                 </li>
                                 <li>
-                                    <a href="order-success.html">order success</a>
+                                    <a href="order-success.html">
+                                        order success
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="order-tracking.html">order tracking</a>
+                                    <a href="order-tracking.html">
+                                        order tracking
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="review.html">review</a>
@@ -433,7 +601,9 @@ function MainMenu() {
                                     <a href="search.html">search</a>
                                 </li>
                                 <li>
-                                    <a href="user-dashboard.html">user dashboard</a>
+                                    <a href="user-dashboard.html">
+                                        user dashboard
+                                    </a>
                                 </li>
                                 <li>
                                     <a href="wishlist.html">wishlist</a>
@@ -441,41 +611,54 @@ function MainMenu() {
                             </ul>
                         </li>
                         <li className="dropdown">
-                            <a href="undefined" className="nav-link menu-title">
-                                blog
-                            </a>
+                            <Link href="/blog">
+                                <a className="nav-link menu-title">blog</a>
+                            </Link>
                             <ul className="nav-submenu menu-content">
                                 <li>
-                                    <a href="blog-details.html">Blog Details</a>
+                                    <Link href="/blog/category/business">
+                                        <a>Business</a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="blog-infinite-scroll.html">Blog Infinite Scroll</a>
+                                    <Link href="/blog/category/entertainment">
+                                        <a>Entertainment</a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="blog-left-sidebar.html">Blog Left Sidebar</a>
+                                    <Link href="/blog/category/global">
+                                        <a>Global</a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="blog-listing.html">Blog Listing</a>
+                                    <Link href="/blog/category/health">
+                                        <a>Health</a>
+                                    </Link>
                                 </li>
                                 <li>
-                                    <a href="blog-masonary.html">
-                                        blog Masonary <span>New</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="blog-no-sidebar.html">blog No Sidebar</a>
-                                </li>
-                                <li>
-                                    <a href="blog-right-sidebar.html">Blog Right Sidebar</a>
+                                    <Link href="/blog/category/sports">
+                                        <a>Sports</a>
+                                    </Link>
                                 </li>
                             </ul>
                         </li>
                         <li className="mobile-poster d-flex d-xl-none">
-                            <img src="/images/pwa.png" className="img-fluid" alt="" />
+                            <img
+                                src="/images/pwa.png"
+                                className="img-fluid"
+                                alt=""
+                            />
                             <div className="mobile-contain">
                                 <h5>Enjoy app-like experience</h5>
-                                <p className="font-light">With this Screen option you can use Website like an App.</p>
-                                <a href="undefined" id="installApp" className="btn btn-solid-default btn-spacing w-100">
+                                <p className="font-light">
+                                    With this Screen option you can use Website
+                                    like an App.
+                                </p>
+                                <a
+                                    href="undefined"
+                                    id="installApp"
+                                    className="btn btn-solid-default btn-spacing w-100"
+                                >
                                     ADD TO HOMESCREEN
                                 </a>
                             </div>

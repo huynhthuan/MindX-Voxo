@@ -1,10 +1,18 @@
-import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { connect, useDispatch, useSelector } from 'react-redux';
+import { logOut } from '../../store/auth/authSlice';
 import SmallCart from './MenuRight/SmallCart';
 import WisList from './MenuRight/WisList';
 
 function MenuRight() {
-    const { data: session, status } = useSession();
+    const { cookie, user } = useSelector((state) => state.auth);
+
+    const dispatch = useDispatch();
+
+    const signOut = () => {
+        dispatch(logOut());
+    };
+
     return (
         <div className="menu-right">
             <ul>
@@ -16,11 +24,11 @@ function MenuRight() {
                 <li className="onhover-dropdown">
                     <div className="cart-media">
                         <i data-feather="user"></i>
-                        <span className="ms-1">{status === 'authenticated' && session.user.nicename}</span>
+                        <span className="ms-1">{cookie !== null ? user.username : ''}</span>
                     </div>
                     <div className="onhover-div profile-dropdown">
                         <ul>
-                            {status === 'authenticated' ? (
+                            {cookie !== null ? (
                                 <>
                                     <li>
                                         <Link href="/user-dashboard">
