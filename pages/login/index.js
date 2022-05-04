@@ -75,7 +75,7 @@ function Login() {
             });
 
             if (res.error && res.error !== null && res.error !== '') {
-                reset('password');
+                reset();
                 Swal.fire({
                     title: 'Error!',
                     text: res.error,
@@ -139,7 +139,7 @@ function Login() {
                                 <input
                                     id="email"
                                     type="text"
-                                    {...register('email', {
+                                    {...register("email", {
                                         required: true,
                                         pattern:
                                             /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -163,8 +163,7 @@ function Login() {
                                 <input
                                     id="password"
                                     type="password"
-                                    name="password"
-                                    {...register('password', {
+                                    {...register("password", {
                                         required: true,
                                     })}
                                 />
