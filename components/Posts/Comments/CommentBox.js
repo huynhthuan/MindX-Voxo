@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 function CommentBox() {
     return (
         <div className="row g-2">
@@ -64,6 +66,20 @@ function CommentBox() {
                 >
                     Submit
                 </button>
+            </div>
+
+            <div className="col-12">
+                <div className="d-flex ">
+                    <p className="alert alert-warning">
+                        You must{' '}
+                        <b>
+                            <Link href="/login">
+                                <span>login</span>
+                            </Link>
+                        </b>{' '}
+                        to comment this post!
+                    </p>
+                </div>
             </div>
         </div>
     );
