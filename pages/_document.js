@@ -4,9 +4,11 @@ export default function Document() {
     return (
         <Html>
             <Head />
+
             <body className="theme-color2 light ltr">
                 <Main />
                 <NextScript />
+
                 <script src="/js/jquery-3.5.1.min.js"></script>
 
                 <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
@@ -28,6 +30,13 @@ export default function Document() {
                 {/* <script src="/js/cart_modal_resize.js"></script> */}
 
                 <script src="/js/bootstrap/bootstrap-notify.min.js"></script>
+
+                <script
+                    async
+                    defer
+                    crossorigin="anonymous"
+                    src="https://connect.facebook.net/en_US/sdk.js"
+                ></script>
 
                 <script src="/js/script.js"></script>
             </body>

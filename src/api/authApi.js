@@ -8,6 +8,13 @@ const authApi = {
             params,
         });
     },
+    LoginWithFb: (params) => {
+        const url = '/api/user/fb_login';
+
+        return axiosClient.post(url, null, {
+            params,
+        });
+    },
 };
 
 export default authApi;

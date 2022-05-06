@@ -72,7 +72,7 @@ function BillingAddress() {
                 Edit billing address
             </button>
 
-            <ModalEditBillingAddress billingData={data} />
+            <ModalEditBillingAddress customerData={data} />
         </>
     );
 }

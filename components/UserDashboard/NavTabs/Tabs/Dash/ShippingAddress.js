@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useCustomerInfor } from '../../../../../reactQueryHook';
+import ModalEditShippingAddress from '../../../Modals/ModalEditShippingAddress';
 
 function ShippingAddress() {
     const { isLoading, isError, data, error } = useCustomerInfor();
@@ -59,9 +60,15 @@ function ShippingAddress() {
                     </>
                 )}
             </div>
-            <button className="btn btn-danger btn-sm rounded-2">
+            <button
+                className="btn btn-danger btn-sm rounded-2"
+                data-bs-toggle="modal"
+                data-bs-target="#editShipping"
+            >
                 Edit Address
             </button>
+
+            <ModalEditShippingAddress customerData={data} />
         </>
     );
 }
