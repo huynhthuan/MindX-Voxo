@@ -4,7 +4,7 @@ import { useCustomerInfor } from '../../../../../reactQueryHook';
 import ModalEditShippingAddress from '../../../Modals/ModalEditShippingAddress';
 
 function ShippingAddress() {
-    const { isLoading, isError, data, error } = useCustomerInfor();
+    const { isLoading, isError, data, error , isFetching} = useCustomerInfor();
     useEffect(() => {
         if (isError) {
             toast.error(error, {
@@ -23,7 +23,7 @@ function ShippingAddress() {
         <>
             <h6 className="font-light fw-bold">Shipping Address</h6>
             <div className="mb-3">
-                {isLoading || isError ? (
+                {isLoading || isError || isFetching? (
                     <Skeleton count={10} height={20} />
                 ) : (
                     <>

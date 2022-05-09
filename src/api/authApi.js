@@ -15,6 +15,20 @@ const authApi = {
             params,
         });
     },
+    RegisterWithFb: (params) => {
+        const url = '/api/user/fb_register';
+
+        return axiosClient.post(url, null, {
+            params,
+        });
+    },
+    RegisterWithGoogle: (params) => {
+        const url = '/api/user/google_register';
+
+        return axiosClient.post(url, null, {
+            params,
+        });
+    },
 };
 
 export default authApi;

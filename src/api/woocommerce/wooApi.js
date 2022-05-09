@@ -8,9 +8,14 @@ const wooApi = {
             params,
         });
     },
+    getOrderNote: (orderId) => {
+        const url = '/orders/' + orderId + '/notes';
+
+        return wooClient.get(url);
+    },
     getCustomer: (userID) => {
         const url = '/customers/' + userID;
-        
+
         return wooClient.get(url);
     },
     getWishList: (userID) => {
@@ -27,7 +32,23 @@ const wooApi = {
         const url = '/customers/' + userID;
 
         return wooClient.put(url, data);
-    }
+    },
+    getProducts: (params) => {
+        const url = '/products';
+
+        return wooClient.get(url, {
+            params,
+        });
+    },
+    getProductVariations: (ids) => {
+        const url =
+            '/products/' +
+            ids.productId +
+            '/variations/' +
+            ids.productVariationId;
+
+        return wooClient.get(url);
+    },
 };
 
 export default wooApi;

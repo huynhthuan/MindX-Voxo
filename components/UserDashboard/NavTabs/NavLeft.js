@@ -1,48 +1,74 @@
+import { useEffect } from 'react';
+import NavItem from './Tabs/NavItem';
+import { useRouter } from 'next/router';
+
 function NavLeft() {
+    const router = useRouter();
+    const { tab } = router.query;
+
+    useEffect(() => {
+        if (tab) {
+            let triggerTabList = [].slice.call(
+                document.querySelectorAll('#myTab button')
+            );
+
+            triggerTabList.forEach(function (triggerEl) {
+                let tabTrigger = new bootstrap.Tab(triggerEl);
+                let tabTarget = triggerEl
+                    .getAttribute('data-bs-target')
+                    .replace('#', '');
+                
+                if (tabTarget === tab) {
+                    tabTrigger.show();
+                }
+            });
+        }
+    }, [tab]);
+
     return (
         <div className="col-lg-3">
-            <ul className="nav nav-tabs custome-nav-tabs flex-column category-option" id="myTab">
-                <li className="nav-item mb-2">
-                    <button className="nav-link font-light active" id="tab" data-bs-toggle="tab" data-bs-target="#dash" type="button">
-                        <i className="fas fa-angle-right"></i>Dashboard
-                    </button>
-                </li>
+            <ul
+                className="nav nav-tabs custome-nav-tabs flex-column category-option"
+                id="myTab"
+            >
+                <NavItem
+                    tabId={'tab-dash'}
+                    target={'#dash'}
+                    title={'Dashboard'}
+                    isActive={true}
+                />
 
-                <li className="nav-item mb-2">
-                    <button className="nav-link font-light" id="1-tab" data-bs-toggle="tab" data-bs-target="#order" type="button">
-                        <i className="fas fa-angle-right"></i>Orders
-                    </button>
-                </li>
+                <NavItem
+                    tabId={'tab-order'}
+                    target={'#order'}
+                    title={'Orders'}
+                />
 
-                <li className="nav-item mb-2">
-                    <button className="nav-link font-light" id="2-tab" data-bs-toggle="tab" data-bs-target="#wishlist" type="button">
-                        <i className="fas fa-angle-right"></i>Wishlist
-                    </button>
-                </li>
+                <NavItem
+                    tabId={'tab-wishlist'}
+                    target={'#wishlist'}
+                    title={'Wishlist'}
+                />
 
-                <li className="nav-item mb-2">
-                    <button className="nav-link font-light" id="3-tab" data-bs-toggle="tab" data-bs-target="#save" type="button">
-                        <i className="fas fa-angle-right"></i>Saved Address
-                    </button>
-                </li>
+                <NavItem
+                    tabId={'tab-save'}
+                    target={'#save'}
+                    title={'Saved Address'}
+                />
 
-                <li className="nav-item mb-2">
-                    <button className="nav-link font-light" id="4-tab" data-bs-toggle="tab" data-bs-target="#pay" type="button">
-                        <i className="fas fa-angle-right"></i>Payment
-                    </button>
-                </li>
+                <NavItem tabId={'tab-pay'} target={'#pay'} title={'Payment'} />
 
-                <li className="nav-item mb-2">
-                    <button className="nav-link font-light" id="5-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button">
-                        <i className="fas fa-angle-right"></i>Profile
-                    </button>
-                </li>
+                <NavItem
+                    tabId={'tab-profile'}
+                    target={'#profile'}
+                    title={'Profile'}
+                />
 
-                <li className="nav-item">
-                    <button className="nav-link font-light" id="6-tab" data-bs-toggle="tab" data-bs-target="#security" type="button">
-                        <i className="fas fa-angle-right"></i>Security
-                    </button>
-                </li>
+                <NavItem
+                    tabId={'tab-security'}
+                    target={'#security'}
+                    title={'Security'}
+                />
             </ul>
         </div>
     );

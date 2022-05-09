@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { useMyWishList } from '../../../../../../reactQueryHook';
 
 function WishListSummary() {
-    const { isLoading, isError, data, error } = useMyWishList();
+    const { isLoading, isError, data, error , isFetching} = useMyWishList();
     useEffect(() => {
         if (isError) {
             toast.error(error, {
@@ -35,7 +35,7 @@ function WishListSummary() {
                 <div>
                     <h5 className="font-light">wishlist</h5>
                     <h3>
-                        {isLoading || isError ? (
+                        {isLoading || isError || isFetching ? (
                             <Skeleton width={80} />
                         ) : (
                             data.data.length
