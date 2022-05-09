@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import SubscribeBox from '../../../components/Common/SubscribeBox';
 import PostCardMansory from '../../../components/Posts/PostCardMansory';
@@ -55,18 +55,8 @@ function Category() {
                 totalPost: res.headers.get('x-wp-total'),
                 totalPage: res.headers.get('x-wp-totalpages')
             }
-        
         }
     );
-
-    if (isLoading) 
-        return <>
-            {
-                Array(10).fill(0).map((item, index) => {
-                    return <CategoryPostSkeleton key = {index} />
-                })
-            }
-        </>
 
     if (error) return 'An error has occurred: ' + error.message
 
@@ -128,11 +118,17 @@ function Category() {
                     <div className="row g-4 filter-gallery mt-3 grid">
                         {/* minhhieu */}
                         {
-                            data.responseInfo && data.responseInfo.map( (item,index) => {
-                                return <div className="grid-item col-lg-3 col-md-4 col-sm-6" key={index}>
-                                    <PostCardMansory {...item}/>
-                                </div>
-                            })
+                            isLoading 
+                                ?   
+                                    Array(10).fill(0).map((item, index) => {
+                                        return <CategoryPostSkeleton key = {index} />
+                                    })
+                                : 
+                                    data.responseInfo && data.responseInfo.map( (item,index) => {
+                                        return <div className="grid-item col-lg-3 col-md-4 col-sm-6" key={index}>
+                                            <PostCardMansory {...item}/>
+                                        </div>
+                                    })
                         }
                     </div>
                 </div>
@@ -157,41 +153,18 @@ function Category() {
                                     </li>
                                     {/* minhhieu */}
                                     {
-                                        data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                            return <li className="page-item active">
-                                                <a
-                                                    className="page-link"
-                                                    href="undefined"
-                                                >
-                                                    {index+1}
-                                                </a>
-                                            </li>
-                                        })
+                                        !isLoading &&
+                                            data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
+                                                return <li className="page-item active">
+                                                    <a
+                                                        className="page-link"
+                                                        href="undefined"
+                                                    >
+                                                        {index+1}
+                                                    </a>
+                                                </li>
+                                            })
                                     }
-                                    {/* <li className="page-item active">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            1
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            2
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            3
-                                        </a>
-                                    </li> */}
                                     <li className="page-item">
                                         <a className="page-link">
                                             <span aria-hidden="true">

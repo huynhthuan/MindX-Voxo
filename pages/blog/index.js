@@ -7,22 +7,6 @@ import { useQuery } from 'react-query';
 import { BLOG_LIST } from '../../utils/api_minhhieu';
 
 function Blog() {
-
-    const { isLoading, error, data } = useQuery('repoData', async () =>
-        {
-            const res = await fetch(BLOG_LIST);
-        
-            const data = await res.json();
-
-            return {
-                responseInfo: data, 
-                totalPost: res.headers.get('x-wp-total'),
-                totalPage: res.headers.get('x-wp-totalpages')
-            }
-        
-        }
-    );
-
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -53,6 +37,20 @@ function Blog() {
         feather.replace();
     }, []);
 
+    const { isLoading, error, data } = useQuery('repoData', async () =>
+        {
+            const res = await fetch(BLOG_LIST);
+        
+            const data = await res.json();
+
+            return {
+                responseInfo: data, 
+                totalPost: res.headers.get('x-wp-total'),
+                totalPage: res.headers.get('x-wp-totalpages')
+            }
+        
+        }
+    );
 
     if (isLoading) return 'Loading...'
 

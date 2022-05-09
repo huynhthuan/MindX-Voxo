@@ -13,8 +13,6 @@ function Post() {
 
   if (error) return 'An error has occurred: ' + error.message
 
-  console.log(data);
-
   return (
     <>
       {
