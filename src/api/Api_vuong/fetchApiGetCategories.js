@@ -1,0 +1,37 @@
+import axios from "axios";
+import { BASE_URL_API } from "../../../utils/api";
+import queryString from "query-string";
+
+export const fetchApiGetCategories = async (orderby = "date", order = "asc", slug, page, categories, per_page = "24") => {
+   // console.log(`  ~ slug, page`, slug, page);
+   const response = await fetchApi.get("/products/categories/?slug=" + slug);
+   const responseId = response.data[0].id;
+   const firstPage = `products?orderby=${orderby}&order=${order}&categories=${responseId}&per_page=${per_page}`;
+   const data = await fetchApi.get(page ? firstPage + "&page=" + page : firstPage);
+   data.idCategories = responseId;
+   return data;
+};
+export const fetchApi = axios.create({
+   baseURL: BASE_URL_API + "/wp-json/wc/v3/",
+   headers: {
+      "content-type": "application/json",
+      Authorization: "Basic Y2tfYWI0NGZmOThiN2FjOGM2MjliMTA3Mzk5ZWIwYjBjOGMyNmUwNDhjNDpjc18wYmRiZTI2OWM5NjA5OGJmZDY1N2FiZDRlMmQ3NTI2MzJmNDZhYTIw",
+   },
+   paramsSerializer: (params) => queryString.stringify(params),
+});
+// fetchApi.interceptors.response.use(
+//    (response) => {
+//       if (response && response.data) {
+//          return {
+//             data: response.data,
+//             headers: response.headers,
+//          };
+//       }
+
+//       return response;
+//    },
+//    (error) => {
+//       // Handle errors
+//       throw error;
+//    }
+// );

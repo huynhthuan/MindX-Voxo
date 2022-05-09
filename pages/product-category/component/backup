@@ -1,0 +1,181 @@
+import Link from "next/link";
+
+function Filter() {
+   return (
+      <div>
+         <div className="row g-4">
+            {/* filter button */}
+            <div className="filter-button">
+               <button className="btn filter-btn p-0">
+                  <i data-feather="align-left"></i> Filter
+               </button>
+            </div>
+            {/* filter button */}
+
+            {/* label and featured section */}
+            <div className="col-md-12">
+               <ul className="short-name">
+                  <li>
+                     <div className="label-tag">
+                        <span>Shirts</span>
+                        <button type="button" className="btn-close" aria-label="Close"></button>
+                     </div>
+                  </li>
+                  <li>
+                     <div className="label-tag">
+                        <span>Kurtas</span>
+                        <button type="button" className="btn-close" aria-label="Close"></button>
+                     </div>
+                  </li>
+                  <li>
+                     <div className="label-tag">
+                        <span>Jackets</span>
+                        <button type="button" className="btn-close" aria-label="Close"></button>
+                     </div>
+                  </li>
+                  <li>
+                     <div className="label-tag">
+                        <span>Blazers</span>
+                        <button type="button" className="btn-close" aria-label="Close"></button>
+                     </div>
+                  </li>
+                  <li>
+                     <div className="label-tag">
+                        <a href="undefined">
+                           <span>Clear All</span>
+                        </a>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+
+            <div className="col-12">
+               <div className="filter-options">
+                  <div className="select-options">
+                     <div className="page-view-filter">
+                        <div className="dropdown select-featured">
+                           <button
+                              className="btn dropdown-toggle"
+                              type="button"
+                              id="dropdownMenuButton1"
+                              data-bs-toggle="dropdown"
+                              aria-expanded="false"
+                           >
+                              24 Page per view
+                           </button>
+                           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li>
+                                 <Link href={"/product-category/accessories?orderby=title&order=asc&categories=19&per_page=24"}>
+                                    <a className="dropdown-item">Alphabetically A-Z</a>
+                                 </Link>
+                              </li>
+                              <li>
+                                 <Link href={"/product-category/accessories?orderby=title&order=desc&categories=19&per_page=24"}>
+                                    <a className="dropdown-item" href="undefined">
+                                       Alphabetically Z-A
+                                    </a>
+                                 </Link>
+                              </li>
+                              <li>
+                                 <Link href={"/product-category/accessories?orderby=price&order=desc&categories=19&per_page=24"}>
+                                    <a className="dropdown-item" href="undefined">
+                                       Price, High To Low
+                                    </a>
+                                 </Link>
+                              </li>
+                              <li>
+                                 <Link href={"/product-category/accessories?orderby=price&order=asc&categories=19&per_page=24"}>
+                                    <a className="dropdown-item" href="undefined">
+                                       Price, Low To High
+                                    </a>
+                                 </Link>
+                              </li>
+                              <li>
+                                 <Link href={"/product-category/accessories?orderby=date&order=asc&categories=19&per_page=24"}>
+                                    <a className="dropdown-item" href="undefined">
+                                       Date, Old To New
+                                    </a>
+                                 </Link>
+                              </li>
+                              <li>
+                                 <Link href={"/product-category/accessories?orderby=date&order=desc&categories=19&per_page=24"}>
+                                    <a className="dropdown-item" href="undefined">
+                                       Date, New To Old
+                                    </a>
+                                 </Link>
+                              </li>
+                           </ul>
+                        </div>
+                     </div>
+
+                     <div className="dropdown select-featured">
+                        <button
+                           className="btn dropdown-toggle"
+                           type="button"
+                           id="dropdownMenuButton1"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false"
+                        >
+                           Select Featured
+                        </button>
+                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                           <li>
+                              <a className="dropdown-item" href="undefined">
+                                 Jeans
+                              </a>
+                           </li>
+                           <li>
+                              <a className="dropdown-item" href="undefined">
+                                 T-Shirt
+                              </a>
+                           </li>
+                           <li>
+                              <a className="dropdown-item" href="undefined">
+                                 Shirt
+                              </a>
+                           </li>
+                           <li>
+                              <a className="dropdown-item" href="undefined">
+                                 Jacket
+                              </a>
+                           </li>
+                           <li>
+                              <a className="dropdown-item" href="undefined">
+                                 Hoodie
+                              </a>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+                  <div className="grid-options d-sm-inline-block d-none">
+                     <ul className="d-flex">
+                        <li className="two-grid">
+                           <a>
+                              <img src="/svg/grid-2.svg" className="img-fluid blur-up lazyload" alt="" />
+                           </a>
+                        </li>
+                        <li className="three-grid d-md-inline-block d-none">
+                           <a>
+                              <img src="/svg/grid-3.svg" className="img-fluid blur-up lazyload" alt="" />
+                           </a>
+                        </li>
+                        <li className="grid-btn active d-lg-inline-block d-none">
+                           <a>
+                              <img src="/svg/grid.svg" className="img-fluid blur-up lazyload" alt="" />
+                           </a>
+                        </li>
+                        <li className="list-btn">
+                           <a>
+                              <img src="/svg/list.svg" className="img-fluid blur-up lazyload" alt="" />
+                           </a>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   );
+}
+
+export default Filter;
