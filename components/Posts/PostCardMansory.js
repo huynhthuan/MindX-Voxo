@@ -1,4 +1,4 @@
-function PostCardMansory() {
+function PostCardMansory({id,date,title,content,excerpt}) {
     return (
         <div className="card masonary-blog">
             <a href="blog-details.html">
@@ -10,7 +10,7 @@ function PostCardMansory() {
             </a>
             <div className="card-body">
                 <a href="blog-details.html">
-                    <h2 className="card-title">Just a Standard Format Post.</h2>
+                    <h2 className="card-title">{title.rendered}</h2>
                 </a>
                 <p className="font-light">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.

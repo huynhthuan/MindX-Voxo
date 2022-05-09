@@ -3,8 +3,26 @@ import SubscribeBox from '../../components/Common/SubscribeBox';
 import Head from 'next/head';
 import PostCard from '../../components/Posts/PostCard';
 import Sidebar from '../../components/Blog/Sidebar';
+import { useQuery } from 'react-query';
+import { BLOG_LIST } from '../../utils/api_minhhieu';
 
 function Blog() {
+
+    const { isLoading, error, data } = useQuery('repoData', async () =>
+        {
+            const res = await fetch(BLOG_LIST);
+        
+            const data = await res.json();
+
+            return {
+                responseInfo: data, 
+                totalPost: res.headers.get('x-wp-total'),
+                totalPage: res.headers.get('x-wp-totalpages')
+            }
+        
+        }
+    );
+
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -35,6 +53,11 @@ function Blog() {
         feather.replace();
     }, []);
 
+
+    if (isLoading) return 'Loading...'
+
+    if (error) return 'An error has occurred: ' + error.message
+
     return (
         <>
             <Head>
@@ -57,7 +80,7 @@ function Blog() {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h3>Blog Listing</h3>
+                            <h3>New Post</h3>
                             <nav>
                                 <ol className="breadcrumb">
                                     <li className="breadcrumb-item">
@@ -69,7 +92,7 @@ function Blog() {
                                         className="breadcrumb-item active"
                                         aria-current="page"
                                     >
-                                        Blog Listing
+                                        New Post
                                     </li>
                                 </ol>
                             </nav>
@@ -85,45 +108,14 @@ function Blog() {
                     <div className="row g-4">
                         <div className="col-lg-9 col-md-7 order-md-1 ratio_square">
                             <div className="row g-4 g-xl-5">
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
+                                {/* minhhieu */}
+                                {
+                                    data.responseInfo.map( (item,index) => {
+                                        return <div className="col-12" key={index}>
+                                            <PostCard {...item}/>
+                                        </div>
+                                    })
+                                }
                             </div>
                         </div>
 
@@ -152,30 +144,19 @@ function Blog() {
                                             </span>
                                         </a>
                                     </li>
-                                    <li className="page-item active">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            1
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            2
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            3
-                                        </a>
-                                    </li>
+                                    {/* minhhieu */}
+                                    {
+                                        data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
+                                            return <li className="page-item active">
+                                                <a
+                                                    className="page-link"
+                                                    href="undefined"
+                                                >
+                                                    {index+1}
+                                                </a>
+                                            </li>
+                                        })
+                                    }
                                     <li className="page-item">
                                         <a className="page-link">
                                             <span aria-hidden="true">

@@ -1,8 +1,11 @@
-import { useEffect } from 'react';
+import { useState,useEffect } from 'react';
+import { useQuery } from 'react-query';
 import SubscribeBox from '../../../components/Common/SubscribeBox';
 import PostCardMansory from '../../../components/Posts/PostCardMansory';
 import Link from 'next/link';
 import Head from 'next/head';
+import { BlOG_LIST_CATEGORY } from '../../../utils/api_minhhieu';
+import { CategoryPostSkeleton } from '../../../components/Skeleton_minhhieu';
 
 function Category() {
     useEffect(() => {
@@ -40,6 +43,32 @@ function Category() {
         })(jQuery);
         feather.replace();
     }, []);
+
+    const { isLoading, error, data } = useQuery('repoData', async () =>
+        {
+            const res = await fetch(BlOG_LIST_CATEGORY + '43');
+        
+            const data = await res.json();
+
+            return {
+                responseInfo: data, 
+                totalPost: res.headers.get('x-wp-total'),
+                totalPage: res.headers.get('x-wp-totalpages')
+            }
+        
+        }
+    );
+
+    if (isLoading) 
+        return <>
+            {
+                Array(10).fill(0).map((item, index) => {
+                    return <CategoryPostSkeleton key = {index} />
+                })
+            }
+        </>
+
+    if (error) return 'An error has occurred: ' + error.message
 
     return (
         <>
@@ -97,65 +126,14 @@ function Category() {
             <section className="masonary-blog-section section-b-space">
                 <div className="container">
                     <div className="row g-4 filter-gallery mt-3 grid">
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        {/* Quote section start */}
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-                        {/* Quote section end */}
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        {/* Quote section start */}
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-                        {/* Quote section end */}
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        {/* Quote section start */}
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-                        {/* Quote section end */}
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        {/* Quote section start */}
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-                        {/* Quote section end */}
+                        {/* minhhieu */}
+                        {
+                            data.responseInfo && data.responseInfo.map( (item,index) => {
+                                return <div className="grid-item col-lg-3 col-md-4 col-sm-6" key={index}>
+                                    <PostCardMansory {...item}/>
+                                </div>
+                            })
+                        }
                     </div>
                 </div>
             </section>
@@ -177,7 +155,20 @@ function Category() {
                                             </span>
                                         </a>
                                     </li>
-                                    <li className="page-item active">
+                                    {/* minhhieu */}
+                                    {
+                                        data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
+                                            return <li className="page-item active">
+                                                <a
+                                                    className="page-link"
+                                                    href="undefined"
+                                                >
+                                                    {index+1}
+                                                </a>
+                                            </li>
+                                        })
+                                    }
+                                    {/* <li className="page-item active">
                                         <a
                                             className="page-link"
                                             href="undefined"
@@ -200,7 +191,7 @@ function Category() {
                                         >
                                             3
                                         </a>
-                                    </li>
+                                    </li> */}
                                     <li className="page-item">
                                         <a className="page-link">
                                             <span aria-hidden="true">

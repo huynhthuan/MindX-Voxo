@@ -1,4 +1,4 @@
-function PostCard() {
+function PostCard({id,date,title,content,excerpt}) {
     return (
         <div className="masonary-blog box-shadow">
             <a href="blog-details.html" className="bg-size">
@@ -12,8 +12,9 @@ function PostCard() {
                 <h6 className="masonary-name">PRODUCT UPDATE</h6>
                 <a href="blog-details.html">
                     <h2 className="card-title">
-                        How to make the perfect morning coffee, according to the
-                        science
+                        {
+                            title.rendered
+                        }
                     </h2>
                 </a>
                 <p className="font-light">
