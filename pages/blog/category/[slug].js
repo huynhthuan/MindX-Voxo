@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 import SubscribeBox from '../../../components/Common/SubscribeBox';
 import PostCardMansory from '../../../components/Posts/PostCardMansory';
 import Link from 'next/link';
@@ -8,6 +10,21 @@ import { BlOG_LIST_CATEGORY } from '../../../utils/api_minhhieu';
 import { CategoryPostSkeleton } from '../../../components/Skeleton_minhhieu';
 
 function Category() {
+
+    const router = useRouter();
+    const {page} = router.query;
+    const fetchBlogListByCategory = async (category, page) => {
+        const result = await axios.get(BlOG_LIST_CATEGORY + '43');
+
+        const data = await result.json();
+
+        return {
+            responseInfo: data, 
+            totalPost: res.headers.get('x-wp-total'),
+            totalPage: res.headers.get('x-wp-totalpages')
+        }
+    }
+
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -43,6 +60,10 @@ function Category() {
         })(jQuery);
         feather.replace();
     }, []);
+
+    useEffect(() => {
+        
+    }, [page]);
 
     const { isLoading, error, data } = useQuery('repoData', async () =>
         {
@@ -155,10 +176,10 @@ function Category() {
                                     {
                                         !isLoading &&
                                             data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                                return <li className="page-item active">
+                                                return <li className="page-item active" key={index}>
                                                     <a
                                                         className="page-link"
-                                                        href="undefined"
+                                                        href={`?page=${index + 1}`}
                                                     >
                                                         {index+1}
                                                     </a>

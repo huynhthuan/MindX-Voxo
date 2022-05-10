@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import Head from 'next/head';
 import PostCard from '../../components/Posts/PostCard';
@@ -7,6 +8,9 @@ import { useQuery } from 'react-query';
 import { BLOG_LIST } from '../../utils/api_minhhieu';
 
 function Blog() {
+
+    const router = useRouter();
+
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -145,13 +149,13 @@ function Blog() {
                                     {/* minhhieu */}
                                     {
                                         data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                            return <li className="page-item active">
-                                                <a
+                                            return <li className="page-item active" key={index}>
+                                                <div
                                                     className="page-link"
-                                                    href="undefined"
+                                                    onClick={() => console.log(index+1)}
                                                 >
                                                     {index+1}
-                                                </a>
+                                                </div>
                                             </li>
                                         })
                                     }
