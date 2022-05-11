@@ -1,29 +1,13 @@
 import { useEffect } from 'react';
-import { useQuery } from 'react-query';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import SubscribeBox from '../../../components/Common/SubscribeBox';
 import PostCardMansory from '../../../components/Posts/PostCardMansory';
 import Link from 'next/link';
 import Head from 'next/head';
-import { BlOG_LIST_CATEGORY } from '../../../utils/api_minhhieu';
 import { CategoryPostSkeleton } from '../../../components/Skeleton_minhhieu';
+import { useBlogListCategory } from '../../../src/api_minhhieu/bloglistcategory';
 
 function Category() {
-
-    const router = useRouter();
-    const {page} = router.query;
-    const fetchBlogListByCategory = async (category, page) => {
-        const result = await axios.get(BlOG_LIST_CATEGORY + '43');
-
-        const data = await result.json();
-
-        return {
-            responseInfo: data, 
-            totalPost: res.headers.get('x-wp-total'),
-            totalPage: res.headers.get('x-wp-totalpages')
-        }
-    }
 
     useEffect(() => {
         (function ($) {
@@ -61,23 +45,10 @@ function Category() {
         feather.replace();
     }, []);
 
-    useEffect(() => {
-        
-    }, [page]);
+    const router = useRouter();
+    const {page} = router.query;
 
-    const { isLoading, error, data } = useQuery('repoData', async () =>
-        {
-            const res = await fetch(BlOG_LIST_CATEGORY + '43');
-        
-            const data = await res.json();
-
-            return {
-                responseInfo: data, 
-                totalPost: res.headers.get('x-wp-total'),
-                totalPage: res.headers.get('x-wp-totalpages')
-            }
-        }
-    );
+    const { isLoading, error, data, isFetching } = useBlogListCategory({category:router.query.slug,page:page ? page : 1});
 
     if (error) return 'An error has occurred: ' + error.message
 
@@ -136,17 +107,17 @@ function Category() {
             {/* Masonary Blog Section Start */}
             <section className="masonary-blog-section section-b-space">
                 <div className="container">
-                    <div className="row g-4 filter-gallery mt-3 grid">
+                    <div className="row g-4 d-flex mt-3" style={{ 'height': "unset !important"}}>
                         {/* minhhieu */}
                         {
                             isLoading 
                                 ?   
-                                    Array(10).fill(0).map((item, index) => {
+                                    Array(12).fill(0).map((item, index) => {
                                         return <CategoryPostSkeleton key = {index} />
                                     })
                                 : 
                                     data.responseInfo && data.responseInfo.map( (item,index) => {
-                                        return <div className="grid-item col-lg-3 col-md-4 col-sm-6" key={index}>
+                                        return <div className="col-lg-3 col-md-4 col-sm-6" key={index}>
                                             <PostCardMansory {...item}/>
                                         </div>
                                     })

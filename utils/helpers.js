@@ -1,4 +1,4 @@
-export default function onClickPreventDefault(e) {
+export function onClickPreventDefault(e) {
     return e.preventDefault();
 }
 

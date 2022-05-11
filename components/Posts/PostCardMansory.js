@@ -1,7 +1,8 @@
 import { useQuery } from 'react-query';
 import { BLOG_LIST } from '../../utils/api_minhhieu';
 
-function PostCardMansory({id,date,title,content,excerpt,featured_media,author}) {
+function PostCardMansory({id,title}) {
+    
     const { isLoading, error, data } = useQuery('media', async () =>
         {
             const res = await fetch(BLOG_LIST + id + '?_embed');
@@ -16,7 +17,7 @@ function PostCardMansory({id,date,title,content,excerpt,featured_media,author}) 
         return 'An error has occurred: ' + error.message;
 
     return (
-        <div className="card masonary-blog">
+        <div className="card masonary-blog" style={{height:'100%'}}>
             <a href="blog-details.html">
                 <img
                     src={

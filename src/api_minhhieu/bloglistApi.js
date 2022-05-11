@@ -1,29 +1,24 @@
 import { useQuery } from 'react-query';
 import { BLOG_LIST } from '../../utils/api_minhhieu';
-import PostCard from '../../components/Posts/PostCard';
+import {getPostCategoryId} from '../../utils/helpers';
+import axios from 'axios';
 
-function Post() {
-  const { isLoading, error, data } = useQuery('repoData', () =>
-    fetch(BLOG_LIST).then(res =>
-      res.json()
-    )
-  )
-
-  if (isLoading) return 'Loading...'
-
-  if (error) return 'An error has occurred: ' + error.message
-
-  return (
-    <>
-      {
-        data.map((item,index) => {
-          return <div className="col-12" key={index}>
-            <PostCard {...item}/>
-          </div>
-        })
+const fetchBlogListNewPost = async (param) => {
+  const result = await axios.get(BLOG_LIST,
+    {
+      params: {
+        page:param.page,
+        per_page:25
       }
-    </>
-  )
+    });
+
+  return {
+    responseInfo: result.data, 
+    totalPost: result.headers['x-wp-total'],
+    totalPage: result.headers['x-wp-totalpages'],
+  }
 }
 
-export default Post;
+export const useBlogListNewPost = (param) => {
+  return useQuery(['blog-list-new-post', param], () => fetchBlogListNewPost(param))
+}

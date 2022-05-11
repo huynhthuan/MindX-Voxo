@@ -4,12 +4,10 @@ import SubscribeBox from '../../components/Common/SubscribeBox';
 import Head from 'next/head';
 import PostCard from '../../components/Posts/PostCard';
 import Sidebar from '../../components/Blog/Sidebar';
-import { useQuery } from 'react-query';
-import { BLOG_LIST } from '../../utils/api_minhhieu';
+import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
+import { useBlogListNewPost } from '../../src/api_minhhieu/bloglistApi';
 
 function Blog() {
-
-    const router = useRouter();
 
     useEffect(() => {
         (function ($) {
@@ -40,23 +38,13 @@ function Blog() {
         })(jQuery);
         feather.replace();
     }, []);
+    
+    const router = useRouter();
+    const {page} = router.query;
 
-    const { isLoading, error, data } = useQuery('repoData', async () =>
-        {
-            const res = await fetch(BLOG_LIST);
-        
-            const data = await res.json();
+    const { isLoading, error, data, isFetching } = useBlogListNewPost({ page: page ? page : 1 });
 
-            return {
-                responseInfo: data, 
-                totalPost: res.headers.get('x-wp-total'),
-                totalPage: res.headers.get('x-wp-totalpages')
-            }
-        
-        }
-    );
-
-    if (isLoading) return 'Loading...'
+    console.log(data);
 
     if (error) return 'An error has occurred: ' + error.message
 
@@ -112,11 +100,18 @@ function Blog() {
                             <div className="row g-4 g-xl-5">
                                 {/* minhhieu */}
                                 {
-                                    data.responseInfo.map( (item,index) => {
-                                        return <div className="col-12" key={index}>
-                                            <PostCard {...item}/>
-                                        </div>
-                                    })
+                                    isLoading
+                                        ?
+                                            Array(8).fill(0).map((item, index) => {
+                                                return <NewPostBlogListSkeleton key={index}/>
+                                            })
+                                        :
+
+                                            data.responseInfo && data.responseInfo.map( (item,index) => {
+                                                return <div className="col-12" key={index}>
+                                                    <PostCard {...item}/>
+                                                </div>
+                                            })
                                 }
                             </div>
                         </div>
@@ -148,16 +143,19 @@ function Blog() {
                                     </li>
                                     {/* minhhieu */}
                                     {
-                                        data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                            return <li className="page-item active" key={index}>
-                                                <div
-                                                    className="page-link"
-                                                    onClick={() => console.log(index+1)}
-                                                >
-                                                    {index+1}
-                                                </div>
-                                            </li>
-                                        })
+                                        !isLoading
+                                            && 
+                                                data?.totalPage && 
+                                                    Array(data.totalPage * 1).fill(0).map((item, index) => {
+                                                        return <li className="page-item active" key={index}>
+                                                            <a
+                                                                className="page-link"
+                                                                href={`?page=${index + 1}`}
+                                                            >
+                                                                {index+1}
+                                                            </a>
+                                                        </li>
+                                                    })
                                     }
                                     <li className="page-item">
                                         <a className="page-link">
