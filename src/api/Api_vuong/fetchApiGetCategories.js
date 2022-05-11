@@ -2,13 +2,14 @@ import axios from "axios";
 import { BASE_URL_API } from "../../../utils/api";
 import queryString from "query-string";
 
-export const fetchApiGetCategories = async (orderby = "date", order = "asc", slug, page, categories, per_page = "24") => {
-   // console.log(`  ~ slug, page`, slug, page);
+export const fetchApiGetCategories = async (query, asPath) => {
+   const pathApi = asPath.replace(/\/\w+-\w+\/\w+\?/, "");
+   const { slug, page } = query;
    const response = await fetchApi.get("/products/categories/?slug=" + slug);
    const responseId = response.data[0].id;
-   const firstPage = `products?orderby=${orderby}&order=${order}&categories=${responseId}&per_page=${per_page}`;
+   const firstPage = `products?${pathApi}&category=`+responseId;
    const data = await fetchApi.get(page ? firstPage + "&page=" + page : firstPage);
-   data.idCategories = responseId;
+   data.idCategory = responseId;
    return data;
 };
 export const fetchApi = axios.create({
@@ -19,19 +20,3 @@ export const fetchApi = axios.create({
    },
    paramsSerializer: (params) => queryString.stringify(params),
 });
-// fetchApi.interceptors.response.use(
-//    (response) => {
-//       if (response && response.data) {
-//          return {
-//             data: response.data,
-//             headers: response.headers,
-//          };
-//       }
-
-//       return response;
-//    },
-//    (error) => {
-//       // Handle errors
-//       throw error;
-//    }
-// );

@@ -4,7 +4,7 @@ import { useCustomerInfor } from '../../../../../reactQueryHook';
 import ModalEditBillingAddress from '../../../Modals/ModalEditBillingAddress';
 
 function BillingAddress() {
-    const { isLoading, isError, data, error } = useCustomerInfor();
+    const { isLoading, isError, data, error, isFetching } = useCustomerInfor();
 
     useEffect(() => {
         if (isError) {
@@ -24,7 +24,7 @@ function BillingAddress() {
         <>
             <h6 className="font-light fw-bold">Billing Address</h6>
             <div className="mb-3">
-                {isLoading || isError ? (
+                {isLoading || isError || isFetching ? (
                     <Skeleton count={11} height={20} />
                 ) : (
                     <>

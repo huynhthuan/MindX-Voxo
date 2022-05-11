@@ -1,6 +1,61 @@
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import { toast } from 'react-toastify';
+import { useMyOrders } from '../../../../reactQueryHook';
+import Pagination from '../../../Common/Pagination';
+import OrderItem from '../../Orders/OrderItem';
+
 function Order() {
+    const router = useRouter();
+    const [pageTotal, setPageTotal] = useState(0);
+    const { orderPage, tab } = router.query;
+
+    const { isLoading, isError, data, error, isFetching } = useMyOrders({
+        page: orderPage ? Number(orderPage) : 1,
+        order: 'desc',
+        orderby: 'date',
+    });
+
+    useEffect(() => {
+        if (isError) {
+            toast.error(error, {
+                position: 'bottom-left',
+                autoClose: 2000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }, [isError]);
+
+    useEffect(() => {
+        if (data) {
+            setPageTotal(data.headers['x-wp-totalpages']);
+        }
+    }, [data]);
+
+    const onChangePage = (event) => {
+        router.push(
+            {
+                pathname: '/user-dashboard',
+                query: { tab, orderPage: event.selected + 1 },
+            },
+            null,
+            {
+                scroll: false,
+                shallow: true,
+            }
+        );
+    };
+
     return (
-        <div className="tab-pane fade table-dashboard dashboard wish-list-section" id="order">
+        <div
+            className="tab-pane fade table-dashboard dashboard wish-list-section"
+            id="order"
+        >
             <div className="box-head mb-3">
                 <h3>My Order</h3>
             </div>
@@ -8,167 +63,43 @@ function Order() {
                 <table className="table cart-table">
                     <thead>
                         <tr className="table-head">
-                            <th scope="col">image</th>
                             <th scope="col">Order Id</th>
-                            <th scope="col">Product Details</th>
+                            <th scope="col">Date created</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Price</th>
+                            <th scope="col">Total Price</th>
                             <th scope="col">View</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <a href="product-left-sidebar.html">
-                                    <img src="/images/fashion/product/front/1.jpg" className="blur-up lazyload" alt="" />
-                                </a>
-                            </td>
-                            <td>
-                                <p className="mt-0">#125021</p>
-                            </td>
-                            <td>
-                                <p className="fs-6 m-0">Outwear & Coats</p>
-                            </td>
-                            <td>
-                                <p className="success-button btn btn-sm">Shipped</p>
-                            </td>
-                            <td>
-                                <p className="theme-color fs-6">$49.54</p>
-                            </td>
-                            <td>
-                                <a href="undefined">
-                                    <i className="far fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <a href="product-left-sidebar.html">
-                                    <img src="/images/fashion/product/front/2.jpg" className="blur-up lazyload" alt="" />
-                                </a>
-                            </td>
-                            <td>
-                                <p className="mt-0">#125367</p>
-                            </td>
-                            <td>
-                                <p className="fs-6 m-0">Outwear & Coats</p>
-                            </td>
-                            <td>
-                                <p className="danger-button btn btn-sm">Pending</p>
-                            </td>
-                            <td>
-                                <p className="theme-color fs-6">$49.54</p>
-                            </td>
-                            <td>
-                                <a href="undefined">
-                                    <i className="far fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <a href="product-left-sidebar.html">
-                                    <img src="/images/fashion/product/front/3.jpg" className="blur-up lazyload" alt="" />
-                                </a>
-                            </td>
-                            <td>
-                                <p className="m-0">#125948</p>
-                            </td>
-                            <td>
-                                <p className="fs-6 m-0">Men's Sweatshirt</p>
-                            </td>
-                            <td>
-                                <p className="success-button btn btn-sm">Shipped</p>
-                            </td>
-                            <td>
-                                <p className="theme-color fs-6">$49.54</p>
-                            </td>
-                            <td>
-                                <a href="undefined">
-                                    <i className="far fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <a href="product-left-sidebar.html">
-                                    <img src="/images/fashion/product/front/4.jpg" className="blur-up lazyload" alt="" />
-                                </a>
-                            </td>
-                            <td>
-                                <p className="m-0">#127569</p>
-                            </td>
-                            <td>
-                                <p className="fs-6 m-0">Men's Hoodie t-shirt</p>
-                            </td>
-                            <td>
-                                <p className="success-button btn btn-sm">Shipped</p>
-                            </td>
-                            <td>
-                                <p className="theme-color fs-6">$49.54</p>
-                            </td>
-                            <td>
-                                <a href="undefined">
-                                    <i className="far fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <a href="product-left-sidebar.html">
-                                    <img src="/images/fashion/product/front/5.jpg" className="blur-up lazyload" alt="" />
-                                </a>
-                            </td>
-                            <td>
-                                <p className="m-0">#125753</p>
-                            </td>
-                            <td>
-                                <p className="fs-6 m-0">Men's Hoodie t-shirt</p>
-                            </td>
-                            <td>
-                                <p className="danger-button btn btn-sm">Canceled</p>
-                            </td>
-                            <td>
-                                <p className="theme-color fs-6">$49.54</p>
-                            </td>
-                            <td>
-                                <a href="undefined">
-                                    <i className="far fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <a href="product-left-sidebar.html">
-                                    <img src="/images/fashion/product/front/6.jpg" className="blur-up lazyload" alt="" />
-                                </a>
-                            </td>
-                            <td>
-                                <p className="m-0">#125021</p>
-                            </td>
-                            <td>
-                                <p className="fs-6 m-0">Men's Sweatshirt</p>
-                            </td>
-                            <td>
-                                <p className="danger-button btn btn-sm">Canceled</p>
-                            </td>
-                            <td>
-                                <p className="theme-color fs-6">$49.54</p>
-                            </td>
-                            <td>
-                                <a href="undefined">
-                                    <i className="far fa-eye"></i>
-                                </a>
-                            </td>
-                        </tr>
+                        {isLoading || isFetching || isError ? (
+                            new Array(10).fill(null).map((item, index) => (
+                                <tr key={index}>
+                                    <td colSpan={5}>
+                                        <Skeleton height={24.4} count={1} />
+                                    </td>
+                                </tr>
+                            ))
+                        ) : data.data.length === 0 ? (
+                            <tr>
+                                <td colSpan={5}>
+                                    <span className="text-center">
+                                        You don't have any orders
+                                    </span>
+                                </td>
+                            </tr>
+                        ) : (
+                            data.data.map((order, index) => (
+                                <OrderItem orderData={order} key={index} />
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>
+            {tab === 'order' ? (
+                <Pagination pageTotal={pageTotal} onClickEvent={onChangePage} />
+            ) : (
+                <></>
+            )}
         </div>
     );
 }

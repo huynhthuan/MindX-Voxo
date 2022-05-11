@@ -2,8 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/router";
 
-function PageSection({ totalPages, page='1' ,query}) {
-   // console.log(`  ~ query`, query)
+function PageSection({ totalPages, page = "1", query }) {
    const router = useRouter();
    return (
       <nav className="page-section">
@@ -17,7 +16,7 @@ function PageSection({ totalPages, page='1' ,query}) {
                      onClick={() => {
                         router.push(
                            {
-                              pathname: "/product-category/accessories",
+                              pathname: "/product-category/" + query.slug,
                            },
                            null,
                            {
@@ -41,10 +40,10 @@ function PageSection({ totalPages, page='1' ,query}) {
                            onClick={() => {
                               router.push(
                                  {
-                                    pathname: "/product-category/accessories",
+                                    pathname: "/product-category/" + query.slug,
                                     query: {
                                        ...router.query,
-                                       page: item + 1
+                                       page: item + 1,
                                     },
                                  },
                                  null,
@@ -69,8 +68,8 @@ function PageSection({ totalPages, page='1' ,query}) {
                      onClick={() => {
                         router.push(
                            {
-                              pathname: "/product-category/accessories",
-                              query: {...router.query, page: totalPages },
+                              pathname: "/product-category/" + query.slug,
+                              query: { ...router.query, page: totalPages },
                            },
                            null,
                            {

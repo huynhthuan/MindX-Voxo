@@ -464,9 +464,9 @@
     /*=====================
      16. Recently puchase modal
      ==========================*/
-    setInterval(function () {
-        $(".recently-purchase").toggleClass("show");
-    }, 20000);
+    // setInterval(function () {
+    //     $(".recently-purchase").toggleClass("show");
+    // }, 20000);
 
     $(".recently-purchase .close-popup").on("click", function () {
         $(".recently-purchase").removeClass("show");

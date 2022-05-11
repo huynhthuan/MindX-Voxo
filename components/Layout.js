@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../store/auth/authSlice';
 import { ToastContainer, toast, Slide } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 function Layout({ children }) {
     let { cookie_expiration, cookie } = useSelector((state) => state.auth);
@@ -87,10 +88,6 @@ function Layout({ children }) {
                 />
                 <title>Voxo</title>
                 <link rel="preconnect" href="https://fonts.gstatic.com/" />
-                <link
-                    href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap"
-                    rel="stylesheet"
-                />
             </Head>
 
             <Navbar />

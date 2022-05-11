@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { conventToCurrency } from "../Common_vuong";
+import { conventToCurrency } from "../component_vuong/Common";
 import RatingDetails from "./RatingDetails";
 
 function ProductCart({ id, price, name, rating_count, categories, images, average_rating, sale_price, on_sale, featured }) {

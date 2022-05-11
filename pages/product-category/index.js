@@ -1,215 +1,71 @@
-import Breadcrumb from "../../components/Common_vuong/Breadcrumb";
+import _ from 'lodash';
+import { Fragment, useEffect } from 'react';
+import Breadcrumb from '../../components/Common/BreadCrumb';
+import SubscribeBox from '../../components/Common/SubscribeBox';
+import ProductCateBoxItem from '../../components/ProductCategory/ProductCateBoxItem';
+import customApi from '../../src/api/wordpress/customApi';
 
-function ProductCategoryList() {
-   return (
-      <>
-         <Breadcrumb title="Shop Category" content="Shop Category" />
+// This gets called on every request
+export async function getServerSideProps({ req, res }) {
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=59'
+    );
+    let getProductCat = async () => {
+        let result = [];
+        let res = await customApi.getProductCategories({
+            parent: 0,
+            order: 'asc',
+            orderby: 'name',
+            exclude: 15,
+            acf_format: 'standard',
+        });
 
-         <section className="section-b-space">
-            <div className="container">
-               <div className="row g-4 product-style-1 mb-5 d-md-flex d-none">
-                  <div className="col-xl-4 col-md-6">
-                     <div className="category-image">
-                        <div className="elec-image">
-                           <img src="/images/fashion/product/front/1.jpg" className="img-fluid blur-up lazyload" alt="" />
-                        </div>
-                        <div className="category-contain">
-                           <h3>Slim Fit</h3>
-                           <ul className="product-list">
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    skechite
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Mustard
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Boys
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Multicolor
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
+        await Promise.all(
+            res.map(async (category, index) => {
+                let childCategory = await customApi.getProductCategories({
+                    parent: category.id,
+                    order: 'asc',
+                    orderby: 'name',
+                    acf_format: 'standard',
+                });
+                result.push({
+                    cateParent: category,
+                    cateChild: childCategory,
+                });
+            })
+        );
 
-                  <div className="col-xl-4 col-md-6">
-                     <div className="category-image">
-                        <div className="elec-image">
-                           <img src="/images/fashion/product/front/2.jpg" className="img-fluid blur-up lazyload" alt="" />
-                        </div>
-                        <div className="category-contain">
-                           <h3>Outwear</h3>
-                           <ul className="product-list">
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    skechite
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Mustard
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Boys
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Multicolor
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
+        return _.orderBy(result, ['cateParent.name'], ['asc']);
+    };
 
-                  <div className="col-xl-4 col-md-6">
-                     <div className="category-image">
-                        <div className="elec-image">
-                           <img src="/images/fashion/product/front/3.jpg" className="img-fluid blur-up lazyload" alt="" />
-                        </div>
-                        <div className="category-contain">
-                           <h3>Coats</h3>
-                           <ul className="product-list">
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    skechite
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Mustard
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Boys
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Multicolor
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
+    let productCategories = await getProductCat();
 
-                  <div className="col-xl-4 col-md-6">
-                     <div className="category-image">
-                        <div className="elec-image">
-                           <img src="/images/fashion/product/front/4.jpg" className="img-fluid blur-up lazyload" alt="" />
-                        </div>
-                        <div className="category-contain">
-                           <h3>Sweatshirt</h3>
-                           <ul className="product-list">
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    skechite
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Mustard
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Boys
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Multicolor
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
+    return { props: { productCategories } };
+}
 
-                  <div className="col-xl-4 col-md-6">
-                     <div className="category-image">
-                        <div className="elec-image">
-                           <img src="/images/fashion/product/front/5.jpg" className="img-fluid blur-up lazyload" alt="" />
-                        </div>
-                        <div className="category-contain">
-                           <h3>Jecket</h3>
-                           <ul className="product-list">
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    skechite
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Mustard
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Boys
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Multicolor
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
+function ProductCategoryList({ productCategories }) {
+    return (
+        <Fragment>
+            <Breadcrumb title={'Shop Category'} />
 
-                  <div className="col-xl-4 col-md-6">
-                     <div className="category-image">
-                        <div className="elec-image">
-                           <img src="/images/fashion/product/front/6.jpg" className="img-fluid blur-up lazyload" alt="" />
-                        </div>
-                        <div className="category-contain">
-                           <h3>t-Shirt</h3>
-                           <ul className="product-list">
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    skechite
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Mustard
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Boys
-                                 </a>
-                              </li>
-                              <li>
-                                 <a href="javascript:void(0)" className="font-light">
-                                    Multicolor
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </section>
-      </>
-   );
+            <section className="section-b-space">
+                <div className="container">
+                    <div className="row g-4 product-style-1 mb-5 d-md-flex d-none">
+                        {productCategories.map((categoryList, index) => (
+                            <div className="col-xl-4 col-md-6" key={index}>
+                                <ProductCateBoxItem
+                                    categoryData={categoryList}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <SubscribeBox />
+        </Fragment>
+    );
 }
 
 export default ProductCategoryList;

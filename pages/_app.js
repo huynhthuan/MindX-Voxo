@@ -19,14 +19,28 @@ import '../styles/vendors/slick/slick.css';
 import '../styles/vendors/slick/slick-theme.css';
 import '../styles/demo2.css';
 import '../styles/globals.css';
+import NextNProgress from 'nextjs-progressbar';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+        },
+    },
+});
 
 function MyApp({ Component, pageProps }) {
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <QueryClientProvider client={queryClient}>
+                    <NextNProgress
+                        color="#dc3545"
+                        startPosition={0.3}
+                        stopDelayMs={200}
+                        height={4}
+                        showOnShallow={true}
+                    />
                     <Layout>
                         <SkeletonTheme
                             baseColor="#eaeaea"

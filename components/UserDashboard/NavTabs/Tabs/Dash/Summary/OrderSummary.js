@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { useMyOrders } from '../../../../../../reactQueryHook';
 
 function OrderSummary() {
-    const { isLoading, isError, data, error } = useMyOrders();
+    const { isLoading, isError, data, error, isFetching } = useMyOrders();
     useEffect(() => {
         if (isError) {
             toast.error(error, {
@@ -35,7 +35,7 @@ function OrderSummary() {
                 <div>
                     <h5 className="font-light">total order</h5>
                     <h3>
-                        {isLoading || isError ? (
+                        {isLoading || isError || isFetching ? (
                             <Skeleton width={80} />
                         ) : (
                             data.headers['x-wp-total']

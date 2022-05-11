@@ -17,183 +17,21 @@ function MainMenu() {
                                 </span>
                             </div>
                         </li>
-                        <li className="mega-menu dropdown home-menu">
+                        <li>
+                            <Link href="/product-category">
+                                <a className="nav-link menu-title">
+                                    All categories
+                                </a>
+                            </Link>
+                        </li>
+                        <li>
                             <Link href="/shop">
                                 <a className="nav-link menu-title">shop</a>
                             </Link>
-                            <div className="mega-menu-container menu-content">
-                                <div className="container-fluid">
-                                    <div className="row">
-                                        <div className="col mega-box">
-                                            <div className="link-section">
-                                                <div className="opensubmegamenu">
-                                                    <ul>
-                                                        <li>
-                                                            <a
-                                                                href="index.html"
-                                                                className="megamenu-image"
-                                                            >
-                                                                <img
-                                                                    src="/images/demo-image/fashion.jpg"
-                                                                    className="img-fluid blur-up lazyload"
-                                                                    alt=""
-                                                                />
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-
-                                                <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">
-                                                        Fashion Demo
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col mega-box">
-                                            <div className="link-section">
-                                                <div className="opensubmegamenu">
-                                                    <ul>
-                                                        <li>
-                                                            <a
-                                                                href="flower-demo.html"
-                                                                className="megamenu-image"
-                                                            >
-                                                                <img
-                                                                    src="/images/demo-image/flower.jpg"
-                                                                    className="img-fluid blur-up lazyload"
-                                                                    alt=""
-                                                                />
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">
-                                                        Flowers Demo
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col mega-box">
-                                            <div className="link-section">
-                                                <div className="opensubmegamenu">
-                                                    <ul>
-                                                        <li>
-                                                            <a
-                                                                href="furniture-demo.html"
-                                                                className="megamenu-image"
-                                                            >
-                                                                <img
-                                                                    src="/images/demo-image/furniture.jpg"
-                                                                    className="img-fluid blur-up lazyload"
-                                                                    alt=""
-                                                                />
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">
-                                                        Furniture Demo
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col mega-box">
-                                            <div className="link-section">
-                                                <div className="opensubmegamenu">
-                                                    <ul>
-                                                        <li>
-                                                            <a
-                                                                href="electronic-demo.html"
-                                                                className="megamenu-image"
-                                                            >
-                                                                <img
-                                                                    src="/images/demo-image/electonic.jpg"
-                                                                    className="img-fluid blur-up lazyload"
-                                                                    alt=""
-                                                                />
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">
-                                                        Electronic Demo
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col mega-box">
-                                            <div className="link-section">
-                                                <div className="opensubmegamenu">
-                                                    <ul>
-                                                        <li>
-                                                            <a
-                                                                href="shoes-demo.html"
-                                                                className="megamenu-image"
-                                                            >
-                                                                <img
-                                                                    src="/images/demo-image/shoes.jpg"
-                                                                    className="img-fluid blur-up lazyload"
-                                                                    alt=""
-                                                                />
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">
-                                                        Shoes Demo
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col mega-box">
-                                            <div className="link-section">
-                                                <div className="opensubmegamenu">
-                                                    <ul>
-                                                        <li>
-                                                            <a
-                                                                href="vegetables-demo.html"
-                                                                className="megamenu-image"
-                                                            >
-                                                                <img
-                                                                    src="/images/demo-image/vagetables.jpg"
-                                                                    className="img-fluid blur-up lazyload"
-                                                                    alt=""
-                                                                />
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <div className="megamenu-image-title pb-0">
-                                                    <h5 className="mb-0">
-                                                        Vegetables Demo
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </li>
                         <li>
                             <Link href="/review">
                                 <a className="nav-link menu-title">Review</a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/faq">
-                                <a className="nav-link menu-title">Faq</a>
-                            </Link>
-                        </li>
-                        <li className="dropdown">
-                            <Link href="/contact-us">
-                                <a className="nav-link menu-title">
-                                    Contact us
-                                </a>
                             </Link>
                         </li>
                         <li className="dropdown">
@@ -227,6 +65,18 @@ function MainMenu() {
                                     </Link>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <Link href="/faq">
+                                <a className="nav-link menu-title">Faq</a>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="/contact-us">
+                                <a className="nav-link menu-title">
+                                    Contact us
+                                </a>
+                            </Link>
                         </li>
                         <li className="mobile-poster d-flex d-xl-none">
                             <img

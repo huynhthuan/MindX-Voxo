@@ -3,7 +3,12 @@ import { Html, Head, Main, NextScript } from 'next/document';
 export default function Document() {
     return (
         <Html>
-            <Head />
+            <Head>
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&amp;display=swap"
+                    rel="stylesheet"
+                />
+            </Head>
 
             <body className="theme-color2 light ltr">
                 <Main />
@@ -34,9 +39,11 @@ export default function Document() {
                 <script
                     async
                     defer
-                    crossorigin="anonymous"
+                    crossOrigin="anonymous"
                     src="https://connect.facebook.net/en_US/sdk.js"
                 ></script>
+
+                <script src="https://apis.google.com/js/api:client.js"></script>
 
                 <script src="/js/script.js"></script>
             </body>

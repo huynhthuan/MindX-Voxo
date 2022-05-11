@@ -21,3 +21,78 @@ header .category-menu .btn i {
 .filter-options .grid-options li:hover {
     cursor: pointer;
 }
+
+.warning-button,
+.secondary-button,
+.danger-button,
+.info-button,
+.dark-button,
+.primary-button,
+.violet-button {
+    margin: 0 !important;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 12px !important;
+    color: #fff !important;
+}
+
+.warning-button {
+    background-color: #ffc107;
+}
+
+.secondary-button {
+    background-color: #6c757d;
+}
+
+.danger-button {
+    background-color: #dc3545;
+}
+
+.info-button {
+    background-color: #0dcaf0;
+    color: #000;
+}
+
+.dark-button {
+    background-color: #212529;
+}
+
+.primary-button {
+    background-color: #0d6efd;
+}
+
+.violet-button {
+    background-color: #9b59b6;
+}
+
+.order-left-image .tracking-product-image {
+    width: 20%;
+}
+
+.category-image .category-contain .product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category-image .category-contain .product-list li {
+    width: 50%;
+}
+
+.category-image .category-contain .product-list li a:hover,
+.category-image .category-contain h3:hover {
+    color: #dc3545 !important;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: #dc3545;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
