@@ -3,10 +3,10 @@ import Breadcrumb from '../components/Common/BreadCrumb';
 import SubscribeBox from '../components/Common/SubscribeBox';
 import Link from 'next/link';
 
-export default function Custom404() {
+export default function Custom505() {
     return (
         <Fragment>
-            <Breadcrumb title={'Page not found'} />
+            <Breadcrumb title={500} />
 
             {/* 404 Section Start */}
             <section className="page-not-found section-b-space">
@@ -25,13 +25,8 @@ export default function Custom404() {
                         <div className="col-md-8 mx-auto mt-md-5 mt-3">
                             <div className="page-container pass-forgot">
                                 <div>
-                                    <h2>page not found</h2>
-                                    <p>
-                                        The page you are looking for doesn't
-                                        exist or an other error occurred. Go
-                                        back, or head over to choose a new
-                                        direction.
-                                    </p>
+                                    <h2>Internal Server Error</h2>
+                                    <p>Something went wrong :(</p>
                                     <Link href="/">
                                         <a className="btn btn-solid-default">
                                             Back Home Page

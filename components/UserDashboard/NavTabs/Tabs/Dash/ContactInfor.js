@@ -4,7 +4,7 @@ import { useCustomerInfor } from '../../../../../reactQueryHook';
 import ModalChangePassword from '../../../../UserDashboard/Modals/ModalChangePassword';
 
 function ContactInfor() {
-    const { isLoading, isError, data, error } = useCustomerInfor();
+    const { isLoading, isError, data, error, isFetching } = useCustomerInfor();
     useEffect(() => {
         if (isError) {
             toast.error(error, {
@@ -21,7 +21,7 @@ function ContactInfor() {
     return (
         <>
             <div className="mb-3">
-                {isLoading || isError ? (
+                {isLoading || isError || isFetching? (
                     <Skeleton count={4} />
                 ) : (
                     <>

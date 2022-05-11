@@ -8,18 +8,18 @@ function BannerTimer() {
             day = hour * 24;
 
         let countDown = new Date('Aug 21, 2023 00:00:00').getTime();
-        let x = setInterval(function () {
-            var now = new Date().getTime(),
+        let timer = setInterval(function () {
+            let now = new Date().getTime(),
                 distance = countDown - now;
 
-            (document.getElementById('days1').innerText = Math.floor(distance / day)),
-                (document.getElementById('hours1').innerText = Math.floor((distance % day) / hour)),
-                (document.getElementById('minutes1').innerText = Math.floor((distance % hour) / minute)),
-                (document.getElementById('seconds1').innerText = Math.floor((distance % minute) / second));
+            $('#days1').text(Math.floor(distance / day));
+            $('#hours1').text(Math.floor((distance % day) / hour));
+            $('#minutes1').text(Math.floor((distance % hour) / minute));
+            $('#seconds1').text(Math.floor((distance % minute) / second));
         }, second);
 
         return () => {
-            clearInterval(x);
+            clearInterval(timer);
         };
     }, []);
 
@@ -29,7 +29,11 @@ function BannerTimer() {
                 <div className="row gy-3">
                     <div className="col-lg-12">
                         <div className="discount-image-details discount-spacing">
-                            <img src="images/fashion/banner/8.jpg" className="bg-img blur-up lazyload" alt="" />
+                            <img
+                                src="images/fashion/banner/8.jpg"
+                                className="bg-img blur-up lazyload"
+                                alt=""
+                            />
 
                             <div className="discunt-details">
                                 <div>
@@ -38,45 +42,68 @@ function BannerTimer() {
                                     </div>
 
                                     <h5 className="mt-3">
-                                        Special Discount <span className="theme-color">70% OFF</span>
+                                        Special Discount{' '}
+                                        <span className="theme-color">
+                                            70% OFF
+                                        </span>
                                     </h5>
                                     <h2 className="my-3 deal-text">
                                         Deal Of The Day <br />
-                                        from <span className="theme-color">$75</span>
+                                        from{' '}
+                                        <span className="theme-color">$75</span>
                                     </h2>
                                     <div className="timer-style-2 mt-xl-1 my-2 justify-content-center d-flex">
                                         <ul>
                                             <li>
                                                 <div className="counter">
                                                     <div>
-                                                        <h2 id="days1" className="theme-color"></h2>Days
+                                                        <h2
+                                                            id="days1"
+                                                            className="theme-color"
+                                                        ></h2>
+                                                        Days
                                                     </div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div className="counter">
                                                     <div>
-                                                        <h2 id="hours1" className="theme-color"></h2>Hour
+                                                        <h2
+                                                            id="hours1"
+                                                            className="theme-color"
+                                                        ></h2>
+                                                        Hour
                                                     </div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div className="counter">
                                                     <div>
-                                                        <h2 id="minutes1" className="theme-color"></h2>Min
+                                                        <h2
+                                                            id="minutes1"
+                                                            className="theme-color"
+                                                        ></h2>
+                                                        Min
                                                     </div>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div className="counter">
                                                     <div>
-                                                        <h2 id="seconds1" className="theme-color"></h2>Sec
+                                                        <h2
+                                                            id="seconds1"
+                                                            className="theme-color"
+                                                        ></h2>
+                                                        Sec
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    <button type="button" className="btn default-light-theme default-theme mt-2">
+                                    <button
+                                        type="button"
+                                        className="btn default-light-theme default-theme mt-2"
+                                    >
                                         Shop Now
                                     </button>
 

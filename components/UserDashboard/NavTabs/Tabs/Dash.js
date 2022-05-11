@@ -1,13 +1,12 @@
-import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import BillingAddress from './Dash/BillingAddress';
 import ContactInfor from './Dash/ContactInfor';
 import ShippingAddress from './Dash/ShippingAddress';
 import OrderPendingSummary from './Dash/Summary/OrderPendingSummary';
 import OrderSummary from './Dash/Summary/OrderSummary';
 import WishListSummary from './Dash/Summary/WishListSummary';
+import Link from 'next/link';
 
 function Dash() {
     const { user } = useSelector((state) => state.auth);
@@ -91,9 +90,6 @@ function Dash() {
                             <div className="box address-box">
                                 <div className="box-title">
                                     <h4>Address</h4>
-                                    <button className="btn btn-danger btn-sm rounded-2">
-                                        Manage Addresses
-                                    </button>
                                 </div>
                                 <div className="box-content">
                                     <div className="row g-4">

@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import { useUpdateCustomerInfor } from '../../../reactQueryHook';
-import wooApi from '../../../src/api/woocommerce/wooApi';
+import { BASE_URL_API } from '../../../utils/api';
+import { WOO_CONSUMER_KEY, WOO_CONSUMER_SECRET } from '../../../utils/const';
 import { COUNTRIES } from '../../../utils/data/countries';
 
-function ModalEditBillingAddress({ customerData }) {
+function ModalEditShippingAddress({ customerData }) {
     const {
         error,
         isError,
@@ -32,7 +32,6 @@ function ModalEditBillingAddress({ customerData }) {
             const {
                 first_name,
                 last_name,
-                email,
                 phone,
                 address_1,
                 address_2,
@@ -41,10 +40,9 @@ function ModalEditBillingAddress({ customerData }) {
                 state,
                 country,
                 postcode,
-            } = customerData.data.billing;
+            } = customerData.data.shipping;
             setValue('first_name', first_name);
             setValue('last_name', last_name);
-            setValue('email', email);
             setValue('phone', phone);
             setValue('address_1', address_1);
             setValue('address_2', address_2);
@@ -73,7 +71,7 @@ function ModalEditBillingAddress({ customerData }) {
             $('.modal-close-button').click();
             Swal.fire({
                 title: 'Success!',
-                text: 'Update customer information succesfully!',
+                text: 'Update customer shipping address succesfully!',
                 icon: 'success',
                 confirmButtonText: 'Close',
             });
@@ -82,14 +80,14 @@ function ModalEditBillingAddress({ customerData }) {
 
     const onSubmit = async (data) => {
         mutate({
-            billing: {
+            shipping: {
                 ...data,
             },
         });
     };
 
     return (
-        <div className="modal fade add-address-modal" id="editBilling">
+        <div className="modal fade add-address-modal" id="editShipping">
             <div className="modal-dialog modal-dialog-centered modal-lg">
                 <div className="modal-content">
                     <div className="modal-header">
@@ -162,34 +160,6 @@ function ModalEditBillingAddress({ customerData }) {
                                             <div className="valid-feedback d-block text-danger">
                                                 Minimum last name length is 3
                                                 characters.
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="mb-1">
-                                        <label
-                                            htmlFor="email"
-                                            className="form-label font-light"
-                                        >
-                                            Email
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="email"
-                                            {...register('email', {
-                                                required: true,
-                                                pattern:
-                                                    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-                                            })}
-                                        />
-                                        {errors.email?.type === 'required' && (
-                                            <div className="valid-feedback d-block text-danger">
-                                                Please fill the email.
-                                            </div>
-                                        )}
-                                        {errors.email?.type === 'pattern' && (
-                                            <div className="valid-feedback d-block text-danger">
-                                                Email format incorrect.
                                             </div>
                                         )}
                                     </div>
@@ -323,11 +293,15 @@ function ModalEditBillingAddress({ customerData }) {
                                                 Select country
                                             </option>
                                             {COUNTRIES.map((country, index) => (
-                                                <option key={index} value={country.code}>
+                                                <option
+                                                    key={index}
+                                                    value={country.code}
+                                                >
                                                     {country.name}
                                                 </option>
                                             ))}
                                         </select>
+
                                         {errors.country?.type ===
                                             'required' && (
                                             <div className="valid-feedback d-block text-danger">
@@ -414,4 +388,4 @@ function ModalEditBillingAddress({ customerData }) {
     );
 }
 
-export default ModalEditBillingAddress;
+export default ModalEditShippingAddress;
