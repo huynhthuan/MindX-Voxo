@@ -50,7 +50,7 @@ function Category() {
 
     const { isLoading, error, data, isFetching } = useBlogListCategory({category:router.query.slug,page:page ? page : 1});
 
-    if (error) return 'An error has occurred: ' + error.message
+    if (error) return 'An error has occurred: ' + error.message;
 
     return (
         <>

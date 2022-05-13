@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query';
 import { BLOG_LIST } from '../../utils/api_minhhieu';
-import {getPostCategoryId} from '../../utils/helpers';
 import axios from 'axios';
 
 const fetchBlogListNewPost = async (param) => {
@@ -20,5 +19,5 @@ const fetchBlogListNewPost = async (param) => {
 }
 
 export const useBlogListNewPost = (param) => {
-  return useQuery(['blog-list-new-post', param], () => fetchBlogListNewPost(param))
+  return useQuery(['blog-list-new-post', param], () => fetchBlogListNewPost(param));
 }

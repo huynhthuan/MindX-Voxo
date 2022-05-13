@@ -22,4 +22,37 @@ const NewPostBlogListSkeleton = () => {
   </div>
 }
 
-export { CategoryPostSkeleton, NewPostBlogListSkeleton };
+const DetailPostSkeleton = () => {
+  return <div>
+    <Skeleton height='25rem'/>
+    <Skeleton className='mt-4' width='30%'/>
+    <Skeleton height='1.5rem' className="mt-4"/>
+    <Skeleton height='1.5rem' className="mt-3"/>
+    <Skeleton className="mt-4"/>
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+    <Skeleton />
+  </div>            
+}
+
+export { CategoryPostSkeleton, NewPostBlogListSkeleton, DetailPostSkeleton };

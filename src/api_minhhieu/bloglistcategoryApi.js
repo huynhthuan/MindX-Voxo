@@ -13,9 +13,13 @@ const fetchBlogListByCategory = async (param) => {
     }
   });
 
-  return result;
+  return {
+    responseInfo: result.data, 
+    totalPost: result.headers['x-wp-total'],
+    totalPage: result.headers['x-wp-totalpages'],
+  }
 }
 
 export const useBlogListCategory = (param) => {
-  return useQuery(['blog-list-category', param], () => fetchBlogListByCategory(param))
+  return useQuery(['blog-list-category', param], () => fetchBlogListByCategory(param));
 }
