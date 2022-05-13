@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import { useMyOrdersPending } from '../../../../../../reactQueryHook';
 
 function OrderPendingSummary() {
-    const { isLoading, isError, data, error } = useMyOrdersPending();
+    const { isLoading, isError, data, error, isFetching } = useMyOrdersPending();
     useEffect(() => {
         if (isError) {
             toast.error(error, {
@@ -35,7 +35,7 @@ function OrderPendingSummary() {
                 <div>
                     <h5 className="font-light">pending orders</h5>
                     <h3>
-                        {isLoading || isError ? (
+                        {isLoading || isError || isFetching ? (
                             <Skeleton width={80} />
                         ) : (
                             data.headers['x-wp-total']

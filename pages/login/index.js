@@ -11,6 +11,7 @@ import wooApi from '../../src/api/woocommerce/wooApi';
 function Login() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingFb, setIsLoadingFb] = useState(false);
 
     const { cookie } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -124,6 +125,90 @@ function Login() {
         }
     };
 
+    useEffect(() => {
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '980758382812999',
+                cookie: true, // Enable cookies to allow the server to access the session.
+                xfbml: true, // Parse social plugins on this webpage.
+                version: 'v13.0', // Use this Graph API version for this call.
+            });
+        };
+    }, []);
+
+    const loginFb = (e) => {
+        setIsLoadingFb(true);
+        e.preventDefault();
+        try {
+            FB.login(async function (response) {
+                console.log(response);
+                // handle the response
+                const { authResponse, status } = response;
+
+                if (status !== 'connected') {
+                    setIsLoadingFb(false);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred, please try again.',
+                        icon: 'error',
+                        confirmButtonText: 'Close',
+                    });
+                    return;
+                }
+
+                let res = await authApi.LoginWithFb({
+                    access_token: authResponse.accessToken,
+                });
+
+                if (res.error && res.error !== null && res.error !== '') {
+                    setIsLoadingFb(false);
+                    Swal.fire({
+                        title: 'Error!',
+                        text: res.error,
+                        icon: 'error',
+                        confirmButtonText: 'Close',
+                    });
+                    return;
+                }
+
+                let { cookie_name, cookie, user, cookie_expiration } = res;
+
+                let resWishList = await wooApi.getWishList(user.id);
+
+                const { share_key } = resWishList.data[0];
+
+                dispatch(
+                    loginSuccess({
+                        cookie,
+                        cookie_expiration,
+                        cookie_name,
+                        user,
+                        share_key,
+                    })
+                );
+
+                setIsLoadingFb(false);
+
+                Swal.fire({
+                    title: `Login success!`,
+                    text: 'Welcome back VOXO SHOP',
+                    icon: 'success',
+                    showConfirmButton: false,
+                });
+
+                router.push('/');
+            });
+        } catch (error) {
+            setIsLoadingFb(false);
+            Swal.fire({
+                title: 'Error!',
+                text: 'An error occurred, please try again.',
+                icon: 'error',
+                confirmButtonText: 'Close',
+            });
+        }
+    };
+
     return (
         <>
             {/* Log In Section Start */}
@@ -139,7 +224,7 @@ function Login() {
                                 <input
                                     id="email"
                                     type="text"
-                                    {...register("email", {
+                                    {...register('email', {
                                         required: true,
                                         pattern:
                                             /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
@@ -163,7 +248,7 @@ function Login() {
                                 <input
                                     id="password"
                                     type="password"
-                                    {...register("password", {
+                                    {...register('password', {
                                         required: true,
                                     })}
                                 />
@@ -199,19 +284,35 @@ function Login() {
                             </div>
 
                             <p className="sign-category">
-                                <span>Or sign up with</span>
+                                <span>Or sign in with</span>
                             </p>
 
                             <div className="row gx-md-3 gy-3">
                                 <div className="col-md-6">
-                                    <a href="www.facebook.html">
-                                        <div className="social-media fb-media">
-                                            <img
-                                                src="/images/inner-page/facebook.png"
-                                                className="img-fluid blur-up lazyload"
-                                                alt=""
-                                            />
-                                            <h6>Facebook</h6>
+                                    <a href="#" onClick={loginFb}>
+                                        <div
+                                            className="social-media fb-media"
+                                            style={{ height: 51.36 }}
+                                        >
+                                            {isLoadingFb ? (
+                                                <div
+                                                    className="spinner-border text-light spinner-border-sm"
+                                                    role="status"
+                                                >
+                                                    <span className="sr-only">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <img
+                                                        src="/images/inner-page/facebook.png"
+                                                        className="img-fluid blur-up lazyload"
+                                                        alt=""
+                                                    />
+                                                    <h6>Facebook</h6>
+                                                </>
+                                            )}
                                         </div>
                                     </a>
                                 </div>

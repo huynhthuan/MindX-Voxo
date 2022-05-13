@@ -1,343 +1,70 @@
-function ProductCategoryList() {
+import _ from 'lodash';
+import { Fragment, useEffect } from 'react';
+import Breadcrumb from '../../components/Common/BreadCrumb';
+import SubscribeBox from '../../components/Common/SubscribeBox';
+import ProductCateBoxItem from '../../components/ProductCategory/ProductCateBoxItem';
+import customApi from '../../src/api/wordpress/customApi';
+
+// This gets called on every request
+export async function getServerSideProps({ req, res }) {
+    res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=59'
+    );
+    let getProductCat = async () => {
+        let result = [];
+        let res = await customApi.getProductCategories({
+            parent: 0,
+            order: 'asc',
+            orderby: 'name',
+            exclude: 15,
+            acf_format: 'standard',
+        });
+
+        await Promise.all(
+            res.map(async (category, index) => {
+                let childCategory = await customApi.getProductCategories({
+                    parent: category.id,
+                    order: 'asc',
+                    orderby: 'name',
+                    acf_format: 'standard',
+                });
+                result.push({
+                    cateParent: category,
+                    cateChild: childCategory,
+                });
+            })
+        );
+
+        return _.orderBy(result, ['cateParent.name'], ['asc']);
+    };
+
+    let productCategories = await getProductCat();
+
+    return { props: { productCategories } };
+}
+
+function ProductCategoryList({ productCategories }) {
     return (
-        <>
-            <section class="breadcrumb-section section-b-space">
-                <ul class="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <h3>Shop Category</h3>
-                            <nav>
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="index.html">
-                                            <i class="fas fa-home"></i>
-                                        </a>
-                                    </li>
-                                    <li
-                                        class="breadcrumb-item active"
-                                        aria-current="page"
-                                    >
-                                        Shop Category
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
+        <Fragment>
+            <Breadcrumb title={'Shop Category'} />
+
+            <section className="section-b-space">
+                <div className="container">
+                    <div className="row g-4 product-style-1 mb-5 d-md-flex d-none">
+                        {productCategories.map((categoryList, index) => (
+                            <div className="col-xl-4 col-md-6" key={index}>
+                                <ProductCateBoxItem
+                                    categoryData={categoryList}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
-            <section class="section-b-space">
-                <div class="container">
-                    <div class="row g-4 product-style-1 mb-5 d-md-flex d-none">
-                        <div class="col-xl-4 col-md-6">
-                            <div class="category-image">
-                                <div class="elec-image">
-                                    <img
-                                        src="/images/fashion/product/front/1.jpg"
-                                        class="img-fluid blur-up lazyload"
-                                        alt=""
-                                    />
-                                </div>
-                                <div class="category-contain">
-                                    <h3>Slim Fit</h3>
-                                    <ul class="product-list">
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                skechite
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Mustard
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Boys
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Multicolor
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4 col-md-6">
-                            <div class="category-image">
-                                <div class="elec-image">
-                                    <img
-                                        src="/images/fashion/product/front/2.jpg"
-                                        class="img-fluid blur-up lazyload"
-                                        alt=""
-                                    />
-                                </div>
-                                <div class="category-contain">
-                                    <h3>Outwear</h3>
-                                    <ul class="product-list">
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                skechite
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Mustard
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Boys
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Multicolor
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4 col-md-6">
-                            <div class="category-image">
-                                <div class="elec-image">
-                                    <img
-                                        src="/images/fashion/product/front/3.jpg"
-                                        class="img-fluid blur-up lazyload"
-                                        alt=""
-                                    />
-                                </div>
-                                <div class="category-contain">
-                                    <h3>Coats</h3>
-                                    <ul class="product-list">
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                skechite
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Mustard
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Boys
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Multicolor
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4 col-md-6">
-                            <div class="category-image">
-                                <div class="elec-image">
-                                    <img
-                                        src="/images/fashion/product/front/4.jpg"
-                                        class="img-fluid blur-up lazyload"
-                                        alt=""
-                                    />
-                                </div>
-                                <div class="category-contain">
-                                    <h3>Sweatshirt</h3>
-                                    <ul class="product-list">
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                skechite
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Mustard
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Boys
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Multicolor
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4 col-md-6">
-                            <div class="category-image">
-                                <div class="elec-image">
-                                    <img
-                                        src="/images/fashion/product/front/5.jpg"
-                                        class="img-fluid blur-up lazyload"
-                                        alt=""
-                                    />
-                                </div>
-                                <div class="category-contain">
-                                    <h3>Jecket</h3>
-                                    <ul class="product-list">
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                skechite
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Mustard
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Boys
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Multicolor
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-4 col-md-6">
-                            <div class="category-image">
-                                <div class="elec-image">
-                                    <img
-                                        src="/images/fashion/product/front/6.jpg"
-                                        class="img-fluid blur-up lazyload"
-                                        alt=""
-                                    />
-                                </div>
-                                <div class="category-contain">
-                                    <h3>t-Shirt</h3>
-                                    <ul class="product-list">
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                skechite
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Mustard
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Boys
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a
-                                                href="javascript:void(0)"
-                                                class="font-light"
-                                            >
-                                                Multicolor
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </>
+            <SubscribeBox />
+        </Fragment>
     );
 }
 

@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useCustomerInfor } from '../../../../../reactQueryHook';
+import ModalEditShippingAddress from '../../../Modals/ModalEditShippingAddress';
 
 function ShippingAddress() {
-    const { isLoading, isError, data, error } = useCustomerInfor();
+    const { isLoading, isError, data, error , isFetching} = useCustomerInfor();
     useEffect(() => {
         if (isError) {
             toast.error(error, {
@@ -22,7 +23,7 @@ function ShippingAddress() {
         <>
             <h6 className="font-light fw-bold">Shipping Address</h6>
             <div className="mb-3">
-                {isLoading || isError ? (
+                {isLoading || isError || isFetching? (
                     <Skeleton count={10} height={20} />
                 ) : (
                     <>
@@ -59,9 +60,15 @@ function ShippingAddress() {
                     </>
                 )}
             </div>
-            <button className="btn btn-danger btn-sm rounded-2">
+            <button
+                className="btn btn-danger btn-sm rounded-2"
+                data-bs-toggle="modal"
+                data-bs-target="#editShipping"
+            >
                 Edit Address
             </button>
+
+            <ModalEditShippingAddress customerData={data} />
         </>
     );
 }

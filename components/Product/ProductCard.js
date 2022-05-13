@@ -4,12 +4,12 @@ function ProductCart() {
             <div className="img-wrapper">
                 <div className="front">
                     <a href="product-left-sidebar.html">
-                        <img src="images/fashion/product/front/5.jpg" className="bg-img blur-up lazyload" alt="" />
+                        <img src="/images/fashion/product/front/5.jpg" className="bg-img blur-up lazyload" alt="" />
                     </a>
                 </div>
                 <div className="back">
                     <a href="product-left-sidebar.html">
-                        <img src="images/fashion/product/back/5.jpg" className="bg-img blur-up lazyload" alt="" />
+                        <img src="/images/fashion/product/back/5.jpg" className="bg-img blur-up lazyload" alt="" />
                     </a>
                 </div>
                 <div className="label-block">
