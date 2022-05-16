@@ -1,6 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useRelatedPosts } from '../../src/api_minhhieu/relatedPostsApi';
+import RelatedPostsItem from './RelatedPostsItem';
 
-function RelatedPostSlide() {
+function RelatedPostSlide({info}) {
+
+    const [finishFetching, setFinishFetching] = useState(false);
+
     useEffect(() => {
         $('.slide-4').slick({
             dots: true,
@@ -32,139 +37,23 @@ function RelatedPostSlide() {
         });
     }, []);
 
+    const { isLoading, error, data, isFetching } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
+
+    if (error) return 'An error has occurred: ' + error.message;
+
     return (
         <section className="section-b-space block-shadow-space ratio3_2">
             <div className="container">
                 <div className="slide-4 product-wrapper slick-lg-space">
-                    <div>
-                        <div className="card blog-categority">
-                            <a href="blog-details.html" className="blog-img">
-                                <img
-                                    src="/images/inner-page/product/9.jpg"
-                                    alt=""
-                                    className="card-img-top blur-up lazyload bg-img"
-                                />
-                            </a>
-                            <div className="card-body">
-                                <a href="blog-details.html">
-                                    <h2 className="card-title">
-                                        How to make the perfect morning coffee,
-                                        according to the science
-                                    </h2>
-                                </a>
-                                <div className="blog-profile">
-                                    <div className="image-name">
-                                        <h3>John wike</h3>
-                                        <h6>15 Aug 2021</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="card blog-categority">
-                            <a href="blog-details.html" className="blog-img">
-                                <img
-                                    src="/images/inner-page/product/8.jpg"
-                                    alt=""
-                                    className="card-img-top blur-up lazyload bg-img"
-                                />
-                            </a>
-                            <div className="card-body">
-                                <a href="blog-details.html">
-                                    <h2 className="card-title">
-                                        How to make the perfect morning coffee,
-                                        according to the science
-                                    </h2>
-                                </a>
-                                <div className="blog-profile">
-                                    <div className="image-name">
-                                        <h3>John wike</h3>
-                                        <h6>15 Aug 2021</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="card blog-categority">
-                            <a href="blog-details.html" className="blog-img">
-                                <img
-                                    src="/images/inner-page/product/4.jpg"
-                                    alt=""
-                                    className="card-img-top blur-up lazyload bg-img"
-                                />
-                            </a>
-                            <div className="card-body">
-                                <a href="blog-details.html">
-                                    <h2 className="card-title">
-                                        How to make the perfect morning coffee,
-                                        according to the science
-                                    </h2>
-                                </a>
-                                <div className="blog-profile">
-                                    <div className="image-name">
-                                        <h3>John wike</h3>
-                                        <h6>15 Aug 2021</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="card blog-categority">
-                            <a href="blog-details.html" className="blog-img">
-                                <img
-                                    src="/images/inner-page/product/16.jpg"
-                                    alt=""
-                                    className="card-img-top blur-up lazyload bg-img"
-                                />
-                            </a>
-                            <div className="card-body">
-                                <a href="blog-details.html">
-                                    <h2 className="card-title">
-                                        How to make the perfect morning coffee,
-                                        according to the science
-                                    </h2>
-                                </a>
-                                <div className="blog-profile">
-                                    <div className="image-name">
-                                        <h3>John wike</h3>
-                                        <h6>15 Aug 2021</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div className="card blog-categority">
-                            <a href="blog-details.html" className="blog-img">
-                                <img
-                                    src="/images/inner-page/product/13.jpg"
-                                    alt=""
-                                    className="card-img-top blur-up lazyload bg-img"
-                                />
-                            </a>
-                            <div className="card-body">
-                                <a href="blog-details.html">
-                                    <h2 className="card-title">
-                                        How to make the perfect morning coffee,
-                                        according to the science
-                                    </h2>
-                                </a>
-                                <div className="blog-profile">
-                                    <div className="image-name">
-                                        <h3>John wike</h3>
-                                        <h6>15 Aug 2021</h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        isLoading || !data
+                            ?
+                                null
+                            :
+                                data.map((item,index) => {
+                                    return <RelatedPostsItem key={index} postId={item.id}/>
+                                })
+                    }
                 </div>
             </div>
         </section>

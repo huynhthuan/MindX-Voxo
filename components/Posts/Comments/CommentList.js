@@ -22,8 +22,8 @@ function CommentList() {
                     </div>
                 </div>
             </div>
-            <div class="load-more">
-                <button class="loadMore btn btn-submit btn-full">
+            <div className="load-more">
+                <button className="loadMore btn btn-submit btn-full">
                     load more
                 </button>
             </div>

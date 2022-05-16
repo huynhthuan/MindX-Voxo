@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const fetchDetailPost = async (postId) => {
 
-    const result = await axios.get(BLOG_LIST + '414' + '?_embed');
+    const result = await axios.get(BLOG_LIST + postId + '?_embed');
   
     return result;
 }

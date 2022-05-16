@@ -8,13 +8,9 @@ import CommentList from '../../../components/Posts/Comments/CommentList';
 import CommentBox from '../../../components/Posts/Comments/CommentBox';
 import { useDetailPost } from '../../../src/api_minhhieu/detailPostApi';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
 import { DetailPostSkeleton } from '../../../components/Skeleton_minhhieu';
 
 function BlogDetail() {
-
-    const [postId, setPostId] = useState(null);
 
     const router = useRouter();
     const { slug } = router.query;
@@ -26,7 +22,7 @@ function BlogDetail() {
     
     const { isLoading, error, data, isFetching } = useDetailPost(slug);
 
-    console.log(data);
+    // console.log(data);
 
     if (error) return 'An error has occurred: ' + error.message;
 
@@ -143,19 +139,22 @@ function BlogDetail() {
                                                                 }
                                                             </span>
                                                             <h2 className="card-title">
-                                                                Just a Standard Format Post.
+                                                                {
+                                                                    data.data.title.rendered
+                                                                }
                                                             </h2>
                                                             <div dangerouslySetInnerHTML={{ __html: data.data.content.rendered }}></div>
                                                         </div>
                                                     </div>
 
                                                     <AuthorBox {...data.data._embedded.author[0]}/>
+
+                                                    <CommentBox />
+
+                                                    <CommentList />
                                                 </>
                                     }
 
-                                    <CommentBox />
-
-                                    <CommentList />
                                 </div>
                             </div>
                         </div>
@@ -167,8 +166,12 @@ function BlogDetail() {
                 </div>
             </section>
             {/* Details Blog Section End */}
-
-            <RelatedPostSlide />
+            {
+                isLoading || !data
+                    ? null
+                    : 
+                        <RelatedPostSlide info={{categoryId:data.data.categories[0],excludeId:data.data.id}}/>
+            }
 
             <SubscribeBox />
         </>
