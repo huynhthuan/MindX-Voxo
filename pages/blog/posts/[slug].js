@@ -94,62 +94,64 @@ function BlogDetail() {
                                             ? 
                                                 <DetailPostSkeleton/>
                                             :
-                                                <div className="blog-details">
-                                                    <div className="blog-image-box">
-                                                        <img
-                                                            src={
-                                                                data.data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
-                                                            }
-                                                            alt=""
-                                                            className="card-img-top"
-                                                        />
-                                                        <div className="blog-title">
-                                                            <div>
-                                                                <div className="social-media media-center">
-                                                                    <a
-                                                                        href="https://www.facebook.com/"
-                                                                        target="new"
-                                                                    >
-                                                                        <div className="social-icon-box social-color">
-                                                                            <i className="fab fa-facebook-f"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <a
-                                                                        href="https://twitter.com/"
-                                                                        target="new"
-                                                                    >
-                                                                        <div className="social-icon-box social-color">
-                                                                            <i className="fab fa-twitter"></i>
-                                                                        </div>
-                                                                    </a>
-                                                                    <a
-                                                                        href="https://in.pinterest.com/"
-                                                                        target="new"
-                                                                    >
-                                                                        <div className="social-icon-box social-color">
-                                                                            <i className="fab fa-pinterest-p"></i>
-                                                                        </div>
-                                                                    </a>
+                                                <>
+                                                    <div className="blog-details">
+                                                        <div className="blog-image-box">
+                                                            <img
+                                                                src={
+                                                                    data.data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+                                                                }
+                                                                alt=""
+                                                                className="card-img-top"
+                                                            />
+                                                            <div className="blog-title">
+                                                                <div>
+                                                                    <div className="social-media media-center">
+                                                                        <a
+                                                                            href="https://www.facebook.com/"
+                                                                            target="new"
+                                                                        >
+                                                                            <div className="social-icon-box social-color">
+                                                                                <i className="fab fa-facebook-f"></i>
+                                                                            </div>
+                                                                        </a>
+                                                                        <a
+                                                                            href="https://twitter.com/"
+                                                                            target="new"
+                                                                        >
+                                                                            <div className="social-icon-box social-color">
+                                                                                <i className="fab fa-twitter"></i>
+                                                                            </div>
+                                                                        </a>
+                                                                        <a
+                                                                            href="https://in.pinterest.com/"
+                                                                            target="new"
+                                                                        >
+                                                                            <div className="social-icon-box social-color">
+                                                                                <i className="fab fa-pinterest-p"></i>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+
+                                                        <div className="blog-detail-contain">
+                                                            <span className="font-light">
+                                                                {
+                                                                    transferDate(data.data.date)
+                                                                }
+                                                            </span>
+                                                            <h2 className="card-title">
+                                                                Just a Standard Format Post.
+                                                            </h2>
+                                                            <div dangerouslySetInnerHTML={{ __html: data.data.content.rendered }}></div>
+                                                        </div>
                                                     </div>
 
-                                                    <div className="blog-detail-contain">
-                                                        <span className="font-light">
-                                                            {
-                                                                transferDate(data.data.date)
-                                                            }
-                                                        </span>
-                                                        <h2 className="card-title">
-                                                            Just a Standard Format Post.
-                                                        </h2>
-                                                        <div dangerouslySetInnerHTML={{ __html: data.data.content.rendered }}></div>
-                                                    </div>
-                                                </div>
+                                                    <AuthorBox {...data.data._embedded.author[0]}/>
+                                                </>
                                     }
-
-                                    <AuthorBox />
 
                                     <CommentBox />
 
