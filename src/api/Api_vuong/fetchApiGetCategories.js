@@ -7,9 +7,16 @@ export const fetchApiGetCategories = async (query, asPath) => {
    const { slug, page } = query;
    const response = await fetchApi.get("/products/categories/?slug=" + slug);
    const responseId = response.data[0].id;
-   const firstPage = `products?${pathApi}&category=`+responseId;
+   const firstPage = `products?${pathApi}&per_page=12&category=` + responseId;
    const data = await fetchApi.get(page ? firstPage + "&page=" + page : firstPage);
    data.idCategory = responseId;
+   return data;
+};
+export const fetchApiProductById = async (id) => {
+   const data = await fetchApi.get("/products/" + id);
+   const res = await fetchApi.get("/products/reviews?product=" + id);
+   data.data.reviews = res.data
+  
    return data;
 };
 export const fetchApi = axios.create({

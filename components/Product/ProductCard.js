@@ -1,50 +1,29 @@
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 import { conventToCurrency } from "../component_vuong/Common";
 import RatingDetails from "./RatingDetails";
 
-function ProductCart({ id, price, name, rating_count, categories, images, average_rating, sale_price, on_sale, featured }) {
+function ProductCart({ id, price, slug, name, rating_count, categories, images, average_rating, sale_price, on_sale, featured }) {
+   const router = useRouter();
    useEffect(() => {
-      (function ($) {
-         "use strict";
-         $(".bg-top").parent().addClass("b-top");
-         $(".bg-bottom").parent().addClass("b-bottom");
-         $(".bg-center").parent().addClass("b-center");
-         $(".bg-left").parent().addClass("b-left");
-         $(".bg-right").parent().addClass("b-right");
-         $(".bg_size_content").parent().addClass("b_size_content");
-         $(".bg-img").parent().addClass("bg-size");
-         $(".bg-img.blur-up").parent().addClass("blur-up lazyload");
-         $(".bg-img").each(function () {
-            var el = $(this),
-               src = el.attr("src"),
-               parent = el.parent();
-
-            parent.css({
-               "background-image": "url(" + src + ")",
-               "background-size": "cover",
-               "background-position": "center",
-               "background-repeat": "no-repeat",
-               display: "block",
-            });
-
-            el.hide();
-         });
-      })(jQuery);
-      feather.replace();
+      functionJquery();
    }, []);
+   const handleClick = (slug,id) => {
+      router.push("/product/" + slug+'?id='+id);
+   };
 
    return (
       <div className="product-box">
          <div className="img-wrapper">
             <div className="front">
-               <a href="product-left-sidebar.html">
+               <div role={'button'} onClick={() => handleClick(slug,id)}>
                   <img src={images[0].src} className="bg-img blur-up lazyload" alt="" />
-               </a>
+               </div>
             </div>
             <div className="back">
-               <a href="product-left-sidebar.html">
+               <div role={'button'} onClick={() => handleClick(slug,id)}>
                   <img src={images[4].src} className="bg-img blur-up lazyload" alt="" />
-               </a>
+               </div>
             </div>
             <div className="label-block">
                {featured && <span className="label label-black">New</span>}
@@ -81,9 +60,9 @@ function ProductCart({ id, price, name, rating_count, categories, images, averag
                <RatingDetails rating={average_rating} />
             </div>
             <div className="main-price">
-               <a href="product-left-sidebar.html" className="font-default">
-                  <h5>{name}</h5>  
-               </a>
+               <div onClick={() => handleClick(slug,id)} role="button" className="font-default">
+                  <h5>{name}</h5>
+               </div>
                <div className="listing-content">
                   <span className="font-light">Jacket</span>
                   <p className="font-light">
@@ -101,3 +80,33 @@ function ProductCart({ id, price, name, rating_count, categories, images, averag
 }
 
 export default ProductCart;
+
+const functionJquery = () => {
+   (function ($) {
+      "use strict";
+      $(".bg-top").parent().addClass("b-top");
+      $(".bg-bottom").parent().addClass("b-bottom");
+      $(".bg-center").parent().addClass("b-center");
+      $(".bg-left").parent().addClass("b-left");
+      $(".bg-right").parent().addClass("b-right");
+      $(".bg_size_content").parent().addClass("b_size_content");
+      $(".bg-img").parent().addClass("bg-size");
+      $(".bg-img.blur-up").parent().addClass("blur-up lazyload");
+      $(".bg-img").each(function () {
+         var el = $(this),
+            src = el.attr("src"),
+            parent = el.parent();
+
+         parent.css({
+            "background-image": "url(" + src + ")",
+            "background-size": "cover",
+            "background-position": "center",
+            "background-repeat": "no-repeat",
+            display: "block",
+         });
+
+         el.hide();
+      });
+   })(jQuery);
+   feather.replace();
+};

@@ -21,6 +21,7 @@ function PageSection({ totalPages, page = "1", query }) {
                            null,
                            {
                               scroll: false,
+                              shallow: true,
                            }
                         );
                      }}
@@ -44,11 +45,13 @@ function PageSection({ totalPages, page = "1", query }) {
                                     query: {
                                        ...router.query,
                                        page: item + 1,
+                                       slug: "",
                                     },
                                  },
                                  null,
                                  {
                                     scroll: false,
+                                    shallow: true,
                                  }
                               );
                            }}
@@ -69,11 +72,12 @@ function PageSection({ totalPages, page = "1", query }) {
                         router.push(
                            {
                               pathname: "/product-category/" + query.slug,
-                              query: { ...router.query, page: totalPages },
+                              query: { ...router.query, page: totalPages, slug: "" },
                            },
                            null,
                            {
                               scroll: false,
+                              shallow: true,
                            }
                         );
                      }}

@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import MostPopular from "./MostPopular";
 
 function Sidebar({ resBrand, resColor, resSize }) {
+   const ref=useRef()
+   console.log(`  ~ ref`, ref.current?.value)
    const router = useRouter();
    const { query, pathname } = router;
    const arrColor = query.pa_color ? query.pa_color.split(",") : [];
@@ -97,16 +99,16 @@ function Sidebar({ resBrand, resColor, resSize }) {
                </div>
             </div>
 
-            <div className="accordion-item category-price">
+            <div className="accordion-item category-price"  >
                <h2 className="accordion-header" id="headingFour">
                   <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
                      Price
                   </button>
                </h2>
-               <div id="collapseFour" className="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                  <div className="accordion-body">
-                     <div className="range-slider category-list">
-                        <input type="text" className="js-range-slider" defaultValue="1" onChange={(e)=>console.log(e.target.value)}/>
+               <div id="collapseFour" className="accordion-collapse collapse show" aria-labelledby="headingFour" data-bs-parent="#accordionExample" >
+                  <div className="accordion-body" >
+                     <div className="range-slider category-list" >
+                        <input type="text" className="js-range-slider" defaultValue="" ref={ref}  onFocus={()=>console.log('aaa')}/>
                      </div>
                   </div>
                </div>

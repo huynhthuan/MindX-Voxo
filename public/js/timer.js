@@ -4,7 +4,7 @@ var second = 1000,
   day = hour * 24;
 
 var countDown = new Date("Aug 21, 2023 00:00:00").getTime(),
-  x = setInterval(function () {
+  x =document.getElementById("days")&& setInterval(function () {
     var now = new Date().getTime(),
       distance = countDown - now;
 
