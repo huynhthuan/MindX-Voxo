@@ -4,9 +4,11 @@ import axios from 'axios';
 
 const fetchDetailPost = async (postId) => {
 
-    const result = await axios.get(BLOG_LIST + postId + '?_embed');
+    if (postId) {
+        const result = await axios.get(BLOG_LIST + postId + '?_embed');
   
-    return result;
+        return result;
+    }
 }
   
 export const useDetailPost = (postId) => {

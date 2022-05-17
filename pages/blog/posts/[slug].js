@@ -22,8 +22,6 @@ function BlogDetail() {
     
     const { isLoading, error, data, isFetching } = useDetailPost(slug);
 
-    // console.log(data);
-
     if (error) return 'An error has occurred: ' + error.message;
 
     return (
@@ -168,8 +166,9 @@ function BlogDetail() {
             {/* Details Blog Section End */}
             {
                 isLoading || !data
-                    ? null
-                    : 
+                    ?
+                        null
+                    :
                         <RelatedPostSlide info={{categoryId:data.data.categories[0],excludeId:data.data.id}}/>
             }
 

@@ -55,4 +55,13 @@ const DetailPostSkeleton = () => {
   </div>            
 }
 
-export { CategoryPostSkeleton, NewPostBlogListSkeleton, DetailPostSkeleton };
+const RelatedPostSkeleton = () => {
+  return <div>
+    <Skeleton height={'15rem'} width='100%'/>
+    <Skeleton/>
+    <Skeleton/>
+    <Skeleton width='30%'/>
+  </div>
+}
+
+export { CategoryPostSkeleton, NewPostBlogListSkeleton, DetailPostSkeleton, RelatedPostSkeleton };
