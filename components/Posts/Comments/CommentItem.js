@@ -1,4 +1,11 @@
-function CommentItem() {
+function CommentItem({author_name,content,date}) {
+
+    // Hàm chuyển đổi thời gian tạo bài
+    const transferDate = (date) => {
+        const d = new Date(date);
+        return d.getDate() + '/' + (d.getMonth() * 1 + 1) + '/' + d.getFullYear() + ' - ' + d.getHours() + ':' + d.getMinutes();
+    }
+
     return (
         <div className="customer-section">
             <div className="customer-profile">
@@ -10,14 +17,11 @@ function CommentItem() {
             </div>
 
             <div className="customer-details">
-                <h5>B. Perdue</h5>
+                <h5>{author_name}</h5>
 
-                <p className="font-light">
-                    Love the processor speed and the sensitivity of the touch
-                    screen.
-                </p>
+                <div className="font-light" dangerouslySetInnerHTML={{ __html: content.rendered }}></div>
 
-                <p className="date-custo font-light">- Sep 08, 2021</p>
+                <p className="date-custo font-light">{transferDate(date)}</p>
             </div>
         </div>
     );

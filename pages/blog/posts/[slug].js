@@ -9,7 +9,7 @@ import CommentBox from '../../../components/Posts/Comments/CommentBox';
 import { useDetailPost } from '../../../src/api_minhhieu/detailPostApi';
 import { useRouter } from 'next/router';
 import { DetailPostSkeleton } from '../../../components/Skeleton_minhhieu/index';
-import { useSelector } from 'react-redux';
+
 
 function BlogDetail() {
 
@@ -22,10 +22,6 @@ function BlogDetail() {
         const d = new Date(date);
         return d.getDate() + '/' + (d.getMonth() * 1 + 1) + '/' + d.getFullYear() + ' - ' + d.getHours() + ':' + d.getMinutes();
     }
-
-    //Lấy thông tin người dùng
-    const authState = useSelector(state => state.auth);
-    const {user} = authState;
     
     //Get data bài viết 
     const { isLoading, error, data, isFetching } = useDetailPost(slug);
@@ -155,9 +151,9 @@ function BlogDetail() {
 
                                                     <AuthorBox {...data.data._embedded.author[0]}/>
 
-                                                    <CommentBox {...user}/>
+                                                    <CommentBox postId={data.data.id}/>
 
-                                                    <CommentList />
+                                                    <CommentList postId={data.data.id}/>
                                                 </>
                                     }
 

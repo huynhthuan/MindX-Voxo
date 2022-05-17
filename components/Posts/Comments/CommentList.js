@@ -1,6 +1,12 @@
 import CommentItem from './CommentItem';
+import { usePostComments } from '../../../src/api_minhhieu/postcommentsApi';
 
-function CommentList() {
+function CommentList({postId}) {
+
+    const { isLoading, error, data, isFetching } = usePostComments(postId);
+
+    if (error) return 'An error has occurred: ' + error.message;
+
     return (
         <>
             <div className="row g-4">
@@ -8,15 +14,21 @@ function CommentList() {
                     <div className="cloth-review">
                         <div className="tab-pane">
                             <div className="customer-review-box">
-                                <h4>Comments (100)</h4>
-
-                                <CommentItem />
-
-                                <CommentItem />
-
-                                <CommentItem />
-
-                                <CommentItem />
+                                {
+                                   !isLoading
+                                        &&
+                                            <h4>Comments ({data.data.length})</h4> 
+                                }
+                                {
+                                    !isLoading
+                                        &&
+                                            data
+                                                &&
+                                                    data.data.map((item,index) => {
+                                                        return <CommentItem {...item} key={index}/>
+                                                    })
+                                }
+                                
                             </div>
                         </div>
                     </div>

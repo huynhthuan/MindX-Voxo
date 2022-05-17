@@ -1,13 +1,32 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { CREATE_COMMENT } from '../../../utils/api_minhhieu/index';
 
-function CommentBox({id,displayname,email}) {
+function CommentBox({postId}) {
+    console.log(postId);
+
+    //Lấy thông tin người dùng
+    const authState = useSelector(state => state.auth);
+    const {user} = authState;
 
     const [comment, setComment] = useState('')
 
-    const handleSubmitComment = () => {
-        
+    const handleSubmitComment = async () => {
+        const result = await axios.post(
+            CREATE_COMMENT,
+            {
+                
+                "post_id": postId*1,
+                "name":user.username,
+                "email":user.email,
+                "content":comment
+                
+            }
+        ).then(res => {
+            console.log(res);
+        })
     }
 
     const handleCommentChange = (event) => {
