@@ -5,7 +5,7 @@ import PostCardMansory from '../../../components/Posts/PostCardMansory';
 import Link from 'next/link';
 import Head from 'next/head';
 import { CategoryPostSkeleton } from '../../../components/Skeleton_minhhieu';
-import { useBlogListCategory } from '../../../src/api_minhhieu/bloglistcategory';
+import { useBlogListCategory } from '../../../src/api_minhhieu/bloglistcategoryApi';
 
 function Category() {
 

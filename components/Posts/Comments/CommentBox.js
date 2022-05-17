@@ -1,6 +1,20 @@
 import Link from 'next/link';
+import { useState } from 'react';
+import axios from 'axios';
 
-function CommentBox() {
+function CommentBox({id,displayname,email}) {
+
+    const [comment, setComment] = useState('')
+
+    const handleSubmitComment = () => {
+        
+    }
+
+    const handleCommentChange = (event) => {
+        const value = event.target.value;
+        setComment(value);
+    }
+
     return (
         <div className="row g-2">
             <div className="col-12">
@@ -55,6 +69,8 @@ function CommentBox() {
                     className="form-control"
                     id="textarea"
                     placeholder="Leave a comment here"
+                    onChange={handleCommentChange}
+                    value={comment}
                     required
                 ></textarea>
             </div>
@@ -63,6 +79,7 @@ function CommentBox() {
                 <button
                     type="submit"
                     className="btn btn-solid-default btn-spacing mt-2"
+                    onClick={handleSubmitComment}
                 >
                     Submit
                 </button>
