@@ -1,5 +1,6 @@
 import CommentItem from './CommentItem';
 import { usePostComments } from '../../../src/api_minhhieu/postcommentsApi';
+import { PostCommentsSkeleton } from '../../Skeleton_minhhieu';
 
 function CommentList({postId}) {
 
@@ -20,8 +21,13 @@ function CommentList({postId}) {
                                             <h4>Comments ({data.data.length})</h4> 
                                 }
                                 {
-                                    !isLoading
-                                        &&
+                                    isLoading                                                  
+                                        ?
+                                            Array(4).fill(0).map((item, index) => {
+                                                return <PostCommentsSkeleton key={index}/>
+                                            })
+                                            
+                                        :
                                             data
                                                 &&
                                                     data.data.map((item,index) => {
@@ -34,11 +40,11 @@ function CommentList({postId}) {
                     </div>
                 </div>
             </div>
-            <div className="load-more">
+            {/* <div className="load-more">
                 <button className="loadMore btn btn-submit btn-full">
                     load more
                 </button>
-            </div>
+            </div> */}
         </>
     );
 }

@@ -9,7 +9,7 @@ const CategoryPostSkeleton = () => {
 }
 
 const NewPostBlogListSkeleton = () => {
-  return <div className="col-12">
+  return <div className="col-12 col-lg-3">
       <div className="row">
         <div className="col-lg-4">
           <Skeleton height='20rem'/>
@@ -23,7 +23,7 @@ const NewPostBlogListSkeleton = () => {
 }
 
 const DetailPostSkeleton = () => {
-  return <div>
+  return <div className="mb-4">
     <Skeleton height='25rem'/>
     <Skeleton className='mt-4' width='30%'/>
     <Skeleton height='1.5rem' className="mt-4"/>
@@ -64,4 +64,18 @@ const RelatedPostSkeleton = () => {
   </div>
 }
 
-export { CategoryPostSkeleton, NewPostBlogListSkeleton, DetailPostSkeleton, RelatedPostSkeleton };
+const PostCommentsSkeleton = () => {
+  return <div className="d-flex mt-3">
+    <div className="me-3">
+      <Skeleton className="rounded-circle" height='4rem' width='4rem'/>
+    </div>
+    <div className="mt-1">
+      <Skeleton width='10rem'/>
+      <Skeleton width='10rem' className="mb-3"/>
+      <Skeleton width='20rem' />
+    </div>
+    <hr/>
+  </div>
+}
+
+export { CategoryPostSkeleton, NewPostBlogListSkeleton, DetailPostSkeleton, RelatedPostSkeleton, PostCommentsSkeleton };
