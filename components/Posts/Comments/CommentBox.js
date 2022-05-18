@@ -3,30 +3,30 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { CREATE_COMMENT } from '../../../utils/api_minhhieu/index';
+import { useAddPostComment } from '../../../src/api_minhhieu/postcommentsApi';
 
 function CommentBox({postId}) {
-    console.log(postId);
 
     //Lấy thông tin người dùng
     const authState = useSelector(state => state.auth);
     const {user} = authState;
 
-    const [comment, setComment] = useState('')
+    const [comment, setComment] = useState('');
+    const [loginRequirement, setLoginRequirement] = useState(false);
+
+    const { mutate: addComment } = useAddPostComment();
 
     const handleSubmitComment = async () => {
-        const result = await axios.post(
-            CREATE_COMMENT,
-            {
-                
-                "post_id": postId*1,
-                "name":user.username,
-                "email":user.email,
-                "content":comment
-                
-            }
-        ).then(res => {
-            console.log(res);
-        })
+        if (user.id) {
+            addComment({
+                post_id: postId,
+                name:user.username,
+                email:user.email,
+                content:comment
+            })
+        } else {
+            setLoginRequirement(true);
+        }
     }
 
     const handleCommentChange = (event) => {
@@ -41,7 +41,8 @@ function CommentBox({postId}) {
                     <h3>Leave Comments</h3>
                 </div>
             </div>
-            <div className="col-lg-4">
+
+            {/* <div className="col-lg-4">
                 <label htmlFor="fname" className="form-label">
                     First Name
                 </label>
@@ -77,7 +78,7 @@ function CommentBox({postId}) {
                     placeholder="example@example.com"
                     required
                 />
-            </div>
+            </div> */}
 
             <div className="col-12">
                 <label htmlFor="textarea" className="form-label">
@@ -104,7 +105,7 @@ function CommentBox({postId}) {
                 </button>
             </div>
 
-            <div className="col-12">
+            <div className="col-12" hidden={!loginRequirement}>
                 <div className="d-flex ">
                     <p className="alert alert-warning">
                         You must{' '}
