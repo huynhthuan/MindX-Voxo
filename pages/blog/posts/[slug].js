@@ -6,8 +6,28 @@ import RelatedPostSlide from '../../../components/Posts/RelatedPostSlide';
 import AuthorBox from '../../../components/Posts/AuthorBox';
 import CommentList from '../../../components/Posts/Comments/CommentList';
 import CommentBox from '../../../components/Posts/Comments/CommentBox';
+import { useDetailPost } from '../../../src/api_minhhieu/detailPostApi';
+import { useRouter } from 'next/router';
+import { DetailPostSkeleton } from '../../../components/Skeleton_minhhieu/index';
+
 
 function BlogDetail() {
+
+    // Lấy id bài viết từ url
+    const router = useRouter();
+    const { slug } = router.query;
+    
+    // Hàm chuyển đổi thời gian tạo bài
+    const transferDate = (date) => {
+        const d = new Date(date);
+        return d.getDate() + '/' + (d.getMonth() * 1 + 1) + '/' + d.getFullYear() + ' - ' + d.getHours() + ':' + d.getMinutes();
+    }
+    
+    //Get data bài viết 
+    const { isLoading, error, data, isFetching } = useDetailPost(slug);
+
+    if (error) return 'An error has occurred: ' + error.message;
+
     return (
         <>
             <Head>
@@ -67,134 +87,76 @@ function BlogDetail() {
                         <div className="col-lg-9 col-md-8 order-md-1 ratio_square">
                             <div className="row g-4">
                                 <div className="col-12">
-                                    <div className="blog-details">
-                                        <div className="blog-image-box">
-                                            <img
-                                                src="/images/inner-page/product/10.jpg"
-                                                alt=""
-                                                className="card-img-top"
-                                            />
-                                            <div className="blog-title">
-                                                <div>
-                                                    <div className="social-media media-center">
-                                                        <a
-                                                            href="https://www.facebook.com/"
-                                                            target="new"
-                                                        >
-                                                            <div className="social-icon-box social-color">
-                                                                <i className="fab fa-facebook-f"></i>
-                                                            </div>
-                                                        </a>
-                                                        <a
-                                                            href="https://twitter.com/"
-                                                            target="new"
-                                                        >
-                                                            <div className="social-icon-box social-color">
-                                                                <i className="fab fa-twitter"></i>
-                                                            </div>
-                                                        </a>
-                                                        <a
-                                                            href="https://in.pinterest.com/"
-                                                            target="new"
-                                                        >
-                                                            <div className="social-icon-box social-color">
-                                                                <i className="fab fa-pinterest-p"></i>
-                                                            </div>
-                                                        </a>
+                                    {
+                                        isLoading || !data
+                                            ? 
+                                                <DetailPostSkeleton/>
+                                            :
+                                                <>
+                                                    <div className="blog-details">
+                                                        <div className="blog-image-box">
+                                                            <img
+                                                                src={
+                                                                    data.data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+                                                                }
+                                                                alt=""
+                                                                className="card-img-top"
+                                                            />
+                                                            {/* <div className="blog-title">
+                                                                <div>
+                                                                    <div className="social-media media-center">
+                                                                        <a
+                                                                            href="https://www.facebook.com/"
+                                                                            target="new"
+                                                                        >
+                                                                            <div className="social-icon-box social-color">
+                                                                                <i className="fab fa-facebook-f"></i>
+                                                                            </div>
+                                                                        </a>
+                                                                        <a
+                                                                            href="https://twitter.com/"
+                                                                            target="new"
+                                                                        >
+                                                                            <div className="social-icon-box social-color">
+                                                                                <i className="fab fa-twitter"></i>
+                                                                            </div>
+                                                                        </a>
+                                                                        <a
+                                                                            href="https://in.pinterest.com/"
+                                                                            target="new"
+                                                                        >
+                                                                            <div className="social-icon-box social-color">
+                                                                                <i className="fab fa-pinterest-p"></i>
+                                                                            </div>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div> */}
+                                                        </div>
+
+                                                        <div className="blog-detail-contain">
+                                                            <span className="font-light">
+                                                                {
+                                                                    transferDate(data.data.date)
+                                                                }
+                                                            </span>
+                                                            <h2 className="card-title">
+                                                                {
+                                                                    data.data.title.rendered
+                                                                }
+                                                            </h2>
+                                                            <div dangerouslySetInnerHTML={{ __html: data.data.content.rendered }}></div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div className="blog-detail-contain">
-                                            <span className="font-light">
-                                                August 15 2021
-                                            </span>
-                                            <h2 className="card-title">
-                                                Just a Standard Format Post.
-                                            </h2>
-                                            <p className="font-light firt-latter">
-                                                Lorem Ipsum is simply dummy text
-                                                of the printing and typesetting
-                                                industry. Lorem Ipsum has been
-                                                the industry's standard dummy
-                                                text ever since the 1500s, Lorem
-                                                Ipsum has been the industry's
-                                                standard dummy text ever since
-                                                the 1500s.looked up one of the
-                                                more obscure Latin words,
-                                                consectetur, from a Lorem Ipsum
-                                                passage.
-                                            </p>
+                                                    <AuthorBox {...data.data._embedded.author[0]}/>
 
-                                            <p className="font-light">
-                                                Contrary to popular belief,
-                                                Lorem Ipsum is not simply random
-                                                text. It has roots in a piece of
-                                                classical Latin literature from
-                                                45 BC, making it over 2000 years
-                                                old. Richard McClintock, a Latin
-                                                professor at Hampden-Sydney
-                                                College in Virginia, looked up
-                                                one of the more obscure Latin
-                                                words, consectetur, from a Lorem
-                                                Ipsum passage, and going through
-                                                the cites of the word in
-                                                classical literature, discovered
-                                                the undoubtable source. Lorem
-                                                Ipsum comes from sections
-                                                1.10.32 and 1.10.33 of "de
-                                                Finibus Bonorum et Malorum" (The
-                                                Extremes of Good and Evil) by
-                                                Cicero, written in 45 BC. This
-                                                book is a treatise on the theory
-                                                of ethics, very popular during
-                                                the Renaissance. The first line
-                                                of Lorem Ipsum, "Lorem ipsum
-                                                dolor sit amet..", comes from a
-                                                line in section 1.10.32. The
-                                                standard chunk of Lorem Ipsum
-                                                used since the 1500s is
-                                                reproduced below for those
-                                                interested. Sections 1.10.32 and
-                                                1.10.33 from "de Finibus Bonorum
-                                                et Malorum" by Cicero are also
-                                                reproduced in their exact
-                                                original form, accompanied by
-                                                English versions from the 1914
-                                                translation by H. Rackham.
-                                            </p>
+                                                    <CommentBox postId={data.data.id}/>
 
-                                            <p className="font-light">
-                                                It is a long established fact
-                                                that a reader will be distracted
-                                                by the readable content of a
-                                                page when looking at its layout.
-                                                The point of using Lorem Ipsum
-                                                is that it has a more-or-less
-                                                normal distribution of letters,
-                                                as opposed to using 'Content
-                                                here, content here', making it
-                                                look like readable English. Many
-                                                desktop publishing packages and
-                                                web page editors now use Lorem
-                                                Ipsum as their default model
-                                                text, and a search for 'lorem
-                                                ipsum' will uncover many web
-                                                sites still in their infancy.
-                                                Various versions have evolved
-                                                over the years, sometimes by
-                                                accident, sometimes on purpose
-                                                injected humour and the like.
-                                            </p>
-                                        </div>
-                                    </div>
+                                                    <CommentList postId={data.data.id}/>
+                                                </>
+                                    }
 
-                                    <AuthorBox />
-
-                                    <CommentBox />
-
-                                    <CommentList />
                                 </div>
                             </div>
                         </div>
@@ -206,8 +168,13 @@ function BlogDetail() {
                 </div>
             </section>
             {/* Details Blog Section End */}
-
-            <RelatedPostSlide />
+            {
+                isLoading || !data
+                    ?
+                        null
+                    :
+                        <RelatedPostSlide info={{categoryId:data.data.categories[0],excludeId:data.data.id}}/>
+            }
 
             <SubscribeBox />
         </>

@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import SubscribeBox from '../../../components/Common/SubscribeBox';
 import PostCardMansory from '../../../components/Posts/PostCardMansory';
 import Link from 'next/link';
 import Head from 'next/head';
+import { CategoryPostSkeleton } from '../../../components/Skeleton_minhhieu';
+import { useBlogListCategory } from '../../../src/api_minhhieu/bloglistcategoryApi';
 
 function Category() {
+
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -40,6 +44,13 @@ function Category() {
         })(jQuery);
         feather.replace();
     }, []);
+
+    const router = useRouter();
+    const {page} = router.query;
+
+    const { isLoading, error, data, isFetching } = useBlogListCategory({category:router.query.slug,page:page ? page : 1});
+
+    if (error) return 'An error has occurred: ' + error.message;
 
     return (
         <>
@@ -96,66 +107,21 @@ function Category() {
             {/* Masonary Blog Section Start */}
             <section className="masonary-blog-section section-b-space">
                 <div className="container">
-                    <div className="row g-4 filter-gallery mt-3 grid">
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        {/* Quote section start */}
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-                        {/* Quote section end */}
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        {/* Quote section start */}
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-                        {/* Quote section end */}
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        {/* Quote section start */}
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-                        {/* Quote section end */}
-
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-
-                        {/* Quote section start */}
-                        <div className="grid-item col-lg-3 col-md-4 col-sm-6">
-                            <PostCardMansory />
-                        </div>
-                        {/* Quote section end */}
+                    <div className="row g-4 d-flex mt-3" style={{ 'height': "unset !important"}}>
+                        {/* minhhieu */}
+                        {
+                            isLoading 
+                                ?   
+                                    Array(12).fill(0).map((item, index) => {
+                                        return <CategoryPostSkeleton key = {index} />
+                                    })
+                                : 
+                                    data.responseInfo && data.responseInfo.map( (item,index) => {
+                                        return <div className="col-lg-3 col-md-4 col-sm-6" key={index}>
+                                            <PostCardMansory {...item}/>
+                                        </div>
+                                    })
+                        }
                     </div>
                 </div>
             </section>
@@ -177,30 +143,20 @@ function Category() {
                                             </span>
                                         </a>
                                     </li>
-                                    <li className="page-item active">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            1
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            2
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            3
-                                        </a>
-                                    </li>
+                                    {/* minhhieu */}
+                                    {
+                                        !isLoading &&
+                                            data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
+                                                return <li className="page-item active" key={index}>
+                                                    <a
+                                                        className="page-link"
+                                                        href={`?page=${index + 1}`}
+                                                    >
+                                                        {index+1}
+                                                    </a>
+                                                </li>
+                                            })
+                                    }
                                     <li className="page-item">
                                         <a className="page-link">
                                             <span aria-hidden="true">
