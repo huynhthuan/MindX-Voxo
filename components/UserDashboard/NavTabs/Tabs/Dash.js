@@ -60,7 +60,7 @@ function Dash() {
                                 <div className="box">
                                     <div className="box-title">
                                         <h4>Contact Information</h4>
-                                        <button className="btn btn-danger btn-sm rounded-2">
+                                        <button className="btn btn-danger btn-sm">
                                             Edit
                                         </button>
                                     </div>
@@ -73,7 +73,7 @@ function Dash() {
                                 <div className="box">
                                     <div className="box-title">
                                         <h4>Newsletters</h4>
-                                        <button className="btn btn-danger btn-sm rounded-2">
+                                        <button className="btn btn-danger btn-sm">
                                             Edit
                                         </button>
                                     </div>

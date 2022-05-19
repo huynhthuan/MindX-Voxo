@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 import MainMenu from './NavBar/MainMenu';
 import MenuLeft from './NavBar/MenuLeft';
@@ -10,6 +11,8 @@ function Navbar() {
     useEffect(() => {
         feather.replace();
     }, []);
+
+    const { theme } = useSelector((state) => state.webSetting);
 
     return (
         <>

@@ -1,37 +1,27 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
-import { useUpdateCustomerInfor } from '../../../reactQueryHook';
-import { BASE_URL_API } from '../../../utils/api';
-import { WOO_CONSUMER_KEY, WOO_CONSUMER_SECRET } from '../../../utils/const';
 import { COUNTRIES } from '../../../utils/data/countries';
 
-function ModalEditShippingAddress({ customerData }) {
-    const {
-        error,
-        isError,
-        isIdle,
-        isLoading,
-        isPaused,
-        isSuccess,
-        status,
-        mutate,
-        reset: resetMutation,
-    } = useUpdateCustomerInfor();
-
+export default function ModalEditAddress({
+    addressData,
+    onClickSubmitEdit,
+    isLoadingEdit,
+    addressRow,
+    editModaAddresslKey,
+}) {
     const {
         register,
         handleSubmit,
-        reset,
         setValue,
         formState: { errors },
     } = useForm();
 
     useEffect(() => {
-        if (customerData) {
+        if (addressData) {
             const {
                 first_name,
                 last_name,
+                email,
                 phone,
                 address_1,
                 address_2,
@@ -39,10 +29,14 @@ function ModalEditShippingAddress({ customerData }) {
                 city,
                 state,
                 country,
-                postcode,
-            } = customerData.data.shipping;
+                postal_code,
+            } = addressData.billing_information;
+            const { address_title } = addressData;
+
+            setValue('address_title', address_title);
             setValue('first_name', first_name);
             setValue('last_name', last_name);
+            setValue('email', email);
             setValue('phone', phone);
             setValue('address_1', address_1);
             setValue('address_2', address_2);
@@ -50,45 +44,16 @@ function ModalEditShippingAddress({ customerData }) {
             setValue('city', city);
             setValue('state', state);
             setValue('country', country);
-            setValue('postcode', postcode);
+            setValue('postcode', postal_code);
         }
-    }, [customerData]);
-
-    useEffect(() => {
-        if (isError) {
-            Swal.fire({
-                title: 'Error!',
-                text: error,
-                icon: 'error',
-                confirmButtonText: 'Close',
-            });
-        }
-    }, [isError]);
-
-    useEffect(() => {
-        if (isSuccess) {
-            resetMutation();
-            $('.modal-close-button').click();
-            Swal.fire({
-                title: 'Success!',
-                text: 'Update customer shipping address succesfully!',
-                icon: 'success',
-                confirmButtonText: 'Close',
-            });
-        }
-    }, [isSuccess]);
-
-    const onSubmit = async (data) => {
-        mutate({
-            shipping: {
-                ...data,
-            },
-        });
-    };
+    }, [addressData]);
 
     return (
-        <div className="modal fade add-address-modal" id="editShipping">
-            <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div
+            className="modal fade add-address-modal"
+            id={editModaAddresslKey.replace('#', '')}
+        >
+            <div className="modal-dialog modal-dialog-centered modal-xl">
                 <div className="modal-content">
                     <div className="modal-header">
                         <button
@@ -100,6 +65,42 @@ function ModalEditShippingAddress({ customerData }) {
                     <div className="modal-body">
                         <form>
                             <div className="row">
+                                <div className="col-12">
+                                    <h5 className="mb-2">Edit address</h5>
+                                </div>
+                                <div className="col-md-12">
+                                    <div className="mb-1">
+                                        <label
+                                            htmlFor="address_title"
+                                            className="form-label font-light"
+                                        >
+                                            Title
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="address_title"
+                                            {...register('address_title', {
+                                                required: true,
+                                                minLength: 3,
+                                            })}
+                                        />
+
+                                        {errors.address_title?.type ===
+                                            'required' && (
+                                            <div className="valid-feedback d-block text-danger">
+                                                Please fill the address title.
+                                            </div>
+                                        )}
+                                        {errors.address_title?.type ===
+                                            'minLength' && (
+                                            <div className="valid-feedback d-block text-danger">
+                                                Minimum address title length is
+                                                3 characters.
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
                                 <div className="col-md-6">
                                     <div className="mb-1">
                                         <label
@@ -165,6 +166,34 @@ function ModalEditShippingAddress({ customerData }) {
                                     </div>
                                     <div className="mb-1">
                                         <label
+                                            htmlFor="email"
+                                            className="form-label font-light"
+                                        >
+                                            Email
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="email"
+                                            {...register('email', {
+                                                required: true,
+                                                pattern:
+                                                    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                                            })}
+                                        />
+                                        {errors.email?.type === 'required' && (
+                                            <div className="valid-feedback d-block text-danger">
+                                                Please fill the email.
+                                            </div>
+                                        )}
+                                        {errors.email?.type === 'pattern' && (
+                                            <div className="valid-feedback d-block text-danger">
+                                                Email format incorrect.
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="mb-1">
+                                        <label
                                             htmlFor="phone"
                                             className="form-label font-light"
                                         >
@@ -213,6 +242,8 @@ function ModalEditShippingAddress({ customerData }) {
                                             </div>
                                         )}
                                     </div>
+                                </div>
+                                <div className="col-md-6">
                                     <div className="mb-1">
                                         <label
                                             htmlFor="address_2"
@@ -234,22 +265,6 @@ function ModalEditShippingAddress({ customerData }) {
                                                 Please fill the address 2.
                                             </div>
                                         )}
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="mb-1">
-                                        <label
-                                            htmlFor="company"
-                                            className="form-label font-light"
-                                        >
-                                            Company
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            id="company"
-                                            {...register('company')}
-                                        />
                                     </div>
                                     <div className="mb-1">
                                         <label
@@ -300,7 +315,6 @@ function ModalEditShippingAddress({ customerData }) {
                                                 </option>
                                             ))}
                                         </select>
-
                                         {errors.country?.type ===
                                             'required' && (
                                             <div className="valid-feedback d-block text-danger">
@@ -354,6 +368,12 @@ function ModalEditShippingAddress({ customerData }) {
                                     </div>
                                 </div>
                             </div>
+                            <input
+                                type="hidden"
+                                name="row"
+                                value={addressRow}
+                                {...register('addressRow')}
+                            />
                         </form>
                     </div>
                     <div className="modal-footer pt-0 text-end d-block">
@@ -366,10 +386,10 @@ function ModalEditShippingAddress({ customerData }) {
                         </button>
                         <button
                             className="btn btn-solid-default rounded-1"
-                            onClick={handleSubmit(onSubmit)}
+                            onClick={handleSubmit(onClickSubmitEdit)}
                             style={{ minWidth: 146 }}
                         >
-                            {isLoading ? (
+                            {isLoadingEdit ? (
                                 <div
                                     className="spinner-border text-black spinner-border-sm"
                                     role="status"
@@ -386,5 +406,3 @@ function ModalEditShippingAddress({ customerData }) {
         </div>
     );
 }
-
-export default ModalEditShippingAddress;

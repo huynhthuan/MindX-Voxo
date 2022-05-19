@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 function Layout({ children }) {
     let { cookie_expiration, cookie } = useSelector((state) => state.auth);
     let dispatch = useDispatch();
-
+    const { theme } = useSelector((state) => state.webSetting);
     useEffect(() => {
         if (cookie) {
             let cookieCheck = setInterval(() => {
@@ -88,6 +88,57 @@ function Layout({ children }) {
                 />
                 <title>Voxo</title>
                 <link rel="preconnect" href="https://fonts.gstatic.com/" />
+
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href="/css/vendors/bootstrap.css"
+                ></link>
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href="/css/vendors/font-awesome.css"
+                ></link>
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href="/css/vendors/feather-icon.css"
+                ></link>
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href="/css/vendors/animate.css"
+                ></link>
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href="/css/vendors/ion.rangeSlider.min.css"
+                ></link>
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href="/css/vendors/slick/slick.css"
+                ></link>
+                <link
+                    rel="stylesheet"
+                    type="text/css"
+                    href="/css/vendors/slick/slick-theme.css"
+                ></link>
+                {theme === 'light' ? (
+                    <link
+                        id="color-link"
+                        rel="stylesheet"
+                        type="text/css"
+                        href="/css/demo2.css"
+                    ></link>
+                ) : (
+                    <link
+                        id="color-link"
+                        rel="stylesheet"
+                        type="text/css"
+                        href="/css/demo2_dark.css"
+                    ></link>
+                )}
             </Head>
 
             <Navbar />

@@ -1,5 +1,6 @@
 import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
+import userApi from '../src/api/userApi';
 import wooApi from '../src/api/woocommerce/wooApi';
 
 export const useCustomerInfor = () => {
@@ -96,4 +97,76 @@ export const useProductVariations = (ids = []) => {
     });
 
     return useQueries(listQueries);
+};
+
+export const useUserAddressList = () => {
+    const { user, cookie } = useSelector((state) => state.auth);
+    return useQuery(
+        ['userAddressList'],
+        async () =>
+            await userApi.GetAddressList({
+                cookie,
+                userId: user.id,
+            })
+    );
+};
+
+export const useUserAddAddress = () => {
+    const queryClient = useQueryClient();
+    const { user, cookie } = useSelector((state) => state.auth);
+
+    return useMutation(
+        async (params) =>
+            await userApi.AddAddressList({
+                cookie,
+                userId: user.id,
+                ...params,
+            }),
+        {
+            mutationKey: 'addUserAddress',
+            onSuccess: (data) => {
+                queryClient.invalidateQueries('userAddressList');
+            },
+        }
+    );
+};
+
+export const useUserRemoveAddress = () => {
+    const queryClient = useQueryClient();
+    const { user, cookie } = useSelector((state) => state.auth);
+
+    return useMutation(
+        async (params) =>
+            await userApi.RemoveAddressList({
+                cookie,
+                userId: user.id,
+                ...params,
+            }),
+        {
+            mutationKey: 'removeUserAddress',
+            onSuccess: (data) => {
+                queryClient.invalidateQueries('userAddressList');
+            },
+        }
+    );
+};
+
+export const useUserUpdateAddress = () => {
+    const queryClient = useQueryClient();
+    const { user, cookie } = useSelector((state) => state.auth);
+
+    return useMutation(
+        async (params) =>
+            await userApi.UpdateAddressList({
+                cookie,
+                userId: user.id,
+                ...params,
+            }),
+        {
+            mutationKey: 'updateUserAddress',
+            onSuccess: (data) => {
+                queryClient.invalidateQueries('userAddressList');
+            },
+        }
+    );
 };

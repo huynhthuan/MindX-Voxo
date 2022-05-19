@@ -25,11 +25,11 @@ function NavRight() {
 
                 <Save />
 
-                <Pay />
+                {/* <Pay /> */}
 
                 <Profile />
 
-                <Security />
+                {/* <Security /> */}
             </div>
         </div>
     );

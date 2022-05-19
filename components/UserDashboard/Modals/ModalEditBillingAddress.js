@@ -234,7 +234,6 @@ function ModalEditBillingAddress({ customerData }) {
                                             id="address_1"
                                             {...register('address_1', {
                                                 required: true,
-                                                minLength: 6,
                                             })}
                                         />
                                         {errors.address_1?.type ===
