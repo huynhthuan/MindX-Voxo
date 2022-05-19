@@ -1,10 +1,14 @@
 import CommentItem from './CommentItem';
 import { usePostComments } from '../../../src/api_minhhieu/postcommentsApi';
 import { PostCommentsSkeleton } from '../../Skeleton_minhhieu';
+import { Fragment, useState } from 'react';
 
 function CommentList({postId}) {
 
-    const { isLoading, error, data, isFetching } = usePostComments(postId);
+    const [page, setPage] = useState(1);
+    const [showLoadMore, setShowLoadMore] = useState(false);
+
+    const { isLoading, error, data, isFetching, hasNextPage, fetchNextPage, isFetchingNextPage } = usePostComments(postId);
 
     if (error) return 'An error has occurred: ' + error.message;
 
@@ -18,7 +22,7 @@ function CommentList({postId}) {
                                 {
                                    !isLoading
                                         &&
-                                            <h4>Comments ({data.data.length})</h4> 
+                                            <h4>Comments ({data.pages[0].headers['x-wp-total']})</h4> 
                                 }
                                 {
                                     isLoading                                                  
@@ -28,23 +32,38 @@ function CommentList({postId}) {
                                             })
                                             
                                         :
-                                            data
-                                                &&
-                                                    data.data.map((item,index) => {
-                                                        return <CommentItem {...item} key={index}/>
+                                            data 
+                                                && 
+                                                    data.pages.map((group,index) => {
+                                                        return <Fragment key={index} >
+                                                            {
+                                                                group.data.map((item) => {
+                                                                    return <CommentItem key={item.id} {...item}/>
+                                                                })
+                                                            }
+                                                        </Fragment>
                                                     })
                                 }
-                                
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {/* <div className="load-more">
-                <button className="loadMore btn btn-submit btn-full">
+            <div className='my-2'>
+                {
+                    isFetching 
+                        && 
+                            !isFetchingNextPage 
+                                ? <PostCommentsSkeleton /> 
+                                : null
+                
+                }
+            </div>
+            <div className="load-more">
+                <button disabled={!hasNextPage} className="loadMore btn btn-submit btn-full" onClick={fetchNextPage}>
                     load more
                 </button>
-            </div> */}
+            </div>
         </>
     );
 }

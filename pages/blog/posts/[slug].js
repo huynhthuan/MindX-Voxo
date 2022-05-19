@@ -102,7 +102,7 @@ function BlogDetail() {
                                                                 alt=""
                                                                 className="card-img-top"
                                                             />
-                                                            <div className="blog-title">
+                                                            {/* <div className="blog-title">
                                                                 <div>
                                                                     <div className="social-media media-center">
                                                                         <a
@@ -131,7 +131,7 @@ function BlogDetail() {
                                                                         </a>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div> */}
                                                         </div>
 
                                                         <div className="blog-detail-contain">

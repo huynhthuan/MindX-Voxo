@@ -26,6 +26,7 @@ function CommentBox({postId}) {
             })
         } else {
             setLoginRequirement(true);
+            setComment('');
         }
     }
 

@@ -23,7 +23,7 @@ const NewPostBlogListSkeleton = () => {
 }
 
 const DetailPostSkeleton = () => {
-  return <div className="mb-4">
+  return <div className="mb-5">
     <Skeleton height='25rem'/>
     <Skeleton className='mt-4' width='30%'/>
     <Skeleton height='1.5rem' className="mt-4"/>
