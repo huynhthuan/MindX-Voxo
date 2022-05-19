@@ -3,10 +3,10 @@ var second = 1000,
     hour = minute * 60,
     day = hour * 24;
 
-var countDown = new Date('2022-05-31T23:59:59').getTime(),
-    x = setInterval(function () {
-        var now = new Date().getTime(),
-            distance = countDown - now;
+var countDown = new Date("Aug 21, 2023 00:00:00").getTime(),
+  x =document.getElementById("days")&& setInterval(function () {
+    var now = new Date().getTime(),
+      distance = countDown - now;
 
         (document.getElementById('days').innerText = Math.floor(
             distance / day
