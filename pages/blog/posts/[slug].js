@@ -150,7 +150,7 @@ function BlogDetail() {
                                                     </div>
 
                                                     <AuthorBox {...data.data._embedded.author[0]}/>
-
+                                                                
                                                     <CommentBox postId={data.data.id}/>
 
                                                     <CommentList postId={data.data.id}/>

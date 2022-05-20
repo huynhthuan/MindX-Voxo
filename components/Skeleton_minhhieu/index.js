@@ -9,10 +9,10 @@ const CategoryPostSkeleton = () => {
 }
 
 const NewPostBlogListSkeleton = () => {
-  return <div className="col-12 col-lg-3">
+  return <div className="col-12">
       <div className="row">
         <div className="col-lg-4">
-          <Skeleton height='20rem'/>
+          <Skeleton className="ratio ratio-4x3"/>
         </div>
         <div className="col-lg-8">
           <Skeleton height='1.5rem' width='40%'/>
