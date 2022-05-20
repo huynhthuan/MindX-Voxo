@@ -53,7 +53,7 @@ function CommentList({postId}) {
                 {
                     isFetching 
                         && 
-                            !isFetchingNextPage 
+                            isFetchingNextPage 
                                 ? <PostCommentsSkeleton /> 
                                 : null
                 

@@ -45,8 +45,9 @@ export const usePostComments = ({postId}) => {
 export const useAddPostComment = () => {
   const queryClient = useQueryClient();
   return useMutation(addComment, {
-    onSuccess: () => {
+    onSuccess: res => {
       queryClient.invalidateQueries('post-comments');
+      return res;
     }
   })
 }

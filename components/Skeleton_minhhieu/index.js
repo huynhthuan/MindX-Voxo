@@ -56,8 +56,8 @@ const DetailPostSkeleton = () => {
 }
 
 const RelatedPostSkeleton = () => {
-  return <div>
-    <Skeleton height={'15rem'} width='100%'/>
+  return <div className="col-12 col-lg-3">
+    <Skeleton className="ratio ratio-16x9" width='100%'/>
     <Skeleton/>
     <Skeleton/>
     <Skeleton width='30%'/>
