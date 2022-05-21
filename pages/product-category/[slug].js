@@ -21,7 +21,7 @@ function ProductCategory(props) {
       error,
       isError,
       isFetching,
-   } = useQuery(["products", { ...query }], () => fetchApiGetCategories(query, asPath), {
+   } = useQuery(["products", { ...query }], () => fetchApiGetCategories(query), {
       enabled: Boolean(slug),
    });
 
@@ -39,7 +39,6 @@ function ProductCategory(props) {
 
    const { headers, idCategory } = data;
    const { "x-wp-total": total, "x-wp-totalpages": totalPages = 0 } = headers;
-   console.log(`  ~ total`, total);
 
    return (
       <>

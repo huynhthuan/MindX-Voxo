@@ -1,25 +1,70 @@
-import React from "react";
-import { conventToCurrency } from "../Common";
-import ClothReview from "./ClothReview";
+import React, { useEffect } from "react";
+import { conventToCurrency, timeCoundown } from "../Common";
+import ColorImage from "./ColorImage";
+import { useRouter } from "next/router";
 
 function ShopSection({ data = {} }) {
+   const router = useRouter();
    const {
+      slug,
       id,
       price,
-      slug,
       name,
-      rating_count,
       stock_quantity,
       categories,
       images,
-      average_rating,
       on_sale,
-      sale_price,
       attributes,
-      featured,
       shipping_required,
+      regular_price,
+      related_ids,
+      date_on_sale_to,
    } = data;
-   if (!data.id) return "Loading...";
+   useEffect(() => {
+      $(document).ready(function () {
+         $(".slider-for").slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: ".slider-nav",
+            autoplay: true,
+            autoplaySpeed: 1500,
+            speed: 1000,
+            dots: false,
+            infinite: false,
+         });
+         $(".slider-nav").slick({
+            slidesToShow: 5,
+            slidesToScroll: 1,
+            asNavFor: ".slider-for",
+            dots: true,
+            centerMode: true,
+            focusOnSelect: true,
+         });
+      });
+      const second = 1000,
+         minute = second * 60,
+         hour = minute * 60,
+         day = hour * 24;
+      if (!document.getElementById("days")) return;
+      const countDown = new Date(date_on_sale_to).getTime(),
+         myTime = setInterval(function () {
+            const now = new Date().getTime(),
+               distance = countDown - now;
+            (document.getElementById("days").innerText = Math.floor(distance / day)),
+               (document.getElementById("hours").innerText = Math.floor((distance % day) / hour)),
+               (document.getElementById("minutes").innerText = Math.floor((distance % hour) / minute)),
+               (document.getElementById("seconds").innerText = Math.floor((distance % minute) / second));
+         }, second);
+      return () => {
+         clearInterval(myTime);
+      };
+   }, [date_on_sale_to, data]);
+
+   const slider_for = `{ "slidesToShow": 1,"slidesToScroll": 1,"arrows": false,"fade": true,"asNavFor": ".slider-nav","autoplay": true,"autoplaySpeed": 11500,"speed": 1000,"dots": false,"infinite": false,}`;
+   const slider_nav = `{"slidesToShow": 5,"slidesToScroll": 1,"asNavFor": ".slider-for","dots": true,"centerMode": true,"focusOnSelect": true,}`;
+   if (!data.id) return <p>Loading...</p>;
    return (
       <section>
          <div className="container">
@@ -28,9 +73,16 @@ function ShopSection({ data = {} }) {
                   <div className="details-items">
                      <div className="row g-4">
                         <div className="col-md-6">
-                           <div className="row g-4 ratio_asos">
-                              {images.slice(0, 1).map(({ src, alt }, key) => (
-                                 <div key={key} className="col-12">
+                           <div className="row g-4 ratio_asos slider-for" data-slick={slider_for}>
+                              {images.map(({ src, alt }, key) => (
+                                 <div key={key} className="col-12 ">
+                                    <img src={src} className="img-fluid w-100" alt={alt} />
+                                 </div>
+                              ))}
+                           </div>
+                           <div className="row ratio_asos slider-nav mb-3" data-slick={slider_nav}>
+                              {images.map(({ src, alt }, key) => (
+                                 <div key={key} className="col-12 ">
                                     <img src={src} className="img-fluid w-100" alt={alt} />
                                  </div>
                               ))}
@@ -39,36 +91,29 @@ function ShopSection({ data = {} }) {
 
                         <div className="col-md-6">
                            <div className="cloth-details-size">
-                              <div className="product-count">
-                                 <ul>
-                                    <li>
-                                       <img src="/images/gif/fire.gif" className="img-fluid blur-up lazyload" alt="image" />
-                                       <span className="p-counter">37</span>
-                                       <span className="lang">orders in last 24 hours</span>
-                                    </li>
-                                    <li>
-                                       <img src="/images/gif/person.gif" className="img-fluid user_img blur-up lazyload" alt="image" />
-                                       <span className="p-counter">44</span>
-                                       <span className="lang">active view this</span>
-                                    </li>
-                                 </ul>
-                              </div>
-
                               <div className="details-image-concept">
                                  <h2>{name}</h2>
                               </div>
 
                               <div className="label-section">
-                                 <span className="badge badge-grey-color">#1 Best seller</span>
-                                 <span className="label-text">in {categories[0].name}</span>
+                                 {categories.map(({ slug, name }, key) => (
+                                    <span
+                                       key={key}
+                                       className="badge badge-grey-color me-2"
+                                       role="button"
+                                       onClick={() => router.push("/product-category/" + slug)}
+                                    >
+                                       in {name}
+                                    </span>
+                                 ))}
                               </div>
 
                               <h3 className="price-detail">
                                  {conventToCurrency(price)}
                                  {on_sale && (
                                     <>
-                                       <del>$459.00</del>
-                                       <span>55% off</span>
+                                       <del>{conventToCurrency(regular_price)}</del>
+                                       <span>{Math.floor((1 - price / regular_price) * 100)}% off</span>
                                     </>
                                  )}
                               </h3>
@@ -76,17 +121,7 @@ function ShopSection({ data = {} }) {
                               <div className="color-image">
                                  <div className="image-select">
                                     <h5>Color :</h5>
-                                    <div className="size-box">
-                                       <ul>
-                                          {attributes
-                                             .filter((item) => item.name === "Color")[0]
-                                             .options.map((item, index) => (
-                                                <li className={"border rounded m-2 p-2"} role={"button"} key={index}>
-                                                   {item}
-                                                </li>
-                                             ))}
-                                       </ul>
-                                    </div>
+                                    <ColorImage related_ids={related_ids} imageSef={{ src: images[0].src, id: id, alt: images[0].alt, slug: slug }} />
                                  </div>
                               </div>
                               <div id="selectSize" className="addeffect-section product-description border-product">
@@ -145,32 +180,31 @@ function ShopSection({ data = {} }) {
                                     {shipping_required && <span className="lang">Free shipping for orders above $500 USD</span>}
                                  </li>
                               </ul>
+                              {date_on_sale_to && (
+                                 <div className="mt-2 mt-md-3 border-product">
+                                    <h6 className="product-title hurry-title d-block">
+                                       Hurry Up! Left <span>{stock_quantity}</span> in stock
+                                    </h6>
 
-                              <div className="mt-2 mt-md-3 border-product">
-                                 <h6 className="product-title hurry-title d-block">
-                                    Hurry Up! Left <span>{stock_quantity}</span> in stock
-                                 </h6>
-                                 <div className="progress">
-                                    <div className="progress-bar" role="progressbar" style={{ width: "70%" }}></div>
+                                    <div className="font-light timer-5">
+                                       <h5>Order in the next to get</h5>
+                                       <ul className="timer1">
+                                          <li className="counter">
+                                             <h5 id="days">&#9251;</h5> Days :
+                                          </li>
+                                          <li className="counter">
+                                             <h5 id="hours">&#9251;</h5> Hour :
+                                          </li>
+                                          <li className="counter">
+                                             <h5 id="minutes">&#9251;</h5> Min :
+                                          </li>
+                                          <li className="counter">
+                                             <h5 id="seconds">&#9251;</h5> Sec
+                                          </li>
+                                       </ul>
+                                    </div>
                                  </div>
-                                 <div className="font-light timer-5">
-                                    <h5>Order in the next to get</h5>
-                                    <ul className="timer1">
-                                       <li className="counter">
-                                          <h5 id="days">&#9251;</h5> Days :
-                                       </li>
-                                       <li className="counter">
-                                          <h5 id="hours">&#9251;</h5> Hour :
-                                       </li>
-                                       <li className="counter">
-                                          <h5 id="minutes">&#9251;</h5> Min :
-                                       </li>
-                                       <li className="counter">
-                                          <h5 id="seconds">&#9251;</h5> Sec
-                                       </li>
-                                    </ul>
-                                 </div>
-                              </div>
+                              )}
 
                               <div className="border-product">
                                  <h6 className="product-title d-block">share it</h6>
@@ -209,8 +243,6 @@ function ShopSection({ data = {} }) {
                      </div>
                   </div>
                </div>
-
-               {/* <ClothReview/> */}
             </div>
          </div>
       </section>

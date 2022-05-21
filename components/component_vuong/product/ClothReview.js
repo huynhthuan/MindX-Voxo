@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { fetchApi } from "../../../src/api/Api_vuong/fetchApiGetCategories";
+import { fetchApi, fetchApiReviewProduct } from "../../../src/api/Api_vuong/fetchApiGetCategories";
 import RatingDetails from "../../Product/RatingDetails";
+import { convertObjectToParams } from "../Common";
 
-function ClothReview({ data = {}, rerender, setRerender }) {
+function ClothReview({ data = {} }) {
+   const [reviews, setReviews] = useState(data.reviews || []);
+   const [isLoadingreviews, setIsLoadingReviews] = useState(false);
    let arrQA = [];
    useEffect(() => {
       const descElement = document.getElementById("desc");
@@ -13,66 +16,43 @@ function ClothReview({ data = {}, rerender, setRerender }) {
       if (nav_guideElement) nav_guideElement.innerHTML = data.meta_data.filter((item) => item.key === "guide")[0].value;
    }, [data]);
    if (!data.id) return "Loading...";
-   const {
-      id,
-      price,
-      slug,
-      name,
-      rating_count,
-      stock_quantity,
-      categories,
-      images,
-      average_rating,
-      on_sale,
-      sale_price,
-      attributes,
-      featured,
-      description,
-      price_html,
-      dimensions,
-      weight,
-      date_created,
-      sku,
-   } = data;
+   const { id } = data;
    if (data.meta_data) {
       const totalQA = data.meta_data.filter((item, index) => item.key === "question_and_answers")[0].value;
       for (let index = 0; index < totalQA; index++) {
          const question = data.meta_data.filter((item) => item.key === "question_and_answers_" + index + "_question")[0].value;
-
          const answers = data.meta_data.filter((item) => item.key === "question_and_answers_" + index + "_answer")[0].value;
          arrQA.push({ answers, question });
       }
    }
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
+      setIsLoadingReviews(true);
       e.preventDefault();
       const data = {
          product_id: id,
-         review: e.target[3].value,
          reviewer: e.target[1].value,
          reviewer_email: e.target[2].value,
+         review: e.target[3].value,
          rating: e.target[0].value,
       };
+      console.log(`  ~ data`, data)
+      const url = convertObjectToParams(data);
       const arrForm = [...e.target];
-      try {
-         fetchApi.post("/products/reviews", data).then((res) => {
-            console.log(res);
-            arrForm.map((item) => (item.value = ""));
-            setRerender(!rerender);
-         });
-      } catch (error) {
-         console.log(`  ~ error`, error)
-         console.log(error.response);
-         throw Error(error)
+      const res = await fetchApiReviewProduct(url, id);
+      if (res[0]) {
+         setReviews(res);
+         arrForm.map((item) => (item.value = ""));
       }
+      setIsLoadingReviews(false);
    };
-   console.log(`  ~ data`, data);
+
    return (
       <div className="container">
          <div className="row gx-4 gy-5">
             <div className="col-12">
                <div className="cloth-review">
                   <nav>
-                     <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                     <div className="nav nav-tabs " id="nav-tab" role="tablist">
                         <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#desc" type="button">
                            Description
                         </button>
@@ -89,7 +69,7 @@ function ClothReview({ data = {}, rerender, setRerender }) {
                            Q & A
                         </button>
 
-                        <button className="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#review" type="button">
+                        <button className="nav-link " id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#review" type="button">
                            Review
                         </button>
                      </div>
@@ -229,14 +209,28 @@ function ClothReview({ data = {}, rerender, setRerender }) {
                                        <label className="mb-1" htmlFor="name">
                                           Name
                                        </label>
-                                       <input type="text" className="form-control" id="name" placeholder="Enter your name" required />
+                                       <input
+                                          type="text"
+                                          disabled={isLoadingreviews}
+                                          className="form-control"
+                                          id="name"
+                                          placeholder="Enter your name"
+                                          required
+                                       />
                                     </div>
 
                                     <div className="col-12 col-md-6">
                                        <label className="mb-1" htmlFor="id">
                                           Email Address
                                        </label>
-                                       <input type="email" className="form-control" id="id" placeholder="Email Address" required />
+                                       <input
+                                          type="email"
+                                          disabled={isLoadingreviews}
+                                          className="form-control"
+                                          id="id"
+                                          placeholder="Email Address"
+                                          required
+                                       />
                                     </div>
 
                                     <div className="col-12">
@@ -244,6 +238,7 @@ function ClothReview({ data = {}, rerender, setRerender }) {
                                           Comments
                                        </label>
                                        <textarea
+                                          disabled={isLoadingreviews}
                                           className="form-control"
                                           placeholder="Leave a comment here"
                                           id="comments"
@@ -253,7 +248,11 @@ function ClothReview({ data = {}, rerender, setRerender }) {
                                     </div>
 
                                     <div className="col-12">
-                                       <button type="submit" className="btn default-light-theme default-theme default-theme-2">
+                                       <button
+                                          type="submit"
+                                          disabled={isLoadingreviews}
+                                          className="btn default-light-theme default-theme default-theme-2"
+                                       >
                                           Submit
                                        </button>
                                     </div>
@@ -264,8 +263,8 @@ function ClothReview({ data = {}, rerender, setRerender }) {
                            <div className="col-12 mt-4">
                               <div className="customer-review-box">
                                  <h4>Customer Reviews</h4>
-                                 {!data.reviews[0] && <p className="alert alert-warning w-100 text-center">There are no review in this product</p>}
-                                 {data.reviews.map(({ date_created, reviewer_avatar_urls, review, rating, reviewer }, index) => (
+                                 {!reviews[0] && <p className="alert alert-warning w-100 text-center">There are no review in this product</p>}
+                                 {reviews.map(({ date_created, reviewer_avatar_urls, review, rating, reviewer }, index) => (
                                     <div key={index} className="customer-section">
                                        <div className="customer-profile">
                                           <img src={reviewer_avatar_urls["24"]} className="img-fluid blur-up lazyload" alt="" />
@@ -274,25 +273,7 @@ function ClothReview({ data = {}, rerender, setRerender }) {
                                        <div className="customer-details">
                                           <h5>{reviewer}</h5>
                                           <RatingDetails rating={rating} />
-                                          {/* <ul className="rating my-2 d-inline-block">
-                                             <li>
-                                                <i className="fas fa-star theme-color"></i>
-                                             </li>
-                                             <li>
-                                                <i className="fas fa-star theme-color"></i>
-                                             </li>
-                                             <li>
-                                                <i className="fas fa-star theme-color"></i>
-                                             </li>
-                                             <li>
-                                                <i className="fas fa-star"></i>
-                                             </li>
-                                             <li>
-                                                <i className="fas fa-star"></i>
-                                             </li>
-                                          </ul> */}
                                           <p className="font-light" dangerouslySetInnerHTML={{ __html: review }}></p>
-
                                           <p className="date-custo font-light">{date_created}</p>
                                        </div>
                                     </div>

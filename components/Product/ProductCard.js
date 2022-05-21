@@ -3,31 +3,32 @@ import { useRouter } from "next/router";
 import { conventToCurrency } from "../component_vuong/Common";
 import RatingDetails from "./RatingDetails";
 
-function ProductCart({ id, price, slug, name, rating_count, categories, images, average_rating, sale_price, on_sale, featured }) {
+function ProductCard({ id, price, slug, name, rating_count, categories, regular_price, images, average_rating, sale_price, on_sale, featured }) {
    const router = useRouter();
    useEffect(() => {
       functionJquery();
    }, []);
-   const handleClick = (slug,id) => {
-      router.push("/product/" + slug+'?id='+id);
+   const handleClick = (slug, id) => {
+      slug=slug||'no-name'
+      router.push(`/product/${slug}?id=${id}`);
    };
 
    return (
       <div className="product-box">
          <div className="img-wrapper">
             <div className="front">
-               <div role={'button'} onClick={() => handleClick(slug,id)}>
+               <div role={"button"} onClick={() => handleClick(slug, id)}>
                   <img src={images[0].src} className="bg-img blur-up lazyload" alt="" />
                </div>
             </div>
             <div className="back">
-               <div role={'button'} onClick={() => handleClick(slug,id)}>
-                  <img src={images[4].src} className="bg-img blur-up lazyload" alt="" />
+               <div role={"button"} onClick={() => handleClick(slug, id)}>
+                  <img src={images[2].src} className="bg-img blur-up lazyload" alt="" />
                </div>
             </div>
             <div className="label-block">
                {featured && <span className="label label-black">New</span>}
-               {on_sale && <span className="label label-theme">{sale_price}% Off</span>}
+               {on_sale && <span className="label label-theme">{Math.floor((1 - price / regular_price) * 100)}% Off</span>}
             </div>
             <div className="cart-wrap">
                <ul>
@@ -60,7 +61,7 @@ function ProductCart({ id, price, slug, name, rating_count, categories, images, 
                <RatingDetails rating={average_rating} />
             </div>
             <div className="main-price">
-               <div onClick={() => handleClick(slug,id)} role="button" className="font-default">
+               <div onClick={() => handleClick(slug, id)} role="button" className="font-default">
                   <h5>{name}</h5>
                </div>
                <div className="listing-content">
@@ -79,7 +80,7 @@ function ProductCart({ id, price, slug, name, rating_count, categories, images, 
    );
 }
 
-export default ProductCart;
+export default ProductCard;
 
 const functionJquery = () => {
    (function ($) {
