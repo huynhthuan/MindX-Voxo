@@ -57,6 +57,13 @@ const userApi = {
             params,
         });
     },
+    UpdateAvatar: (params) => {
+        const url = '/api/user/update_user_avatar';
+
+        return axiosClient.post(url, null, {
+            params,
+        });
+    },
 };
 
 export default userApi;

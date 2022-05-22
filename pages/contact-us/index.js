@@ -1,41 +1,41 @@
+import { useEffect } from 'react';
+import Breadcrumb from '../../components/Common/BreadCrumb';
+import SubscribeBox from '../../components/Common/SubscribeBox';
+
 function ContactUs() {
+    useEffect(() => {
+        (function ($) {
+            'use strict';
+            $('.bg-top').parent().addClass('b-top');
+            $('.bg-bottom').parent().addClass('b-bottom');
+            $('.bg-center').parent().addClass('b-center');
+            $('.bg-left').parent().addClass('b-left');
+            $('.bg-right').parent().addClass('b-right');
+            $('.bg_size_content').parent().addClass('b_size_content');
+            $('.bg-img').parent().addClass('bg-size');
+            $('.bg-img.blur-up').parent().addClass('blur-up lazyload');
+            $('.bg-img').each(function () {
+                var el = $(this),
+                    src = el.attr('src'),
+                    parent = el.parent();
+
+                parent.css({
+                    'background-image': 'url(' + src + ')',
+                    'background-size': 'cover',
+                    'background-position': 'center',
+                    'background-repeat': 'no-repeat',
+                    display: 'block',
+                });
+
+                el.hide();
+            });
+        })(jQuery);
+        feather.replace();
+    }, []);
+
     return (
         <>
-            {/* Breadcrumb section start */}
-            <section className="breadcrumb-section section-b-space">
-                <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h3>Contact Us</h3>
-                            <nav>
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item">
-                                        <a href="index.html">
-                                            <i className="fas fa-home"></i>
-                                        </a>
-                                    </li>
-                                    <li className="breadcrumb-item active" aria-current="page">
-                                        Contact us
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Breadcrumb section end */}
+            <Breadcrumb title={'Contact us'} />
 
             {/* Contact Section Start */}
             <section className="contact-section">
@@ -46,44 +46,95 @@ function ContactUs() {
                                 <div className="material-details">
                                     <div className="title title1 title-effect mb-1 title-left">
                                         <h2>Contact Us</h2>
-                                        <p className="ms-0 w-100">Your email address will not be published. Required fields are marked *</p>
+                                        <p className="ms-0 w-100">
+                                            Your email address will not be
+                                            published. Required fields are
+                                            marked *
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="row g-4 mt-md-1 mt-2">
                                     <div className="col-md-6">
-                                        <label htmlFor="first" className="form-label">
+                                        <label
+                                            htmlFor="first"
+                                            className="form-label"
+                                        >
                                             First Name
                                         </label>
-                                        <input type="text" className="form-control" id="first" placeholder="Enter Your First Name" required />
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="first"
+                                            placeholder="Enter Your First Name"
+                                            required
+                                        />
                                     </div>
                                     <div className="col-md-6">
-                                        <label htmlFor="last" className="form-label">
+                                        <label
+                                            htmlFor="last"
+                                            className="form-label"
+                                        >
                                             Last Name
                                         </label>
-                                        <input type="text" className="form-control" id="last" placeholder="Enter Your Last Name" required />
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            id="last"
+                                            placeholder="Enter Your Last Name"
+                                            required
+                                        />
                                     </div>
                                     <div className="col-md-6">
-                                        <label htmlFor="email" className="form-label">
+                                        <label
+                                            htmlFor="email"
+                                            className="form-label"
+                                        >
                                             Email
                                         </label>
-                                        <input type="email" className="form-control" id="email" placeholder="Enter Your Email Address" required />
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            id="email"
+                                            placeholder="Enter Your Email Address"
+                                            required
+                                        />
                                     </div>
                                     <div className="col-md-6">
-                                        <label htmlFor="email2" className="form-label">
+                                        <label
+                                            htmlFor="email2"
+                                            className="form-label"
+                                        >
                                             Confirm Email
                                         </label>
-                                        <input type="email" className="form-control" id="email2" placeholder="Enter Your Confirm Email Address" required />
+                                        <input
+                                            type="email"
+                                            className="form-control"
+                                            id="email2"
+                                            placeholder="Enter Your Confirm Email Address"
+                                            required
+                                        />
                                     </div>
 
                                     <div className="col-12">
-                                        <label htmlFor="comment" className="form-label">
+                                        <label
+                                            htmlFor="comment"
+                                            className="form-label"
+                                        >
                                             Comment
                                         </label>
-                                        <textarea className="form-control" id="comment" rows="5" required></textarea>
+                                        <textarea
+                                            className="form-control"
+                                            id="comment"
+                                            rows="5"
+                                            required
+                                        ></textarea>
                                     </div>
 
                                     <div className="col-auto">
-                                        <button className="btn btn-solid-default" type="submit">
+                                        <button
+                                            className="btn btn-solid-default"
+                                            type="submit"
+                                        >
                                             Submit
                                         </button>
                                     </div>
@@ -95,14 +146,21 @@ function ContactUs() {
                             <div className="contact-details">
                                 <div>
                                     <h2>Let's get in touch</h2>
-                                    <h5 className="font-light">We're open for any suggestion or just to have a chat</h5>
+                                    <h5 className="font-light">
+                                        We're open for any suggestion or just to
+                                        have a chat
+                                    </h5>
                                     <div className="contact-box">
                                         <div className="contact-icon">
                                             <i data-feather="map-pin"></i>
                                         </div>
                                         <div className="contact-title">
                                             <h4>Address :</h4>
-                                            <p>1418 Riverwood Drive, Suite 3245 Cottonwood, CA 96052, United States</p>
+                                            <p>
+                                                1418 Riverwood Drive, Suite 3245
+                                                Cottonwood, CA 96052, United
+                                                States
+                                            </p>
                                         </div>
                                     </div>
 
@@ -152,31 +210,7 @@ function ContactUs() {
             </section>
             {/* Map Section End */}
 
-            {/* Subscribe Section Start */}
-            <section className="subscribe-section section-b-space">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-8 col-md-6">
-                            <div className="subscribe-details">
-                                <h2 className="mb-3">Subscribe Our News</h2>
-                                <h6 className="font-light">Subscribe and receive our newsletters to follow the news about our fresh and fantastic Products.</h6>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 mt-md-0 mt-3">
-                            <div className="subsribe-input">
-                                <div className="input-group">
-                                    <input type="text" className="form-control subscribe-input" placeholder="Your Email Address" />
-                                    <button className="btn btn-solid-default" type="button">
-                                        Button
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Subscribe Section End */}
+            <SubscribeBox />
         </>
     );
 }

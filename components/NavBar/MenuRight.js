@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../store/auth/authSlice';
 import SmallCart from './MenuRight/SmallCart';
 import WisList from './MenuRight/WisList';
@@ -23,8 +24,33 @@ function MenuRight() {
                 </li>
                 <li className="onhover-dropdown">
                     <div className="cart-media">
-                        <i data-feather="user"></i>
-                        <span className="ms-1">{cookie !== null ? user.username : ''}</span>
+                        {cookie ? (
+                            <span className="avatar">
+                                <img
+                                    src={cookie !== null ? user.avatar : ''}
+                                    alt=""
+                                />
+                            </span>
+                        ) : (
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="feather feather-user"
+                            >
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        )}
+                        <span className="ms-1">
+                            {cookie !== null ? user.username : ''}
+                        </span>
                     </div>
                     <div className="onhover-div profile-dropdown">
                         <ul>
@@ -32,7 +58,9 @@ function MenuRight() {
                                 <>
                                     <li>
                                         <Link href="/user-dashboard">
-                                            <a className="d-block">My account</a>
+                                            <a className="d-block">
+                                                My account
+                                            </a>
                                         </Link>
                                     </li>
                                     <li>

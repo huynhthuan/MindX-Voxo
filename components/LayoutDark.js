@@ -12,25 +12,23 @@ function Layout({ children }) {
     let dispatch = useDispatch();
     const { theme } = useSelector((state) => state.webSetting);
     useEffect(() => {
-        if (!cookie) {
-            return;
+        if (cookie) {
+            let cookieCheck = setInterval(() => {
+                if (moment().format('X') >= cookie_expiration) {
+                    toast.warn('Your login session has expired!', {
+                        position: 'bottom-left',
+                        autoClose: 2000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    dispatch(logOut());
+                    clearInterval(cookieCheck);
+                }
+            }, 1000);
         }
-
-        let cookieCheck = setInterval(() => {
-            if (moment().format('X') >= cookie_expiration) {
-                toast.warn('Your login session has expired!', {
-                    position: 'bottom-left',
-                    autoClose: 2000,
-                    hideProgressBar: true,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                });
-                dispatch(logOut());
-                clearInterval(cookieCheck);
-            }
-        }, 1000);
 
         return () => clearInterval(cookieCheck);
     }, [cookie_expiration]);

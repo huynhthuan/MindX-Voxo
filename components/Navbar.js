@@ -12,8 +12,6 @@ function Navbar() {
         feather.replace();
     }, []);
 
-    const { theme } = useSelector((state) => state.webSetting);
-
     return (
         <>
             {/* header start */}
