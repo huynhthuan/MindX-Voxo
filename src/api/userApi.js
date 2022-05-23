@@ -29,6 +29,41 @@ const userApi = {
             params,
         });
     },
+    GetAddressList: (params) => {
+        const url = '/api/user/get_user_address_list';
+
+        return axiosClient.get(url, {
+            params,
+        });
+    },
+    UpdateAddressList: (params) => {
+        const url = '/api/user/update_user_address_list';
+
+        return axiosClient.post(url, null, {
+            params,
+        });
+    },
+    AddAddressList: (params) => {
+        const url = '/api/user/add_user_address_list';
+
+        return axiosClient.post(url, null, {
+            params,
+        });
+    },
+    RemoveAddressList: (params) => {
+        const url = '/api/user/remove_user_address_list';
+
+        return axiosClient.post(url, null, {
+            params,
+        });
+    },
+    UpdateAvatar: (params) => {
+        const url = '/api/user/update_user_avatar';
+
+        return axiosClient.post(url, null, {
+            params,
+        });
+    },
 };
 
 export default userApi;

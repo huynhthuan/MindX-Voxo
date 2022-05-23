@@ -26,6 +26,15 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
+        updateAvatar: (state, action) => {
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    avatar: action.payload,
+                },
+            };
+        },
         loginSuccess: (state, action) => {
             return {
                 ...action.payload,
@@ -39,6 +48,6 @@ export const authSlice = createSlice({
     },
 });
 
-export const { loginSuccess, logOut } = authSlice.actions;
+export const { loginSuccess, logOut, updateAvatar } = authSlice.actions;
 
 export default authSlice.reducer;

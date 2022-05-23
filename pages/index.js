@@ -8,7 +8,17 @@ import ProductGrid from '../components/Home/ProductGrid';
 import Services from '../components/Home/Services';
 import Slider from '../components/Home/Slider';
 
-export default function Home() {
+export async function getStaticProps() {
+    // const res = await fetch('https://.../posts')
+    // const posts = await res.json()
+    // return {
+    //   props: {
+    //     posts,
+    //   },
+    // }
+}
+
+export default function Home({dataHome}) {
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -45,13 +55,13 @@ export default function Home() {
 
             <BannerProductCategory />
 
-            <ProductGrid />
+            {/* <ProductGrid /> */}
 
             <CategorySlider />
 
             <BannerProductCategoryGrid />
 
-            <ProductGrid />
+            {/* <ProductGrid /> */}
 
             <BannerTimer />
 

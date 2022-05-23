@@ -84,7 +84,7 @@ function WishList() {
                                     <Skeleton count={1} />
                                 </td>
                             </tr>
-                        ) : (
+                        ) : orderProductQueries.length > 0 ? (
                             orderProductQueries.map((query, index) => (
                                 <WishListItem
                                     key={index}
@@ -92,6 +92,14 @@ function WishList() {
                                     productsWishList={dataProducts}
                                 />
                             ))
+                        ) : (
+                            <tr>
+                                <td colSpan={5}>
+                                    <p className="alert alert-warning">
+                                        No product in wishlist
+                                    </p>
+                                </td>
+                            </tr>
                         )}
                     </tbody>
                 </table>

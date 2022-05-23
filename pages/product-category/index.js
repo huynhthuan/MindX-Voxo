@@ -6,14 +6,10 @@ import ProductCateBoxItem from '../../components/ProductCategory/ProductCateBoxI
 import customApi from '../../src/api/wordpress/customApi';
 
 // This gets called on every request
-export async function getServerSideProps({ req, res }) {
-    res.setHeader(
-        'Cache-Control',
-        'public, s-maxage=10, stale-while-revalidate=59'
-    );
+export async function getStaticProps({ req, res }) {
     let getProductCat = async () => {
         let result = [];
-        let res = await customApi.getProductCategories({
+        let res = await customApi.GetProductCategories({
             parent: 0,
             order: 'asc',
             orderby: 'name',
@@ -23,7 +19,7 @@ export async function getServerSideProps({ req, res }) {
 
         await Promise.all(
             res.map(async (category, index) => {
-                let childCategory = await customApi.getProductCategories({
+                let childCategory = await customApi.GetProductCategories({
                     parent: category.id,
                     order: 'asc',
                     orderby: 'name',

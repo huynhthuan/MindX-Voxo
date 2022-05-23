@@ -1,10 +1,14 @@
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import Head from 'next/head';
 import PostCard from '../../components/Posts/PostCard';
 import Sidebar from '../../components/Blog/Sidebar';
+import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
+import { useBlogListNewPost } from '../../src/api_minhhieu/bloglistApi';
 
 function Blog() {
+
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -34,6 +38,15 @@ function Blog() {
         })(jQuery);
         feather.replace();
     }, []);
+    
+    const router = useRouter();
+    const {page} = router.query;
+
+    const { isLoading, error, data, isFetching } = useBlogListNewPost({ page: page ? page : 1 });
+
+    console.log(data);
+
+    if (error) return 'An error has occurred: ' + error.message
 
     return (
         <>
@@ -57,7 +70,7 @@ function Blog() {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h3>Blog Listing</h3>
+                            <h3>New Post</h3>
                             <nav>
                                 <ol className="breadcrumb">
                                     <li className="breadcrumb-item">
@@ -69,7 +82,7 @@ function Blog() {
                                         className="breadcrumb-item active"
                                         aria-current="page"
                                     >
-                                        Blog Listing
+                                        New Post
                                     </li>
                                 </ol>
                             </nav>
@@ -85,45 +98,21 @@ function Blog() {
                     <div className="row g-4">
                         <div className="col-lg-9 col-md-7 order-md-1 ratio_square">
                             <div className="row g-4 g-xl-5">
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
+                                {/* minhhieu */}
+                                {
+                                    isLoading
+                                        ?
+                                            Array(8).fill(0).map((item, index) => {
+                                                return <NewPostBlogListSkeleton key={index}/>
+                                            })
+                                        :
 
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
+                                            data.responseInfo && data.responseInfo.map( (item,index) => {
+                                                return <div className="col-12" key={index}>
+                                                    <PostCard {...item}/>
+                                                </div>
+                                            })
+                                }
                             </div>
                         </div>
 
@@ -152,30 +141,22 @@ function Blog() {
                                             </span>
                                         </a>
                                     </li>
-                                    <li className="page-item active">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            1
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            2
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            3
-                                        </a>
-                                    </li>
+                                    {/* minhhieu */}
+                                    {
+                                        !isLoading
+                                            && 
+                                                data?.totalPage && 
+                                                    Array(data.totalPage * 1).fill(0).map((item, index) => {
+                                                        return <li className="page-item active" key={index}>
+                                                            <a
+                                                                className="page-link"
+                                                                href={`?page=${index + 1}`}
+                                                            >
+                                                                {index+1}
+                                                            </a>
+                                                        </li>
+                                                    })
+                                    }
                                     <li className="page-item">
                                         <a className="page-link">
                                             <span aria-hidden="true">

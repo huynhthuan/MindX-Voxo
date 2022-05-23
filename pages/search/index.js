@@ -36,27 +36,27 @@ function Search() {
 
     return (
         <>
-            <section class="search-section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="title title1 text-center">
+            <section className="search-section">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="title title1 text-center">
                                 <h2>Search For Posts</h2>
                             </div>
                         </div>
-                        <div class="col-lg-6 col-md-8 mx-auto">
-                            <div class="search-bar">
-                                <div class="input-group search-bar w-100  mb-5">
+                        <div className="col-lg-6 col-md-8 mx-auto">
+                            <div className="search-bar">
+                                <div className="input-group search-bar w-100  mb-5">
                                     <input
                                         type="search"
-                                        class="form-control"
+                                        className="form-control"
                                         placeholder="Search"
                                     />
                                     <button
-                                        class="input-group-text"
+                                        className="input-group-text"
                                         id="basic-addon3"
                                     >
-                                        <i class="fas fa-search"></i>
+                                        <i className="fas fa-search"></i>
                                     </button>
                                 </div>
                             </div>
@@ -65,11 +65,14 @@ function Search() {
                 </div>
             </section>
 
-            <section className="left-sidebar-section masonary-blog-section">
+            <section className="left-sidebar-section masonary-blog-section mb-5">
                 <div className="container">
                     <div className="row g-4">
-                        <div className="col-lg-9 col-md-7 order-md-1 ratio_square">
-                            <div className="row g-4 g-xl-5">
+                        <div className="col-12">
+                            <h2 className="mb-2">Posts for keyword: </h2>
+                        </div>
+                        <div className="col-lg-9 col-md-7 ratio_square">
+                            <div className="row g-4 g-xl-5 pb-5">
                                 <div className="col-12">
                                     <PostCard />
                                 </div>
@@ -110,64 +113,60 @@ function Search() {
                                     <PostCard />
                                 </div>
                             </div>
+
+                            <div className="row">
+                                <div className="col-12">
+                                    <nav className="page-section mt-0">
+                                        <ul className="pagination">
+                                            <li className="page-item">
+                                                <a
+                                                    className="page-link"
+                                                    href="undefined"
+                                                >
+                                                    <span aria-hidden="true">
+                                                        <i className="fas fa-chevron-left"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li className="page-item active">
+                                                <a
+                                                    className="page-link"
+                                                    href="undefined"
+                                                >
+                                                    1
+                                                </a>
+                                            </li>
+                                            <li className="page-item">
+                                                <a
+                                                    className="page-link"
+                                                    href="undefined"
+                                                >
+                                                    2
+                                                </a>
+                                            </li>
+                                            <li className="page-item">
+                                                <a
+                                                    className="page-link"
+                                                    href="undefined"
+                                                >
+                                                    3
+                                                </a>
+                                            </li>
+                                            <li className="page-item">
+                                                <a className="page-link">
+                                                    <span aria-hidden="true">
+                                                        <i className="fas fa-chevron-right"></i>
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="col-lg-3 col-md-5">
                             <Sidebar />
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section className="section-b-space">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <nav className="page-section mt-0">
-                                <ul className="pagination">
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            <span aria-hidden="true">
-                                                <i className="fas fa-chevron-left"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li className="page-item active">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            1
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            2
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a
-                                            className="page-link"
-                                            href="undefined"
-                                        >
-                                            3
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link">
-                                            <span aria-hidden="true">
-                                                <i className="fas fa-chevron-right"></i>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>

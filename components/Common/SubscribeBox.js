@@ -25,7 +25,7 @@ function SubscribeBox() {
                                     className="btn btn-solid-default"
                                     type="button"
                                 >
-                                    Button
+                                    Submit
                                 </button>
                             </div>
                         </div>

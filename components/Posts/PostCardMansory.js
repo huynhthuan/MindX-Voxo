@@ -1,16 +1,35 @@
-function PostCardMansory() {
+import { useQuery } from 'react-query';
+import { BLOG_LIST } from '../../utils/api_minhhieu';
+
+function PostCardMansory({id,title}) {
+    
+    const { isLoading, error, data } = useQuery('media', async () =>
+        {
+            const res = await fetch(BLOG_LIST + id + '?_embed');
+        
+            const data = await res.json();
+
+            return data;
+        }
+    );
+
+    if (error) 
+        return 'An error has occurred: ' + error.message;
+
     return (
-        <div className="card masonary-blog">
+        <div className="card masonary-blog" style={{height:'100%'}}>
             <a href="blog-details.html">
                 <img
-                    src="/images/inner-page/product/1.jpg"
+                    src={
+                        !isLoading && data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+                    }
                     alt=""
                     className="card-img-top blur-up lazyload"
                 />
             </a>
             <div className="card-body">
                 <a href="blog-details.html">
-                    <h2 className="card-title">Just a Standard Format Post.</h2>
+                    <h2 className="card-title">{title.rendered}</h2>
                 </a>
                 <p className="font-light">
                     Lorem ipsum, dolor sit amet consectetur adipisicing elit.
@@ -19,18 +38,25 @@ function PostCardMansory() {
                     culpa, fugit magnam recusandae porro labore eligendi?
                 </p>
                 <div className="blog-profile">
-                    <div className="image-profile">
-                        <img
-                            src="/images/inner-page/review-image/1.jpg"
-                            className="img-fluid blur-up lazyload"
-                            alt=""
-                        />
-                    </div>
+                    {
+                        !isLoading
+                            &&
+                                data 
+                                    && 
+                                        <>
+                                            <div className="image-profile">
+                                                <img
+                                                    src={data._embedded.author[0].avatar_urls["24"]}
+                                                    className="img-fluid blur-up lazyload"
+                                                    alt=""
+                                                />
+                                            </div>
 
-                    <div className="image-name">
-                        <h3>John wike</h3>
-                        <h6>15 Aug 2021</h6>
-                    </div>
+                                            <div className="image-name">
+                                                <h3>{data._embedded.author[0].name}</h3>
+                                            </div>
+                                        </>
+                    }
                 </div>
             </div>
         </div>

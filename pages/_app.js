@@ -4,6 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import NextNProgress from 'nextjs-progressbar';
 
 import Layout from '../components/Layout';
 
@@ -17,9 +18,7 @@ import '../styles/vendors/animate.css';
 import '../styles/vendors/ion.rangeSlider.min.css';
 import '../styles/vendors/slick/slick.css';
 import '../styles/vendors/slick/slick-theme.css';
-import '../styles/demo2.css';
 import '../styles/globals.css';
-import NextNProgress from 'nextjs-progressbar';
 
 const queryClient = new QueryClient({
     defaultOptions: {

@@ -56,7 +56,7 @@ function NavLeft() {
                     title={'Saved Address'}
                 />
 
-                <NavItem tabId={'tab-pay'} target={'#pay'} title={'Payment'} />
+                {/* <NavItem tabId={'tab-pay'} target={'#pay'} title={'Payment'} /> */}
 
                 <NavItem
                     tabId={'tab-profile'}
@@ -64,11 +64,11 @@ function NavLeft() {
                     title={'Profile'}
                 />
 
-                <NavItem
+                {/* <NavItem
                     tabId={'tab-security'}
                     target={'#security'}
                     title={'Security'}
-                />
+                /> */}
             </ul>
         </div>
     );

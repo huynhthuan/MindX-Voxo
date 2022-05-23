@@ -65,7 +65,7 @@ function BillingAddress() {
                 )}
             </div>
             <button
-                className="btn btn-danger btn-sm rounded-2"
+                className="btn btn-danger btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#editBilling"
             >
