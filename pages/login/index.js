@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import authApi from '../../src/api/authApi';
 import { loginSuccess } from '../../store/auth/authSlice';
 import wooApi from '../../src/api/woocommerce/wooApi';
+import userApi from '../../src/api/userApi';
 
 function Login() {
     const router = useRouter();
@@ -91,8 +92,6 @@ function Login() {
 
             let resWishList = await wooApi.getWishList(user.id);
 
-            setIsLoading(false);
-
             const { share_key } = resWishList.data[0];
 
             dispatch(
@@ -104,6 +103,8 @@ function Login() {
                     share_key,
                 })
             );
+
+            setIsLoading(false);
 
             Swal.fire({
                 title: `Login success!`,

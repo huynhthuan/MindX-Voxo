@@ -40,7 +40,7 @@ function ContactInfor() {
                 )}
             </div>
             <button
-                className="btn btn-danger rounded-2 btn-sm"
+                className="btn btn-danger btn-sm"
                 data-bs-toggle="modal"
                 data-bs-target="#changePassword"
             >

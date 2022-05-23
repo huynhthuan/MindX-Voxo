@@ -1,5 +1,6 @@
 import { Fragment, useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { toast } from 'react-toastify';
 
 function WishListItem({ productQuery, productsWishList }) {
     const { data, isLoading, isError, isFetching, error } = productQuery;
@@ -21,7 +22,6 @@ function WishListItem({ productQuery, productsWishList }) {
         }
     }, [isError]);
 
-    console.log(data);
     return (
         <tr>
             {isLoading || isError || isFetching ? (

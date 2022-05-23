@@ -6,33 +6,44 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../store/auth/authSlice';
 import { ToastContainer, toast, Slide } from 'react-toastify';
-import { useRouter } from 'next/router';
 
 function Layout({ children }) {
     let { cookie_expiration, cookie } = useSelector((state) => state.auth);
     let dispatch = useDispatch();
-
+    const { theme } = useSelector((state) => state.webSetting);
     useEffect(() => {
-        if (cookie) {
-            let cookieCheck = setInterval(() => {
-                if (moment().format('X') >= cookie_expiration) {
-                    toast.warn('Your login session has expired!', {
-                        position: 'bottom-left',
-                        autoClose: 2000,
-                        hideProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                    dispatch(logOut());
-                    clearInterval(cookieCheck);
-                }
-            }, 1000);
+        if (!cookie) {
+            return;
         }
+
+        let cookieCheck = setInterval(() => {
+            if (moment().format('X') >= cookie_expiration) {
+                toast.warn('Your login session has expired!', {
+                    position: 'bottom-left',
+                    autoClose: 2000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+                dispatch(logOut());
+                clearInterval(cookieCheck);
+            }
+        }, 1000);
 
         return () => clearInterval(cookieCheck);
     }, [cookie_expiration]);
+
+    useEffect(() => {
+        if (theme === 'light') {
+            $('body').removeClass('dark');
+            $('body').addClass('light');
+        } else {
+            $('body').removeClass('light');
+            $('body').addClass('dark');
+        }
+    }, [theme]);
 
     return (
         <Fragment>

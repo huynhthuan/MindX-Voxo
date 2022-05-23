@@ -82,9 +82,9 @@ function Order() {
                         ) : data.data.length === 0 ? (
                             <tr>
                                 <td colSpan={5}>
-                                    <span className="text-center">
+                                    <p className="text-center alert alert-warning">
                                         You don't have any orders
-                                    </span>
+                                    </p>
                                 </td>
                             </tr>
                         ) : (

@@ -111,15 +111,15 @@ function OrderTracking() {
                                 )}
                                 <div className="btn-order-action">
                                     <button
-                                        className="btn btn-report btn-sm btn-warning rounded-2"
+                                        className="btn btn-report btn-sm btn-warning"
                                         onClick={onRefreshOrder}
                                     >
                                         Refresh
                                     </button>
-                                    <button className="btn btn-report btn-sm btn-danger rounded-2 ms-2">
+                                    <button className="btn btn-report btn-sm btn-danger ms-2">
                                         Report
                                     </button>
-                                    <button className="btn btn-success btn-sm rounded-2 ms-2">
+                                    <button className="btn btn-success btn-sm ms-2">
                                         Re order
                                     </button>
                                 </div>
