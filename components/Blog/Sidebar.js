@@ -1,4 +1,13 @@
+import {useStickyPosts} from '../../src/api_minhhieu/stickyPostsApi';
+import { SideBarItemSkeleton } from '../Skeleton_minhhieu';
+import SideBarItem from './SideBarItem';
+
 function Sidebar() {
+
+    const { isLoading, error, data, isFetching } = useStickyPosts();
+
+    if (error) return 'An error has occurred: ' + error.message;
+
     return (
         <div className="left-side">
             {/* Search Bar Start */}
@@ -25,101 +34,19 @@ function Sidebar() {
                     <h3>Popular Posts</h3>
                 </div>
 
-                <div className="popular-image">
-                    <div className="popular-number">
-                        <h4 className="theme-color">01</h4>
-                    </div>
-                    <div className="popular-contain">
-                        <h3>
-                            Lorem Ipsum is simply dummy text of the printing.
-                        </h3>
-                        <p className="font-light mb-1">
-                            <span>King Monster</span> in <span>News</span>
-                        </p>
-                        <div className="review-box">
-                            <span className="font-light clock-time">
-                                <i data-feather="clock"></i>
-                                15m ago
-                            </span>
-                            <span className="font-light eye-icon">
-                                <i data-feather="eye"></i>
-                                8641
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="popular-image">
-                    <div className="popular-number">
-                        <h4 className="theme-color">02</h4>
-                    </div>
-                    <div className="popular-contain">
-                        <h3>
-                            Lorem Ipsum is simply dummy text of the printing.
-                        </h3>
-                        <p className="font-light mb-1">
-                            <span>King Monster</span> in <span>News</span>
-                        </p>
-                        <div className="review-box">
-                            <span className="font-light clock-time">
-                                <i data-feather="clock"></i>
-                                15m ago
-                            </span>
-                            <span className="font-light eye-icon">
-                                <i data-feather="eye"></i>
-                                8641
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="popular-image">
-                    <div className="popular-number">
-                        <h4 className="theme-color">03</h4>
-                    </div>
-                    <div className="popular-contain">
-                        <h3>
-                            Lorem Ipsum is simply dummy text of the printing.
-                        </h3>
-                        <p className="font-light mb-1">
-                            <span>King Monster</span> in <span>News</span>
-                        </p>
-                        <div className="review-box">
-                            <span className="font-light clock-time">
-                                <i data-feather="clock"></i>
-                                15m ago
-                            </span>
-                            <span className="font-light eye-icon">
-                                <i data-feather="eye"></i>
-                                8641
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="popular-image">
-                    <div className="popular-number">
-                        <h4 className="theme-color">04</h4>
-                    </div>
-                    <div className="popular-contain">
-                        <h3>
-                            Lorem Ipsum is simply dummy text of the printing.
-                        </h3>
-                        <p className="font-light mb-1">
-                            <span>King Monster</span> in <span>News</span>
-                        </p>
-                        <div className="review-box">
-                            <span className="font-light clock-time">
-                                <i data-feather="clock"></i>
-                                15m ago
-                            </span>
-                            <span className="font-light eye-icon">
-                                <i data-feather="eye"></i>
-                                8641
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                {
+                    isLoading
+                        ? 
+                            Array(5).fill(0).map((item, index) => {
+                                return <SideBarItemSkeleton key={index}/>
+                            })
+                        :
+                            data    
+                                &&
+                                    data.map((item, index) => {
+                                        return <SideBarItem key={index} data={[item,index]}/>
+                                    })
+                }
             </div>
             {/* Popular Post End */}
 

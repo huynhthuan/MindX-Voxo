@@ -40,9 +40,9 @@ function Blog() {
     }, []);
     
     const router = useRouter();
-    const {page} = router.query;
+    const page = router.query.page ? router.query.page : 1;
 
-    const { isLoading, error, data, isFetching } = useBlogListNewPost({ page: page ? page : 1 });
+    const { isLoading, error, data, isFetching } = useBlogListNewPost({ page });
 
     if (error) return 'An error has occurred: ' + error.message
 
@@ -145,7 +145,7 @@ function Blog() {
                                             && 
                                                 data?.totalPage && 
                                                     Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                                        return <li className="page-item active" key={index}>
+                                                        return <li className={"page-item " + ( index+1 == page ? "active" : "" )} key={index}>
                                                             <a
                                                                 className="page-link"
                                                                 href={`?page=${index + 1}`}

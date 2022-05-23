@@ -78,4 +78,25 @@ const PostCommentsSkeleton = () => {
   </div>
 }
 
-export { CategoryPostSkeleton, NewPostBlogListSkeleton, DetailPostSkeleton, RelatedPostSkeleton, PostCommentsSkeleton };
+const SideBarItemSkeleton = () => {
+  return <div className="row">
+    <div className="col-3">
+      <Skeleton className="ratio ratio-4x3"/>
+    </div>
+    <div className="col-8">
+      <Skeleton/>
+      <Skeleton/>
+      <Skeleton/>
+      <Skeleton/>
+    </div>
+  </div>
+}
+
+export { 
+  CategoryPostSkeleton, 
+  NewPostBlogListSkeleton, 
+  DetailPostSkeleton, 
+  RelatedPostSkeleton, 
+  PostCommentsSkeleton,
+  SideBarItemSkeleton 
+};
