@@ -1,30 +1,19 @@
 import React, { useEffect } from "react";
 import { useQuery } from "react-query";
-import { fetchApiGetCategories, fetchApiProductSection } from "../../../src/api/Api_vuong/fetchApiGetCategories";
+import { fetchApiGetCategories, fetchApiProductSection } from "../../../src/api/Api_vuong/fetchApi";
 import { useRouter } from "next/router";
 import ProductCard from "../../Product/ProductCard";
 
 function ProductSection({ id, categories }) {
-   const router = useRouter();
    const {
       isLoading,
       data = [],
       error,
-   } = useQuery("ProductSection", () => fetchApiProductSection(categories[0].id, id), {
+   } = useQuery(["ProductSection",id], () => fetchApiProductSection(categories[0].id, id), {
       enabled: Boolean(categories),
    });
    useEffect(() => {
-      // $(document).ready(function () {
-      //    $(".autoplay").slick({
-      //       slidesToShow: 5,
-      //       slidesToScroll: 1,
-      //       autoplay: true,
-      //       autoplaySpeed: 1500,
-      //       speed: 1000,
-      //    });
-      // });
-
-      $(".slide-4").slick({
+      let slick = $(".slide-4").slick({
          dots: true,
          infinite: true,
          speed: 500,
@@ -52,31 +41,26 @@ function ProductSection({ id, categories }) {
             },
          ],
       });
+
+      return () => {
+         slick.slick("unslick");
+      };
    }, [data]);
-   if (isLoading) return <div>Loading...</div>;
-   const handleClick = (slug, id) => {
-      slug = slug || "no-name";
-      router.push(`/product/${slug}?id=${id}`);
-   };
+   
+   if (isLoading) return "Loading..."
+
    return (
-      <section className="ratio_asos section-b-space overflow-hidden ">
-         {/* <div className="container">
-            <div className="row g-sm-4 g-3  mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section  autoplay">
-               {data.map((item, index) => (
-                  <ProductCard {...item} key={index} />
-               ))}
-            </div>
-         </div> */}
+      <section className="ratio_asos section-b-space overflow-hidden">
          <div className="container">
             <div className="row">
                <div className="col-12">
                   <h2 className="mb-lg-4 mb-3 ">Customers Also Bought These</h2>
-                  <div className="row g-4 ratio_asos slider-for">
-                     <div className="">
-                        {data.map((item, index) => (
-                           <ProductCard {...item} key={index} />
-                        ))}
-                     </div>
+                  <div className="product-wrapper product-style-2 p-0 slide-4 light-arrow bottom-space">
+                     {data.map((item, index) => (
+                        <div key={index}>
+                           <ProductCard {...item} />
+                        </div>
+                     ))}
                   </div>
                </div>
             </div>

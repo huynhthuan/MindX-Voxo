@@ -1,25 +1,32 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { fetchApiColoImage } from "../../../src/api/Api_vuong/fetchApiGetCategories";
+import { fetchApiColorImage } from "../../../src/api/Api_vuong/fetchApi";
 import { useRouter } from "next/router";
 
-function ColorImage({ related_ids = [], imageSef }) {
+function ColorImage({ listVariation = [], imageSef }) {
    const router = useRouter();
-   const { isLoading, data = [], error } = useQuery("colorImage", () => fetchApiColoImage(related_ids));
+   const { isLoading, data = [], error } = useQuery(["colorImage",...listVariation], () => fetchApiColorImage(listVariation),{cacheTime:10});
    if (isLoading) return "Loading...";
-   data.push(imageSef);
-   const handleClick = (slug, id) => {
-      router.push("/product/" + slug + "?id=" + id);
+   const handleClick = (e) => {
+      const element=document.getElementsByClassName('image-item')
+      Array.from(element).map(item=>item.classList.remove('active'))
+      e.target.parentElement.classList.add('active')
+      // router.push("/product/" + slug + "?id=" + id);
    };
    return (
-      <div className="size-box">
-         <ul className="image-section">
-            {data.map(({ id, src, alt, slug }, index) => (
-               <li key={index} className="border rounded " role="button" onClick={(e) => handleClick(slug, id)}>
-                  <img src={src} className="img-fluid blur-up lazyload" alt={alt} />
-               </li>
-            ))}
-         </ul>
+      <div className="color-image">
+         <div className="image-select">
+            <h5>Color :</h5>
+            <div className="size-box">
+               <ul className="image-section">
+                  {data.map(({ source_url, alt }, index) => (
+                     <li key={index} className="border rounded image-item" role="button" onClick={(e) => handleClick(e)}>
+                        <img src={source_url} className="img-fluid blur-up lazyload" alt={alt} />
+                     </li>
+                  ))}
+               </ul>
+            </div>
+         </div>
       </div>
    );
 }

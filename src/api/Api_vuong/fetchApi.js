@@ -4,6 +4,10 @@ import queryString from "query-string";
 import { convertObjectToParams } from "../../../components/component_vuong/Common";
 import Swal from "sweetalert2";
 
+export const fetchApiWP = axios.create({
+   baseURL: BASE_URL_API + "/wp-json/wp/v2/",
+});
+
 export const fetchApi = axios.create({
    baseURL: BASE_URL_API + "/wp-json/wc/v3/",
    headers: {
@@ -23,22 +27,46 @@ export const fetchApiGetCategories = async (query) => {
       data.idCategory = responseId;
       return data;
    } catch (error) {
-      console.log(error);
+      console.log("error fetchApiGetCategories", error);
    }
 };
 
-export const fetchApiProductById = async (id) => {
+export const fetchApiProductBySlug = async (slug) => {
    try {
-      const data = await fetchApi.get("/products/" + id);
-      const res = await fetchApi.get("/products/reviews?product=" + id);
-      data.data.reviews = res.data;
-      return data;
+      const res = await fetchApi.get("/products?slug=" + slug);
+      return res.data[0];
    } catch (error) {
-      console.log("error", error);
+      console.log("error fetchApiProductBySlug", error);
    }
 };
 
-export const fetchApiReviewProduct = async (url, id) => {
+export const fetchApiNameColor = async (id) => {
+   try {
+      const res = await fetchApi.get("/products/attributes/2/terms/" + id);
+      return res.data;
+   } catch (error) {
+      console.log("error fetchApiNameColor", error);
+   }
+};
+export const fetchApiImageColorWP = async (id) => {
+   try {
+      const res = await fetchApiWP.get("/media/" + id);
+      return res.data;
+   } catch (error) {
+      console.log("error fetchApiImageColorWP", error);
+   }
+};
+export const fetchApiReviewProduct = async (id,totalItems=5) => {
+   try {
+      const res = await fetchApi.get(`/products/reviews?per_page=${totalItems}&product=${id}`);
+      console.log(`  ~ res`, res)
+      return res;
+   } catch (error) {
+      console.log("error fetchApiReviewProduct", error);
+   }
+};
+
+export const fetchApiPostReviewProduct = async (url, id) => {
    try {
       await fetchApi.post("/products/reviews?" + url);
       const res = await fetchApi.get("/products/reviews?product=" + id);
@@ -53,16 +81,17 @@ export const fetchApiReviewProduct = async (url, id) => {
       return error;
    }
 };
-export const fetchApiAllReviews = async () => {
-   const res = await fetchApi.get("/products/reviews");
-   return res.data;
+export const fetchApiAllReviews = async (page = "1") => {
+   const res = await fetchApi.get("/products/reviews?per_page=12&page=" + page);
+   return res;
 };
 
-export const fetchApiColoImage = async (arrId) =>
+export const fetchApiColorImage = async (listVariation) =>
    await Promise.all(
-      arrId.map(async (item) => {
-         const res = await fetchApiProductById(item);
-         return { src: res.data.images[0].src, id: item, alt: res.data.images[0].alt, slug: res.data.slug };
+      listVariation.map(async ({ image, product_variation }) => {
+         const resImageColor = await fetchApiImageColorWP(image);
+         const resNameClor = await fetchApiNameColor(product_variation);
+         return { source_url: resImageColor.source_url, alt: resNameClor.name };
       })
    );
 

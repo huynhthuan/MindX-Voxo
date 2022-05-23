@@ -71,6 +71,7 @@ function Filter({ idCategory, slug }) {
                                        slug: "",
                                        category: idCategory,
                                        per_page: itemsPerPage,
+                                       page: "1" ,
                                     },
                                  },
                                  null,

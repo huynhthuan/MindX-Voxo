@@ -1,20 +1,22 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useQuery } from "react-query";
+import { QueryClient, useQuery, useQueryClient } from "react-query";
 import Swal from "sweetalert2";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import Breadcrumb from "../../components/component_vuong/Common/Breadcrumb";
 import PlaceHolderCard from "../../components/Product/PlaceHolderCard";
 import ProductCard from "../../components/Product/ProductCard";
 import Sidebar from "../../components/ProductCategory/Sidebar";
-import { fetchApi, fetchApiGetCategories } from "../../src/api/Api_vuong/fetchApiGetCategories";
+import { fetchApi, fetchApiGetCategories } from "../../src/api/Api_vuong/fetchApi";
 import BannerDetail from "../../components/component_vuong/product-category/BannerDetail";
 import Filter from "../../components/component_vuong/product-category/Filter";
-import PageSection from "../../components/component_vuong/product-category/PageSection";
+import PagePagination from "../../components/component_vuong/Common/PagePagination";
 
 function ProductCategory(props) {
-   const { query, asPath } = useRouter();
-   const { orderby, order, slug, page, category, per_page = "12" } = query;
+   const queryClient = useQueryClient();
+   const { query } = useRouter();
+   const { page = "1" } = query;
+   const { slug, per_page = "12" } = query;
    const {
       isLoading,
       data = { data: [], headers: "" },
@@ -23,7 +25,15 @@ function ProductCategory(props) {
       isFetching,
    } = useQuery(["products", { ...query }], () => fetchApiGetCategories(query), {
       enabled: Boolean(slug),
+      keepPreviousData: true,
+      staleTime: 60000,
    });
+
+   useEffect(() => {
+      if (data.data.length > 0) {
+         queryClient.prefetchQuery(["products", { ...query, page: +page + 1 + "" }], () => fetchApiGetCategories({ ...query, page: +page + 1 + "" }));
+      }
+   }, [data, page, queryClient, query]);
 
    useEffect(functionJquery, []);
    useEffect(() => {
@@ -35,10 +45,10 @@ function ProductCategory(props) {
             confirmButtonText: "Close",
          });
       }
-   }, [isError]);
+   }, [isError,error]);
 
    const { headers, idCategory } = data;
-   const { "x-wp-total": total, "x-wp-totalpages": totalPages = 0 } = headers;
+   const { "x-wp-totalpages": totalPages = 0 } = headers;
 
    return (
       <>
@@ -63,7 +73,7 @@ function ProductCategory(props) {
                            <p className="alert alert-warning w-100 text-center">There are no products in this category.</p>
                         )}
                      </div>
-                     <PageSection totalPages={totalPages} page={page} query={query} />
+                     <PagePagination totalPages={totalPages} />
                   </div>
                </div>
             </div>

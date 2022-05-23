@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
-import { conventToCurrency, timeCoundown } from "../Common";
+import { conventToCurrency, filter_meta_data, timeCoundown } from "../Common";
 import ColorImage from "./ColorImage";
 import { useRouter } from "next/router";
+import Countdown from "./Countdown";
+import SelectSize from "./SelectSize";
 
-function ShopSection({ data = {} }) {
+function ShopSection(props = {}) {
    const router = useRouter();
    const {
       slug,
@@ -19,52 +21,12 @@ function ShopSection({ data = {} }) {
       regular_price,
       related_ids,
       date_on_sale_to,
-   } = data;
-   useEffect(() => {
-      $(document).ready(function () {
-         $(".slider-for").slick({
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false,
-            fade: true,
-            asNavFor: ".slider-nav",
-            autoplay: true,
-            autoplaySpeed: 1500,
-            speed: 1000,
-            dots: false,
-            infinite: false,
-         });
-         $(".slider-nav").slick({
-            slidesToShow: 5,
-            slidesToScroll: 1,
-            asNavFor: ".slider-for",
-            dots: true,
-            centerMode: true,
-            focusOnSelect: true,
-         });
-      });
-      const second = 1000,
-         minute = second * 60,
-         hour = minute * 60,
-         day = hour * 24;
-      if (!document.getElementById("days")) return;
-      const countDown = new Date(date_on_sale_to).getTime(),
-         myTime = setInterval(function () {
-            const now = new Date().getTime(),
-               distance = countDown - now;
-            (document.getElementById("days").innerText = Math.floor(distance / day)),
-               (document.getElementById("hours").innerText = Math.floor((distance % day) / hour)),
-               (document.getElementById("minutes").innerText = Math.floor((distance % hour) / minute)),
-               (document.getElementById("seconds").innerText = Math.floor((distance % minute) / second));
-         }, second);
-      return () => {
-         clearInterval(myTime);
-      };
-   }, [date_on_sale_to, data]);
+      meta_data,
+   } = props;
 
-   const slider_for = `{ "slidesToShow": 1,"slidesToScroll": 1,"arrows": false,"fade": true,"asNavFor": ".slider-nav","autoplay": true,"autoplaySpeed": 11500,"speed": 1000,"dots": false,"infinite": false,}`;
-   const slider_nav = `{"slidesToShow": 5,"slidesToScroll": 1,"asNavFor": ".slider-for","dots": true,"centerMode": true,"focusOnSelect": true,}`;
-   if (!data.id) return <p>Loading...</p>;
+   if (!id) return <p>Loading...</p>;
+   const listVariation = filter_meta_data(meta_data, "list_variation", "product_variation", "image");
+
    return (
       <section>
          <div className="container">
@@ -73,14 +35,7 @@ function ShopSection({ data = {} }) {
                   <div className="details-items">
                      <div className="row g-4">
                         <div className="col-md-6">
-                           <div className="row g-4 ratio_asos slider-for" data-slick={slider_for}>
-                              {images.map(({ src, alt }, key) => (
-                                 <div key={key} className="col-12 ">
-                                    <img src={src} className="img-fluid w-100" alt={alt} />
-                                 </div>
-                              ))}
-                           </div>
-                           <div className="row ratio_asos slider-nav mb-3" data-slick={slider_nav}>
+                           <div className="row g-4 ratio_asos slider-for">
                               {images.map(({ src, alt }, key) => (
                                  <div key={key} className="col-12 ">
                                     <img src={src} className="img-fluid w-100" alt={alt} />
@@ -118,50 +73,8 @@ function ShopSection({ data = {} }) {
                                  )}
                               </h3>
 
-                              <div className="color-image">
-                                 <div className="image-select">
-                                    <h5>Color :</h5>
-                                    <ColorImage related_ids={related_ids} imageSef={{ src: images[0].src, id: id, alt: images[0].alt, slug: slug }} />
-                                 </div>
-                              </div>
-                              <div id="selectSize" className="addeffect-section product-description border-product">
-                                 <h6 className="product-title size-text">
-                                    select size
-                                    <a href="undefined" data-bs-toggle="modal" data-bs-target="#sizemodal">
-                                       size chart
-                                    </a>
-                                 </h6>
-
-                                 <h6 className="error-message">please select size</h6>
-
-                                 <div className="size-box">
-                                    <ul>
-                                       {attributes
-                                          .filter((item) => item.name === "Size")[0]
-                                          .options.map((item, key) => (
-                                             <li key={key}>{item}</li>
-                                          ))}
-                                    </ul>
-                                 </div>
-
-                                 <h6 className="product-title product-title-2 d-block">quantity</h6>
-
-                                 <div className="qty-box">
-                                    <div className="input-group">
-                                       <span className="input-group-prepend">
-                                          <button type="button" className="btn quantity-left-minus" data-type="minus" data-field="">
-                                             <i className="fas fa-minus"></i>
-                                          </button>
-                                       </span>
-                                       <input type="text" name="quantity" className="form-control input-number" defaultValue="1" />
-                                       <span className="input-group-prepend">
-                                          <button type="button" className="btn quantity-right-plus" data-type="plus" data-field="">
-                                             <i className="fas fa-plus"></i>
-                                          </button>
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
+                              <ColorImage listVariation={listVariation} imageSef={{ src: images[0].src, id: id, alt: images[0].alt, slug: slug }} />
+                              <SelectSize attributes={attributes} />
 
                               <div className="product-buttons">
                                  <a href="wishlist.html" className="btn btn-solid">
@@ -180,31 +93,8 @@ function ShopSection({ data = {} }) {
                                     {shipping_required && <span className="lang">Free shipping for orders above $500 USD</span>}
                                  </li>
                               </ul>
-                              {date_on_sale_to && (
-                                 <div className="mt-2 mt-md-3 border-product">
-                                    <h6 className="product-title hurry-title d-block">
-                                       Hurry Up! Left <span>{stock_quantity}</span> in stock
-                                    </h6>
 
-                                    <div className="font-light timer-5">
-                                       <h5>Order in the next to get</h5>
-                                       <ul className="timer1">
-                                          <li className="counter">
-                                             <h5 id="days">&#9251;</h5> Days :
-                                          </li>
-                                          <li className="counter">
-                                             <h5 id="hours">&#9251;</h5> Hour :
-                                          </li>
-                                          <li className="counter">
-                                             <h5 id="minutes">&#9251;</h5> Min :
-                                          </li>
-                                          <li className="counter">
-                                             <h5 id="seconds">&#9251;</h5> Sec
-                                          </li>
-                                       </ul>
-                                    </div>
-                                 </div>
-                              )}
+                              {date_on_sale_to && <Countdown stock_quantity={stock_quantity} date_on_sale_to={date_on_sale_to} />}
 
                               <div className="border-product">
                                  <h6 className="product-title d-block">share it</h6>

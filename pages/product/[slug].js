@@ -1,6 +1,6 @@
 import Script from "next/script";
 import { useRouter } from "next/router";
-import { fetchApiProductById } from "../../src/api/Api_vuong/fetchApiGetCategories";
+import { fetchApiProductBySlug } from "../../src/api/Api_vuong/fetchApi";
 import { useQuery } from "react-query";
 import Breadcrumb from "../../components/component_vuong/Common/Breadcrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
@@ -10,15 +10,16 @@ import ClothReview from "../../components/component_vuong/product/ClothReview";
 import { useEffect, useState } from "react";
 
 function ProductDetail() {
-   const { id } = useRouter().query;
-   const { isLoading, error, data={} } = useQuery(["product", id], () => fetchApiProductById(id), { enabled: Boolean(id) });
+   const { slug } = useRouter().query;
+   const { isLoading, error, data={} } = useQuery(["product", slug], () => fetchApiProductBySlug(slug), { enabled: Boolean(slug) });
    if(isLoading) return 'Loading...'
+   // console.log(`  ~ data product`, data)
    return (
       <>
          <Breadcrumb title="Product Sticky" content="Product Sticky" />
          <ShopSection {...data} />
          <ClothReview {...data}/>
-         <ProductSection {...data.data}/>
+         <ProductSection {...data}/>
          <SubscribeBox />
          <Script src="/js/sticky-cart-bottom.js" strategy="afterInteractive"></Script>
          {/* <Script src="/js/timer.js" strategy="afterInteractive"></Script> */}

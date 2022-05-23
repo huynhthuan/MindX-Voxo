@@ -1,30 +1,29 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 import { conventToCurrency } from "../component_vuong/Common";
 import RatingDetails from "./RatingDetails";
+import Link from "next/link";
 
-function ProductCard({ id, price, slug, name, rating_count, categories, regular_price, images, average_rating, sale_price, on_sale, featured }) {
-   const router = useRouter();
+function ProductCard({ id, price, slug, name, categories, regular_price, images, average_rating, on_sale, featured }) {
    useEffect(() => {
       functionJquery();
    }, []);
-   const handleClick = (slug, id) => {
-      slug=slug||'no-name'
-      router.push(`/product/${slug}?id=${id}`);
-   };
 
    return (
       <div className="product-box">
          <div className="img-wrapper">
             <div className="front">
-               <div role={"button"} onClick={() => handleClick(slug, id)}>
-                  <img src={images[0].src} className="bg-img blur-up lazyload" alt="" />
-               </div>
+               <Link href={"/product/" + slug} passHref>
+                  <a>
+                     <img src={images[0].src} className="bg-img blur-up lazyload" alt="" />
+                  </a>
+               </Link>
             </div>
             <div className="back">
-               <div role={"button"} onClick={() => handleClick(slug, id)}>
-                  <img src={images[2].src} className="bg-img blur-up lazyload" alt="" />
-               </div>
+               <Link href={"/product/" + slug} passHref>
+                  <a>
+                     <img src={images[2].src} className="bg-img blur-up lazyload" alt="" />
+                  </a>
+               </Link>
             </div>
             <div className="label-block">
                {featured && <span className="label label-black">New</span>}
