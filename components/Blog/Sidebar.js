@@ -1,12 +1,19 @@
 import {useStickyPosts} from '../../src/api_minhhieu/stickyPostsApi';
 import { SideBarItemSkeleton } from '../Skeleton_minhhieu';
 import SideBarItem from './SideBarItem';
+import {useRef} from 'react';
 
 function Sidebar() {
+
+    const searchVal = useRef('');
 
     const { isLoading, error, data, isFetching } = useStickyPosts();
 
     if (error) return 'An error has occurred: ' + error.message;
+
+    const handleSearch = () => {
+        console.log(searchVal.current.value);
+    }
 
     return (
         <div className="left-side">
@@ -14,13 +21,15 @@ function Sidebar() {
             <div className="search-section">
                 <div className="input-group search-bar">
                     <input
-                        type="search"
+                        ref={searchVal}
+                        type="text"
                         className="form-control search-input"
                         placeholder="Search"
                     />
                     <button
                         className="input-group-text search-button"
                         id="basic-addon3"
+                        onClick={handleSearch}
                     >
                         <i className="fas fa-search text-color"></i>
                     </button>
