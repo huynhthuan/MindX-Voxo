@@ -44,8 +44,6 @@ function Blog() {
 
     const { isLoading, error, data, isFetching } = useBlogListNewPost({ page: page ? page : 1 });
 
-    console.log(data);
-
     if (error) return 'An error has occurred: ' + error.message
 
     return (

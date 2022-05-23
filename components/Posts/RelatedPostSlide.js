@@ -5,10 +5,10 @@ import { RelatedPostSkeleton } from '../../components/Skeleton_minhhieu/index';
 
 function RelatedPostSlide({info}) {
 
-    const { isLoading, error, data, isFetching } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
+    const { isLoading, error, data } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
 
     useEffect(() => {
-        if (data) {
+        if (data?.length) {
             $('.slide-4').slick({
                 dots: true,
                 infinite: true,

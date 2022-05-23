@@ -10,7 +10,8 @@ const fetchPostComments = async ({queryKey,pageParam = 1}) => {
         page:pageParam,
         per_page:4
       }
-  });
+  }
+);
 
   return result;
 }
