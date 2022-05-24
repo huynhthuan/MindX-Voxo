@@ -2,11 +2,36 @@ import { useEffect } from "react";
 import { conventToCurrency } from "../component_vuong/Common";
 import RatingDetails from "./RatingDetails";
 import Link from "next/link";
+import Swal from "sweetalert2";
+import { useRouter } from "next/router";
+import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
+import { useDispatch, useSelector } from "react-redux";
+import OnSale from "../component_vuong/product/OnSale";
 
-function ProductCard({ id, price, slug, name, categories, regular_price, images, average_rating, on_sale, featured }) {
+function ProductCard(props) {
+   const router = useRouter();
+   const compare = useSelector((state) => state.compare.value);
+   const dispatch = useDispatch();
+   const { id, price, slug, name, categories, regular_price, images, average_rating, on_sale, featured } = props;
    useEffect(() => {
       functionJquery();
    }, []);
+   const handleCompare = () => {
+      console.log(`  ~ compare`, compare);
+      compare.length < 4 && dispatch(addProductCompare(props));
+
+      Swal.fire({
+         title: compare.length > 3 ? "limited 4 items" : "add product " + (compare.length + 1) + "/4",
+         showCancelButton: true,
+         cancelButtonText: "Ok",
+         cancelButtonColor: "#d90429",
+         confirmButtonText: "go to Compare",
+      }).then((res) => {
+         if (res.isConfirmed) {
+            router.push("/compare");
+         }
+      });
+   };
 
    return (
       <div className="product-box">
@@ -27,7 +52,7 @@ function ProductCard({ id, price, slug, name, categories, regular_price, images,
             </div>
             <div className="label-block">
                {featured && <span className="label label-black">New</span>}
-               {on_sale && <span className="label label-theme">{Math.floor((1 - price / regular_price) * 100)}% Off</span>}
+               <OnSale on_sale={on_sale} price={price} regular_price={regular_price} />
             </div>
             <div className="cart-wrap">
                <ul>
@@ -41,8 +66,8 @@ function ProductCard({ id, price, slug, name, categories, regular_price, images,
                         <i data-feather="eye"></i>
                      </a>
                   </li>
-                  <li>
-                     <a href="compare.html">
+                  <li onClick={handleCompare}>
+                     <a>
                         <i data-feather="refresh-cw"></i>
                      </a>
                   </li>
@@ -57,7 +82,7 @@ function ProductCard({ id, price, slug, name, categories, regular_price, images,
          <div className="product-details">
             <div className="rating-details">
                <span className="font-light grid-content">{categories[0].name}</span>
-               <RatingDetails rating={average_rating} />
+               <RatingDetails average_rating={average_rating} />
             </div>
             <div className="main-price">
                <div onClick={() => handleClick(slug, id)} role="button" className="font-default">

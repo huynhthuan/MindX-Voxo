@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 
-function RatingDetails({ change, rating, mediumRating }) {
+function RatingDetails({ change, average_rating,rating_count }) {
+
    const [ratingChange, setRatingChange] = useState("");
    const handleRating = (index) => {
       change && setRatingChange(index);
    };
-   useEffect(() => setRatingChange(rating), [rating]);
+   useEffect(() => setRatingChange(average_rating), [average_rating]);
    return (
       <ul className="rating mt-0">
          {Array(5)
@@ -21,7 +22,8 @@ function RatingDetails({ change, rating, mediumRating }) {
                   </li>
                )
             )}
-         {!change && <>({ratingChange === "0.00" ? 0 : ratingChange})</>}
+         {!change&&!rating_count && <>({ratingChange === "0.00" ? (0): ratingChange})</>}
+         {rating_count? <>({rating_count} reviews)</>:null}
          <input type="hidden" value={ratingChange || 5} />
       </ul>
    );

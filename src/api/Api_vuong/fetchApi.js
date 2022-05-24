@@ -99,3 +99,8 @@ export const fetchApiProductSection = async (idSlug, id) => {
    const res = await fetchApi(`/products?category=${idSlug}&exclude=${id}`);
    return res.data;
 };
+
+export const fetchApiFaq=async()=>{
+   const res=await fetchApi('https://voxohub.xyz/wp-json/acf/v3/options/options')
+   return res.data.acf.list_question
+}
