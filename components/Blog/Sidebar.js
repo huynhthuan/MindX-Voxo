@@ -1,30 +1,67 @@
 import {useStickyPosts} from '../../src/api_minhhieu/stickyPostsApi';
 import { SideBarItemSkeleton } from '../Skeleton_minhhieu';
 import SideBarItem from './SideBarItem';
-import {useRef} from 'react';
+import {useRef, useState} from 'react';
+import {useRouter} from 'next/router';
 
 function Sidebar() {
 
+    const router = useRouter();
     const searchVal = useRef('');
+    const [requireKW, setRequireKW] = useState(false);
 
     const { isLoading, error, data, isFetching } = useStickyPosts();
 
     if (error) return 'An error has occurred: ' + error.message;
 
+    const handleInputChange = () => {
+        if (!searchVal.current.value) {
+            setRequireKW(true);
+        } else {
+            setRequireKW(false);
+        }
+    }
+
     const handleSearch = () => {
-        console.log(searchVal.current.value);
+        if (!searchVal.current.value) {
+            setRequireKW(true);
+        } else {
+            router.push({
+                pathname:'/search',
+                query:{keyword:searchVal.current.value}
+            });
+        }
+        
+    }
+
+    const handleInputKeyDown = (event) => {
+        if (event.charCode == 13 || event.keyCode == 13) {
+            if (!searchVal.current.value) {
+                setRequireKW(true);
+            } else {
+                router.push({
+                    pathname:'/search',
+                    query:{keyword:searchVal.current.value}
+                });
+            }
+        }
     }
 
     return (
         <div className="left-side">
             {/* Search Bar Start */}
-            <div className="search-section">
+            <div className="search-section position-relative">
+                <div className='position-absolute bottom-100 mb-1 fw-bold theme-color' hidden={!requireKW}>
+                    Please enter keyword 
+                </div>
                 <div className="input-group search-bar">
                     <input
                         ref={searchVal}
                         type="text"
                         className="form-control search-input"
                         placeholder="Search"
+                        onKeyDown={handleInputKeyDown}
+                        onChange={handleInputChange}
                     />
                     <button
                         className="input-group-text search-button"

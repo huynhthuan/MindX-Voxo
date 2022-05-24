@@ -23,7 +23,7 @@ function PostCard({id,title,excerpt}) {
                 <a href="blog-details.html" style={{width:'30%', backgroundColor:'#ddd'}}>
                     <img
                         src={
-                            !isLoading && data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+                            !isLoading ? data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url : null
                         }
                         className="card-img-top bg-img blur-up lazyload"
                         alt=""
@@ -45,7 +45,7 @@ function PostCard({id,title,excerpt}) {
                 <div className="blog-profile">
                     <div className="image-profile">
                         <img
-                            src={!isLoading && data._embedded.author[0].avatar_urls["24"]}
+                            src={!isLoading ? data._embedded.author[0].avatar_urls["24"] : null}
                             className="img-fluid blur-up lazyload"
                             alt=""
                         />

@@ -23,7 +23,7 @@ function PostCardMansory({id,title,excerpt}) {
                 <a href="blog-details.html">
                     <img
                         src={
-                            !isLoading && data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+                            !isLoading ? data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url : null
                         }
                         alt=""
                         className="card-img-top blur-up lazyload"

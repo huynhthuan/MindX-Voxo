@@ -79,7 +79,7 @@ const PostCommentsSkeleton = () => {
 }
 
 const SideBarItemSkeleton = () => {
-  return <div className="row">
+  return <div className="row mb-3">
     <div className="col-3">
       <Skeleton className="ratio ratio-4x3"/>
     </div>

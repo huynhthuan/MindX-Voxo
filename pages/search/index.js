@@ -2,6 +2,9 @@ import { useEffect } from 'react';
 import Sidebar from '../../components/Blog/Sidebar';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import PostCard from '../../components/Posts/PostCard';
+import { useSearchPosts } from '../../src/api_minhhieu/searchPostsApi';
+import { useRouter } from 'next/router';
+import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
 
 function Search() {
     useEffect(() => {
@@ -33,6 +36,13 @@ function Search() {
         })(jQuery);
         feather.replace();
     }, []);
+
+    const router = useRouter();
+    const {page} = router.query;
+
+    const { isLoading, error, data } = useSearchPosts({ keyword:router.query.keyword, page: page ? page : 1 });
+
+    if (error) router.push('/notfound');
 
     return (
         <>
@@ -73,45 +83,19 @@ function Search() {
                         </div>
                         <div className="col-lg-9 col-md-7 ratio_square">
                             <div className="row g-4 g-xl-5 pb-5">
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
+                                {
+                                    !isLoading 
+                                        ? 
+                                            data.responseInfo && data.responseInfo.map( (item,index) => {
+                                                return <div className="col-12" key={index}>
+                                                    <PostCard {...item}/>
+                                                </div>
+                                            })
+                                        :
+                                            Array(10).fill(0).map((item, index) => {
+                                                return <NewPostBlogListSkeleton key={index}/>
+                                            })
+                                }
                             </div>
 
                             <div className="row">
@@ -128,7 +112,7 @@ function Search() {
                                                     </span>
                                                 </a>
                                             </li>
-                                            <li className="page-item active">
+                                            {/* <li className="page-item active">
                                                 <a
                                                     className="page-link"
                                                     href="undefined"
@@ -151,7 +135,7 @@ function Search() {
                                                 >
                                                     3
                                                 </a>
-                                            </li>
+                                            </li> */}
                                             <li className="page-item">
                                                 <a className="page-link">
                                                     <span aria-hidden="true">

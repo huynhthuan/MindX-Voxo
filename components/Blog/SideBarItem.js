@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const SideBarItem = ({data}) => {
     // Hàm chuyển đổi thời gian tạo bài
     const transferDate = (date) => {
@@ -9,10 +11,12 @@ const SideBarItem = ({data}) => {
         <div className="popular-number">
             <h4 className="theme-color">{'0' + (data[1] * 1 + 1)}</h4>
         </div>
-        <div className="popular-contain">
-            <h3>
-                {data[0].title.rendered}
-            </h3>
+        <div className="popular-contain" style={{cursor:'pointer'}}>
+            <Link href={`/blog/posts/${data[0].id}`}>
+                <h3>
+                    {data[0].title.rendered}
+                </h3>
+            </Link>
             <p className="font-light mb-1">
                 <span>King Monster</span> in <span>News</span>
             </p>
