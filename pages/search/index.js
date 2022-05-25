@@ -40,6 +40,7 @@ function Search() {
 
     const router = useRouter();
     const page = router.query.page ? router.query.page : 1;
+    console.log(page);
     const {keyword} = router.query;
     const searchVal = useRef('');
     const [requireKW, setRequireKW] = useState(false);
@@ -54,7 +55,7 @@ function Search() {
             setAllowFetch(true);
             refetch();
         }
-    },[keyword || page])
+    },[keyword,page])
 
     const handleInputChange = (event) => {
         if (!searchVal.current.value) {
@@ -147,7 +148,7 @@ function Search() {
                                                         </div>
                                                     })
                                                 :
-                                                    <div className="theme-color h4">No posts found</div>
+                                                    <div className="theme-color h4">No post found</div>
                                         :
                                             Array(10).fill(0).map((item, index) => {
                                                 return <NewPostBlogListSkeleton key={index}/>
