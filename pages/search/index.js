@@ -5,6 +5,7 @@ import PostCard from '../../components/Posts/PostCard';
 import { useSearchPosts } from '../../src/api_minhhieu/searchPostsApi';
 import { useRouter } from 'next/router';
 import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
+import { unset } from 'lodash';
 
 function Search() {
     useEffect(() => {
@@ -46,8 +47,6 @@ function Search() {
 
     const { isLoading, error, data, refetch, isFetching, isFetched } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
 
-    console.log(isFetching,'-----',isLoading);
-
     if (error) router.push('/notfound');
 
     useEffect(() => {
@@ -55,7 +54,7 @@ function Search() {
             setAllowFetch(true);
             refetch();
         }
-    },[keyword])
+    },[keyword || page])
 
     const handleInputChange = (event) => {
         if (!searchVal.current.value) {
@@ -133,7 +132,7 @@ function Search() {
                 <div className="container">
                     <div className="row g-4">
                         <div className="col-12">
-                            <h2 className="mb-2">Posts for keyword: </h2>
+                            <div className="mb-2 h2" style={{textTransform:"unset!important"}}>Posts For Keyword: {router.query.keyword}</div>
                         </div>
                         <div className="col-lg-9 col-md-7 ratio_square">
                             <div className="row g-4 g-xl-5 pb-5">
@@ -148,7 +147,7 @@ function Search() {
                                                         </div>
                                                     })
                                                 :
-                                                    <div className="theme-color h4">No posts found for keyword "{router.query.keyword}"</div>
+                                                    <div className="theme-color h4">No posts found</div>
                                         :
                                             Array(10).fill(0).map((item, index) => {
                                                 return <NewPostBlogListSkeleton key={index}/>
@@ -165,21 +164,29 @@ function Search() {
                                                         <nav className="page-section mt-0">
                                                             <ul className="pagination">
                                                                 <li className="page-item">
-                                                                    <a
+                                                                    <div
                                                                         className="page-link"
-                                                                        href="undefined"
+                                                                        onClick={() => {
+                                                                            router.push({
+                                                                                pathname:'/search',
+                                                                                query:{
+                                                                                    keyword:keyword,
+                                                                                    page: page !== 1 ?  page*1 - 1 : null
+                                                                                }
+                                                                            });
+                                                                        }}
                                                                     >
                                                                         <span aria-hidden="true">
                                                                             <i className="fas fa-chevron-left"></i>
                                                                         </span>
-                                                                    </a>
+                                                                    </div>
                                                                 </li>
                                                                 {
                                                                     Array(data.totalPage*1).fill(0).map((item,index) => {
                                                                         return <li className={"page-item " + ( index+1 == page ? "active" : "" )} key={index}>
                                                                                 <a
                                                                                     className="page-link"
-                                                                                    href="undefined"
+                                                                                    href={`?keyword=${keyword}&page=${index + 1}`}
                                                                                 >
                                                                                     {index * 1 + 1}
                                                                                 </a>
@@ -187,11 +194,22 @@ function Search() {
                                                                     })
                                                                 }
                                                                 <li className="page-item">
-                                                                    <a className="page-link">
+                                                                    <div 
+                                                                        className="page-link" 
+                                                                        onClick={() => {
+                                                                            router.push({
+                                                                                pathname:'/search',
+                                                                                query:{
+                                                                                    keyword:keyword,
+                                                                                    page: page != data.totalPage ?  page*1 + 1 : null
+                                                                                }
+                                                                            });
+                                                                        }}
+                                                                    >
                                                                         <span aria-hidden="true">
                                                                             <i className="fas fa-chevron-right"></i>
                                                                         </span>
-                                                                    </a>
+                                                                    </div>
                                                                 </li>
                                                             </ul>
                                                         </nav>
