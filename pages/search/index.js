@@ -44,9 +44,9 @@ function Search() {
     const [requireKW, setRequireKW] = useState(false);
     const [allowFetch, setAllowFetch] = useState(false);
 
-    const { isLoading, error, data, refetch } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
+    const { isLoading, error, data, refetch, isFetching, isFetched } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
 
-    console.log(data);
+    console.log(isFetching,'-----',isLoading);
 
     if (error) router.push('/notfound');
 
@@ -93,10 +93,7 @@ function Search() {
 
     return (
         <>
-            <section className="search-section position-relative">
-                <div className='position-absolute bottom-100 mb-1 fw-bold theme-color' hidden={!requireKW}>
-                    Please enter keyword 
-                </div>
+            <section className="search-section">
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
@@ -106,7 +103,10 @@ function Search() {
                         </div>
                         <div className="col-lg-6 col-md-8 mx-auto">
                             <div className="search-bar">
-                                <div className="input-group search-bar w-100  mb-5">
+                                <div className="input-group search-bar w-100 mb-5 position-relative">
+                                    <div className='position-absolute bottom-100 mb-1 fw-bold theme-color' hidden={!requireKW}>
+                                        Please enter keyword 
+                                    </div>
                                     <input
                                         ref={searchVal}
                                         type="search"
@@ -138,7 +138,7 @@ function Search() {
                         <div className="col-lg-9 col-md-7 ratio_square">
                             <div className="row g-4 g-xl-5 pb-5">
                                 {
-                                    !isLoading 
+                                    !isFetching
                                         ? 
                                             data?.responseInfo.length > 0
                                                 ? 

@@ -3,7 +3,6 @@ import { BLOG_LIST } from '../../utils/api_minhhieu';
 import axios from 'axios';
 
 const fetchSearchPosts = async (param) => {
-    console.log(param);
     const result = await axios.get(BLOG_LIST,
     {
         params: {
