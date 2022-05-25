@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import SliderItemClothes from '../Slider/SliderItemClothes';
 import SliderItemShoe from '../Slider/SliderItemShoe';
 
-function Slider() {
+function Slider({ dataSliser }) {
     useEffect(() => {
         let sliderHome = $('.slick-2')
             .slick({
@@ -30,8 +30,16 @@ function Slider() {
             <section className="home-section home-style-2 pt-0">
                 <div className="container-fluid p-0">
                     <div className="slick-2 dot-dark">
-                        <SliderItemClothes />
-                        <SliderItemShoe />
+                        {dataSliser.map((slide, index) => {
+                            return slide.type === 'clothes' ? (
+                                <SliderItemClothes
+                                    slideData={slide}
+                                    key={index}
+                                />
+                            ) : (
+                                <SliderItemShoe slideData={slide} key={index} />
+                            );
+                        })}
                     </div>
                 </div>
             </section>

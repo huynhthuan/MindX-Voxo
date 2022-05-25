@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { toast } from 'react-toastify';
 import { useMyWishList } from '../../../../../../reactQueryHook';
 
 function WishListSummary() {

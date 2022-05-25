@@ -8,6 +8,7 @@ import authApi from '../../src/api/authApi';
 import { loginSuccess } from '../../store/auth/authSlice';
 import wooApi from '../../src/api/woocommerce/wooApi';
 import userApi from '../../src/api/userApi';
+import { setCookies } from 'cookies-next';
 
 function Login() {
     const router = useRouter();
@@ -93,6 +94,10 @@ function Login() {
             let resWishList = await wooApi.getWishList(user.id);
 
             const { share_key } = resWishList.data[0];
+
+            setCookies('wordpress_login', cookie, {
+                expires: new Date(cookie_expiration * 1000),
+            });
 
             dispatch(
                 loginSuccess({

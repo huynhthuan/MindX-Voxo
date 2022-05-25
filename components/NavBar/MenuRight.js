@@ -4,14 +4,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../store/auth/authSlice';
 import SmallCart from './MenuRight/SmallCart';
 import WisList from './MenuRight/WisList';
+import { useRouter } from 'next/router';
 
 function MenuRight() {
     const { cookie, user } = useSelector((state) => state.auth);
+    const router = useRouter();
 
     const dispatch = useDispatch();
 
     const signOut = () => {
         dispatch(logOut());
+        router.push('/');
     };
 
     return (
