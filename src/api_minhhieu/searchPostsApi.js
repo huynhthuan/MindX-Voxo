@@ -21,5 +21,5 @@ const fetchSearchPosts = async (param) => {
 }
 
 export const useSearchPosts = (param) => {
-    return useQuery(['search-post'], () => fetchSearchPosts(param));
+    return useQuery(['search-post'], () => fetchSearchPosts(param), {enabled:param.allowFetch});
 }
