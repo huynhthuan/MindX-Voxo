@@ -19,13 +19,9 @@ function ShopSection(props = {}) {
       attributes,
       shipping_required,
       regular_price,
-      related_ids,
       date_on_sale_to,
-      meta_data,
+      acf:{list_variation},
    } = props;
-
-   if (!id) return <p>Loading...</p>;
-   const listVariation = filter_meta_data(meta_data, "list_variation", "product_variation", "image");
 
    return (
       <section>
@@ -73,7 +69,7 @@ function ShopSection(props = {}) {
                                  )}
                               </h3>
 
-                              <ColorImage listVariation={listVariation} imageSef={{ src: images[0].src, id: id, alt: images[0].alt, slug: slug }} />
+                              <ColorImage list_variation={list_variation} />
                               <SelectSize attributes={attributes} />
 
                               <div className="product-buttons">

@@ -52,6 +52,7 @@ function PageItem({ children, numPage }) {
    return (
       <li className={numPage === +page ? "page-item active" : "page-item"}>
          <a
+         href="#product-list"
             className="page-link"
             role="button"
             onClick={() => {

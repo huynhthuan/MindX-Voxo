@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { functionJquery } from './component_vuong/Common';
 
 import MainMenu from './NavBar/MainMenu';
 import MenuLeft from './NavBar/MenuLeft';

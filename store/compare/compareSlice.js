@@ -1,14 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
+
+const compareAdapter = createEntityAdapter({
+   selectId: (item) => item.id,
+});
 
 export const compareSlice = createSlice({
    name: "compare",
-   initialState: { value: [] },
+   initialState: compareAdapter.getInitialState(),
    reducers: {
-      addProductCompare: (state, action) => {
-         state.value.push(action.payload);
+      addProductCompare: (state, { payload }) => {
+         compareAdapter.addOne(state, payload);
       },
-      removeProductCompare: (state, action) => {
-         state.value = action.payload;
+      removeProductCompare: (state, { payload }) => {
+         compareAdapter.removeOne(state, payload);
       },
    },
 });

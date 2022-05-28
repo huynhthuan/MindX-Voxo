@@ -1,15 +1,19 @@
-import React, { useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { useQuery } from "react-query";
 import { fetchApiGetCategories, fetchApiProductSection } from "../../../src/api/Api_vuong/fetchApi";
 import { useRouter } from "next/router";
 import ProductCard from "../../Product/ProductCard";
+import { errorModal } from "../Common";
+import PlaceHolderCard from "../../Product/PlaceHolderCard";
 
 function ProductSection({ id, categories }) {
    const {
       isLoading,
       data = [],
       error,
-   } = useQuery(["ProductSection",id], () => fetchApiProductSection(categories[0].id, id), {
+      isError,
+      isFetching,
+   } = useQuery(["ProductSection", id], () => fetchApiProductSection(categories[0].id, id), {
       enabled: Boolean(categories),
    });
    useEffect(() => {
@@ -46,22 +50,32 @@ function ProductSection({ id, categories }) {
          slick.slick("unslick");
       };
    }, [data]);
-   
-   if (isLoading) return "Loading..."
-
+   useEffect(() => {
+      errorModal(isError, error);
+   }, [error, isError]);
    return (
       <section className="ratio_asos section-b-space overflow-hidden">
          <div className="container">
             <div className="row">
                <div className="col-12">
                   <h2 className="mb-lg-4 mb-3 ">Customers Also Bought These</h2>
-                  <div className="product-wrapper product-style-2 p-0 slide-4 light-arrow bottom-space">
-                     {data.map((item, index) => (
-                        <div key={index}>
-                           <ProductCard {...item} />
-                        </div>
-                     ))}
-                  </div>
+
+                  {isLoading || isError || isFetching || !id ? (
+                     <div className="d-flex justify-content-around">
+                        <PlaceHolderCard />
+                        <PlaceHolderCard />
+                        <PlaceHolderCard />
+                        <PlaceHolderCard />
+                     </div>
+                  ) : (
+                     <div className="product-wrapper product-style-2 p-0 slide-4 light-arrow bottom-space">
+                        {data.map((item, index) => (
+                           <Fragment key={index}>
+                              <ProductCard {...item} />
+                           </Fragment>
+                        ))}
+                     </div>
+                  )}
                </div>
             </div>
          </div>

@@ -2,7 +2,6 @@ import React from "react";
 import { fetchApiReviewProduct } from "../../src/api/Api_vuong/fetchApi";
 
 function LoadMore({id, totalItems, children }) {
-   console.log(`  ~ totalItems`, totalItems);
 
    const handleClick=()=>{
        console.log('click');

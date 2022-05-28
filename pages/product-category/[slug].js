@@ -11,41 +11,41 @@ import { fetchApi, fetchApiGetCategories } from "../../src/api/Api_vuong/fetchAp
 import BannerDetail from "../../components/component_vuong/product-category/BannerDetail";
 import Filter from "../../components/component_vuong/product-category/Filter";
 import PagePagination from "../../components/component_vuong/Common/PagePagination";
+import { errorModal } from "../../components/component_vuong/Common";
+import { toast, ToastContainer } from "react-toastify";
+import { dataFetch, dataSlice } from "./data";
 
 function ProductCategory(props) {
+   props = dataSlice;
    const queryClient = useQueryClient();
    const { query } = useRouter();
    const { page = "1" } = query;
    const { slug, per_page = "12" } = query;
-   const {
-      isLoading,
-      data = { data: [], headers: "" },
+   // const {
+   //    isLoading,
+   //    data = { data: [], headers: "" },
+   //    error,
+   //    isError,
+   //    isFetching,
+   // } = useQuery(["products", { ...query }], () => fetchApiGetCategories(query), {
+   //    enabled: Boolean(slug),
+   //    keepPreviousData: true,
+   //    staleTime: 60000,
+   // });
+   let isLoading,
       error,
       isError,
-      isFetching,
-   } = useQuery(["products", { ...query }], () => fetchApiGetCategories(query), {
-      enabled: Boolean(slug),
-      keepPreviousData: true,
-      staleTime: 60000,
-   });
+      isFetching = false,
+      data = dataFetch;
 
    useEffect(() => {
-      if (data.data.length > 0) {
-         queryClient.prefetchQuery(["products", { ...query, page: +page + 1 + "" }], () => fetchApiGetCategories({ ...query, page: +page + 1 + "" }));
-      }
+      queryClient.prefetchQuery(["products", { ...query, page: +page + 1 + "" }], () => fetchApiGetCategories({ ...query, page: +page + 1 + "" }));
    }, [data, page, queryClient, query]);
 
    useEffect(functionJquery, []);
    useEffect(() => {
-      if (isError) {
-         Swal.fire({
-            title: "Error!",
-            text: error,
-            icon: "error",
-            confirmButtonText: "Close",
-         });
-      }
-   }, [isError,error]);
+      errorModal(isError, error);
+   }, [isError, error]);
 
    const { headers, idCategory } = data;
    const { "x-wp-totalpages": totalPages = 0 } = headers;
@@ -82,12 +82,19 @@ function ProductCategory(props) {
       </>
    );
 }
-export const getServerSideProps = async () => {
-   const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
-   const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
-   const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
-   return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
-};
+
+// export const getStaticPaths = async () => {
+//    return {
+//       paths: [], //indicates that no page needs be created at build time
+//       fallback: "blocking", //indicates the type of fallback
+//    };
+// };
+// export const getStaticProps = async () => {
+//    const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
+//    const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
+//    const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
+//    return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
+// };
 
 export default ProductCategory;
 

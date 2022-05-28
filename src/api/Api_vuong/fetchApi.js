@@ -59,7 +59,6 @@ export const fetchApiImageColorWP = async (id) => {
 export const fetchApiReviewProduct = async (id,totalItems=5) => {
    try {
       const res = await fetchApi.get(`/products/reviews?per_page=${totalItems}&product=${id}`);
-      console.log(`  ~ res`, res)
       return res;
    } catch (error) {
       console.log("error fetchApiReviewProduct", error);

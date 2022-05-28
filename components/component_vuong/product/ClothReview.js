@@ -5,18 +5,7 @@ import RatingDetails from "../../Product/RatingDetails";
 import { convertObjectToParams, filter_meta_data } from "../Common";
 import ReviewsProduct from "./ReviewsProduct";
 
-function ClothReview({ description, meta_data = [], id }) {
-   useEffect(() => {
-      const descElement = document.getElementById("desc");
-      const speciElement = document.getElementById("speci");
-      const nav_guideElement = document.getElementById("nav-guide");
-      if (descElement) descElement.innerHTML = description;
-      if (speciElement) speciElement.innerHTML = meta_data.filter((item) => item.key === "specifications")[0]?.value;
-      if (nav_guideElement) nav_guideElement.innerHTML = meta_data.filter((item) => item.key === "guide")[0]?.value;
-   }, [description, meta_data]);
-
-   const listQA = meta_data ? filter_meta_data(meta_data, "question_and_answers", "question", "answer") : [];
-
+function ClothReview({ description, id, acf: { question_and_answers, specifications, guide } }) {
    return (
       <div className="container">
          <div className="row gx-4 gy-5">
@@ -47,14 +36,14 @@ function ClothReview({ description, meta_data = [], id }) {
                   </nav>
 
                   <div className="tab-content" id="nav-tabContent">
-                     <div className="tab-pane fade show active" id="desc"></div>
-                     <div className="tab-pane fade" id="speci"></div>
-                     <div className="tab-pane fade overflow-auto" id="nav-guide"></div>
+                     <div className="tab-pane fade show active" id="desc" dangerouslySetInnerHTML={{ __html: description }}></div>
+                     <div className="tab-pane fade" id="speci" dangerouslySetInnerHTML={{ __html: specifications }}></div>
+                     <div className="tab-pane fade overflow-auto" id="nav-guide" dangerouslySetInnerHTML={{ __html: guide }}></div>
 
                      <div className="tab-pane fade" id="question">
                         <div className="question-answer">
                            <ul>
-                              {listQA.map(({ answer, question }, key) => (
+                              {question_and_answers.map(({ answer, question }, key) => (
                                  <li key={key}>
                                     <div className="que">
                                        <i className="fas fa-question"></i>

@@ -7,21 +7,36 @@ import { useRouter } from "next/router";
 import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
 import { useDispatch, useSelector } from "react-redux";
 import OnSale from "../component_vuong/product/OnSale";
+import { toast } from "react-toastify";
 
 function ProductCard(props) {
    const router = useRouter();
-   const compare = useSelector((state) => state.compare.value);
+   const compareProduct = useSelector((state) => Object.values(state.compare.entities));
+
    const dispatch = useDispatch();
-   const { id, price, slug, name, categories, regular_price, images, average_rating, on_sale, featured } = props;
+   const {
+      id,
+      price,
+      slug,
+      name,
+      categories,
+      regular_price,
+      images,
+      average_rating,
+      on_sale,
+      featured,
+      acf: { back_image, front_image },
+      short_description,
+   } = props;
    useEffect(() => {
       functionJquery();
-   }, []);
-   const handleCompare = () => {
-      console.log(`  ~ compare`, compare);
-      compare.length < 4 && dispatch(addProductCompare(props));
+   }, [front_image]);
 
+   const handleCompare = () => {
+      compareProduct.length < 4 && dispatch(addProductCompare(props));
       Swal.fire({
-         title: compare.length > 3 ? "limited 4 items" : "add product " + (compare.length + 1) + "/4",
+         title: compareProduct.length > 3 ? "limited 4 items" : "add product " + (compareProduct.length + 1) + "/4",
+         icon: compareProduct.length > 3 ? "error" : "success",
          showCancelButton: true,
          cancelButtonText: "Ok",
          cancelButtonColor: "#d90429",
@@ -32,21 +47,20 @@ function ProductCard(props) {
          }
       });
    };
-
    return (
       <div className="product-box">
          <div className="img-wrapper">
             <div className="front">
                <Link href={"/product/" + slug} passHref>
                   <a>
-                     <img src={images[0].src} className="bg-img blur-up lazyload" alt="" />
+                     <img src={front_image} className="bg-img blur-up lazyload" alt="" />
                   </a>
                </Link>
             </div>
             <div className="back">
                <Link href={"/product/" + slug} passHref>
                   <a>
-                     <img src={images[2].src} className="bg-img blur-up lazyload" alt="" />
+                     <img src={back_image} className="bg-img blur-up lazyload" alt="" />
                   </a>
                </Link>
             </div>
@@ -90,16 +104,13 @@ function ProductCard(props) {
                </div>
                <div className="listing-content">
                   <span className="font-light">Jacket</span>
-                  <p className="font-light">
-                     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit, deserunt? Asperiores aliquam voluptatum culpa aliquid ab ducimus
-                     eaque illum, quibusdam reiciendis id ad consectetur quis, animi qui, minus quidem eveniet! Dolorum magnam numquam, asperiores
-                     accusantium architecto placeat quam officia, tempore repellendus.
-                  </p>
+                  <p className="font-light" dangerouslySetInnerHTML={{ __html: short_description }}></p>
                </div>
                <h3 className="theme-color">{conventToCurrency(price)}</h3>
                <button className="btn listing-content">Add To Cart</button>
             </div>
          </div>
+         {props.children}
       </div>
    );
 }
