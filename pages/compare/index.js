@@ -9,13 +9,15 @@ import OnSale from "../../components/component_vuong/product/OnSale";
 import ProductCard from "../../components/Product/ProductCard";
 import RatingDetails from "../../components/Product/RatingDetails";
 import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
+import Swal from "sweetalert2";
 
 function Compare() {
    const compareProduct = useSelector((state) => state.compare.entities);
+   console.log(`  ~ compareProduct`, compareProduct);
    const listCompare = [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
-   console.log(`  ~ recentlyViewed`, recentlyViewed)
-   const listRecentlyViewed = Object.values(recentlyViewed).filter(item=>!listCompare.map(item=>item.id).includes(item.id));
+   console.log(`  ~ recentlyViewed`, recentlyViewed);
+   const listRecentlyViewed = Object.values(recentlyViewed).filter((item) => !listCompare.map((item) => item.id).includes(item.id));
 
    const dispatch = useDispatch();
    const handleRemove = (id) => {
@@ -27,7 +29,12 @@ function Compare() {
 
    const handleAdd = (item) => {
       console.log("add");
-      dispatch(addProductCompare(item));
+      Object.values(compareProduct).length< 4
+         ? dispatch(addProductCompare(item))
+         : Swal.fire({
+              title: "limited 4 items",
+              icon: "error",
+           });
    };
 
    return (
@@ -44,7 +51,7 @@ function Compare() {
                   </div>
                   <div className="modal-body ratio_30">
                      <div className="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
-                        {listRecentlyViewed.slice(0,4).map((item, key) => (
+                        {listRecentlyViewed.slice(0, 4).map((item, key) => (
                            <ProductCard {...item} key={key}>
                               <div className="d-flex justify-content-center mt-3">
                                  <button
