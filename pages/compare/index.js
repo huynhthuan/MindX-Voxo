@@ -1,7 +1,6 @@
 import { Fragment, useEffect } from "react";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import { conventToCurrency } from "../../components/component_vuong/Common";
@@ -13,10 +12,8 @@ import Swal from "sweetalert2";
 
 function Compare() {
    const compareProduct = useSelector((state) => state.compare.entities);
-   console.log(`  ~ compareProduct`, compareProduct);
    const listCompare = [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
-   console.log(`  ~ recentlyViewed`, recentlyViewed);
    const listRecentlyViewed = Object.values(recentlyViewed).filter((item) => !listCompare.map((item) => item.id).includes(item.id));
 
    const dispatch = useDispatch();
@@ -28,7 +25,6 @@ function Compare() {
    }, []);
 
    const handleAdd = (item) => {
-      console.log("add");
       Object.values(compareProduct).length< 4
          ? dispatch(addProductCompare(item))
          : Swal.fire({

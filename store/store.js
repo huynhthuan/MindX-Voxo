@@ -3,7 +3,6 @@ import rootReducers from './reducers';
 
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-import compareReducers from './compare/compareSlice';
 
 const persistConfig = {
     key: 'root',
@@ -26,4 +25,3 @@ const store = configureStore({
 export const persistor = persistStore(store);
 
 export default store;
-console.log(`  ~ store`, store.getState().compare)

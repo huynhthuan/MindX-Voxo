@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
 import { useDispatch, useSelector } from "react-redux";
 import OnSale from "../component_vuong/product/OnSale";
-import { toast } from "react-toastify";
 
 function ProductCard(props) {
    const router = useRouter();
