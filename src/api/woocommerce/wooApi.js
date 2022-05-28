@@ -49,6 +49,13 @@ const wooApi = {
 
         return wooClient.get(url);
     },
+    getCategories: (params) => {
+        const url = '/products/categories';
+
+        return wooClient.get(url, {
+            params,
+        });
+    },
 };
 
 export default wooApi;

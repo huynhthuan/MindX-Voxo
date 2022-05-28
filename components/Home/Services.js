@@ -1,71 +1,42 @@
+import SevicesItem from '../Sevices/SevicesItem';
+
+const sevicesData = [
+    {
+        icon: '/svg/icons.svg#customer',
+        title: 'Customer Servcies',
+        desc: 'Top notch customer service.',
+    },
+    {
+        icon: '/svg/icons.svg#shop',
+        title: 'Pickup At Any Store',
+        desc: 'Free shipping on orders over $65.',
+    },
+    {
+        icon: '/svg/icons.svg#secure-payment',
+        title: 'Secured Payment',
+        desc: 'We accept all major credit cards.',
+    },
+    {
+        icon: '/svg/icons.svg#return',
+        title: 'Free Returns',
+        desc: '30-days free return policy.',
+    },
+];
+
 function Services() {
     return (
         <section className="service-section service-style-2 section-b-space">
             <div className="container">
                 <div className="row g-4 g-sm-3">
-                    <div className="col-xl-3 col-sm-6">
-                        <div className="service-wrap">
-                            <div className="service-icon">
-                                <svg>
-                                    <use xlinkHref="/svg/icons.svg#customer" />
-                                </svg>
-                            </div>
-                            <div className="service-content">
-                                <h3 className="mb-2">Customer Servcies</h3>
-                                <span className="font-light">
-                                    Top notch customer service.
-                                </span>
-                            </div>
+                    {sevicesData.map((item, index) => (
+                        <div key={index} className="col-xl-3 col-sm-6">
+                            <SevicesItem
+                                title={item.title}
+                                desc={item.desc}
+                                icon={item.icon}
+                            />
                         </div>
-                    </div>
-
-                    <div className="col-xl-3 col-sm-6">
-                        <div className="service-wrap">
-                            <div className="service-icon">
-                                <svg>
-                                    <use xlinkHref="/svg/icons.svg#shop" />
-                                </svg>
-                            </div>
-                            <div className="service-content">
-                                <h3 className="mb-2">Pickup At Any Store</h3>
-                                <span className="font-light">
-                                    Free shipping on orders over $65.
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-xl-3 col-sm-6">
-                        <div className="service-wrap">
-                            <div className="service-icon">
-                                <svg>
-                                    <use xlinkHref="/svg/icons.svg#secure-payment" />
-                                </svg>
-                            </div>
-                            <div className="service-content">
-                                <h3 className="mb-2">Secured Payment</h3>
-                                <span className="font-light">
-                                    We accept all major credit cards.
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-xl-3 col-sm-6">
-                        <div className="service-wrap">
-                            <div className="service-icon">
-                                <svg>
-                                    <use xlinkHref="/svg/icons.svg#return" />
-                                </svg>
-                            </div>
-                            <div className="service-content">
-                                <h3 className="mb-2">Free Returns</h3>
-                                <span className="font-light">
-                                    30-days free return policy.
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>

@@ -181,7 +181,7 @@ function Save() {
                     <div className="row g-3">
                         {isLoading ? (
                             <Skeleton />
-                        ) : data.address_list.length > 0 ? (
+                        ) : data.address_list && data.address_list.length > 0 ? (
                             data.address_list.map((item, index) => (
                                 <div className="col-xl-4 col-md-6" key={index}>
                                     <AddressItem

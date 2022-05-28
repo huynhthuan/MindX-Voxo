@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 
-function BannerTimer() {
+function BannerTimer({ dataTimer }) {
+    const { product_data: product } = dataTimer;
     useEffect(() => {
+        console.log(dataTimer);
+
         let second = 1000,
             minute = second * 60,
             hour = minute * 60,
             day = hour * 24;
 
-        let countDown = new Date('Aug 21, 2023 00:00:00').getTime();
+        let countDown = new Date(dataTimer.time_end).getTime();
         let timer = setInterval(function () {
             let now = new Date().getTime(),
                 distance = countDown - now;
@@ -17,6 +21,35 @@ function BannerTimer() {
             $('#minutes1').text(Math.floor((distance % hour) / minute));
             $('#seconds1').text(Math.floor((distance % minute) / second));
         }, second);
+
+        (function ($) {
+            'use strict';
+            $('.bg-top').parent().addClass('b-top');
+            $('.bg-bottom').parent().addClass('b-bottom');
+            $('.bg-center').parent().addClass('b-center');
+            $('.bg-left').parent().addClass('b-left');
+            $('.bg-right').parent().addClass('b-right');
+            $('.bg_size_content').parent().addClass('b_size_content');
+            $('.bg-img').parent().addClass('bg-size');
+            $('.bg-img.blur-up').parent().addClass('blur-up lazyload');
+            $('.bg-img').each(function () {
+                var el = $(this),
+                    src = el.attr('src'),
+                    parent = el.parent();
+
+                parent.css({
+                    'background-image': 'url(' + src + ')',
+                    'background-size': 'cover',
+                    'background-position': 'center',
+                    'background-repeat': 'no-repeat',
+                    display: 'block',
+                });
+
+                el.hide();
+            });
+        })(jQuery);
+
+        feather.replace();
 
         return () => {
             clearInterval(timer);
@@ -30,9 +63,9 @@ function BannerTimer() {
                     <div className="col-lg-12">
                         <div className="discount-image-details discount-spacing">
                             <img
-                                src="images/fashion/banner/8.jpg"
+                                src={dataTimer.background}
                                 className="bg-img blur-up lazyload"
-                                alt=""
+                                alt={product.name}
                             />
 
                             <div className="discunt-details">
@@ -41,17 +74,18 @@ function BannerTimer() {
                                         <i className="fas fa-heart theme-color"></i>
                                     </div>
 
-                                    <h5 className="mt-3">
-                                        Special Discount{' '}
-                                        <span className="theme-color">
-                                            70% OFF
-                                        </span>
-                                    </h5>
-                                    <h2 className="my-3 deal-text">
-                                        Deal Of The Day <br />
-                                        from{' '}
-                                        <span className="theme-color">$75</span>
-                                    </h2>
+                                    <h5
+                                        className="mt-3"
+                                        dangerouslySetInnerHTML={{
+                                            __html: dataTimer.subtitle,
+                                        }}
+                                    ></h5>
+                                    <h2
+                                        className="my-3 deal-text"
+                                        dangerouslySetInnerHTML={{
+                                            __html: dataTimer.title,
+                                        }}
+                                    ></h2>
                                     <div className="timer-style-2 mt-xl-1 my-2 justify-content-center d-flex">
                                         <ul>
                                             <li>
@@ -100,16 +134,22 @@ function BannerTimer() {
                                             </li>
                                         </ul>
                                     </div>
-                                    <button
-                                        type="button"
-                                        className="btn default-light-theme default-theme mt-2"
-                                    >
-                                        Shop Now
-                                    </button>
+                                    <Link href={'/product/' + product.slug}>
+                                        <button
+                                            type="button"
+                                            className="btn default-light-theme default-theme mt-2"
+                                        >
+                                            Shop Now
+                                        </button>
+                                    </Link>
 
                                     <div className="timer-bg timer-bg-center d-lg-block d-none">
-                                        <h3 className="mt-0">Latest Jacket</h3>
-                                        <span>BUY ONE GET ONE FREE</span>
+                                        <h3 className="mt-0">
+                                            {dataTimer.product_title}
+                                        </h3>
+                                        <span>
+                                            {dataTimer.product_subtitle}
+                                        </span>
                                     </div>
                                 </div>
                             </div>

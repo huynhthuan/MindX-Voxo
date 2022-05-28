@@ -11,8 +11,6 @@ $('.slick-1')
     })
     .slickAnimation();
 
-
-
 $('.insta-slider1').slick({
     dots: true,
     infinite: true,
@@ -116,32 +114,6 @@ $('.slide-three').slick({
     ],
 });
 
-$('.slide-3-1').slick({
-    dots: true,
-    arrows: false,
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 2,
-    responsive: [
-        {
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 3,
-            },
-        },
-        {
-            breakpoint: 420,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                fade: true,
-            },
-        },
-    ],
-});
-
-
-
 $('.slide-4_1').slick({
     dots: true,
     infinite: true,
@@ -178,35 +150,6 @@ $('.slide-5').slick({
     arrows: false,
     slidesToShow: 5,
     slidesToScroll: 1,
-    responsive: [
-        {
-            breakpoint: 1200,
-            settings: {
-                slidesToShow: 4,
-            },
-        },
-        {
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 2,
-            },
-        },
-        {
-            breakpoint: 420,
-            settings: {
-                slidesToShow: 2,
-            },
-        },
-    ],
-});
-
-$('.slide-5_1').slick({
-    dots: true,
-    infinite: false,
-    speed: 500,
-    arrows: false,
-    slidesToShow: 5,
-    slidesToScroll: 2,
     responsive: [
         {
             breakpoint: 1200,
@@ -614,8 +557,10 @@ $('.slider-for').slick({
     arrows: true,
     fade: true,
     asNavFor: '.slider-nav',
-    nextArrow: '<div class="custom-arrow next"><span>Next</span><i class="fas fa-chevron-right ms-3"></i></div>',
-    prevArrow: '<div class="custom-arrow prev"><i class="fas fa-chevron-left me-3"></i><span>Prev</span></div>',
+    nextArrow:
+        '<div class="custom-arrow next"><span>Next</span><i class="fas fa-chevron-right ms-3"></i></div>',
+    prevArrow:
+        '<div class="custom-arrow prev"><i class="fas fa-chevron-left me-3"></i><span>Prev</span></div>',
 });
 $('.slider-nav').slick({
     slidesToShow: 3,

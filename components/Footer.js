@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 function Footer() {
     return (
         <>
@@ -9,28 +11,51 @@ function Footer() {
                             <div className="col-xl-3 col-lg-4 col-md-6">
                                 <div className="footer-contact">
                                     <div className="brand-logo">
-                                        <a href="index.html" className="footer-logo">
-                                            <svg className="svg-icon">{/* <use className="fill-color" xlink:href="svg/icons.svg#logo"></use> */}</svg>
-                                            <img src="/images/logo.png" className="img-fluid blur-up lazyload" alt="logo" />
+                                        <a
+                                            href="index.html"
+                                            className="footer-logo"
+                                        >
+                                            <svg className="svg-icon">
+                                                <use
+                                                    className="fill-color"
+                                                    xlinkHref="/svg/icons.svg#logo"
+                                                ></use>
+                                            </svg>
+                                            <img
+                                                src="/images/logo.png"
+                                                className="img-fluid blur-up lazyload"
+                                                alt="logo"
+                                            />
                                         </a>
                                     </div>
                                     <ul className="contact-lists">
                                         <li>
                                             <span>
                                                 <b>phone:</b>
-                                                <span className="font-light"> + 185659635</span>
+                                                <span className="font-light">
+                                                    {' '}
+                                                    + 185659635
+                                                </span>
                                             </span>
                                         </li>
                                         <li>
                                             <span>
                                                 <b>Address:</b>
-                                                <span className="font-light"> 1418 Riverwood Drive, Suite 3245 Cottonwood, CA 96052, United States</span>
+                                                <span className="font-light">
+                                                    {' '}
+                                                    1418 Riverwood Drive, Suite
+                                                    3245 Cottonwood, CA 96052,
+                                                    United States
+                                                </span>
                                             </span>
                                         </li>
                                         <li>
                                             <span>
                                                 <b>Email:</b>
-                                                <span className="font-light"> Voxo123@gmail.com</span>
+                                                <span className="font-light">
+                                                    {' '}
+                                                    Voxo123@gmail.com
+                                                </span>
                                             </span>
                                         </li>
                                     </ul>
@@ -44,29 +69,39 @@ function Footer() {
                                     <div className="footer-content">
                                         <ul>
                                             <li>
-                                                <a href="index.html" className="font-dark">
-                                                    Home
-                                                </a>
+                                                <Link href="/">
+                                                    <a className="font-dark">
+                                                        Home
+                                                    </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="shop-left-sidebar.html" className="font-dark">
-                                                    Shop
-                                                </a>
+                                                <Link href="/shop">
+                                                    <a className="font-dark">
+                                                        Shop
+                                                    </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="about-us.html" className="font-dark">
-                                                    About Us
-                                                </a>
+                                                <Link href="/about-us">
+                                                    <a className="font-dark">
+                                                        About Us
+                                                    </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="blog-details.html" className="font-dark">
-                                                    Blog
-                                                </a>
+                                                <Link href="/blog">
+                                                    <a className="font-dark">
+                                                        Blog
+                                                    </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="contact-us.html" className="font-dark">
-                                                    Contact
-                                                </a>
+                                                <Link href="/contact-us">
+                                                    <a className="font-dark">
+                                                        Contact
+                                                    </a>
+                                                </Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -80,27 +115,42 @@ function Footer() {
                                     <div className="footer-content">
                                         <ul>
                                             <li>
-                                                <a href="shop-left-sidebar.html" className="font-dark">
+                                                <a
+                                                    href="shop-left-sidebar.html"
+                                                    className="font-dark"
+                                                >
                                                     Latest Shoes
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="shop-left-sidebar.html" className="font-dark">
+                                                <a
+                                                    href="shop-left-sidebar.html"
+                                                    className="font-dark"
+                                                >
                                                     Branded Jeans
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="shop-left-sidebar.html" className="font-dark">
+                                                <a
+                                                    href="shop-left-sidebar.html"
+                                                    className="font-dark"
+                                                >
                                                     New Jackets
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="shop-left-sidebar.html" className="font-dark">
+                                                <a
+                                                    href="shop-left-sidebar.html"
+                                                    className="font-dark"
+                                                >
                                                     Colorfull Hoodies
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="shop-left-sidebar.html" className="font-dark">
+                                                <a
+                                                    href="shop-left-sidebar.html"
+                                                    className="font-dark"
+                                                >
                                                     Shiner Goggles
                                                 </a>
                                             </li>
@@ -116,29 +166,32 @@ function Footer() {
                                     <div className="footer-content">
                                         <ul>
                                             <li>
-                                                <a href="user-dashboard.html" className="font-dark">
-                                                    Your Orders
-                                                </a>
+                                                <Link href="/user-dashboard?tab=order">
+                                                    <a className="font-dark">
+                                                        Your Orders
+                                                    </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="user-dashboard.html" className="font-dark">
-                                                    Your Account
-                                                </a>
+                                                <Link href="/user-dashboard">
+                                                    <a className="font-dark">
+                                                        Your Account
+                                                    </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="order-tracking.html" className="font-dark">
-                                                    Track Orders
-                                                </a>
+                                                <Link href="/wishlist">
+                                                    <a className="font-dark">
+                                                        Your Wishlist
+                                                    </a>
+                                                </Link>
                                             </li>
                                             <li>
-                                                <a href="wishlist.html" className="font-dark">
-                                                    Your Wishlist
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="faq.html" className="font-dark">
-                                                    Shopping FAQs
-                                                </a>
+                                                <Link href="/faq">
+                                                    <a className="font-dark">
+                                                        Shopping FAQs
+                                                    </a>
+                                                </Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -156,12 +209,22 @@ function Footer() {
                                         target="_blank"
                                     >
                                         <div className="input-group mb-4">
-                                            <input type="text" className="form-control" placeholder="Your Email Address" />
-                                            <span className="input-group-text" id="basic-addon4">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Your Email Address"
+                                            />
+                                            <span
+                                                className="input-group-text"
+                                                id="basic-addon4"
+                                            >
                                                 <i className="fas fa-arrow-right"></i>
                                             </span>
                                         </div>
-                                        <p className="font-dark mb-0">Keep up to date with our latest news and special offers.</p>
+                                        <p className="font-dark mb-0">
+                                            Keep up to date with our latest news
+                                            and special offers.
+                                        </p>
                                     </form>
                                 </div>
                             </div>
@@ -176,28 +239,47 @@ function Footer() {
                                     <li className="font-dark">We accept:</li>
                                     <li>
                                         <a href="undefined">
-                                            <img src="/images/payment-icon/1.jpg" className="img-fluid blur-up lazyload" alt="payment icon" />
+                                            <img
+                                                src="/images/payment-icon/1.jpg"
+                                                className="img-fluid blur-up lazyload"
+                                                alt="payment icon"
+                                            />
                                         </a>
                                     </li>
                                     <li>
                                         <a href="undefined">
-                                            <img src="/images/payment-icon/2.jpg" className="img-fluid blur-up lazyload" alt="payment icon" />
+                                            <img
+                                                src="/images/payment-icon/2.jpg"
+                                                className="img-fluid blur-up lazyload"
+                                                alt="payment icon"
+                                            />
                                         </a>
                                     </li>
                                     <li>
                                         <a href="undefined">
-                                            <img src="/images/payment-icon/3.jpg" className="img-fluid blur-up lazyload" alt="payment icon" />
+                                            <img
+                                                src="/images/payment-icon/3.jpg"
+                                                className="img-fluid blur-up lazyload"
+                                                alt="payment icon"
+                                            />
                                         </a>
                                     </li>
                                     <li>
                                         <a href="undefined">
-                                            <img src="/images/payment-icon/4.jpg" className="img-fluid blur-up lazyload" alt="payment icon" />
+                                            <img
+                                                src="/images/payment-icon/4.jpg"
+                                                className="img-fluid blur-up lazyload"
+                                                alt="payment icon"
+                                            />
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                             <div className="col-md-6">
-                                <p className="mb-0 font-dark">© 2022, Voxo Theme. Made with heart by Pixelstrap</p>
+                                <p className="mb-0 font-dark">
+                                    © 2022, Voxo Theme. Made with heart by
+                                    Pixelstrap
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -210,18 +292,26 @@ function Footer() {
                 <div className="container">
                     <div className="cart-content">
                         <div className="product-image">
-                            <img src="/images/fashion/instagram/1.jpg" className="img-fluid blur-up lazyload" alt="" />
+                            <img
+                                src="/images/fashion/instagram/1.jpg"
+                                className="img-fluid blur-up lazyload"
+                                alt=""
+                            />
                             <div className="content">
                                 <h5>men yellow jacket</h5>
                                 <h6>
-                                    $32.96<del className="font-light">$459.00</del>
+                                    $32.96
+                                    <del className="font-light">$459.00</del>
                                     <span>55% off</span>
                                 </h6>
                             </div>
                         </div>
                         <div className="selection-section">
                             <div className="form-group mb-0">
-                                <select id="inputState" className="form-control form-select">
+                                <select
+                                    id="inputState"
+                                    className="form-control form-select"
+                                >
                                     <option disabled defaultChecked>
                                         Choose color...
                                     </option>
@@ -232,7 +322,10 @@ function Footer() {
                                 </select>
                             </div>
                             <div className="form-group mb-0">
-                                <select id="input-state" className="form-control form-select">
+                                <select
+                                    id="input-state"
+                                    className="form-control form-select"
+                                >
                                     <option defaultChecked disabled>
                                         Choose size...
                                     </option>
@@ -244,11 +337,18 @@ function Footer() {
                             </div>
                         </div>
                         <div className="add-btn">
-                            <a className="btn default-light-theme default-theme default-theme-2 outline-button wishlist-btn" href="wishlist.html">
+                            <a
+                                className="btn default-light-theme default-theme default-theme-2 outline-button wishlist-btn"
+                                href="wishlist.html"
+                            >
                                 <i className="fa fa-bookmark"></i> Wishlist
                             </a>
-                            <a className="btn default-light-theme default-theme default-theme-2 outline-button" href="cart.html">
-                                <i className="fas fa-shopping-cart"></i> Add To Cart
+                            <a
+                                className="btn default-light-theme default-theme default-theme-2 outline-button"
+                                href="cart.html"
+                            >
+                                <i className="fas fa-shopping-cart"></i> Add To
+                                Cart
                             </a>
                         </div>
                     </div>
@@ -258,7 +358,10 @@ function Footer() {
 
             {/* recently purchase product */}
             <div className="recently-purchase d-md-flex d-none">
-                <img src="/images/fashion/instagram/3.jpg" alt="img-fluid blur-up lazyload" />
+                <img
+                    src="/images/fashion/instagram/3.jpg"
+                    alt="img-fluid blur-up lazyload"
+                />
                 <div className="media-body">
                     <div>
                         <h4>Some recently purchase this item</h4>
@@ -277,12 +380,21 @@ function Footer() {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            >
                                 <i className="fas fa-times"></i>
                             </button>
                         </div>
                         <div className="modal-body">
-                            <img src="/images/size-chart.jpg" alt="" className="img-fluid blur-up lazyload" />
+                            <img
+                                src="/images/size-chart.jpg"
+                                alt=""
+                                className="img-fluid blur-up lazyload"
+                            />
                         </div>
                     </div>
                 </div>
@@ -291,7 +403,11 @@ function Footer() {
 
             {/* Add To Cart Notification */}
             <div className="added-notification">
-                <img src="/images/fashion/banner/2.jpg" className="img-fluid blur-up lazyload" alt="" />
+                <img
+                    src="/images/fashion/banner/2.jpg"
+                    className="img-fluid blur-up lazyload"
+                    alt=""
+                />
                 <h3>added to cart</h3>
             </div>
             {/* Add To Cart Notification */}
@@ -300,44 +416,83 @@ function Footer() {
             <div className="modal fade quick-view-modal" id="quick-view">
                 <div className="modal-dialog modal-lg modal-dialog-centered">
                     <div className="modal-content">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button
+                            type="button"
+                            className="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
                         <div className="modal-body">
                             <div className="row gy-4">
                                 <div className="col-lg-6">
                                     <div className="quick-view-image">
                                         <div className="quick-view-slider ratio_2">
                                             <div>
-                                                <img src="/images/fashion/product/front/4.jpg" className="img-fluid bg-img blur-up lazyload" alt="product" />
+                                                <img
+                                                    src="/images/fashion/product/front/4.jpg"
+                                                    className="img-fluid bg-img blur-up lazyload"
+                                                    alt="product"
+                                                />
                                             </div>
                                             <div>
-                                                <img src="/images/fashion/product/front/5.jpg" className="img-fluid bg-img blur-up lazyload" alt="product" />
+                                                <img
+                                                    src="/images/fashion/product/front/5.jpg"
+                                                    className="img-fluid bg-img blur-up lazyload"
+                                                    alt="product"
+                                                />
                                             </div>
                                             <div>
-                                                <img src="/images/fashion/product/front/6.jpg" className="img-fluid bg-img blur-up lazyload" alt="product" />
+                                                <img
+                                                    src="/images/fashion/product/front/6.jpg"
+                                                    className="img-fluid bg-img blur-up lazyload"
+                                                    alt="product"
+                                                />
                                             </div>
                                             <div>
-                                                <img src="/images/fashion/product/front/7.jpg" className="img-fluid bg-img blur-up lazyload" alt="product" />
+                                                <img
+                                                    src="/images/fashion/product/front/7.jpg"
+                                                    className="img-fluid bg-img blur-up lazyload"
+                                                    alt="product"
+                                                />
                                             </div>
                                         </div>
                                         <div className="quick-nav">
                                             <div>
-                                                <img src="/images/fashion/product/front/4.jpg" className="img-fluid blur-up lazyload" alt="product" />
+                                                <img
+                                                    src="/images/fashion/product/front/4.jpg"
+                                                    className="img-fluid blur-up lazyload"
+                                                    alt="product"
+                                                />
                                             </div>
                                             <div>
-                                                <img src="/images/fashion/product/front/5.jpg" className="img-fluid blur-up lazyload" alt="product" />
+                                                <img
+                                                    src="/images/fashion/product/front/5.jpg"
+                                                    className="img-fluid blur-up lazyload"
+                                                    alt="product"
+                                                />
                                             </div>
                                             <div>
-                                                <img src="/images/fashion/product/front/6.jpg" className="img-fluid blur-up lazyload" alt="product" />
+                                                <img
+                                                    src="/images/fashion/product/front/6.jpg"
+                                                    className="img-fluid blur-up lazyload"
+                                                    alt="product"
+                                                />
                                             </div>
                                             <div>
-                                                <img src="/images/fashion/product/front/7.jpg" className="img-fluid blur-up lazyload" alt="product" />
+                                                <img
+                                                    src="/images/fashion/product/front/7.jpg"
+                                                    className="img-fluid blur-up lazyload"
+                                                    alt="product"
+                                                />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="product-right">
-                                        <h2 className="mb-2">Men's Hoodie t-shirt</h2>
+                                        <h2 className="mb-2">
+                                            Men's Hoodie t-shirt
+                                        </h2>
                                         <ul className="rating mt-1">
                                             <li>
                                                 <i className="fas fa-star theme-color"></i>
@@ -354,7 +509,9 @@ function Footer() {
                                             <li>
                                                 <i className="fas fa-star"></i>
                                             </li>
-                                            <li className="font-light">(In stock)</li>
+                                            <li className="font-light">
+                                                (In stock)
+                                            </li>
                                         </ul>
                                         <div className="price mt-3">
                                             <h3>$20.00</h3>
@@ -381,21 +538,36 @@ function Footer() {
                                             <h4>product details</h4>
                                             <ul>
                                                 <li>
-                                                    <span className="font-light">Style :</span> Hoodie
+                                                    <span className="font-light">
+                                                        Style :
+                                                    </span>{' '}
+                                                    Hoodie
                                                 </li>
                                                 <li>
-                                                    <span className="font-light">Catgory :</span> T-shirt
+                                                    <span className="font-light">
+                                                        Catgory :
+                                                    </span>{' '}
+                                                    T-shirt
                                                 </li>
                                                 <li>
-                                                    <span className="font-light">Tags:</span> summer, organic
+                                                    <span className="font-light">
+                                                        Tags:
+                                                    </span>{' '}
+                                                    summer, organic
                                                 </li>
                                             </ul>
                                         </div>
                                         <div className="product-btns">
-                                            <a href="cart.html" className="btn btn-solid-default btn-sm">
+                                            <a
+                                                href="cart.html"
+                                                className="btn btn-solid-default btn-sm"
+                                            >
                                                 Add to cart
                                             </a>
-                                            <a href="product-left-sidebar.html" className="btn btn-solid-default btn-sm">
+                                            <a
+                                                href="product-left-sidebar.html"
+                                                className="btn btn-solid-default btn-sm"
+                                            >
                                                 View details
                                             </a>
                                         </div>
@@ -409,36 +581,63 @@ function Footer() {
             {/* Quick view modal end */}
 
             {/* Cart Successful Start */}
-            <div className="modal fade cart-modal" id="addtocart" tabIndex="-1" role="dialog" aria-label="myModalLabel" aria-hidden="true">
+            <div
+                className="modal fade cart-modal"
+                id="addtocart"
+                tabIndex="-1"
+                role="dialog"
+                aria-label="myModalLabel"
+                aria-hidden="true"
+            >
                 <div className="modal-dialog modal-lg modal-dialog-centered">
                     <div className="modal-content ">
                         <div className="modal-header">
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
                         </div>
 
                         <div className="modal-body">
                             <div className="modal-contain">
                                 <div>
                                     <div className="modal-messages">
-                                        <i className="fas fa-check"></i> 3-stripes full-zip hoodie successfully added to you cart.
+                                        <i className="fas fa-check"></i>{' '}
+                                        3-stripes full-zip hoodie successfully
+                                        added to you cart.
                                     </div>
                                     <div className="modal-product">
                                         <div className="modal-contain-img">
-                                            <img src="/images/fashion/instagram/4.jpg" className="img-fluid blur-up lazyload" alt="" />
+                                            <img
+                                                src="/images/fashion/instagram/4.jpg"
+                                                className="img-fluid blur-up lazyload"
+                                                alt=""
+                                            />
                                         </div>
                                         <div className="modal-contain-details">
                                             <h4>Premier Cropped Skinny Jean</h4>
-                                            <p className="font-light my-2">Yellow, Qty : 3</p>
+                                            <p className="font-light my-2">
+                                                Yellow, Qty : 3
+                                            </p>
                                             <div className="product-total">
                                                 <h5>
-                                                    TOTAL : <span>$1,140.00</span>
+                                                    TOTAL :{' '}
+                                                    <span>$1,140.00</span>
                                                 </h5>
                                             </div>
                                             <div className="shop-cart-button mt-3">
-                                                <a href="shop-left-sidebar.html" className="btn default-light-theme conti-button default-theme default-theme-2 rounded">
+                                                <a
+                                                    href="shop-left-sidebar.html"
+                                                    className="btn default-light-theme conti-button default-theme default-theme-2 rounded"
+                                                >
                                                     CONTINUE SHOPPING
                                                 </a>
-                                                <a href="cart.html" className="btn default-light-theme conti-button default-theme default-theme-2 rounded">
+                                                <a
+                                                    href="cart.html"
+                                                    className="btn default-light-theme conti-button default-theme default-theme-2 rounded"
+                                                >
                                                     VIEW CART
                                                 </a>
                                             </div>
@@ -457,16 +656,24 @@ function Footer() {
                                                         <div className="img-wrapper">
                                                             <div className="front">
                                                                 <a href="product-left-sidebar.html">
-                                                                    <img src="/images/fashion/product/front/1.jpg" className="bg-img blur-up lazyload" alt="" />
+                                                                    <img
+                                                                        src="/images/fashion/product/front/1.jpg"
+                                                                        className="bg-img blur-up lazyload"
+                                                                        alt=""
+                                                                    />
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div className="product-details text-center">
                                                             <div className="rating-details d-block text-center">
-                                                                <span className="font-light grid-content">B&Y Jacket</span>
+                                                                <span className="font-light grid-content">
+                                                                    B&Y Jacket
+                                                                </span>
                                                             </div>
                                                             <div className="main-price mt-0 d-block text-center">
-                                                                <h3 className="theme-color">$78.00</h3>
+                                                                <h3 className="theme-color">
+                                                                    $78.00
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -477,16 +684,24 @@ function Footer() {
                                                         <div className="img-wrapper">
                                                             <div className="front">
                                                                 <a href="product-left-sidebar.html">
-                                                                    <img src="/images/fashion/product/front/2.jpg" className="bg-img blur-up lazyload" alt="" />
+                                                                    <img
+                                                                        src="/images/fashion/product/front/2.jpg"
+                                                                        className="bg-img blur-up lazyload"
+                                                                        alt=""
+                                                                    />
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div className="product-details text-center">
                                                             <div className="rating-details d-block text-center">
-                                                                <span className="font-light grid-content">B&Y Jacket</span>
+                                                                <span className="font-light grid-content">
+                                                                    B&Y Jacket
+                                                                </span>
                                                             </div>
                                                             <div className="main-price mt-0 d-block text-center">
-                                                                <h3 className="theme-color">$78.00</h3>
+                                                                <h3 className="theme-color">
+                                                                    $78.00
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -497,16 +712,24 @@ function Footer() {
                                                         <div className="img-wrapper">
                                                             <div className="front">
                                                                 <a href="product-left-sidebar.html">
-                                                                    <img src="/images/fashion/product/front/3.jpg" className="bg-img blur-up lazyload" alt="" />
+                                                                    <img
+                                                                        src="/images/fashion/product/front/3.jpg"
+                                                                        className="bg-img blur-up lazyload"
+                                                                        alt=""
+                                                                    />
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div className="product-details text-center">
                                                             <div className="rating-details d-block text-center">
-                                                                <span className="font-light grid-content">B&Y Jacket</span>
+                                                                <span className="font-light grid-content">
+                                                                    B&Y Jacket
+                                                                </span>
                                                             </div>
                                                             <div className="main-price mt-0 d-block text-center">
-                                                                <h3 className="theme-color">$78.00</h3>
+                                                                <h3 className="theme-color">
+                                                                    $78.00
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -517,16 +740,24 @@ function Footer() {
                                                         <div className="img-wrapper">
                                                             <div className="front">
                                                                 <a href="product-left-sidebar.html">
-                                                                    <img src="/images/fashion/product/front/4.jpg" className="bg-img blur-up lazyload" alt="" />
+                                                                    <img
+                                                                        src="/images/fashion/product/front/4.jpg"
+                                                                        className="bg-img blur-up lazyload"
+                                                                        alt=""
+                                                                    />
                                                                 </a>
                                                             </div>
                                                         </div>
                                                         <div className="product-details text-center">
                                                             <div className="rating-details d-block text-center">
-                                                                <span className="font-light grid-content">B&Y Jacket</span>
+                                                                <span className="font-light grid-content">
+                                                                    B&Y Jacket
+                                                                </span>
                                                             </div>
                                                             <div className="main-price mt-0 d-block text-center">
-                                                                <h3 className="theme-color">$78.00</h3>
+                                                                <h3 className="theme-color">
+                                                                    $78.00
+                                                                </h3>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -547,22 +778,44 @@ function Footer() {
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content ">
                         <div className="modal-header">
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button
+                                type="button"
+                                className="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                            ></button>
                         </div>
 
                         <div className="modal-body">
-                            <img src="/images/newletter-icon.png" className="img-fluid blur-up lazyload" alt="" />
+                            <img
+                                src="/images/newletter-icon.png"
+                                className="img-fluid blur-up lazyload"
+                                alt=""
+                            />
                             <div className="modal-title">
-                                <h2 className="tt-title">Sign up for our Newsletter!</h2>
-                                <p className="font-light">Never miss any new updates or products we reveal, stay up to date.</p>
+                                <h2 className="tt-title">
+                                    Sign up for our Newsletter!
+                                </h2>
+                                <p className="font-light">
+                                    Never miss any new updates or products we
+                                    reveal, stay up to date.
+                                </p>
                                 <p className="font-light">Oh, and it's free!</p>
 
                                 <div className="input-group mb-3">
-                                    <input placeholder="Email" className="form-control" type="text" />
+                                    <input
+                                        placeholder="Email"
+                                        className="form-control"
+                                        type="text"
+                                    />
                                 </div>
 
                                 <div className="cancel-button text-center">
-                                    <button className="btn default-theme w-100" data-bs-dismiss="modal" type="button">
+                                    <button
+                                        className="btn default-theme w-100"
+                                        data-bs-dismiss="modal"
+                                        type="button"
+                                    >
                                         Submit
                                     </button>
                                 </div>
