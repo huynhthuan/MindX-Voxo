@@ -31,7 +31,7 @@ function ProductCard(props) {
       functionJquery();
    }, [front_image]);
 
-   const handleCompare = () => {
+   const handleAddCompare = () => {
       compareProduct.length < 4 && dispatch(addProductCompare(props));
       Swal.fire({
          title: compareProduct.length > 3 ? "limited 4 items" : "add product " + (compareProduct.length + 1) + "/4",
@@ -45,6 +45,7 @@ function ProductCard(props) {
             router.push("/compare");
          }
       });
+    
    };
    return (
       <div className="product-box">
@@ -79,7 +80,7 @@ function ProductCard(props) {
                         <i data-feather="eye"></i>
                      </a>
                   </li>
-                  <li onClick={handleCompare}>
+                  <li onClick={handleAddCompare}>
                      <a>
                         <i data-feather="refresh-cw"></i>
                      </a>
@@ -110,6 +111,7 @@ function ProductCard(props) {
             </div>
          </div>
          {props.children}
+         <div className="" id="footer-card"></div>
       </div>
    );
 }

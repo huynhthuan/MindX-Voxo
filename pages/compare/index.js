@@ -24,7 +24,7 @@ function Compare() {
       jQuery;
    }, []);
 
-   const handleAdd = (item) => {
+   const handleAddCompare = (item) => {
       Object.values(compareProduct).length< 4
          ? dispatch(addProductCompare(item))
          : Swal.fire({
@@ -53,7 +53,7 @@ function Compare() {
                                  <button
                                     disabled={listCompare.map((product) => product.id).includes(item.id)}
                                     className="btn btn-warning"
-                                    onClick={() => handleAdd(item)}
+                                    onClick={() => handleAddCompare(item)}
                                  >
                                     {listCompare.map((product) => product.id).includes(item.id) ? "In Compare" : "Add Compare"}
                                  </button>

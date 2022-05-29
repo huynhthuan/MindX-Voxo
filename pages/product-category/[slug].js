@@ -14,29 +14,30 @@ import PagePagination from "../../components/component_vuong/Common/PagePaginati
 import { errorModal } from "../../components/component_vuong/Common";
 import { toast, ToastContainer } from "react-toastify";
 import { dataFetch, dataSlice } from "./data";
+import StickCompare from "../../components/component_vuong/product-category/StickCompare";
 
 function ProductCategory(props) {
-   props = dataSlice;
+   // props = dataSlice;
    const queryClient = useQueryClient();
    const { query } = useRouter();
    const { page = "1" } = query;
    const { slug, per_page = "12" } = query;
-   // const {
-   //    isLoading,
-   //    data = { data: [], headers: "" },
-   //    error,
-   //    isError,
-   //    isFetching,
-   // } = useQuery(["products", { ...query }], () => fetchApiGetCategories(query), {
-   //    enabled: Boolean(slug),
-   //    keepPreviousData: true,
-   //    staleTime: 60000,
-   // });
-   let isLoading,
+   const {
+      isLoading,
+      data = { data: [], headers: "" },
       error,
       isError,
-      isFetching = false,
-      data = dataFetch;
+      isFetching,
+   } = useQuery(["products", { ...query }], () => fetchApiGetCategories(query), {
+      enabled: Boolean(slug),
+      keepPreviousData: true,
+      staleTime: 60000,
+   });
+   // let isLoading,
+   //    error,
+   //    isError,
+   //    isFetching = false,
+   //    data = dataFetch;
 
    useEffect(() => {
       queryClient.prefetchQuery(["products", { ...query, page: +page + 1 + "" }], () => fetchApiGetCategories({ ...query, page: +page + 1 + "" }));
@@ -79,22 +80,23 @@ function ProductCategory(props) {
             </div>
          </section>
          <SubscribeBox />
+         <StickCompare/>
       </>
    );
 }
 
-// export const getStaticPaths = async () => {
-//    return {
-//       paths: [], //indicates that no page needs be created at build time
-//       fallback: "blocking", //indicates the type of fallback
-//    };
-// };
-// export const getStaticProps = async () => {
-//    const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
-//    const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
-//    const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
-//    return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
-// };
+export const getStaticPaths = async () => {
+   return {
+      paths: [], //indicates that no page needs be created at build time
+      fallback: "blocking", //indicates the type of fallback
+   };
+};
+export const getStaticProps = async () => {
+   const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
+   const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
+   const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
+   return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
+};
 
 export default ProductCategory;
 
