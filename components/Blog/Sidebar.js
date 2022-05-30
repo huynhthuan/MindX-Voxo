@@ -4,7 +4,7 @@ import SideBarItem from './SideBarItem';
 import {useRef, useState} from 'react';
 import {useRouter} from 'next/router';
 
-function Sidebar() {
+function Sidebar({showSearchBox}) {
 
     const router = useRouter();
     const searchVal = useRef('');
@@ -50,7 +50,7 @@ function Sidebar() {
     return (
         <div className="left-side">
             {/* Search Bar Start */}
-            <div className="search-section position-relative">
+            <div className="search-section position-relative" hidden={showSearchBox}>
                 <div className='position-absolute bottom-100 mb-1 fw-bold theme-color' hidden={!requireKW}>
                     Please enter keyword 
                 </div>

@@ -40,7 +40,6 @@ function Search() {
 
     const router = useRouter();
     const page = router.query.page ? router.query.page : 1;
-    console.log(page);
     const {keyword} = router.query;
     const searchVal = useRef('');
     const [requireKW, setRequireKW] = useState(false);
@@ -133,7 +132,7 @@ function Search() {
                 <div className="container">
                     <div className="row g-4">
                         <div className="col-12">
-                            <div className="mb-2 h2" style={{textTransform:"unset!important"}}>Posts For Keyword: {router.query.keyword}</div>
+                            <div className="mb-2 h2" style={{textTransform:"unset!important"}}> {keyword ? (`Posts For Keyword: ${keyword}`) : null}</div>
                         </div>
                         <div className="col-lg-9 col-md-7 ratio_square">
                             <div className="row g-4 g-xl-5 pb-5">
@@ -148,7 +147,7 @@ function Search() {
                                                         </div>
                                                     })
                                                 :
-                                                    <div className="theme-color h4">No post found</div>
+                                                    <div className="theme-color h4" hidden={keyword ? false : true}>No post found</div>
                                         :
                                             Array(10).fill(0).map((item, index) => {
                                                 return <NewPostBlogListSkeleton key={index}/>
@@ -185,12 +184,22 @@ function Search() {
                                                                 {
                                                                     Array(data.totalPage*1).fill(0).map((item,index) => {
                                                                         return <li className={"page-item " + ( index+1 == page ? "active" : "" )} key={index}>
-                                                                                <a
+                                                                                <div
                                                                                     className="page-link"
-                                                                                    href={`?keyword=${keyword}&page=${index + 1}`}
+                                                                                    onClick={
+                                                                                        () => {
+                                                                                            router.push({
+                                                                                                pathname:'/search',
+                                                                                                query:{
+                                                                                                    keyword:keyword,
+                                                                                                    page: index * 1 + 1
+                                                                                                }
+                                                                                            });
+                                                                                        } 
+                                                                                    }
                                                                                 >
                                                                                     {index * 1 + 1}
-                                                                                </a>
+                                                                                </div>
                                                                             </li>
                                                                     })
                                                                 }
@@ -220,7 +229,7 @@ function Search() {
                         </div>
 
                         <div className="col-lg-3 col-md-5">
-                            <Sidebar />
+                            <Sidebar showSearchBox={true}/>
                         </div>
                     </div>
                 </div>
