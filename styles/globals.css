@@ -562,3 +562,38 @@ header .category-menu .btn i {
     display: flex;
     align-items: center;
 }
+
+.slide-product-desc p {
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+}
+
+.home-slider .add-btn {
+    margin: calc(15px + (30 - 15) * ((100vw - 320px) / (1920 - 320))) 0;
+}
+
+.banner-poster
+    .sugestion-product
+    .slider-shoes-image
+    .relative-shoes
+    .shoes-price
+    h6 {
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+}
+
+.banner-poster .price-number h6 {
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+}
+
+.banner-poster,
+.home-section .home-slider {
+    height: calc(400px + (750 - 400) * ((100vw - 320px) / (1660 - 320)));
+}

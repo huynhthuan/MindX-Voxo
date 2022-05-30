@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { removeCookies } from 'cookies-next';
 
 const initialState = {
     cookie: null,
@@ -41,6 +42,7 @@ export const authSlice = createSlice({
             };
         },
         logOut: (state, action) => {
+            removeCookies('wordpress_login')
             return {
                 ...initialState,
             };

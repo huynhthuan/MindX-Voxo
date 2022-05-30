@@ -1,7 +1,36 @@
 import React, { useEffect } from 'react';
+import Link from 'next/link';
 
-function CategorySlider() {
+function CategorySlider({ dataCategorySlider }) {
     useEffect(() => {
+        (function ($) {
+            'use strict';
+            $('.bg-top').parent().addClass('b-top');
+            $('.bg-bottom').parent().addClass('b-bottom');
+            $('.bg-center').parent().addClass('b-center');
+            $('.bg-left').parent().addClass('b-left');
+            $('.bg-right').parent().addClass('b-right');
+            $('.bg_size_content').parent().addClass('b_size_content');
+            $('.bg-img').parent().addClass('bg-size');
+            $('.bg-img.blur-up').parent().addClass('blur-up lazyload');
+            $('.bg-img').each(function () {
+                var el = $(this),
+                    src = el.attr('src'),
+                    parent = el.parent();
+
+                parent.css({
+                    'background-image': 'url(' + src + ')',
+                    'background-size': 'cover',
+                    'background-position': 'center',
+                    'background-repeat': 'no-repeat',
+                    display: 'block',
+                });
+
+                el.hide();
+            });
+        })(jQuery);
+        feather.replace();
+
         let categorySlider = $('.category-slider1').slick({
             dots: false,
             infinite: true,
@@ -48,8 +77,10 @@ function CategorySlider() {
                 <div className="row">
                     <div className="col-lg-12">
                         <div className="title title-2 text-center">
-                            <h2>Our Category</h2>
-                            <h5 className="text-color">Our collection</h5>
+                            <h2>{dataCategorySlider.title}</h2>
+                            <h5 className="text-color">
+                                {dataCategorySlider.subtitle}
+                            </h5>
                         </div>
                     </div>
                 </div>
@@ -65,51 +96,37 @@ function CategorySlider() {
                     </div>
                     <div className="col-xxl-10 col-lg-9">
                         <div className="category-wrapper category-slider1 white-arrow category-arrow">
-                            <div>
-                                <a href="shop-left-sidebar.html" className="category-wrap category-padding">
-                                    <img src="images/fashion/category/1.jpg" className="bg-img blur-up lazyload" alt="category image" />
-                                    <div className="category-content category-text-1">
-                                        <h3 className="theme-color">Shoes</h3>
-                                        <span className="text-dark">Fashion</span>
+                            {dataCategorySlider.list_category.map(
+                                (category, index) => (
+                                    <div key={index}>
+                                        <Link
+                                            href={
+                                                '/product-category/' +
+                                                category.slug
+                                            }
+                                        >
+                                            <a className="category-wrap category-padding">
+                                                <img
+                                                    src={
+                                                        category.acf
+                                                            .thumbnail_home
+                                                    }
+                                                    className="bg-img blur-up lazyload"
+                                                    alt={category.name}
+                                                />
+                                                <div className="category-content category-text-1">
+                                                    <h3 className="theme-color">
+                                                        {category.name}
+                                                    </h3>
+                                                    <span className="text-dark">
+                                                        Fashion
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </Link>
                                     </div>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="shop-left-sidebar.html" className="category-wrap category-padding">
-                                    <img src="images/fashion/category/2.jpg" className="bg-img blur-up lazyload" alt="category image" />
-                                    <div className="category-content category-text-1">
-                                        <h3 className="theme-color">Men</h3>
-                                        <span className="text-dark">Fashion</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="shop-left-sidebar.html" className="category-wrap category-padding">
-                                    <img src="images/fashion/category/3.jpg" className="bg-img blur-up lazyload" alt="category image" />
-                                    <div className="category-content category-text-1">
-                                        <h3 className="theme-color">Jeans</h3>
-                                        <span className="text-dark">Fashion</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="shop-left-sidebar.html" className="category-wrap category-padding">
-                                    <img src="images/fashion/category/4.jpg" className="bg-img blur-up lazyload" alt="category image" />
-                                    <div className="category-content category-text-1">
-                                        <h3 className="theme-color">Jacket</h3>
-                                        <span className="text-dark">Fashion</span>
-                                    </div>
-                                </a>
-                            </div>
-                            <div>
-                                <a href="shop-left-sidebar.html" className="category-wrap category-padding">
-                                    <img src="images/fashion/category/3.jpg" className="bg-img blur-up lazyload" alt="category image" />
-                                    <div className="category-content category-text-1">
-                                        <h3 className="theme-color">Jeans</h3>
-                                        <span className="text-dark">Fashion</span>
-                                    </div>
-                                </a>
-                            </div>
+                                )
+                            )}
                         </div>
                     </div>
                 </div>
