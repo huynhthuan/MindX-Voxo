@@ -56,7 +56,7 @@ function Layout({ children }) {
 
             {children}
 
-            {router.pathname !== '/messages' ? <Footer /> : <></>}
+            {/* {router.pathname !== '/messages' ? <Footer /> : <></>} */}
 
             <ToastContainer
                 position="bottom-left"

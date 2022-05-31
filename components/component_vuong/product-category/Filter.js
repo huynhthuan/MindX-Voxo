@@ -10,7 +10,7 @@ function Filter({ idCategory, slug }) {
    }, [per_page]);
 
    return (
-      <div>
+      <div id="product-list">
          <div className="row g-4">
             <div className="filter-button">
                <button className="btn filter-btn p-0">
@@ -71,6 +71,7 @@ function Filter({ idCategory, slug }) {
                                        slug: "",
                                        category: idCategory,
                                        per_page: itemsPerPage,
+                                       page: "1",
                                     },
                                  },
                                  null,

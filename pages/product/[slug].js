@@ -1,30 +1,50 @@
 import Script from "next/script";
 import { useRouter } from "next/router";
-import { fetchApiProductById } from "../../src/api/Api_vuong/fetchApiGetCategories";
+import { fetchApiProductBySlug } from "../../src/api/Api_vuong/fetchApi";
 import { useQuery } from "react-query";
 import Breadcrumb from "../../components/component_vuong/Common/Breadcrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import ShopSection from "../../components/component_vuong/product/ShopSection";
 import ProductSection from "../../components/component_vuong/product/ProductSection";
 import ClothReview from "../../components/component_vuong/product/ClothReview";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import PlaceHolderShopSection from "../../components/component_vuong/product/PlaceHolderShopSection";
+import { errorModal } from "../../components/component_vuong/Common";
+import PlaceHolderClothReview from "../../components/component_vuong/product/PlaceHolderClothReview";
+import PlaceHolderProductSection from "../../components/component_vuong/product/PlaceHolderProductSection";
+import { useDispatch, useSelector } from "react-redux";
+import { addRecentlyViewedProducts } from "../../store/recentlyViewedProducts/recentlyViewedProductsSlice";
 
 function ProductDetail() {
-   const { id } = useRouter().query;
-   const [rerender,setRerender]=useState(false)
-   const { isLoading, error, data } = useQuery(["product", id,rerender], () => fetchApiProductById(id), { enabled: Boolean(id) });
-   
-   if(isLoading) return 'Loading...'
+   const { slug } = useRouter().query;
+   const recentlyViewedProducts = useSelector((state) => state.recentlyViewedProducts);
+   const dispatch = useDispatch();
+   const {
+      isLoading,
+      error,
+      data = {},
+      isError,
+      isFetching,
+   } = useQuery(["product", slug], () => fetchApiProductBySlug(slug), { enabled: Boolean(slug) });
+   useEffect(() => {
+      errorModal(isError, error);
+   }, [isError, error]);
+   useEffect(() => {
+      if (data.id) { 
+         dispatch(addRecentlyViewedProducts(data));
+      }
+   }, [data]);
+   if (!slug) return null;
+
    return (
       <>
          <Breadcrumb title="Product Sticky" content="Product Sticky" />
-         <ShopSection {...data} />
-         <ClothReview {...data}{...{rerender,setRerender}}/>
-         <ProductSection {...data}/>
+         {isLoading || isError || isFetching ? <PlaceHolderShopSection /> : <ShopSection {...data} />}
+         {isLoading || isError || isFetching ? <PlaceHolderClothReview /> : <ClothReview {...data} />}
+         {isLoading || isError || isFetching ? <PlaceHolderProductSection /> : <ProductSection {...data} />}
          <SubscribeBox />
-
          <Script src="/js/sticky-cart-bottom.js" strategy="afterInteractive"></Script>
-         <Script src="/js/timer.js" strategy="afterInteractive"></Script>
+         {/* <Script src="/js/timer.js" strategy="afterInteractive"></Script> */}
          <Script src="/js/check-box-select.js" strategy="afterInteractive"></Script>
          <Script src="/js/ion.rangeSlider.min.js" strategy="afterInteractive"></Script>
          <Script src="/js/filter.js" strategy="afterInteractive"></Script>
