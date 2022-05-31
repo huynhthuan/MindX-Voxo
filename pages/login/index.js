@@ -16,8 +16,8 @@ function Login() {
     const [isLoadingFb, setIsLoadingFb] = useState(false);
 
     const auth = useSelector((state) => state.auth);
-    console.log(`  ~ auth`, auth)
-    const { cookie }=auth
+    
+    const { cookie } = auth;
     const dispatch = useDispatch();
 
     useEffect(() => {

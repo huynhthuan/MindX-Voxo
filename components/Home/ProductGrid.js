@@ -1,4 +1,4 @@
-import ProductCart from '../Product/ProductCard';
+import ProductCard from '../Product/ProductCard';
 
 function ProductGrid({ dataProduct }) {
     const { title, subtitle, products } = dataProduct;
@@ -17,7 +17,7 @@ function ProductGrid({ dataProduct }) {
                                     key={index}
                                     className="col-xl-3 col-lg-4 col-6"
                                 >
-                                    {/* <ProductCart {...item} /> */}
+                                    <ProductCard {...item} />
                                 </div>
                             ))}
                         </div>
