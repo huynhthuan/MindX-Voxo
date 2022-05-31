@@ -39,7 +39,7 @@ function ProductCard(props) {
          showCancelButton: true,
          cancelButtonText: "Ok",
          cancelButtonColor: "#d90429",
-         confirmButtonText: "go to Compare",
+         confirmButtonText: "Compare",
       }).then((res) => {
          if (res.isConfirmed) {
             router.push("/compare");

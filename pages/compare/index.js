@@ -9,12 +9,14 @@ import ProductCard from "../../components/Product/ProductCard";
 import RatingDetails from "../../components/Product/RatingDetails";
 import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
 import Swal from "sweetalert2";
+import CompareItem from "../../components/component_vuong/compare/CompareItem";
 
 function Compare() {
    const compareProduct = useSelector((state) => state.compare.entities);
    const listCompare = [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
-   const listRecentlyViewed = Object.values(recentlyViewed).filter((item) => !listCompare.map((item) => item.id).includes(item.id));
+   const listRecentlyViewed = Object.values(recentlyViewed);
+   // .filter((item) => !listCompare.map((item) => item.id).includes(item.id));
 
    const dispatch = useDispatch();
    const handleRemove = (id) => {
@@ -25,7 +27,7 @@ function Compare() {
    }, []);
 
    const handleAddCompare = (item) => {
-      Object.values(compareProduct).length< 4
+      Object.values(compareProduct).length < 4
          ? dispatch(addProductCompare(item))
          : Swal.fire({
               title: "limited 4 items",
@@ -37,7 +39,7 @@ function Compare() {
       <>
          <Breadcrumb title={"Compare"} />
          <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-lg">
+            <div className="modal-dialog modal-xl">
                <div className="modal-content">
                   <div className="modal-header">
                      <h3 className="modal-title" id="exampleModalLabel">
@@ -91,40 +93,8 @@ function Compare() {
                                  </tr>
                                  <tr className="table-product-details">
                                     <td></td>
-                                    {listCompare.map(({ price, name, regular_price, images, on_sale, slug }, key) => (
-                                       <td key={key}>
-                                          {!name ? (
-                                             // <button onClick={handleAdd}>ADD</button>
-                                             <button type="button" className="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                                Add Compare
-                                             </button>
-                                          ) : (
-                                             <div className="product-box">
-                                                <div className="product-image">
-                                                   <Link href={"/product/" + slug}>
-                                                      <a className="w-100 blur-up lazyload">
-                                                         <img src={images[0].src} className="img-fluid bg-img blur-up lazyload" alt={images[0].alt} />
-                                                      </a>
-                                                   </Link>
-                                                </div>
-                                                <div className="product-details">
-                                                   <div>
-                                                      <a>
-                                                         <h6 className="fw-bold">{name}</h6>
-                                                      </a>
-                                                   </div>
-
-                                                   <div className="price-details mt-2">
-                                                      <h6 className="font-green">
-                                                         {conventToCurrency(price)}
-                                                         <span className="font-light mx-2">{conventToCurrency(regular_price)}</span>
-                                                         <OnSale on_sale={on_sale} price={price} regular_price={regular_price} />
-                                                      </h6>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                          )}
-                                       </td>
+                                    {listCompare.map((item, index) => (
+                                     <CompareItem {...item} key={index}/>
                                     ))}
                                  </tr>
 

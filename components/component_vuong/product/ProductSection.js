@@ -53,6 +53,7 @@ function ProductSection({ id, categories }) {
    useEffect(() => {
       errorModal(isError, error);
    }, [error, isError]);
+   
    return (
       <section className="ratio_asos section-b-space overflow-hidden">
          <div className="container">

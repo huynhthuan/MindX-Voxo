@@ -6,6 +6,7 @@ import { convertObjectToParams, filter_meta_data } from "../Common";
 import ReviewsProduct from "./ReviewsProduct";
 
 function ClothReview({ description, id, acf: { question_and_answers, specifications, guide } }) {
+   
    return (
       <div className="container">
          <div className="row gx-4 gy-5">

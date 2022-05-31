@@ -30,7 +30,7 @@ function ProductDetail() {
       errorModal(isError, error);
    }, [isError, error]);
    useEffect(() => {
-      if (data.id) {
+      if (data.id) { 
          dispatch(addRecentlyViewedProducts(data));
       }
    }, [data]);

@@ -50,6 +50,7 @@ function ProductCategory(props) {
 
    const { headers, idCategory } = data;
    const { "x-wp-totalpages": totalPages = 0 } = headers;
+   console.log(`  ~ data`, data)
 
    return (
       <>

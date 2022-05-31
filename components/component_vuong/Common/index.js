@@ -33,6 +33,7 @@ export const errorModal = (isError, error) => {
 };
 
 export const functionJquery = () => {
+   console.log('jq');
    (function ($) {
       "use strict";
       $(".bg-top").parent().addClass("b-top");
