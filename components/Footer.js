@@ -47,7 +47,7 @@ function Footer() {
                                                 <b>phone:</b>
                                                 <span className="font-light">
                                                     {' '}
-                                                    {footer.phone}
+                                                    {footer?.phone}
                                                 </span>
                                             </span>
                                         </li>
@@ -56,7 +56,7 @@ function Footer() {
                                                 <b>Address:</b>
                                                 <span className="font-light">
                                                     {' '}
-                                                    {footer.address}
+                                                    {footer?.address}
                                                 </span>
                                             </span>
                                         </li>
@@ -65,7 +65,7 @@ function Footer() {
                                                 <b>Email:</b>
                                                 <span className="font-light">
                                                     {' '}
-                                                    {footer.email}
+                                                    {footer?.email}
                                                 </span>
                                             </span>
                                         </li>
@@ -125,7 +125,7 @@ function Footer() {
                                     </div>
                                     <div className="footer-content">
                                         <ul>
-                                            {footer.category.map(
+                                            {footer.category && footer?.category.map(
                                                 (cate, index) => (
                                                     <li key={index}>
                                                         <Link
