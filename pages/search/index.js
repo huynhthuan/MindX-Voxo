@@ -5,7 +5,6 @@ import PostCard from '../../components/Posts/PostCard';
 import { useSearchPosts } from '../../src/api_minhhieu/searchPostsApi';
 import { useRouter } from 'next/router';
 import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
-import { unset } from 'lodash';
 
 function Search() {
     useEffect(() => {
