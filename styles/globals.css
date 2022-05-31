@@ -597,3 +597,118 @@ header .category-menu .btn i {
 .home-section .home-slider {
     height: calc(400px + (750 - 400) * ((100vw - 320px) / (1660 - 320)));
 }
+
+.warp-chat-dashboard {
+    height: calc(100vh - 95.48px);
+}
+
+.chat-sidebar-list .sendbird-channel-list {
+    margin-right: 0;
+    width: 100%;
+}
+
+.chat-sidebar-list .sendbird-channel-header {
+    width: 100%;
+}
+
+.chat-sidebar-list .sendbird-channel-preview {
+    width: 100%;
+}
+
+.chat-sidebar-list {
+    position: relative;
+    height: 100%;
+}
+
+.channel-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+}
+
+.offcanvas-custom {
+    width: 500px;
+}
+
+.channel-custom .sendbird-thumbnail-message-item-body {
+    max-width: 100%;
+}
+
+.channel-custom .sendbird-conversation {
+    border: none;
+}
+
+.channel-custom
+    .sendbird-conversation__messages
+    .sendbird-conversation__messages-padding {
+    padding: 0 10px;
+}
+
+.channel-custom
+    .sendbird-message-content.outgoing
+    .sendbird-message-content__middle {
+    max-width: 80%;
+}
+
+.sendbird-dropdown__reaction-bar {
+    left: unset !important;
+    right: 10px;
+    z-index: 9999999999;
+}
+
+.setting-channel-custom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+}
+
+.setting-channel-custom .sendbird-channel-settings {
+    width: 100%;
+    border: none;
+}
+
+.setting-channel-custom .sendbird-channel-settings__freeze {
+    width: 100%;
+    max-width: 100%;
+}
+
+.setting-channel-custom
+    .sendbird-channel-profile
+    .sendbird-channel-profile__title {
+    width: 100%;
+    max-width: 100%;
+}
+
+.header-channel-open {
+    background-color: white;
+    border-bottom: 1px solid #0000001f;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.channel-back,
+.chat-close {
+    border: none;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.channel-custom .sendbird-conversation {
+    height: calc(100% - 51px);
+    border: none!important;
+}
+
+.channel-custom .sendbird-conversation__messages {
+    overflow: hidden;
+}

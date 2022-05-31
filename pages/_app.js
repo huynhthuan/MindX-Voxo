@@ -18,6 +18,7 @@ import '../styles/vendors/animate.css';
 import '../styles/vendors/ion.rangeSlider.min.css';
 import '../styles/vendors/slick/slick.css';
 import '../styles/vendors/slick/slick-theme.css';
+import '@sendbird/uikit-react/dist/index.css';
 import '../styles/globals.css';
 
 const queryClient = new QueryClient({

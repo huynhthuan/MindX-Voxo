@@ -1,14 +1,13 @@
-import { combineReducers } from "redux";
-import compare from "./compare/compareSlice";
-import recentlyViewedProducts from "./recentlyViewedProducts/recentlyViewedProductsSlice";
-import auth from "./auth/authSlice";
-import webSetting from "./user/webSettingSlice";
+import { combineReducers } from 'redux';
+
+import auth from './auth/authSlice';
+import webSetting from './user/webSettingSlice';
+import webData from './webData/webDataSlice';
 
 const reducers = combineReducers({
-   auth,
-   webSetting,
-   compare,
-   recentlyViewedProducts,
+    auth,
+    webSetting,
+    webData,
 });
 
 export default reducers;

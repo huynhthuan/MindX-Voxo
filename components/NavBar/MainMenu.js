@@ -78,6 +78,13 @@ function MainMenu() {
                                 </a>
                             </Link>
                         </li>
+                        <li>
+                            <Link href="/messages">
+                                <a className="nav-link menu-title">
+                                    Messages
+                                </a>
+                            </Link>
+                        </li>
                         <li className="mobile-poster d-flex d-xl-none">
                             <img
                                 src="/images/pwa.png"

@@ -4,7 +4,6 @@ import { trimHTML } from '../../utils/const';
 
 export default function SliderItemShoe({ slideData }) {
     const { product_data: product, slide_data } = slideData;
-    console.log(slideData);
     return (
         <div>
             <div className="banner-poster">
