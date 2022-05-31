@@ -1,14 +1,18 @@
 import React, { Fragment, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import BannerProductCategory from '../components/Banners/BannerProductCategory';
 import BannerProductCategoryGrid from '../components/Banners/BannerProductCategoryGrid';
 import BannerTimer from '../components/Banners/BannerTimer';
+import NewsletterModal from '../components/Footers/NewsletterModal';
 import CategorySlider from '../components/Home/CategorySlider';
 import InstagramSlider from '../components/Home/InstagramSlider';
 import ProductGrid from '../components/Home/ProductGrid';
+import ProductSlider from '../components/Home/ProductSlider';
 import Services from '../components/Home/Services';
 import Slider from '../components/Home/Slider';
 import wooApi from '../src/api/woocommerce/wooApi';
 import customApi from '../src/api/wordpress/customApi';
+import { setWebData } from '../store/webData/webDataSlice';
 
 export async function getStaticProps() {
     const res = await customApi.GetHomeData();
@@ -19,17 +23,23 @@ export async function getStaticProps() {
         listProduct.push(item[type + '_banner'].product);
     });
     let productInHome = [
-        ...listProduct,
-        acf.product_sale,
-        ...acf.product_instagram,
+        ...new Set([
+            ...listProduct,
+            acf.product_sale,
+            ...acf.product_instagram,
+            ...acf.product_slider,
+            ...acf.product_category_grid,
+        ]),
     ];
 
     let resProduct = await wooApi.getProducts({
         include: productInHome.join(','),
+        per_page: 99,
     });
 
     let resCategory = await wooApi.getCategories({
         include: acf.list_category_slider.join(','),
+        per_page: 99,
     });
 
     let dataHome = {
@@ -44,6 +54,13 @@ export async function getStaticProps() {
             };
         }),
         collection: acf.collection_banner,
+        productSlider: {
+            title: acf.product_slider_title,
+            subtitle: acf.product_slider_subtitle,
+            products: resProduct.data.filter((product, index) =>
+                acf.product_slider.includes(product.id)
+            ),
+        },
         category_slider: {
             title: acf.title_category_slider,
             subtitle: acf.subtitle_category_slider,
@@ -53,6 +70,13 @@ export async function getStaticProps() {
             title: acf.title_category_grid,
             subtitle: acf.subtitle_category_grid,
             list: acf.list_category_grid,
+        },
+        productGrid: {
+            title: acf.product_grid_title,
+            subtitle: acf.product_grid_subtitle,
+            products: resProduct.data.filter((product, index) =>
+                acf.product_category_grid.includes(product.id)
+            ),
         },
         sale: {
             title: acf.title_product_sale,
@@ -89,6 +113,8 @@ export async function getStaticProps() {
 }
 
 export default function Home({ dataHome }) {
+    const dispatch = useDispatch();
+
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -117,6 +143,12 @@ export default function Home({ dataHome }) {
             });
         })(jQuery);
         feather.replace();
+
+        dispatch(
+            setWebData({
+                footer: dataHome.footer,
+            })
+        );
     }, []);
 
     return (
@@ -125,7 +157,7 @@ export default function Home({ dataHome }) {
 
             <BannerProductCategory dataBanner={dataHome.collection} />
 
-            {/* <ProductGrid /> */}
+            <ProductSlider dataProduct={dataHome.productSlider} />
 
             <CategorySlider dataCategorySlider={dataHome.category_slider} />
 
@@ -133,13 +165,15 @@ export default function Home({ dataHome }) {
                 dataBannerProduct={dataHome.category_grid}
             />
 
-            {/* <ProductGrid /> */}
+            <ProductGrid dataProduct={dataHome.productGrid} />
 
             <BannerTimer dataTimer={dataHome.sale} />
 
-            <InstagramSlider />
+            <InstagramSlider dataProduct={dataHome.instagram} />
 
             <Services />
+
+            <NewsletterModal />
         </Fragment>
     );
 }

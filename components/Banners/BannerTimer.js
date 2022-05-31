@@ -4,8 +4,6 @@ import Link from 'next/link';
 function BannerTimer({ dataTimer }) {
     const { product_data: product } = dataTimer;
     useEffect(() => {
-        console.log(dataTimer);
-
         let second = 1000,
             minute = second * 60,
             hour = minute * 60,
