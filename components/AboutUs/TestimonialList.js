@@ -1,7 +1,7 @@
-import TestimonialItem from "./TeamMembers";
+import TestimonialItem from "./TestimonialItem";
 import { useEffect } from "react";
 
-const TestimonalList = ({about_us_testimonal_list}) => {
+const TestimonialList = ({about_us_testimonal_list}) => {
 
     useEffect(() => {
         let slideTestimonial = $('.slide-3-1').slick({
@@ -42,4 +42,4 @@ const TestimonalList = ({about_us_testimonal_list}) => {
     </div>
 }
 
-export default TestimonalList;
+export default TestimonialList;

@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import TeamList from '../../components/AboutUs/TeamList';
-import TestimonalList from '../../components/AboutUs/TestimonialList';
 import Breadcrumb from '../../components/Common/BreadCrumb';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import { useShopInfor } from '../../src/api_minhhieu/shopInforApi';
+import TestimonialItem from '../../components/AboutUs/TestimonialList';
+import { TeamMemberSkeleton, TestimonialItemSkeleton } from '../../components/Skeleton_minhhieu';
 
 export default function AboutUs() {
     useEffect(() => {
@@ -188,7 +189,7 @@ export default function AboutUs() {
                     {
                         isFetching
                             ? 
-                                null
+                                <TeamMemberSkeleton/>
                             :
                                 <TeamList {...data.data.acf}/>
                     }
@@ -213,10 +214,10 @@ export default function AboutUs() {
                     </div>
                     {
                         isFetching
-                        ? 
-                            null
-                        :
-                            <TestimonalList {...data.data.acf}/>
+                            ? 
+                                <TestimonialItemSkeleton/>
+                            :
+                                <TestimonialItem {...data.data.acf}/>
                     }
                 </div>
             </section>

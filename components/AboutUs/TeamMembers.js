@@ -5,8 +5,9 @@ const TeamMembers = ({image, job, name}) => {
                 <div className="leader-image">
                     <img
                         src={image}
-                        className="img-fluid bg-img"
+                        className="img-fluid bg-img w-100"
                         alt=""
+                        style={{height:'20rem'}}
                     />
                     {/* <ul className="social-media">
                         <li>

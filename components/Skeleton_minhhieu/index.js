@@ -92,11 +92,57 @@ const SideBarItemSkeleton = () => {
   </div>
 }
 
+const TeamMemberSkeleton = () => {
+  return <div className="row">
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+  </div>
+}
+
+const TestimonialItemSkeleton = () => {
+  return <div className="row">
+    <div className="col-12 col-lg-4">
+      <Skeleton className="ratio ratio-1x1"/>
+    </div>
+    <div className="col-12 col-lg-4">
+      <Skeleton className="ratio ratio-1x1"/>
+    </div>
+    <div className="col-12 col-lg-4">
+      <Skeleton className="ratio ratio-1x1"/>
+    </div>
+  </div>
+}
+
 export { 
   CategoryPostSkeleton, 
   NewPostBlogListSkeleton, 
   DetailPostSkeleton, 
   RelatedPostSkeleton, 
   PostCommentsSkeleton,
-  SideBarItemSkeleton 
+  SideBarItemSkeleton,
+  TeamMemberSkeleton,
+  TestimonialItemSkeleton
 };
