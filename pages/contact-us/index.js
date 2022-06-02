@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Common/BreadCrumb';
 import SubscribeBox from '../../components/Common/SubscribeBox';
+import {CONTACT_US} from '../../utils/api_minhhieu/index';
 
 function ContactUs() {
     useEffect(() => {
@@ -33,6 +34,80 @@ function ContactUs() {
         feather.replace();
     }, []);
 
+    const [contactForm, setContactForm] = useState({
+        'first-name':'',
+        'last-name':'',
+        'your-email':'',
+        'your-comment':''
+    });
+
+    const [emailInvalid, setEmailInvalid] = useState(false);
+    const [emailConfirmed, setEmailConfirmed] = useState(false);
+    const [firstnameEmpty, setFirstnameEmpty] = useState(false);
+    const [lastnameEmpty, setLastnameEmpty] = useState(false);
+    const [commentEmpty, setCommentEmpty] = useState(false);
+
+    const validateEmail = (email) => {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    const handlecontactFormPropertiesChange = (e) => {
+        setContactForm({
+            ...contactForm,
+            [e.target.name]:e.target.value
+        }) 
+    }
+
+    const handleSubmit = () => {
+        console.log(contactForm);
+        // if (contactForm['first-name']) {
+        //     setFirstnameEmpty(true);
+        // } else if (contactForm['last-name']) {
+        //     setLastnameEmpty(true);
+        // }
+        // if (validateEmail(contactForm['your-email'])) {
+        //     setEmailConfirmed(false);
+        //     const formData = new FormData();
+        //     formData.append('first-name',contactForm['first-name']);
+        //     formData.append('last-name',contactForm['last-name']);
+        //     formData.append('your-email',contactForm['your-email']);
+        //     formData.append('your-comment',contactForm['your-comment']);
+        // } else {
+        //     setEmailInvalid(true);
+        // }
+        // if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail.current.value))
+        // {
+        //     setEmailInValid(false);
+        //     const formData = new FormData();
+        //     formData.append("your-email",userEmail.current.value);
+        //     axios({
+        //         url: SUBSCRIBE_EMAIL,
+        //         data: formData,
+        //         method: 'POST',
+        //         headers: { "Content-Type": "multipart/form-data" },
+        //     })
+        //     .then( res => {
+        //         if (res.status === 200) {
+        //             console.log(res);
+        //             setAlertInfo({
+        //                 result:true,
+        //                 text:'Subscribe successfull',
+        //                 displayTime:3000
+        //             })
+        //         } else {
+        //             setAlertInfo({
+        //                 result:false,
+        //                 text:'Subscribe Failed',
+        //                 displayTime:3000
+        //             })
+        //         }
+        //     })
+    }
+
     return (
         <>
             <Breadcrumb title={'Contact us'} />
@@ -54,27 +129,31 @@ function ContactUs() {
                                     </div>
                                 </div>
                                 <div className="row g-4 mt-md-1 mt-2">
-                                    <div className="col-md-6">
+                                    <div className="col-md-6 position-relative">
                                         <label
                                             htmlFor="first"
                                             className="form-label"
                                         >
-                                            First Name
+                                            First Name <span className='theme-color'>*</span>
                                         </label>
                                         <input
+                                            // value={contactForm['first-name']}
                                             type="text"
                                             className="form-control"
                                             id="first"
                                             placeholder="Enter Your First Name"
+                                            name='first-name'
                                             required
+                                            onChange={handlecontactFormPropertiesChange}
                                         />
+                                        <div hidden={!firstnameEmpty} className='position-absolute top-100 theme-color mt-1'>First name can not be empty</div>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-6 position-relative">
                                         <label
                                             htmlFor="last"
                                             className="form-label"
                                         >
-                                            Last Name
+                                            Last Name <span className='theme-color'>*</span>
                                         </label>
                                         <input
                                             type="text"
@@ -82,14 +161,17 @@ function ContactUs() {
                                             id="last"
                                             placeholder="Enter Your Last Name"
                                             required
+                                            name='last-name'
+                                            onChange={handlecontactFormPropertiesChange}
                                         />
+                                        <div hidden={!lastnameEmpty} className='position-absolute top-100 theme-color mt-1'>Last name can not be empty</div>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-6 pt-lg-2 position-relative">
                                         <label
                                             htmlFor="email"
                                             className="form-label"
                                         >
-                                            Email
+                                            Email <span className='theme-color'>*</span>
                                         </label>
                                         <input
                                             type="email"
@@ -97,9 +179,12 @@ function ContactUs() {
                                             id="email"
                                             placeholder="Enter Your Email Address"
                                             required
+                                            name='your-email'
+                                            onChange={handlecontactFormPropertiesChange}
                                         />
+                                        <div hidden={!emailInvalid} className='position-absolute top-100 theme-color mt-1'>Email invalid</div>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-6 pt-lg-2 position-relative">
                                         <label
                                             htmlFor="email2"
                                             className="form-label"
@@ -113,9 +198,10 @@ function ContactUs() {
                                             placeholder="Enter Your Confirm Email Address"
                                             required
                                         />
+                                        <div hidden={!emailConfirmed} className='position-absolute top-100 theme-color mt-1'>Confirm email incorrect</div>
                                     </div>
 
-                                    <div className="col-12">
+                                    <div className="col-12 position-relative pt-2">
                                         <label
                                             htmlFor="comment"
                                             className="form-label"
@@ -127,13 +213,17 @@ function ContactUs() {
                                             id="comment"
                                             rows="5"
                                             required
+                                            name='your-comment'
+                                            onChange={handlecontactFormPropertiesChange}
                                         ></textarea>
+                                        <div hidden={!commentEmpty} className='position-absolute top-100 theme-color mt-1'>Comment is empty</div>
                                     </div>
 
-                                    <div className="col-auto">
+                                    <div className="col-auto pt-2">
                                         <button
                                             className="btn btn-solid-default"
                                             type="submit"
+                                            onClick={handleSubmit}
                                         >
                                             Submit
                                         </button>
