@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 import Breadcrumb from '../../components/Common/BreadCrumb';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import {CONTACT_US} from '../../utils/api_minhhieu/index';
+
 
 function ContactUs() {
     useEffect(() => {
@@ -38,74 +40,96 @@ function ContactUs() {
         'first-name':'',
         'last-name':'',
         'your-email':'',
+        'your-confirm-email':'',
         'your-comment':''
     });
+    const [formErrors, setFormErrors] = useState({});
+    const [isSubmit, setIsSubmit] = useState(false);
+    const [disableSubmit, setDisableSubmit] = useState(false);
+    const [submitResult, setSubmitResult] = useState({
+        text:'',
+        showResult:false
+    })
 
-    const [emailInvalid, setEmailInvalid] = useState(false);
-    const [emailConfirmed, setEmailConfirmed] = useState(false);
-    const [firstnameEmpty, setFirstnameEmpty] = useState(false);
-    const [lastnameEmpty, setLastnameEmpty] = useState(false);
-    const [commentEmpty, setCommentEmpty] = useState(false);
+    useEffect(() => {
 
-    const validateEmail = (email) => {
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-            return true;
-        } else {
-            return false;
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
+            setDisableSubmit(true);
+            const formData = new FormData();
+            formData.append("first-name", contactForm['first-name']);
+            formData.append("last-name", contactForm['last-name']);
+            formData.append("your-email", contactForm['your-email']);
+            formData.append("your-comment", contactForm['your-comment']);
+
+            // for (var value of formData.values()) {
+            //     console.log(value);
+            // }
+
+            axios({
+                method: 'POST',
+                url: CONTACT_US,
+                data: formData,
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then( res => {
+                setDisableSubmit(false);
+                console.log(res);
+                if (res.status === 200) {
+                    if (res.data.status === "mail_sent") {
+                        console.log("Submit contact successed");
+                        setSubmitResult({text:'Sending email successed',showResult:true});
+                    } else {
+                        console.log("Submit contact failed");
+                        setSubmitResult({text:'Sending email failed',showResult:true});
+                    }
+                } else {
+                    setSubmitResult({text:'Email can not be send, please try later',showResult:true});
+                }
+            })
         }
+
+
+    }, [formErrors]);
+
+    const validate = (values) => {
+        const errors = {};
+        const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        setDisableSubmit(false);
+
+        if (!values['first-name']) 
+            errors['first-name'] = 'First name is required';
+
+        if (!values['last-name'])
+            errors['last-name'] = 'Last name is required';
+
+        if (!values['your-email']) {
+            errors['your-email'] = 'Email is required';
+        } else if (!regex.test(values['your-email'])) {
+            errors['your-email'] = 'Email format is invalid';
+        }
+
+        if (!values['your-confirm-email']) {
+            errors['your-confirm-email'] = 'Confirm email is required';
+        } else  if (values['your-confirm-email'] !== values['your-email']) {
+            errors['your-confirm-email'] = 'Confirm email is incorrect';
+        }
+
+        if (!values['your-comment'])
+            errors['your-comment'] = 'Enter your comment to submit';
+
+        return errors;
     }
 
     const handlecontactFormPropertiesChange = (e) => {
-        setContactForm({
-            ...contactForm,
-            [e.target.name]:e.target.value
-        }) 
+        const {name,value} = e.target;
+        setContactForm({...contactForm, [name]:value}); 
     }
 
     const handleSubmit = () => {
-        console.log(contactForm);
-        // if (contactForm['first-name']) {
-        //     setFirstnameEmpty(true);
-        // } else if (contactForm['last-name']) {
-        //     setLastnameEmpty(true);
-        // }
-        // if (validateEmail(contactForm['your-email'])) {
-        //     setEmailConfirmed(false);
-        //     const formData = new FormData();
-        //     formData.append('first-name',contactForm['first-name']);
-        //     formData.append('last-name',contactForm['last-name']);
-        //     formData.append('your-email',contactForm['your-email']);
-        //     formData.append('your-comment',contactForm['your-comment']);
-        // } else {
-        //     setEmailInvalid(true);
-        // }
-        // if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail.current.value))
-        // {
-        //     setEmailInValid(false);
-        //     const formData = new FormData();
-        //     formData.append("your-email",userEmail.current.value);
-        //     axios({
-        //         url: SUBSCRIBE_EMAIL,
-        //         data: formData,
-        //         method: 'POST',
-        //         headers: { "Content-Type": "multipart/form-data" },
-        //     })
-        //     .then( res => {
-        //         if (res.status === 200) {
-        //             console.log(res);
-        //             setAlertInfo({
-        //                 result:true,
-        //                 text:'Subscribe successfull',
-        //                 displayTime:3000
-        //             })
-        //         } else {
-        //             setAlertInfo({
-        //                 result:false,
-        //                 text:'Subscribe Failed',
-        //                 displayTime:3000
-        //             })
-        //         }
-        //     })
+        setSubmitResult({...submitResult,showResult:false});
+        setDisableSubmit(true);
+        setFormErrors(validate(contactForm));
+        setIsSubmit(true);
     }
 
     return (
@@ -134,10 +158,9 @@ function ContactUs() {
                                             htmlFor="first"
                                             className="form-label"
                                         >
-                                            First Name <span className='theme-color'>*</span>
+                                            First Name 
                                         </label>
                                         <input
-                                            // value={contactForm['first-name']}
                                             type="text"
                                             className="form-control"
                                             id="first"
@@ -146,14 +169,14 @@ function ContactUs() {
                                             required
                                             onChange={handlecontactFormPropertiesChange}
                                         />
-                                        <div hidden={!firstnameEmpty} className='position-absolute top-100 theme-color mt-1'>First name can not be empty</div>
+                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['first-name']}</div>
                                     </div>
                                     <div className="col-md-6 position-relative">
                                         <label
                                             htmlFor="last"
                                             className="form-label"
                                         >
-                                            Last Name <span className='theme-color'>*</span>
+                                            Last Name 
                                         </label>
                                         <input
                                             type="text"
@@ -164,14 +187,14 @@ function ContactUs() {
                                             name='last-name'
                                             onChange={handlecontactFormPropertiesChange}
                                         />
-                                        <div hidden={!lastnameEmpty} className='position-absolute top-100 theme-color mt-1'>Last name can not be empty</div>
+                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['last-name']}</div>
                                     </div>
                                     <div className="col-md-6 pt-lg-2 position-relative">
                                         <label
                                             htmlFor="email"
                                             className="form-label"
                                         >
-                                            Email <span className='theme-color'>*</span>
+                                            Email 
                                         </label>
                                         <input
                                             type="email"
@@ -182,7 +205,7 @@ function ContactUs() {
                                             name='your-email'
                                             onChange={handlecontactFormPropertiesChange}
                                         />
-                                        <div hidden={!emailInvalid} className='position-absolute top-100 theme-color mt-1'>Email invalid</div>
+                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['your-email']}</div>
                                     </div>
                                     <div className="col-md-6 pt-lg-2 position-relative">
                                         <label
@@ -197,8 +220,10 @@ function ContactUs() {
                                             id="email2"
                                             placeholder="Enter Your Confirm Email Address"
                                             required
+                                            name='your-confirm-email'
+                                            onChange={handlecontactFormPropertiesChange}
                                         />
-                                        <div hidden={!emailConfirmed} className='position-absolute top-100 theme-color mt-1'>Confirm email incorrect</div>
+                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['your-confirm-email']}</div>
                                     </div>
 
                                     <div className="col-12 position-relative pt-2">
@@ -216,7 +241,7 @@ function ContactUs() {
                                             name='your-comment'
                                             onChange={handlecontactFormPropertiesChange}
                                         ></textarea>
-                                        <div hidden={!commentEmpty} className='position-absolute top-100 theme-color mt-1'>Comment is empty</div>
+                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['your-comment']}</div>
                                     </div>
 
                                     <div className="col-auto pt-2">
@@ -224,9 +249,15 @@ function ContactUs() {
                                             className="btn btn-solid-default"
                                             type="submit"
                                             onClick={handleSubmit}
+                                            disabled={disableSubmit}
                                         >
                                             Submit
                                         </button>
+                                    </div>
+                                    <div className='col-12' hidden={!submitResult.showResult}>
+                                        <div className="alert alert-warning">
+                                            {submitResult.text}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
