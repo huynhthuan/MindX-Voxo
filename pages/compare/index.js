@@ -1,76 +1,65 @@
-import { Fragment, useEffect } from "react";
-import Link from "next/link";
+import { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
-import { conventToCurrency } from "../../components/component_vuong/Common";
-import OnSale from "../../components/component_vuong/product/OnSale";
+import { functionJquery, getListCompare } from "../../components/component_vuong/Common";
 import ProductCard from "../../components/Product/ProductCard";
 import RatingDetails from "../../components/Product/RatingDetails";
-import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
-import Swal from "sweetalert2";
+import { removeProductCompare } from "../../store/compare/compareSlice";
 import CompareItem from "../../components/component_vuong/compare/CompareItem";
+import SearchCompare from "../../components/component_vuong/compare/SearchCompare";
+import AddCompare from "../../components/component_vuong/compare/AddCompare";
 
 function Compare() {
    const compareProduct = useSelector((state) => state.compare.entities);
-   const listCompare = [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
+   const listCompare = getListCompare(compareProduct);
    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
    const listRecentlyViewed = Object.values(recentlyViewed);
-   // .filter((item) => !listCompare.map((item) => item.id).includes(item.id));
 
    const dispatch = useDispatch();
-   const handleRemove = (id) => {
+   const handleRemove = (id = "", event) => {
+      event.preventDefault();
       dispatch(removeProductCompare(id));
    };
    useEffect(() => {
-      jQuery;
+      functionJquery;
    }, []);
-
-   const handleAddCompare = (item) => {
-      Object.values(compareProduct).length < 4
-         ? dispatch(addProductCompare(item))
-         : Swal.fire({
-              title: "limited 4 items",
-              icon: "error",
-           });
-   };
+   useEffect(() => {
+      const element = document.getElementById("close-modal");
+      return () => {
+         element.click();
+      };
+   }, []);
 
    return (
       <>
          <Breadcrumb title={"Compare"} />
+         <div className="" id="close-modal2"></div>
          <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-xl">
+            <div className="modal-dialog modal-xl ">
                <div className="modal-content">
                   <div className="modal-header">
                      <h3 className="modal-title" id="exampleModalLabel">
-                        <div className="d-flex justify-content-center mt-3 ms-3 ">Recently Viewed Products</div>
+                        <div className="d-flex justify-content-center mt-3 ms-5 ">Recently Viewed Products</div>
                      </h3>
-                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     <button type="button" className="btn-close mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div className="modal-body ratio_30">
-                     <div className="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
+                  <div className="modal-body ratio_30 ">
+                     <div className="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section mx-3">
                         {listRecentlyViewed.slice(0, 4).map((item, key) => (
-                           <ProductCard {...item} key={key}>
-                              <div className="d-flex justify-content-center mt-3">
-                                 <button
-                                    disabled={listCompare.map((product) => product.id).includes(item.id)}
-                                    className="btn btn-warning"
-                                    onClick={() => handleAddCompare(item)}
-                                 >
-                                    {listCompare.map((product) => product.id).includes(item.id) ? "In Compare" : "Add Compare"}
-                                 </button>
-                              </div>
+                           <ProductCard {...item} key={key} disAction>
+                              <AddCompare listCompare={listCompare} item={item} />
                            </ProductCard>
                         ))}
                      </div>
-                     <div className="">Search</div>
-                     <input type="text" />
+                     <div className="" id="scroll-search"></div>
+                     <SearchCompare listCompare={listCompare} />
                   </div>
                   <div className="modal-footer">
-                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
+                     <button type="button" id="close-modal" className="btn btn-secondary" data-bs-dismiss="modal">
                         Close
                      </button>
-                     {/* <button type="button" className="btn btn-primary">Save changes</button> */}
                   </div>
                </div>
             </div>
@@ -86,7 +75,7 @@ function Compare() {
                                  <tr className="table-cart-button">
                                     <td></td>
                                     {listCompare.map(({ id }, key) => (
-                                       <td key={key} onClick={() => handleRemove(id)}>
+                                       <td key={key} onClick={(event) => handleRemove(id, event)}>
                                           {id && <a className="btn btn-warning">Remove</a>}
                                        </td>
                                     ))}
@@ -94,7 +83,7 @@ function Compare() {
                                  <tr className="table-product-details">
                                     <td></td>
                                     {listCompare.map((item, index) => (
-                                     <CompareItem {...item} key={index}/>
+                                       <CompareItem {...item} key={index} />
                                     ))}
                                  </tr>
 
@@ -175,33 +164,3 @@ function Compare() {
 }
 
 export default Compare;
-
-const jQuery = () => {
-   (function ($) {
-      "use strict";
-      $(".bg-top").parent().addClass("b-top");
-      $(".bg-bottom").parent().addClass("b-bottom");
-      $(".bg-center").parent().addClass("b-center");
-      $(".bg-left").parent().addClass("b-left");
-      $(".bg-right").parent().addClass("b-right");
-      $(".bg_size_content").parent().addClass("b_size_content");
-      $(".bg-img").parent().addClass("bg-size");
-      $(".bg-img.blur-up").parent().addClass("blur-up lazyload");
-      $(".bg-img").each(function () {
-         var el = $(this),
-            src = el.attr("src"),
-            parent = el.parent();
-
-         parent.css({
-            "background-image": "url(" + src + ")",
-            "background-size": "cover",
-            "background-position": "center",
-            "background-repeat": "no-repeat",
-            display: "block",
-         });
-
-         el.hide();
-      });
-   })(jQuery);
-   feather.replace();
-};

@@ -2,7 +2,7 @@ import { Fragment, useEffect } from "react";
 import { useQuery } from "react-query";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
-import { errorModal } from "../../components/component_vuong/Common";
+import { errorModal, functionJquery } from "../../components/component_vuong/Common";
 import PlaceHolderFaqContent from "../../components/component_vuong/faq/PlaceHolderFaqContent";
 import PlaceHolderFaqSidebar from "../../components/component_vuong/faq/PlaceHolderFaqSidebar";
 import { fetchApiFaq } from "../../src/api/Api_vuong/fetchApi";
@@ -10,7 +10,7 @@ import { fetchApiFaq } from "../../src/api/Api_vuong/fetchApi";
 function Faq() {
    const { isLoading, data, error, isError, isFetching } = useQuery("faq", fetchApiFaq);
    useEffect(() => {
-      functionJQuery();
+      functionJquery();
    }, [data]);
    useEffect(() => {
       errorModal(isError, error);
@@ -103,34 +103,3 @@ function Faq() {
 }
 
 export default Faq;
-
-const functionJQuery = () => {
-   (function ($) {
-      "use strict";
-      console.log("ss");
-      $(".bg-top").parent().addClass("b-top");
-      $(".bg-bottom").parent().addClass("b-bottom");
-      $(".bg-center").parent().addClass("b-center");
-      $(".bg-left").parent().addClass("b-left");
-      $(".bg-right").parent().addClass("b-right");
-      $(".bg_size_content").parent().addClass("b_size_content");
-      $(".bg-img").parent().addClass("bg-size");
-      $(".bg-img.blur-up").parent().addClass("blur-up lazyload");
-      $(".bg-img").each(function () {
-         var el = $(this),
-            src = el.attr("src"),
-            parent = el.parent();
-
-         parent.css({
-            "background-image": "url(" + src + ")",
-            "background-size": "cover",
-            "background-position": "center",
-            "background-repeat": "no-repeat",
-            display: "block",
-         });
-
-         el.hide();
-      });
-   })(jQuery);
-   feather.replace();
-};

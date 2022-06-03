@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
 export const conventToCurrency = (price) =>
@@ -32,8 +33,13 @@ export const errorModal = (isError, error) => {
    }
 };
 
+export const getPercent = (num, den) => {
+   return ((num / den) * 100).toFixed(2) + "%";
+};
+
+export const getListCompare = (compareProduct) => [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
+
 export const functionJquery = () => {
-   console.log('jq');
    (function ($) {
       "use strict";
       $(".bg-top").parent().addClass("b-top");

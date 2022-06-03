@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { fetchApiPostReviewProduct } from "../../../src/api/Api_vuong/fetchApi";
-import RatingDetails from "../../Product/RatingDetails";
-import { convertObjectToParams, filter_meta_data } from "../Common";
 import ReviewsProduct from "./ReviewsProduct";
 
-function ClothReview({ description, id, acf: { question_and_answers, specifications, guide } }) {
-   
+function ClothReview({ description, average_rating, rating_count, id, acf: { question_and_answers, specifications, guide } }) {
    return (
       <div className="container">
          <div className="row gx-4 gy-5">
@@ -59,7 +54,7 @@ function ClothReview({ description, id, acf: { question_and_answers, specificati
                         </div>
                      </div>
 
-                     <ReviewsProduct id={id} />
+                     <ReviewsProduct id={id} average_rating={average_rating} rating_count={rating_count} />
                   </div>
                </div>
             </div>
