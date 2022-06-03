@@ -521,48 +521,13 @@
         });
     });
 
-    /*=====================
-        20. Shop List-grid js
-     ==========================*/
-    $(".grid-options .grid-btn").on("click", function () {
-        $(".product-list-section").removeClass("list-style");
-    });
-
-    $(".grid-options .list-btn").on("click", function () {
-        $(".product-list-section").addClass("list-style");
-    });
-    $('.two-grid').on('click', function (e) {
-        $(".product-list-section").removeClass("row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 list-style").addClass("row-cols-2");
-    });
-    $('.three-grid').on('click', function (e) {
-        $(".product-list-section").removeClass("row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 list-style").addClass("row-cols-md-3 row-cols-2");
-    });
-    $('.grid-btn').on('click', function (e) {
-        $(".product-list-section").removeClass("row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 list-style").addClass("row-cols-lg-4 row-cols-md-3 row-cols-2");
-    });
-    $('.five-grid').on('click', function (e) {
-        $(".product-list-section").removeClass("list-style").addClass("row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2");
-    });
-    var contentwidth = $(window).width();
-    if (contentwidth < "1199") {
-        $(".grid-options .grid-btn").addClass("active");
-    }
-    if (contentwidth < "991") {
-        $(".grid-options .three-grid").addClass("active");
-    }
-    if (contentwidth < "767") {
-        $(".grid-options .two-grid").addClass("active");
-    }
-
 })(jQuery);
+
 
 /*=====================
     21. Shop List-grid js
  ==========================*/
-$(".grid-options ul li").click(function () {
-    $(".grid-options li.active").removeClass("active");
-    $(this).addClass("active")
-});
+
 
 /*=====================
     22. Mouseup functions
