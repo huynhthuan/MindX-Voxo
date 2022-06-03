@@ -742,7 +742,7 @@ function Footer() {
 
             <div className="bg-overlay"></div>
 
-            <DynamicChatSidebarWithNoSSR />
+            {/* <DynamicChatSidebarWithNoSSR /> */}
         </>
     );
 }
