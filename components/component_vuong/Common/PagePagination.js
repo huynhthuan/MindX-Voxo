@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
-function PagePagination({ totalPages ,scroll}) {
+function PagePagination({ totalPages, scroll }) {
    const router = useRouter();
    const { page } = router.query;
    return (
@@ -52,13 +52,13 @@ function PageItem({ children, numPage }) {
    return (
       <li className={numPage === +page ? "page-item active" : "page-item"}>
          <a
-         href="#product-list"
+            href="#list-items"
             className="page-link"
             role="button"
             onClick={() => {
                router.push(
                   {
-                     pathname: url + query.slug&&query.slug,
+                     pathname: url + query.slug && query.slug,
                      query: numPage !== 1 && {
                         ...queryDelSlug,
                         page: numPage,

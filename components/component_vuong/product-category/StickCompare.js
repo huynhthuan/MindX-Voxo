@@ -6,7 +6,6 @@ import MostPopularCard from "./MostPopularCard";
 function StickCompare() {
    const compareProduct = useSelector((state) => state.compare.entities);
    const listCompare = Object.values(compareProduct);
-   console.log(`  ~ listCompare`, listCompare);
       return null
    return (
       <div className="position-fixed bottom-0 w-100 " style={{ zIndex: "1", backgroundColor: "white" }}>
