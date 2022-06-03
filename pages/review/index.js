@@ -38,7 +38,7 @@ function Review() {
       <>
          <Breadcrumb title={"Review"} content={"Review"} />
 
-         <section className="review-section section-b-space">
+         <section className="review-section section-b-space" id="list-items">
             <div className="container">
                <div className="row g-4 grid">
                   {isLoading || isError || isFetching ? (

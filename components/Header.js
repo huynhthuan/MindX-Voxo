@@ -44,6 +44,8 @@ export default function Header() {
             <link rel="icon" href="/images/favicon/2.png" type="image/x-icon" />
             <title>Voxo</title>
             <link rel="preconnect" href="https://fonts.gstatic.com/" />
+            
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/satellite-min.css" />
         </Head>
     );
 }
