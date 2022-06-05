@@ -28,6 +28,16 @@ const wooApi = {
 
         return wooClient.get(url);
     },
+    addProductWishlist: (shareKey, params) => {
+        const url = '/wishlist/' + shareKey + '/add_product/';
+
+        return wooClient.post(url, null, params);
+    },
+    removeProductWishlist: (productId) => {
+        const url = 'wishlist/remove_product/' + productId;
+
+        return wooClient.get(url);
+    },
     updateCustomer: (userID, data) => {
         const url = '/customers/' + userID;
 
