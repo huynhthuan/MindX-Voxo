@@ -1,6 +1,9 @@
+import CustomSearchBox from '../component_vuong/compare/CustomSearchBox'
+
 function SearchBar() {
     return (
         <div className="search-full">
+         
             <div className="input-group">
                 <span className="input-group-text">
                     <i data-feather="search" className="font-light"></i>

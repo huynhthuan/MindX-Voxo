@@ -4,6 +4,7 @@ import { Configure, InstantSearch } from "react-instantsearch-hooks-web";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import { configSearch, functionJquery, functionJqueryProductCategory } from "../../components/component_vuong/Common";
+import CustomSearchBox from "../../components/component_vuong/compare/CustomSearchBox";
 import CustomHitSearchProduct from "../../components/component_vuong/searchProduct/CustomHitSearchProduct";
 import Filter from "../../components/component_vuong/searchProduct/Filter";
 import Sort from "../../components/component_vuong/searchProduct/Sort";
