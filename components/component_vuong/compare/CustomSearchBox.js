@@ -13,7 +13,7 @@ function CustomSearchBox({ children }) {
    };
    return (
       <>
-         <section className="search-section  p-0">
+         <section  className="search-section  p-0">
             <div className="container">
                <div className="row">
                   <div className="col-12">

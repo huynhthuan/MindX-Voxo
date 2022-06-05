@@ -4,7 +4,6 @@ import { Configure, InstantSearch } from "react-instantsearch-hooks-web";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import { configSearch, functionJquery, functionJqueryProductCategory } from "../../components/component_vuong/Common";
-import CustomSearchBox from "../../components/component_vuong/compare/CustomSearchBox";
 import CustomHitSearchProduct from "../../components/component_vuong/searchProduct/CustomHitSearchProduct";
 import Filter from "../../components/component_vuong/searchProduct/Filter";
 import Sort from "../../components/component_vuong/searchProduct/Sort";
@@ -12,10 +11,22 @@ import Sort from "../../components/component_vuong/searchProduct/Sort";
 export default function Index() {
    useEffect(() => {
       functionJqueryProductCategory();
+      // top filter
+
+      $(".onclick-title h6").click(function () {
+         $(this).parent(".onclick-title").toggleClass("show").siblings().removeClass("show");
+      });
+
+      $(document).mouseup(function (e) {
+         var topFilter = $(".top-filter-section .onclick-title");
+         if (!topFilter.is(e.target) && topFilter.has(e.target).length === 0) {
+            $(".top-filter-section .onclick-title").removeClass("show");
+         }
+      });
    }, []);
    const { appId, apikey, indexName } = configSearch;
    const searchClient = algoliasearch(appId, apikey);
-   
+
    return (
       <>
          <Breadcrumb title={"Search product"} />
@@ -32,11 +43,9 @@ export default function Index() {
                               </div>
                               <div className="search-panel__filters"></div>
                               <div className="search-panel__results">
-                                 <CustomSearchBox>
-                                    <Filter />
-                                    <Sort />
-                                    <CustomHitSearchProduct />
-                                 </CustomSearchBox>
+                                 <Filter />
+                                 <Sort />
+                                 <CustomHitSearchProduct />
                               </div>
                            </div>
                         </InstantSearch>

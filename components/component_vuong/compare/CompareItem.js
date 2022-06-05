@@ -28,7 +28,7 @@ function CompareItem({ id, price, name, regular_price, images, on_sale, slug }) 
             </div>
          ) : (
             <div className="product-box position-relative">
-               <button type="button" className="btn-close fs-6 position-absolute" onClick={(event) => handleRemove(id, event)}></button>
+                  <button type="button" className="btn-close" onClick={(event) => handleRemove(id, event)}></button>
                <div className="product-image">
                   <Link href={"/product/" + slug}>
                      <a className="w-100 blur-up lazyload">

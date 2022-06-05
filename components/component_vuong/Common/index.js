@@ -73,6 +73,7 @@ export const functionJquery = () => {
 };
 
 export const functionJqueryProductCategory = () => {
+   console.log('22');
    (function ($) {
       "use strict";
       $(".bg-top").parent().addClass("b-top");

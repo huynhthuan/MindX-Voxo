@@ -20,6 +20,7 @@ import '../styles/vendors/slick/slick.css';
 import '../styles/vendors/slick/slick-theme.css';
 import '@sendbird/uikit-react/dist/index.css';
 import '../styles/globals.css';
+import '../styles/compare.css';
 
 const queryClient = new QueryClient({
     defaultOptions: {
