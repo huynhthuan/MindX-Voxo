@@ -1,15 +1,14 @@
 import { useEffect } from "react";
-
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import { functionJquery, getListCompare } from "../../components/component_vuong/Common";
 import ProductCard from "../../components/Product/ProductCard";
 import RatingDetails from "../../components/Product/RatingDetails";
-import { removeProductCompare } from "../../store/compare/compareSlice";
 import CompareItem from "../../components/component_vuong/compare/CompareItem";
-import SearchCompare from "../../components/component_vuong/compare/SearchCompare";
+import Search from "../../components/component_vuong/compare/Search";
 import AddCompare from "../../components/component_vuong/compare/AddCompare";
+import Hit from "../../components/component_vuong/compare/HitCompare";
 
 function Compare() {
    const compareProduct = useSelector((state) => state.compare.entities);
@@ -17,25 +16,19 @@ function Compare() {
    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
    const listRecentlyViewed = Object.values(recentlyViewed);
 
-   const dispatch = useDispatch();
-   const handleRemove = (id = "", event) => {
-      event.preventDefault();
-      dispatch(removeProductCompare(id));
-   };
    useEffect(() => {
       functionJquery;
    }, []);
    useEffect(() => {
-      const element = document.getElementById("close-modal");
+      const elementCloseModal = document.getElementById("close-modal");
       return () => {
-         element.click();
+         elementCloseModal.click();
       };
    }, []);
 
    return (
       <>
          <Breadcrumb title={"Compare"} />
-         <div className="" id="close-modal2"></div>
          <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-xl ">
                <div className="modal-content">
@@ -46,15 +39,14 @@ function Compare() {
                      <button type="button" className="btn-close mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div className="modal-body ratio_30 ">
-                     <div className="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section mx-3">
+                     <div className="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 mb-4 custom-gy-5 product-style-2 ratio_asos product-list-section mx-3">
                         {listRecentlyViewed.slice(0, 4).map((item, key) => (
                            <ProductCard {...item} key={key} disAction>
                               <AddCompare listCompare={listCompare} item={item} />
                            </ProductCard>
                         ))}
                      </div>
-                     <div className="" id="scroll-search"></div>
-                     <SearchCompare listCompare={listCompare} />
+                     <Search />
                   </div>
                   <div className="modal-footer">
                      <button type="button" id="close-modal" className="btn btn-secondary" data-bs-dismiss="modal">
@@ -72,14 +64,6 @@ function Compare() {
                         <div className="table-wrapper table-responsive ratio_asos">
                            <table className="table table-striped-1">
                               <tbody>
-                                 <tr className="table-cart-button">
-                                    <td></td>
-                                    {listCompare.map(({ id }, key) => (
-                                       <td key={key} onClick={(event) => handleRemove(id, event)}>
-                                          {id && <a className="btn btn-warning">Remove</a>}
-                                       </td>
-                                    ))}
-                                 </tr>
                                  <tr className="table-product-details">
                                     <td></td>
                                     {listCompare.map((item, index) => (

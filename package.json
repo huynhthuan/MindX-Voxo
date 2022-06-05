@@ -12,6 +12,7 @@
     "@hookform/resolvers": "^2.8.10",
     "@reduxjs/toolkit": "^1.8.1",
     "@sendbird/uikit-react": "^3.0.0-beta.5",
+    "algoliasearch": "^4.13.1",
     "axios": "^0.27.1",
     "cookies-next": "^2.0.4",
     "firebase": "^9.8.1",

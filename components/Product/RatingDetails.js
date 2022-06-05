@@ -16,7 +16,7 @@ function RatingDetails({ average_rating ,showNum ,rating_count}) {
                   </li>
                )
             )}
-         {showNum&&<>({average_rating === "0.00" ? 0 : average_rating})</>}
+         {showNum&&<>({average_rating === "0.00" ? 0 : Number(average_rating).toFixed(1)})</>}
          {rating_count ? <> ({rating_count} reviews)</> : null}
       </ul>
    );

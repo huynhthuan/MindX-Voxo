@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import SubscribeBox from "../../components/Common/SubscribeBox";
-import Breadcrumb from "../../components/component_vuong/Common/Breadcrumb";
 import PlaceHolderCard from "../../components/Product/PlaceHolderCard";
 import ProductCard from "../../components/Product/ProductCard";
 import Sidebar from "../../components/ProductCategory/Sidebar";
@@ -10,8 +9,9 @@ import { fetchApi, fetchApiGetCategories } from "../../src/api/Api_vuong/fetchAp
 import BannerDetail from "../../components/component_vuong/product-category/BannerDetail";
 import Filter from "../../components/component_vuong/product-category/Filter";
 import PagePagination from "../../components/component_vuong/Common/PagePagination";
-import { errorModal, functionJquery } from "../../components/component_vuong/Common";
+import { errorModal, functionJquery, functionJqueryProductCategory } from "../../components/component_vuong/Common";
 import StickCompare from "../../components/component_vuong/product-category/StickCompare";
+import Breadcrumb from "../../components/Common/BreadCrumb";
 
 function ProductCategory(props) {
    // props = dataSlice;
@@ -30,17 +30,12 @@ function ProductCategory(props) {
       keepPreviousData: true,
       staleTime: 60000,
    });
-   // let isLoading,
-   //    error,
-   //    isError,
-   //    isFetching = false,
-   //    data = dataFetch;
 
    useEffect(() => {
       queryClient.prefetchQuery(["products", { ...query, page: +page + 1 + "" }], () => fetchApiGetCategories({ ...query, page: +page + 1 + "" }));
    }, [data, page, queryClient, query]);
 
-   useEffect(functionJquery, [data]);
+   useEffect(functionJqueryProductCategory, [data]);
    useEffect(() => {
       errorModal(isError, error);
    }, [isError, error]);
@@ -50,7 +45,7 @@ function ProductCategory(props) {
 
    return (
       <>
-         <Breadcrumb title="Shop Listing" content=" Shop Fashion" />
+         <Breadcrumb title="Shop Listing"/>
          <section className="section-b-space">
             <div className="container">
                <div className="row">
@@ -77,7 +72,7 @@ function ProductCategory(props) {
             </div>
          </section>
          <SubscribeBox />
-         <StickCompare/>
+         <StickCompare />
       </>
    );
 }
@@ -96,5 +91,3 @@ export const getStaticProps = async () => {
 };
 
 export default ProductCategory;
-
-

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
-function PagePagination({ totalPages, scroll }) {
+function PagePagination({ totalPages }) {
    const router = useRouter();
    const { page } = router.query;
    return (
-      <nav className="page-section">
+      <nav hidden={!totalPages} className="page-section mb-3">
          <ul className="pagination">
             {page && (
                <PageItem numPage={1}>

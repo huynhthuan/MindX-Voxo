@@ -1,18 +1,19 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 
-function CustomSearchBox(props) {
+function CustomSearchBox({ children }) {
    const { query, refine, clear, isSearchStalled } = useSearchBox();
-
-   const elementInputSearch = document.getElementById("input-scroll");
-
-   if (query) {
-      location.href = "#scroll-search";
-      elementInputSearch.focus();
-   }
+   // const {
+   //    query: { search },
+   // } = useRouter();
+   const elementInput = document.getElementById("input-search");
+   const handleSearch = () => {
+      refine(elementInput.value);
+   };
    return (
       <>
-         <section className="search-section mt-5 p-0">
+         <section className="search-section  p-0">
             <div className="container">
                <div className="row">
                   <div className="col-12">
@@ -23,17 +24,17 @@ function CustomSearchBox(props) {
                   <div className="col-lg-6 col-md-8 mx-auto ">
                      <div className="search-bar">
                         <div className="input-group search-bar w-100 mb-3">
-                           <a href="#scroll-search" id="scroll-click"></a>
                            <input
-                              id="input-scroll"
+                              id="input-search"
                               type="search"
                               className="form-control"
                               placeholder="Search"
+                              defaultValue={query}
                               onChange={(e) => {
                                  refine(e.target.value);
                               }}
                            />
-                           <button className="input-group-text" id="basic-addon3">
+                           <button className="input-group-text" id="basic-addon3" onClick={handleSearch}>
                               <i className="fas fa-search"></i>
                            </button>
                         </div>
@@ -42,7 +43,7 @@ function CustomSearchBox(props) {
                </div>
             </div>
          </section>
-         {query && props.children}
+         {children}
       </>
    );
 }

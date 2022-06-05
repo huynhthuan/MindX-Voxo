@@ -1,21 +1,19 @@
 import React from "react";
-import { Highlight } from "react-instantsearch-hooks-web";
 import { useSelector } from "react-redux";
-import ProductCard from "../../Product/ProductCard";
 import MostPopularCard from "../product-category/MostPopularCard";
 import AddCompare from "./AddCompare";
-function Hit({ hit }) {
+function HitCompare({ hit }) {
    const compareProduct = useSelector((state) => state.compare.entities);
    const listCompare = Object.values(compareProduct);
 
    return (
-      <>
-         <MostPopularCard {...hit} />
+      <div className="d-flex my-2">
+         <MostPopularCard {...hit} className='m-0 p-0' hiddenCategories/>
          <div className="ms-auto">
             <AddCompare listCompare={listCompare} item={hit} />
          </div>
-      </>
+      </div>
    );
 }
 
-export default Hit;
+export default HitCompare;
