@@ -1,3 +1,5 @@
+import axios from 'axios';
+import FormData from 'form-data';
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import BannerProductCategory from '../components/Banners/BannerProductCategory';
@@ -149,6 +151,28 @@ export default function Home({ dataHome }) {
                 footer: dataHome.footer,
             })
         );
+    }, []);
+
+    useEffect(() => {
+        let data = new FormData();
+        data.append('first-name', 'thuan');
+        data.append('last-name', 'huynh');
+        data.append('your-email', 'aaaa@gmail.com');
+        data.append('your-comment', 'adsađâsđấ');
+
+        let config = {
+            method: 'post',
+            url: 'https://voxohub.xyz/wp-json/contact-form-7/v1/contact-forms/2701/feedback',
+            data: data,
+        };
+
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }, []);
 
     return (

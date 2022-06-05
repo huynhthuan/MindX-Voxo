@@ -25,11 +25,6 @@ function MainMenu() {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/shop">
-                                <a className="nav-link menu-title">shop</a>
-                            </Link>
-                        </li>
-                        <li>
                             <Link href="/review">
                                 <a className="nav-link menu-title">Review</a>
                             </Link>
@@ -75,13 +70,6 @@ function MainMenu() {
                             <Link href="/contact-us">
                                 <a className="nav-link menu-title">
                                     Contact us
-                                </a>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link href="/messages">
-                                <a className="nav-link menu-title">
-                                    Messages
                                 </a>
                             </Link>
                         </li>

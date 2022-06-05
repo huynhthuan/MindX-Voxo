@@ -172,20 +172,7 @@
     /*=====================
        4. search box function
        ==========================*/
-    $(".search-box").on("click", function () {
-        $(".search-full").addClass("open");
-    });
-    $(window).on("load resize", function () {
-        // open searchbox
-        $(".search-type").on("click", function () {
-            $(this).parents(".search-full").addClass("show");
-        });
 
-        // close seach
-        $(".close-search").on("click", function () {
-            $(".search-full").removeClass("open");
-        });
-    });
 
     // ------------ demo 6 ------------
     $(".search-box").on("click", function () {

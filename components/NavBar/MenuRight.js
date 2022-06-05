@@ -14,8 +14,27 @@ function MenuRight() {
 
     const signOut = () => {
         dispatch(logOut());
-        router.push('/');
+        if (router.pathname !== '/') {
+            router.push('/');
+        }
     };
+
+    useEffect(() => {
+        $('.search-box').on('click', function () {
+            $('.search-full').addClass('open');
+        });
+        $(window).on('load resize', function () {
+            // open searchbox
+            $('.search-type').on('click', function () {
+                $(this).parents('.search-full').addClass('show');
+            });
+
+            // close seach
+            $('.close-search').on('click', function () {
+                $('.search-full').removeClass('open');
+            });
+        });
+    }, []);
 
     return (
         <div className="menu-right">

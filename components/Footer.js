@@ -2,14 +2,6 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import dynamic from 'next/dynamic';
 
-const DynamicChatSidebarWithNoSSR = dynamic(
-    () => import('../components/Chats/ChatPopup'),
-    {
-        ssr: false,
-        loading: () => <p>Loading</p>,
-    }
-);
-
 function Footer() {
     const webData = useSelector((state) => state.webData);
     const { footer } = webData;
@@ -741,8 +733,6 @@ function Footer() {
             {/* tap to top Section End */}
 
             <div className="bg-overlay"></div>
-
-            {/* <DynamicChatSidebarWithNoSSR /> */}
         </>
     );
 }
