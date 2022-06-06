@@ -4,7 +4,6 @@ import {getPostCategoryId} from '../../utils/helpers';
 import axios from 'axios';
 
 const fetchBlogListByCategory = async (param) => {
-  console.log(param);
   const result = await axios.get(BLOG_LIST,
   {
     params: {

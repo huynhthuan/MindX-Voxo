@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Common/BreadCrumb';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import {CONTACT_US} from '../../utils/api_minhhieu/index';
-import FormData from 'form-data';
 import axios from 'axios';
 
 
@@ -66,12 +65,10 @@ function ContactUs() {
             axios({
                 method: 'POST',
                 url: CONTACT_US,
-                data: data,
-                headers: { "Content-Type": "multipart/form-data" },
+                data: data
             })
             .then( res => {
                 setDisableSubmit(false);
-                console.log(res);
                 if (res.status === 200) {
                     if (res.data.status === "mail_sent") {
                         console.log("Submit contact successed");
