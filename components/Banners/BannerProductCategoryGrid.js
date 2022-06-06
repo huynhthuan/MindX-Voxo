@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 
 function BannerProductCategoryGrid({ dataBannerProduct }) {
-    console.log(dataBannerProduct);
     useEffect(() => {
         (function ($) {
             'use strict';

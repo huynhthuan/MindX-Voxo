@@ -1,6 +1,11 @@
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import dynamic from 'next/dynamic';
 
 function Footer() {
+    const webData = useSelector((state) => state.webData);
+    const { footer } = webData;
+
     return (
         <>
             {/* footer start */}
@@ -34,7 +39,7 @@ function Footer() {
                                                 <b>phone:</b>
                                                 <span className="font-light">
                                                     {' '}
-                                                    + 185659635
+                                                    {footer?.phone}
                                                 </span>
                                             </span>
                                         </li>
@@ -43,9 +48,7 @@ function Footer() {
                                                 <b>Address:</b>
                                                 <span className="font-light">
                                                     {' '}
-                                                    1418 Riverwood Drive, Suite
-                                                    3245 Cottonwood, CA 96052,
-                                                    United States
+                                                    {footer?.address}
                                                 </span>
                                             </span>
                                         </li>
@@ -54,7 +57,7 @@ function Footer() {
                                                 <b>Email:</b>
                                                 <span className="font-light">
                                                     {' '}
-                                                    Voxo123@gmail.com
+                                                    {footer?.email}
                                                 </span>
                                             </span>
                                         </li>
@@ -114,46 +117,22 @@ function Footer() {
                                     </div>
                                     <div className="footer-content">
                                         <ul>
-                                            <li>
-                                                <a
-                                                    href="shop-left-sidebar.html"
-                                                    className="font-dark"
-                                                >
-                                                    Latest Shoes
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="shop-left-sidebar.html"
-                                                    className="font-dark"
-                                                >
-                                                    Branded Jeans
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="shop-left-sidebar.html"
-                                                    className="font-dark"
-                                                >
-                                                    New Jackets
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="shop-left-sidebar.html"
-                                                    className="font-dark"
-                                                >
-                                                    Colorfull Hoodies
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a
-                                                    href="shop-left-sidebar.html"
-                                                    className="font-dark"
-                                                >
-                                                    Shiner Goggles
-                                                </a>
-                                            </li>
+                                            {footer.category && footer?.category.map(
+                                                (cate, index) => (
+                                                    <li key={index}>
+                                                        <Link
+                                                            href={
+                                                                '/product-category/' +
+                                                                cate.slug
+                                                            }
+                                                        >
+                                                            <a className="font-dark">
+                                                                {cate.name}
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                )
+                                            )}
                                         </ul>
                                     </div>
                                 </div>
@@ -201,7 +180,6 @@ function Footer() {
                                 <div className="footer-newsletter">
                                     <h3>Let’s stay in touch</h3>
                                     <form
-                                        action="https://pixelstrap.us19.list-manage.com/subscribe/post?u=5a128856334b598b395f1fc9b&amp;id=082f74cbda"
                                         className="form-newsletter  needs-validation"
                                         method="post"
                                         id="mc-embedded-subscribe-form"
@@ -277,8 +255,7 @@ function Footer() {
                             </div>
                             <div className="col-md-6">
                                 <p className="mb-0 font-dark">
-                                    © 2022, Voxo Theme. Made with heart by
-                                    Pixelstrap
+                                    {footer.coppyright}
                                 </p>
                             </div>
                         </div>
@@ -374,32 +351,6 @@ function Footer() {
                 <a href="undefined" className="close-popup fa fa-times"></a>
             </div>
             {/* recently purchase product */}
-
-            {/* Size Modal Start */}
-            <div className="modal modal-size fade" id="sizemodal">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            >
-                                <i className="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <img
-                                src="/images/size-chart.jpg"
-                                alt=""
-                                className="img-fluid blur-up lazyload"
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* Size Modal End */}
 
             {/* Add To Cart Notification */}
             <div className="added-notification">
@@ -772,59 +723,6 @@ function Footer() {
                 </div>
             </div>
             {/* Cart Successful End */}
-
-            {/* Newsletter modal start  */}
-            <div className="modal fade newletter-modal" id="newsletter">
-                <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content ">
-                        <div className="modal-header">
-                            <button
-                                type="button"
-                                className="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                            ></button>
-                        </div>
-
-                        <div className="modal-body">
-                            <img
-                                src="/images/newletter-icon.png"
-                                className="img-fluid blur-up lazyload"
-                                alt=""
-                            />
-                            <div className="modal-title">
-                                <h2 className="tt-title">
-                                    Sign up for our Newsletter!
-                                </h2>
-                                <p className="font-light">
-                                    Never miss any new updates or products we
-                                    reveal, stay up to date.
-                                </p>
-                                <p className="font-light">Oh, and it's free!</p>
-
-                                <div className="input-group mb-3">
-                                    <input
-                                        placeholder="Email"
-                                        className="form-control"
-                                        type="text"
-                                    />
-                                </div>
-
-                                <div className="cancel-button text-center">
-                                    <button
-                                        className="btn default-theme w-100"
-                                        data-bs-dismiss="modal"
-                                        type="button"
-                                    >
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* Newsletter modal end */}
 
             {/* tap to top Section Start */}
             <div className="tap-to-top">

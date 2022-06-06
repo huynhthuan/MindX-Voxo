@@ -1,27 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function RatingDetails({change,rating}) {
-   const [ratingChange, setRatingChange] = useState(rating);
-   const handleRating = (index) => {
-     change&& setRatingChange(index);
-   };
+function RatingDetails({ average_rating ,showNum ,rating_count}) {
    return (
-      <ul className="rating mt-0">
+      <ul className="rating my-2 d-inline-block ">
          {Array(5)
             .fill(0)
             .map((item, index) =>
-               index + 1 <= ratingChange ? (
-                  <li key={index} role="button" onClick={() => handleRating(index + 1)}>
+               index + 1 <= +average_rating ? (
+                  <li key={index}  >
                      <i className="fas fa-star theme-color"></i>
                   </li>
                ) : (
-                  <li key={index} role="button" onClick={() => handleRating(index + 1)}>
+                  <li key={index}  >
                      <i className="fas fa-star"></i>
                   </li>
                )
             )}
-         ({ratingChange})
-         <input name='rating' className="d-none" type="text" value={!ratingChange&&5} required/>
+         {showNum&&<>({average_rating === "0.00" ? 0 : average_rating})</>}
+         {rating_count ? <> ({rating_count} reviews)</> : null}
       </ul>
    );
 }

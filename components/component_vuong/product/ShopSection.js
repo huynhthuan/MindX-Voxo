@@ -1,25 +1,28 @@
-import React from "react";
-import { conventToCurrency } from "../Common";
-import ClothReview from "./ClothReview";
+import React, { useEffect } from "react";
+import { conventToCurrency, filter_meta_data, timeCoundown } from "../Common";
+import ColorImage from "./ColorImage";
+import { useRouter } from "next/router";
+import Countdown from "./Countdown";
+import SelectSize from "./SelectSize";
 
-function ShopSection({ data = {} }) {
+function ShopSection(props = {}) {
+   const router = useRouter();
    const {
+      slug,
       id,
       price,
-      slug,
       name,
-      rating_count,
       stock_quantity,
       categories,
       images,
-      average_rating,
       on_sale,
-      sale_price,
       attributes,
-      featured,
       shipping_required,
-   } = data;
-   if (!data.id) return "Loading...";
+      regular_price,
+      date_on_sale_to,
+      acf:{list_variation},
+   } = props;
+
    return (
       <section>
          <div className="container">
@@ -28,9 +31,9 @@ function ShopSection({ data = {} }) {
                   <div className="details-items">
                      <div className="row g-4">
                         <div className="col-md-6">
-                           <div className="row g-4 ratio_asos">
-                              {images.slice(0, 1).map(({ src, alt }, key) => (
-                                 <div key={key} className="col-12">
+                           <div className="row g-4 ratio_asos slider-for">
+                              {images.map(({ src, alt }, key) => (
+                                 <div key={key} className="col-12 ">
                                     <img src={src} className="img-fluid w-100" alt={alt} />
                                  </div>
                               ))}
@@ -39,94 +42,35 @@ function ShopSection({ data = {} }) {
 
                         <div className="col-md-6">
                            <div className="cloth-details-size">
-                              <div className="product-count">
-                                 <ul>
-                                    <li>
-                                       <img src="/images/gif/fire.gif" className="img-fluid blur-up lazyload" alt="image" />
-                                       <span className="p-counter">37</span>
-                                       <span className="lang">orders in last 24 hours</span>
-                                    </li>
-                                    <li>
-                                       <img src="/images/gif/person.gif" className="img-fluid user_img blur-up lazyload" alt="image" />
-                                       <span className="p-counter">44</span>
-                                       <span className="lang">active view this</span>
-                                    </li>
-                                 </ul>
-                              </div>
-
                               <div className="details-image-concept">
                                  <h2>{name}</h2>
                               </div>
 
                               <div className="label-section">
-                                 <span className="badge badge-grey-color">#1 Best seller</span>
-                                 <span className="label-text">in {categories[0].name}</span>
+                                 {categories.map(({ slug, name }, key) => (
+                                    <span
+                                       key={key}
+                                       className="badge badge-grey-color me-2"
+                                       role="button"
+                                       onClick={() => router.push("/product-category/" + slug)}
+                                    >
+                                       in {name}
+                                    </span>
+                                 ))}
                               </div>
 
                               <h3 className="price-detail">
                                  {conventToCurrency(price)}
                                  {on_sale && (
                                     <>
-                                       <del>$459.00</del>
-                                       <span>55% off</span>
+                                       <del>{conventToCurrency(regular_price)}</del>
+                                       <span>{Math.floor((1 - price / regular_price) * 100)}% off</span>
                                     </>
                                  )}
                               </h3>
 
-                              <div className="color-image">
-                                 <div className="image-select">
-                                    <h5>Color :</h5>
-                                    <div className="size-box">
-                                       <ul>
-                                          {attributes
-                                             .filter((item) => item.name === "Color")[0]
-                                             .options.map((item, index) => (
-                                                <li className={"border rounded m-2 p-2"} role={"button"} key={index}>
-                                                   {item}
-                                                </li>
-                                             ))}
-                                       </ul>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div id="selectSize" className="addeffect-section product-description border-product">
-                                 <h6 className="product-title size-text">
-                                    select size
-                                    <a href="undefined" data-bs-toggle="modal" data-bs-target="#sizemodal">
-                                       size chart
-                                    </a>
-                                 </h6>
-
-                                 <h6 className="error-message">please select size</h6>
-
-                                 <div className="size-box">
-                                    <ul>
-                                       {attributes
-                                          .filter((item) => item.name === "Size")[0]
-                                          .options.map((item, key) => (
-                                             <li key={key}>{item}</li>
-                                          ))}
-                                    </ul>
-                                 </div>
-
-                                 <h6 className="product-title product-title-2 d-block">quantity</h6>
-
-                                 <div className="qty-box">
-                                    <div className="input-group">
-                                       <span className="input-group-prepend">
-                                          <button type="button" className="btn quantity-left-minus" data-type="minus" data-field="">
-                                             <i className="fas fa-minus"></i>
-                                          </button>
-                                       </span>
-                                       <input type="text" name="quantity" className="form-control input-number" defaultValue="1" />
-                                       <span className="input-group-prepend">
-                                          <button type="button" className="btn quantity-right-plus" data-type="plus" data-field="">
-                                             <i className="fas fa-plus"></i>
-                                          </button>
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
+                              <ColorImage list_variation={list_variation} />
+                              <SelectSize attributes={attributes} />
 
                               <div className="product-buttons">
                                  <a href="wishlist.html" className="btn btn-solid">
@@ -146,31 +90,7 @@ function ShopSection({ data = {} }) {
                                  </li>
                               </ul>
 
-                              <div className="mt-2 mt-md-3 border-product">
-                                 <h6 className="product-title hurry-title d-block">
-                                    Hurry Up! Left <span>{stock_quantity}</span> in stock
-                                 </h6>
-                                 <div className="progress">
-                                    <div className="progress-bar" role="progressbar" style={{ width: "70%" }}></div>
-                                 </div>
-                                 <div className="font-light timer-5">
-                                    <h5>Order in the next to get</h5>
-                                    <ul className="timer1">
-                                       <li className="counter">
-                                          <h5 id="days">&#9251;</h5> Days :
-                                       </li>
-                                       <li className="counter">
-                                          <h5 id="hours">&#9251;</h5> Hour :
-                                       </li>
-                                       <li className="counter">
-                                          <h5 id="minutes">&#9251;</h5> Min :
-                                       </li>
-                                       <li className="counter">
-                                          <h5 id="seconds">&#9251;</h5> Sec
-                                       </li>
-                                    </ul>
-                                 </div>
-                              </div>
+                              {date_on_sale_to && <Countdown stock_quantity={stock_quantity} date_on_sale_to={date_on_sale_to} />}
 
                               <div className="border-product">
                                  <h6 className="product-title d-block">share it</h6>
@@ -209,8 +129,6 @@ function ShopSection({ data = {} }) {
                      </div>
                   </div>
                </div>
-
-               {/* <ClothReview/> */}
             </div>
          </div>
       </section>

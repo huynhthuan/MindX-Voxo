@@ -4,7 +4,6 @@ import MostPopular from "./MostPopular";
 
 function Sidebar({ resBrand, resColor, resSize }) {
    const ref=useRef()
-   console.log(`  ~ ref`, ref.current?.value)
    const router = useRouter();
    const { query, pathname } = router;
    const arrColor = query.pa_color ? query.pa_color.split(",") : [];

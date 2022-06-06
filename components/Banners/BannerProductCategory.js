@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 
 function BannerProductCategory({ dataBanner }) {
-    console.log(dataBanner);
     useEffect(() => {
         (function ($) {
             'use strict';

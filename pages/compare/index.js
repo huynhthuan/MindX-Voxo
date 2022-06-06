@@ -1,359 +1,166 @@
+import { useEffect } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import Breadcrumb from "../../components/Common/BreadCrumb";
+import SubscribeBox from "../../components/Common/SubscribeBox";
+import { functionJquery, getListCompare } from "../../components/component_vuong/Common";
+import ProductCard from "../../components/Product/ProductCard";
+import RatingDetails from "../../components/Product/RatingDetails";
+import { removeProductCompare } from "../../store/compare/compareSlice";
+import CompareItem from "../../components/component_vuong/compare/CompareItem";
+import SearchCompare from "../../components/component_vuong/compare/SearchCompare";
+import AddCompare from "../../components/component_vuong/compare/AddCompare";
+
 function Compare() {
-    return (
-        <>
-            {/* Breadcrumb section start */}
-            <section className="breadcrumb-section section-b-space">
-                <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h3>Compare</h3>
-                            <nav>
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item">
-                                        <a href="index.html">
-                                            <i className="fas fa-home"></i>
-                                        </a>
-                                    </li>
-                                    <li className="breadcrumb-item active" aria-current="page">
-                                        Compare
-                                    </li>
-                                </ol>
-                            </nav>
+   const compareProduct = useSelector((state) => state.compare.entities);
+   const listCompare = getListCompare(compareProduct);
+   const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
+   const listRecentlyViewed = Object.values(recentlyViewed);
+
+   const dispatch = useDispatch();
+   const handleRemove = (id = "", event) => {
+      event.preventDefault();
+      dispatch(removeProductCompare(id));
+   };
+   useEffect(() => {
+      functionJquery;
+   }, []);
+   useEffect(() => {
+      const element = document.getElementById("close-modal");
+      return () => {
+         element.click();
+      };
+   }, []);
+
+   return (
+      <>
+         <Breadcrumb title={"Compare"} />
+         <div className="" id="close-modal2"></div>
+         <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-xl ">
+               <div className="modal-content">
+                  <div className="modal-header">
+                     <h3 className="modal-title" id="exampleModalLabel">
+                        <div className="d-flex justify-content-center mt-3 ms-5 ">Recently Viewed Products</div>
+                     </h3>
+                     <button type="button" className="btn-close mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body ratio_30 ">
+                     <div className="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section mx-3">
+                        {listRecentlyViewed.slice(0, 4).map((item, key) => (
+                           <ProductCard {...item} key={key} disAction>
+                              <AddCompare listCompare={listCompare} item={item} />
+                           </ProductCard>
+                        ))}
+                     </div>
+                     <div className="" id="scroll-search"></div>
+                     <SearchCompare listCompare={listCompare} />
+                  </div>
+                  <div className="modal-footer">
+                     <button type="button" id="close-modal" className="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <section className="section-b-space">
+            <div className="container">
+               <div className="row">
+                  <div className="col-12">
+                     <div className="comparemodal-body">
+                        <div className="table-wrapper table-responsive ratio_asos">
+                           <table className="table table-striped-1">
+                              <tbody>
+                                 <tr className="table-cart-button">
+                                    <td></td>
+                                    {listCompare.map(({ id }, key) => (
+                                       <td key={key} onClick={(event) => handleRemove(id, event)}>
+                                          {id && <a className="btn btn-warning">Remove</a>}
+                                       </td>
+                                    ))}
+                                 </tr>
+                                 <tr className="table-product-details">
+                                    <td></td>
+                                    {listCompare.map((item, index) => (
+                                       <CompareItem {...item} key={index} />
+                                    ))}
+                                 </tr>
+
+                                 <tr className="table-cart-button">
+                                    <td></td>
+                                    {listCompare.map((item, key) => (
+                                       <td key={key}>
+                                          {item.id && (
+                                             <a href="cart.html" className="btn btn-solid-blue">
+                                                + Add to cart
+                                             </a>
+                                          )}
+                                       </td>
+                                    ))}
+                                 </tr>
+
+                                 <tr>
+                                    <td>Customer Rating</td>
+                                    {listCompare.map(({ average_rating, rating_count }, key) => (
+                                       <td key={key}>
+                                          {average_rating && <RatingDetails average_rating={average_rating} rating_count={rating_count} />}
+                                       </td>
+                                    ))}
+                                 </tr>
+
+                                 <tr>
+                                    <td>BRAND</td>
+                                    {listCompare.map(({ attributes }, key) => (
+                                       <td key={key}>{attributes && attributes[2].options[0]}</td>
+                                    ))}
+                                 </tr>
+
+                                 <tr>
+                                    <td>Generic Name</td>
+                                    {listCompare.map(({ categories }, key) => (
+                                       <td key={key}>{categories && categories[0].name}</td>
+                                    ))}
+                                 </tr>
+
+                                 <tr>
+                                    <td>Department</td>
+                                    {listCompare.map(({ categories }, key) => (
+                                       <td key={key}>{categories && categories[1].name}</td>
+                                    ))}
+                                 </tr>
+
+                                 <tr>
+                                    <td>Manufacturer</td>
+                                    {listCompare.map(({ categories }, key) => (
+                                       <td key={key}>{categories && "PAGE INDUSTRIES LIMITED"}</td>
+                                    ))}
+                                 </tr>
+
+                                 <tr>
+                                    <td>color</td>
+                                    {listCompare.map(({ attributes }, key) => (
+                                       <td key={key}>{attributes && attributes[0].options.join(", ")}</td>
+                                    ))}
+                                 </tr>
+
+                                 <tr>
+                                    <td>Date First Available</td>
+                                    {listCompare.map(({ date_created }, key) => (
+                                       <td key={key}>{date_created && new Date(date_created).toLocaleDateString()}</td>
+                                    ))}
+                                 </tr>
+                              </tbody>
+                           </table>
                         </div>
-                    </div>
-                </div>
-            </section>
-            {/* Breadcrumb section end */}
-
-            {/* Compare Section Start */}
-            <section className="section-b-space">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="comparemodal-body">
-                                <div className="table-wrapper table-responsive ratio_asos">
-                                    <table className="table table-striped-1">
-                                        <tbody>
-                                            <tr className="table-product-details">
-                                                <td></td>
-
-                                                <td>
-                                                    <div className="product-box">
-                                                        <div className="product-image">
-                                                            <a className="w-100 blur-up lazyload" href="undefined">
-                                                                <img src="/images/fashion/product/front/1.jpg" className="img-fluid bg-img blur-up lazyload" alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div>
-                                                                <a href="undefined">
-                                                                    <h6 className="fw-bold">Jockey Men's Regular Fit T-Shirt</h6>
-                                                                </a>
-                                                            </div>
-
-                                                            <div className="price-details mt-2">
-                                                                <h6 className="font-green">
-                                                                    $25.59
-                                                                    <span className="font-light mx-2">$89.99</span>
-                                                                    <span className="theme-color">20% off</span>
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="product-box">
-                                                        <div className="product-image">
-                                                            <a className="w-100 blur-up lazyload" href="undefined">
-                                                                <img src="/images/fashion/product/front/2.jpg" className="img-fluid bg-img blur-up lazyload" alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div>
-                                                                <a href="undefined">
-                                                                    <h6 className="fw-bold">Columbia Men's Synthetic Jacket</h6>
-                                                                </a>
-                                                            </div>
-
-                                                            <div className="price-details mt-2">
-                                                                <h6 className="font-green">
-                                                                    $65.25
-                                                                    <span className="font-light mx-2">$70.65</span>
-                                                                    <span className="theme-color">40% off</span>
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="product-box">
-                                                        <div className="product-image">
-                                                            <a className="w-100 blur-up lazyload" href="undefined">
-                                                                <img src="/images/fashion/product/front/3.jpg" className="img-fluid bg-img blur-up lazyload" alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div>
-                                                                <a href="undefined">
-                                                                    <h6 className="fw-bold">Columbia Men's Jacket</h6>
-                                                                </a>
-                                                            </div>
-
-                                                            <div className="price-details mt-2">
-                                                                <h6 className="font-green">
-                                                                    $98.99
-                                                                    <span className="font-light mx-2">$109.50</span>
-                                                                    <span className="theme-color">30% off</span>
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div className="product-box">
-                                                        <div className="product-image">
-                                                            <a className="w-100 blur-up lazyload" href="undefined">
-                                                                <img src="/images/fashion/product/front/4.jpg" className="img-fluid bg-img blur-up lazyload" alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <div className="product-details">
-                                                            <div>
-                                                                <a href="undefined">
-                                                                    <h6 className="fw-bold">Columbia</h6>
-                                                                </a>
-                                                            </div>
-
-                                                            <div className="price-details mt-2">
-                                                                <h6 className="font-green">
-                                                                    $80.00
-                                                                    <span className="font-light mx-2">$40.00</span>
-                                                                    <span className="theme-color">50% off</span>
-                                                                </h6>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr className="table-cart-button">
-                                                <td></td>
-                                                <td>
-                                                    <a href="cart.html" className="btn btn-solid-blue">
-                                                        + Add to cart
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="cart.html" className="btn btn-solid-blue">
-                                                        + Add to cart
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="cart.html" className="btn btn-solid-blue">
-                                                        + Add to cart
-                                                    </a>
-                                                </td>
-                                                <td>
-                                                    <a href="cart.html" className="btn btn-solid-blue">
-                                                        + Add to cart
-                                                    </a>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Customer Rating</td>
-                                                <td>
-                                                    <div className="d-flex align-items-center my0">
-                                                        <ul className="rating my-0">
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star"></i>
-                                                            </li>
-                                                        </ul>
-
-                                                        <span className="font-light ms-2">(22 reviews)</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center my0">
-                                                        <ul className="rating my-0">
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star"></i>
-                                                            </li>
-                                                        </ul>
-
-                                                        <span className="font-light ms-2">(17 reviews)</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center my0">
-                                                        <ul className="rating my-0">
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                        </ul>
-
-                                                        <span className="font-light ms-2">(5 reviews)</span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div className="d-flex align-items-center my0">
-                                                        <ul className="rating my-0">
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star theme-color"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star"></i>
-                                                            </li>
-                                                            <li>
-                                                                <i className="fas fa-star"></i>
-                                                            </li>
-                                                        </ul>
-
-                                                        <span className="font-light ms-2">(26 reviews)</span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>BRAND</td>
-                                                <td>Zara</td>
-                                                <td>Allen Solly</td>
-                                                <td>H&M</td>
-                                                <td>Nike</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Generic Name</td>
-                                                <td>T-Shirt</td>
-                                                <td>Shirt</td>
-                                                <td>Jackets</td>
-                                                <td>Blazers</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Department</td>
-                                                <td>Men</td>
-                                                <td>Men</td>
-                                                <td>Men</td>
-                                                <td>Men</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Manufacturer</td>
-                                                <td>PAGE INDUSTRIES LIMITED</td>
-                                                <td>PAGE INDUSTRIES LIMITED</td>
-                                                <td>Shreenath Lifestyle Pvt. Ltd.</td>
-                                                <td>Shreenath Lifestyle Pvt. Ltd.</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>color</td>
-                                                <td>Black, Yellow, Marron</td>
-                                                <td>Blue, Cream, Black</td>
-                                                <td>Military Color</td>
-                                                <td>Black, Gold</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td>Date First Available</td>
-                                                <td>28 July 2015</td>
-                                                <td>25 March 2021</td>
-                                                <td>25 February 2017</td>
-                                                <td>27 April 2021</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Compare Section End */}
-
-            {/* Subscribe Section Start */}
-            <section className="subscribe-section section-b-space">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-8 col-md-6">
-                            <div className="subscribe-details">
-                                <h2 className="mb-3">Subscribe Our News</h2>
-                                <h6 className="font-light">Subscribe and receive our newsletters to follow the news about our fresh and fantastic Products.</h6>
-                            </div>
-                        </div>
-
-                        <div className="col-lg-4 col-md-6 mt-md-0 mt-3">
-                            <div className="subsribe-input">
-                                <div className="input-group">
-                                    <input type="text" className="form-control subscribe-input" placeholder="Your Email Address" />
-                                    <button className="btn btn-solid-default" type="button">
-                                        Button
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Subscribe Section End */}
-        </>
-    );
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <SubscribeBox />
+      </>
+   );
 }
 
 export default Compare;

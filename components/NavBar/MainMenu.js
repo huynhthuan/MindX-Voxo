@@ -25,11 +25,6 @@ function MainMenu() {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/shop">
-                                <a className="nav-link menu-title">shop</a>
-                            </Link>
-                        </li>
-                        <li>
                             <Link href="/review">
                                 <a className="nav-link menu-title">Review</a>
                             </Link>

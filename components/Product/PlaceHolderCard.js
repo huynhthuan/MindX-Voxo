@@ -12,12 +12,12 @@ function PlaceHolderCard() {
          <div className="product-details">
             <div className="rating-details">
                <span className="font-light grid-content">  
-                  <Skeleton width={150} height={16} />
+                  <Skeleton className="me-3" width={150} height={16} />
                </span>
                <Skeleton width={150} height={16} />
             </div>
             <div className="main-price">
-               <Skeleton width={250} height={22} />
+               <Skeleton width={250} height={22} className='me-2'/>
                <div className="listing-content">
                   <Skeleton height={16} count={5} />
                   <Skeleton width="50%" height={16} />
