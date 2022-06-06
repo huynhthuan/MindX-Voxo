@@ -1,46 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useHits } from "react-instantsearch-hooks-web";
+import { functionJqueryProductCategory } from "../Common";
 
-function Sort() {
+function SortSearchProduct() {
+   const {
+      hits,
+      results: { nbHits },
+      bindEvent,
+      sendEvent,
+   } = useHits();
+   useEffect(() => {
+      functionJqueryProductCategory();
+   }, []);
    return (
       <div className="row g-4">
-         <h3>25 Results Found</h3>
-
-         {/* label and featured section */}
-         {/* <div className="col-12">
-            <ul className="short-name">
-               <li>
-                  <div className="label-tag">
-                     <span>Shirts</span>
-                     <button type="button" className="btn-close" aria-label="Close"></button>
-                  </div>
-               </li>
-               <li>
-                  <div className="label-tag">
-                     <span>Kurtas</span>
-                     <button type="button" className="btn-close" aria-label="Close"></button>
-                  </div>
-               </li>
-               <li>
-                  <div className="label-tag">
-                     <span>Jackets</span>
-                     <button type="button" className="btn-close" aria-label="Close"></button>
-                  </div>
-               </li>
-               <li>
-                  <div className="label-tag">
-                     <span>Blazers</span>
-                     <button type="button" className="btn-close" aria-label="Close"></button>
-                  </div>
-               </li>
-               <li>
-                  <div className="label-tag">
-                     <a href="#">
-                        <span>Clear All</span>
-                     </a>
-                  </div>
-               </li>
-            </ul>
-         </div> */}
+         <h3>{nbHits} Results Found</h3>
 
          <div className="col-12">
             <div className="filter-options">
@@ -158,4 +132,4 @@ function Sort() {
    );
 }
 
-export default Sort;
+export default SortSearchProduct;

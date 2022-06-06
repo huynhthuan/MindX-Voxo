@@ -38,9 +38,39 @@ export const getPercent = (num, den) => {
    return ((num / den) * 100).toFixed(1) + "%";
 };
 
+export const reduceStringLength = (str = "", num = 30) => {
+   str = str.trim();
+   for (let length = str.length; num < length; num++) {
+      if (str[num] === " ") return str.slice(0, num) + "...";
+   }
+   return str;
+};
+
 export const configSearch = { appId: "IM4IS8NYBU", apikey: "8170a857ccd774d90ce8f2780527a6db", indexName: "product" };
 
 export const getListCompare = (compareProduct) => [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
+
+export const functionJquerySearchFull = () => {
+   $(".search-box").on("click", function () {
+      $(".search-full").addClass("open");
+      $(".search-type").focus();
+      $(".search-type")[0].value = "";
+   });
+   $(".search-type").blur((function(){
+      $(".search-full").removeClass("open");
+   }))
+   // open searchbox
+   $(".search-type").on("click", function () {
+      $(this).parents(".search-full").addClass("show");
+   });
+
+   // close seach
+   $(".close-search").on("click", function () {
+      $(".search-full").removeClass("open");
+   });
+
+   feather.replace();
+};
 
 export const functionJquery = () => {
    (function ($) {
@@ -73,7 +103,6 @@ export const functionJquery = () => {
 };
 
 export const functionJqueryProductCategory = () => {
-   console.log('22');
    (function ($) {
       "use strict";
       $(".bg-top").parent().addClass("b-top");

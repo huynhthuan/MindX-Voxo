@@ -9,15 +9,17 @@ import CompareItem from "../../components/component_vuong/compare/CompareItem";
 import Search from "../../components/component_vuong/compare/Search";
 import AddCompare from "../../components/component_vuong/compare/AddCompare";
 import Hit from "../../components/component_vuong/compare/HitCompare";
+import { useSearchBox } from "react-instantsearch-hooks-web";
 
 function Compare() {
    const compareProduct = useSelector((state) => state.compare.entities);
    const listCompare = getListCompare(compareProduct);
    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
    const listRecentlyViewed = Object.values(recentlyViewed);
+   const { clear } = useSearchBox();
 
    useEffect(() => {
-      functionJquery;
+      functionJquery();
    }, []);
    useEffect(() => {
       const elementCloseModal = document.getElementById("close-modal");
@@ -49,7 +51,7 @@ function Compare() {
                      <Search />
                   </div>
                   <div className="modal-footer">
-                     <button type="button" id="close-modal" className="btn btn-secondary" data-bs-dismiss="modal">
+                     <button type="button" id="close-modal" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => clear()}>
                         Close
                      </button>
                   </div>

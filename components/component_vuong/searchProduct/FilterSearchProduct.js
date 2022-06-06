@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { functionJqueryProductCategory } from "../Common";
 
-function Filter() {
+function FilterSearchProduct() {
+   useEffect(() => {
+      functionJqueryProductCategory();
+   }, []);
    return (
       <div className="row gx-4 gy-5 mt-1">
          <div className="col-12">
@@ -248,4 +252,4 @@ function Filter() {
    );
 }
 
-export default Filter;
+export default FilterSearchProduct;

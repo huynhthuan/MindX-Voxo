@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 
-function CustomSearchBox({ children }) {
+function CustomSearchBox() {
    const { query, refine, clear, isSearchStalled } = useSearchBox();
-   // const {
-   //    query: { search },
-   // } = useRouter();
+
    const elementInput = document.getElementById("input-search");
    const handleSearch = () => {
       refine(elementInput.value);
    };
+   
    return (
       <>
          <section  className="search-section  p-0">
@@ -43,7 +42,6 @@ function CustomSearchBox({ children }) {
                </div>
             </div>
          </section>
-         {children}
       </>
    );
 }

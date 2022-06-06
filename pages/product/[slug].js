@@ -8,7 +8,7 @@ import ProductSection from "../../components/component_vuong/product/ProductSect
 import ClothReview from "../../components/component_vuong/product/ClothReview";
 import { useEffect, useState } from "react";
 import PlaceHolderShopSection from "../../components/component_vuong/product/PlaceHolderShopSection";
-import { errorModal } from "../../components/component_vuong/Common";
+import { errorModal, functionJquery, functionJqueryProductCategory, functionJquerySearchFull } from "../../components/component_vuong/Common";
 import PlaceHolderClothReview from "../../components/component_vuong/product/PlaceHolderClothReview";
 import PlaceHolderProductSection from "../../components/component_vuong/product/PlaceHolderProductSection";
 import { useDispatch, useSelector } from "react-redux";
@@ -30,10 +30,14 @@ function ProductDetail() {
       errorModal(isError, error);
    }, [isError, error]);
    useEffect(() => {
-      if (data.id) { 
+      if (data.id) {
          dispatch(addRecentlyViewedProducts(data));
       }
    }, [data]);
+   useEffect(() => {
+      //   functionJqueryProductCategory();
+        functionJquerySearchFull()
+     }, []);
    if (!slug) return null;
 
    return (

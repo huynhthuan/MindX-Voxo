@@ -11,20 +11,10 @@ function Search() {
 
    return (
       <div className="container">
-         <InstantSearch searchClient={searchClient} indexName={indexName}>
-            <div className="search-panel">
-               <div className="left-panel">
-                  <Configure hitsPerPage={4} />
-                  {/* <CustomRefinementList attribute="attributes.options"  limit={55} operator="or" showmore/> */}
-               </div>
-               <div className="search-panel__filters"></div>
-               <div className="search-panel__results">
-                  <CustomSearchBox>
-                     <CustomHits />
-                  </CustomSearchBox>
-               </div>
-            </div>
-         </InstantSearch>
+            <Configure hitsPerPage={4}/>
+            {/* <CustomRefinementList attribute="attributes.options"  limit={55} operator="or" showmore/> */}
+            <CustomSearchBox />
+            <CustomHits />
       </div>
    );
 }
