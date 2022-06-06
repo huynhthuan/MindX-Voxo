@@ -47,8 +47,13 @@ function Category() {
 
     const router = useRouter();
     const page = router.query.page ? router.query.page : 1;
+    const category = router.query.slug;
 
-    const { isLoading, error, data, isFetching } = useBlogListCategory({category:router.query.slug,page:page ? page : 1});
+    const { isLoading, error, data, isFetching, refetch } = useBlogListCategory({category: category,page: page});
+
+    // useEffect(() => {
+    //     refetch();
+    // }, [page || category ]);
 
     if (error) return 'An error has occurred: ' + error.message;
 
@@ -74,7 +79,7 @@ function Category() {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
-                            <h3>Blog Masonary</h3>
+                            <h3 style={{textTransform: 'capitalize'}}>Blog {category}</h3>
                             <nav>
                                 <ol className="breadcrumb">
                                     <li className="breadcrumb-item">
@@ -93,8 +98,9 @@ function Category() {
                                     <li
                                         className="breadcrumb-item active"
                                         aria-current="page"
+                                        style={{textTransform: 'capitalize'}}
                                     >
-                                        Blog Masonary
+                                        {category}
                                     </li>
                                 </ol>
                             </nav>
@@ -110,7 +116,7 @@ function Category() {
                     <div className="row g-4 d-flex mt-3" style={{ 'height': "unset !important"}}>
                         {/* minhhieu */}
                         {
-                            isLoading 
+                            isFetching 
                                 ?   
                                     Array(12).fill(0).map((item, index) => {
                                         return <CategoryPostSkeleton key = {index} />
@@ -134,35 +140,57 @@ function Category() {
                             <nav className="page-section mt-0">
                                 <ul className="pagination">
                                     <li className="page-item">
-                                        <a
+                                        <div
                                             className="page-link"
-                                            href="undefined"
+                                            onClick={() => {
+                                                if ( page > 1 ) {
+                                                    router.push({
+                                                        pathname:`/blog/category/${category}`,
+                                                        query: {page: page * 1 - 1}
+                                                    })
+                                                }
+                                            }}
                                         >
                                             <span aria-hidden="true">
                                                 <i className="fas fa-chevron-left"></i>
                                             </span>
-                                        </a>
+                                        </div>
                                     </li>
                                     {/* minhhieu */}
                                     {
                                         !isLoading &&
                                             data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                                return <li className={"page-item " + ( index+1 == page ? "active" : "" )} key={index}>
-                                                    <a
+                                                return <li className={"page-item " + ( index + 1 == page ? "active" : "" )} key={index}>
+                                                    <div
                                                         className="page-link"
-                                                        href={`?page=${index + 1}`}
+                                                        onClick={() => {
+                                                            router.push({
+                                                                pathname:`/blog/category/${category}`,
+                                                                query: {page: index + 1}
+                                                            })
+                                                        }}
                                                     >
                                                         {index+1}
-                                                    </a>
+                                                    </div>
                                                 </li>
                                             })
                                     }
                                     <li className="page-item">
-                                        <a className="page-link">
+                                        <div
+                                            className="page-link"
+                                            onClick={() => {
+                                                if ( page < data.totalPage * 1 ) {
+                                                    router.push({
+                                                        pathname:`/blog/category/${category}`,
+                                                        query: {page: page * 1 + 1}
+                                                    })
+                                                }
+                                            }}
+                                        >
                                             <span aria-hidden="true">
                                                 <i className="fas fa-chevron-right"></i>
                                             </span>
-                                        </a>
+                                        </div>
                                     </li>
                                 </ul>
                             </nav>
