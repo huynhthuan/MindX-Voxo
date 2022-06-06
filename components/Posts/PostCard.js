@@ -1,10 +1,12 @@
 import { useQuery } from 'react-query';
 import { BLOG_LIST } from '../../utils/api_minhhieu';
 import Link from 'next/link';
+import { useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
 function PostCard({id,title,excerpt}) {
 
-    const { isLoading, error, data } = useQuery('media', async () =>
+    const { isLoading, error, data, refetch, isFetching } = useQuery('media', async () =>
         {
             const res = await fetch(BLOG_LIST + id + '?_embed');
         
@@ -14,24 +16,34 @@ function PostCard({id,title,excerpt}) {
         }
     );
 
+    useEffect(() => {
+        refetch();
+    }, [id])
+
     if (error) 
         return 'An error has occurred: ' + error.message;
 
     return (
         <div className="masonary-blog box-shadow">
             <Link href={`/blog/posts/${id}`}>
-                <a href="blog-details.html" style={{width:'30%', backgroundColor:'#ddd'}}>
-                    <img
-                        src={
-                            !isLoading ? data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url : null
-                        }
-                        className="card-img-top bg-img blur-up lazyload"
-                        alt=""
-                        style={{
-                            height: '12rem',
-                            objectFit: 'fill'
-                        }}
-                    />
+                <a href="blog-details.html" style={{width:'30%'}}>
+                    {
+                        isFetching
+                            ? 
+                                <Skeleton className='ratio ratio-4x3'></Skeleton>
+                            :
+                                <img
+                                    src={
+                                        data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+                                    }
+                                    className="card-img-top bg-img blur-up lazyload"
+                                    alt=""
+                                    style={{
+                                        height: '12rem',
+                                        objectFit: 'fill'
+                                }}
+                        />
+                    }
                 </a>
             </Link>
             <div className="card-body card-body-width">

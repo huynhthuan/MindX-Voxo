@@ -4,7 +4,6 @@ import SubscribeBox from '../../components/Common/SubscribeBox';
 import {CONTACT_US} from '../../utils/api_minhhieu/index';
 import FormData from 'form-data';
 import axios from 'axios';
-import queryString from 'query-string';
 
 
 function ContactUs() {
@@ -53,42 +52,42 @@ function ContactUs() {
         showResult:false
     })
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     if (Object.keys(formErrors).length === 0 && isSubmit) {
-    //         setDisableSubmit(true);                                                 
+        if (Object.keys(formErrors).length === 0 && isSubmit) {
+            setDisableSubmit(true);                                                 
 
-    //         let data = new FormData();
-    //         data.append("first-name", 'sdfjhdsf');
-    //         data.append("last-name", 'sdfsdfsd');
-    //         data.append("your-email", 'hieudm112@gmail.com');
-    //         data.append("your-comment", 'skjdfkjdf');
+            let data = new FormData();
+            data.append("first-name", 'sdfjhdsf');
+            data.append("last-name", 'sdfsdfsd');
+            data.append("your-email", 'hieudm112@gmail.com');
+            data.append("your-comment", 'skjdfkjdf');
 
-    //         axios({
-    //             method: 'POST',
-    //             url: CONTACT_US,
-    //             data: formData,
-    //             headers: { "Content-Type": "multipart/form-data" },
-    //         })
-    //         .then( res => {
-    //             setDisableSubmit(false);
-    //             console.log(res);
-    //             if (res.status === 200) {
-    //                 if (res.data.status === "mail_sent") {
-    //                     console.log("Submit contact successed");
-    //                     setSubmitResult({text:'Sending email successed',showResult:true});
-    //                 } else {
-    //                     console.log("Submit contact failed");
-    //                     setSubmitResult({text:'Sending email failed',showResult:true});
-    //                 }
-    //             } else {
-    //                 setSubmitResult({text:'Email can not be send, please try later',showResult:true});
-    //             }
-    //         })
-    //     }
+            axios({
+                method: 'POST',
+                url: CONTACT_US,
+                data: data,
+                headers: { "Content-Type": "multipart/form-data" },
+            })
+            .then( res => {
+                setDisableSubmit(false);
+                console.log(res);
+                if (res.status === 200) {
+                    if (res.data.status === "mail_sent") {
+                        console.log("Submit contact successed");
+                        setSubmitResult({text:'Sending email successed',showResult:true});
+                    } else {
+                        console.log("Submit contact failed");
+                        setSubmitResult({text:'Sending email failed',showResult:true});
+                    }
+                } else {
+                    setSubmitResult({text:'Email can not be send, please try later',showResult:true});
+                }
+            })
+        }
 
 
-    // }, [formErrors]);
+    }, [formErrors]);
 
     const validate = (values) => {
         const errors = {};
@@ -125,48 +124,11 @@ function ContactUs() {
     }
 
     const handleSubmit = () => {
-        // setSubmitResult({...submitResult,showResult:false});
-        // setDisableSubmit(true);
-        // setFormErrors(validate(contactForm));
-        // setIsSubmit(true);
-        let formDa = new FormData();
-        
-        formDa.append('first-name', 'thuan');
-        formDa.append('last-name', 'huynh');
-        formDa.append('your-email', 'aaaa@gmail.com');
-        formDa.append('your-comment', 'adsađâsđấ');
-
-        let config = {
-            method: 'post',
-            url: 'https://voxohub.xyz/wp-json/contact-form-7/v1/contact-forms/2701/feedback',
-            data: formDa,
-            headers: {
-                'content-type':' multipart/form-data'
-            }
-        }
-
-        axios(config)
-        .then( res => {
-            setDisableSubmit(false);// e test doan nay đi
-
-            console.log(res);
-            if (res.status === 200) {
-                if (res.data.status === "mail_sent") {
-                    console.log("Submit contact successed");
-                    setSubmitResult({text:'Sending email successed',showResult:true});
-                } else {
-                    console.log("Submit contact failed");
-                    setSubmitResult({text:'Sending email failed',showResult:true});
-                }
-            } else {
-                setSubmitResult({text:'Email can not be send, please try later',showResult:true});
-            }
-        })
+        setSubmitResult({...submitResult,showResult:false});
+        setDisableSubmit(true);
+        setFormErrors(validate(contactForm));
+        setIsSubmit(true);
     }
-
-    useEffect(() => {
-        handleSubmit()
-    }, [])
 
     return (
         <>
