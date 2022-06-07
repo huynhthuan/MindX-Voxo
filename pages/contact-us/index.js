@@ -49,12 +49,14 @@ function ContactUs() {
     const [submitResult, setSubmitResult] = useState({
         text:'',
         showResult:false
-    })
+    });
+    const [showLoading, setShowLoading] = useState(false);
 
     useEffect(() => {
 
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-            setDisableSubmit(true);                                                 
+            setDisableSubmit(true);   
+            setShowLoading(true);                                              
 
             let data = new FormData();
             data.append("first-name", 'sdfjhdsf');
@@ -69,13 +71,21 @@ function ContactUs() {
             })
             .then( res => {
                 setDisableSubmit(false);
+                setShowLoading(false);  
                 if (res.status === 200) {
                     if (res.data.status === "mail_sent") {
                         console.log("Submit contact successed");
+                        setContactForm({
+                                'first-name':'',
+                                'last-name':'',
+                                'your-email':'',
+                                'your-confirm-email':'',
+                                'your-comment':''
+                        });
                         setSubmitResult({text:'Sending email successed',showResult:true});
                     } else {
                         console.log("Submit contact failed");
-                        setSubmitResult({text:'Sending email failed',showResult:true});
+                        setSubmitResult({text:'Sending email failed, please try later',showResult:true});
                     }
                 } else {
                     setSubmitResult({text:'Email can not be send, please try later',showResult:true});
@@ -156,6 +166,7 @@ function ContactUs() {
                                             First Name 
                                         </label>
                                         <input
+                                            value={contactForm['first-name']}
                                             type="text"
                                             className="form-control"
                                             id="first"
@@ -174,6 +185,7 @@ function ContactUs() {
                                             Last Name 
                                         </label>
                                         <input
+                                            value={contactForm['last-name']}
                                             type="text"
                                             className="form-control"
                                             id="last"
@@ -192,6 +204,7 @@ function ContactUs() {
                                             Email 
                                         </label>
                                         <input
+                                            value={contactForm['your-email']}
                                             type="email"
                                             className="form-control"
                                             id="email"
@@ -210,6 +223,7 @@ function ContactUs() {
                                             Confirm Email
                                         </label>
                                         <input
+                                            value={contactForm['your-confirm-email']}
                                             type="email"
                                             className="form-control"
                                             id="email2"
@@ -229,6 +243,7 @@ function ContactUs() {
                                             Comment
                                         </label>
                                         <textarea
+                                            value={contactForm['your-comment']}
                                             className="form-control"
                                             id="comment"
                                             rows="5"
@@ -238,8 +253,7 @@ function ContactUs() {
                                         ></textarea>
                                         <div className='position-absolute top-100 theme-color mt-1'>{formErrors['your-comment']}</div>
                                     </div>
-
-                                    <div className="col-auto pt-2">
+                                    <div className="col-auto pt-2 position-relative">
                                         <button
                                             className="btn btn-solid-default"
                                             type="submit"
@@ -248,6 +262,11 @@ function ContactUs() {
                                         >
                                             Submit
                                         </button>
+                                        <div hidden={!showLoading} className='position-absolute start-100 top-50 mt-2 ms-2 translate-middle-y'>
+                                            <div className="spinner-border text-secondary" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div className='col-12' hidden={!submitResult.showResult}>
                                         <div className="alert alert-warning">
