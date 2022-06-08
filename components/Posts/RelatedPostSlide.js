@@ -8,35 +8,41 @@ function RelatedPostSlide({info}) {
     const { isLoading, error, data } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
 
     useEffect(() => {
-        if (data?.length) {
-            $('.slide-4').slick({
-                dots: true,
-                infinite: true,
-                speed: 500,
-                arrows: false,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                responsive: [
-                    {
-                        breakpoint: 1200,
-                        settings: {
-                            slidesToShow: 3,
-                        },
+        if (!data || data.length === 0) {
+            return;
+        }
+
+        let slideRelatedPost = $('.slide-4').slick({
+            dots: true,
+            infinite: true,
+            speed: 500,
+            arrows: false,
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            responsive: [
+                {
+                    breakpoint: 1200,
+                    settings: {
+                        slidesToShow: 3,
                     },
-                    {
-                        breakpoint: 992,
-                        settings: {
-                            slidesToShow: 2,
-                        },
+                },
+                {
+                    breakpoint: 992,
+                    settings: {
+                        slidesToShow: 2,
                     },
-                    {
-                        breakpoint: 420,
-                        settings: {
-                            slidesToShow: 2,
-                        },
+                },
+                {
+                    breakpoint: 420,
+                    settings: {
+                        slidesToShow: 2,
                     },
-                ],
-            });
+                },
+            ],
+        });
+
+        return () => {
+            slideRelatedPost.slick('unslick');
         }
     }, [data]);
 
