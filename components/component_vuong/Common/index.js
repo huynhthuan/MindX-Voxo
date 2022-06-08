@@ -56,9 +56,9 @@ export const functionJquerySearchFull = () => {
       $(".search-type").focus();
       $(".search-type")[0].value = "";
    });
-   $(".search-type").blur((function(){
-      $(".search-full").removeClass("open");
-   }))
+   // $(".search-type").blur((function(){
+   //    $(".search-full").removeClass("open");
+   // }))
    // open searchbox
    $(".search-type").on("click", function () {
       $(this).parents(".search-full").addClass("show");

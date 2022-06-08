@@ -38,13 +38,12 @@ const { appId, apikey, indexName } = configSearch;
 const searchClient = algoliasearch(appId, apikey);
 function MyApp({ Component, pageProps }) {
    const router = useRouter();
-   console.log(`  ~ router`, router.pathname);
    return (
       <Provider store={store}>
          <PersistGate loading={null} persistor={persistor}>
             <QueryClientProvider client={queryClient}>
                <NextNProgress color="#dc3545" startPosition={0.3} stopDelayMs={200} height={4} showOnShallow={true} />
-               <InstantSearch searchClient={searchClient} indexName={indexName} routing={router.pathname !== "/compare"}>
+               <InstantSearch searchClient={searchClient} indexName={indexName} routing={router.pathname!=='/compare'}>
                   <Layout>
                      <SkeletonTheme baseColor="#eaeaea" highlightColor="#fff">
                         <Component {...pageProps} />

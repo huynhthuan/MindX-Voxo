@@ -12,7 +12,6 @@ function CustomSearchBoxNavBar() {
    useEffect(() => {
       return () => {
          clear();
-         console.log(`  ~ clear`);
       };
    }, [router.pathname]);
 

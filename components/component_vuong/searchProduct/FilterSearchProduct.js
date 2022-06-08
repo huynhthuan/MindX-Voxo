@@ -1,10 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { ClearRefinements, useClearRefinements, useRange, useRefinementList } from "react-instantsearch-hooks-web";
 import { functionJqueryProductCategory } from "../Common";
 
-function FilterSearchProduct() {
+function FilterSearchProduct({ resBrand, resColor = [], resSize, sortHits, setSortHits }) {
+   const refinementListColor = useRefinementList({ attribute: "attributes.options", limit: 55 });
+   const refinementListPrice = useRefinementList({ attribute: "price", limit: 55 });
+   const { canRefine, createURL, refine: refineClearRefinements } = useClearRefinements();
+   const { refine: refineColor, items: itemsColor } = refinementListColor;
+   const { refine: refinePrice, items: itemsPrice } = refinementListPrice;
+
    useEffect(() => {
       functionJqueryProductCategory();
    }, []);
+
+   const handleCheckedFilterColor = (name) => {
+      refineColor(name);
+   };
+
+   const handleCheckedPrice = (index) => {
+      const price = itemsPrice
+         .map((item) => item.value)
+         .filter((price) => {
+            if (index !== 9 && price <= (index + 1) * 10 && price > index * 10) return price;
+         });
+      price.map((price) => refinePrice(price));
+      // refineRange([index*10,(index+1)*10])
+   };
+   // const handleClearRefinements = () => {
+   //    refineClearRefinements();
+   // };
+
    return (
       <div className="row gx-4 gy-5 mt-1">
          <div className="col-12">
@@ -29,183 +54,238 @@ function FilterSearchProduct() {
                   <li className="filter-title">
                      <h6 className="theme-color">filter :</h6>
                   </li>
+                  {/* <button className="btn btn-warning rounded p-2" onClick={() => handleClearRefinements()}>
+                     Clear All
+                  </button>
+                  <ClearRefinements
+                     classNames={{
+                        button: "btn btn-warning rounded  p-2",
+                        disabledButton: "btn btn-light rounded p-2",
+                     }}
+                  /> */}
+                  <li className="onclick-title">
+                     <h6>Color</h6>
+                     <ul className="onclick-content">
+                        {resColor.map(({ name }, index) => (
+                           <li key={index}>
+                              <div className="form-check ps-0 custome-form-check">
+                                 <input
+                                    className="checkbox_animated check-it"
+                                    type="checkbox"
+                                    id="flexCheckDefault"
+                                    onChange={() => handleCheckedFilterColor(name)}
+                                 />
+                                 <label className="form-check-label" htmlFor="flexCheckDefault12">
+                                    {name}
+                                 </label>
+                              </div>
+                           </li>
+                        ))}
+                     </ul>
+                  </li>
 
                   <li className="onclick-title">
                      <h6>Category</h6>
                      <ul className="onclick-content">
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault">
-                                                Art
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault">
+                                 Art
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault1" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault1">
-                                                Bedroom
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault1" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault1">
+                                 Bedroom
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault2" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault2">
-                                                Chair
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault2" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault2">
+                                 Chair
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault3" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault3">
-                                                Creative
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault3" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault3">
+                                 Creative
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault4" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault4">
-                                                Design
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault4" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault4">
+                                 Design
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault5" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault5">
-                                                Furniture
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault5" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault5">
+                                 Furniture
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault6" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault6">
-                                                Gardan
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault6" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault6">
+                                 Gardan
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault7" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault7">
-                                                Home
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault7" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault7">
+                                 Home
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault8" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault8">
-                                                Inside
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault8" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault8">
+                                 Inside
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault9" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault9">
-                                                Kitchen
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault9" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault9">
+                                 Kitchen
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault10" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault10">
-                                                Living Room
-                                             </label>
-                                          </div>
-                                       </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault10" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault10">
+                                 Living Room
+                              </label>
+                           </div>
+                        </li>
 
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault11" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault11">
-                                                Style
-                                             </label>
-                                          </div>
-                                       </li>
-                                    </ul>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault11" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault11">
+                                 Style
+                              </label>
+                           </div>
+                        </li>
+                     </ul>
                   </li>
-
                   <li className="onclick-title">
                      <h6>Material</h6>
                      <ul className="onclick-content">
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault12" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault12">
-                                                Plastic
-                                             </label>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault13" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault13">
-                                                Wood
-                                             </label>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault14" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault14">
-                                                Metal
-                                             </label>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault15" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault15">
-                                                Glass
-                                             </label>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault16" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault16">
-                                                Texttile
-                                             </label>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault17" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault17">
-                                                Steel
-                                             </label>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div className="form-check ps-0 custome-form-check">
-                                             <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault18" />
-                                             <label className="form-check-label" htmlFor="flexCheckDefault18">
-                                                Plywood
-                                             </label>
-                                          </div>
-                                       </li>
-                                    </ul>
-                  </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input
+                                 className="checkbox_animated check-it"
+                                 type="checkbox"
+                                 id="flexCheckDefault12"
+                                 onChange={(e) => handleCheckedFilterColor(e, name)}
+                              />
+                              <label className="form-check-label" htmlFor="flexCheckDefault12">
+                                 Ali
+                              </label>
+                           </div>
+                        </li>
 
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault13" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault13">
+                                 Wood
+                              </label>
+                           </div>
+                        </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault14" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault14">
+                                 Metal
+                              </label>
+                           </div>
+                        </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault15" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault15">
+                                 Glass
+                              </label>
+                           </div>
+                        </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault16" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault16">
+                                 Texttile
+                              </label>
+                           </div>
+                        </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault17" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault17">
+                                 Steel
+                              </label>
+                           </div>
+                        </li>
+                        <li>
+                           <div className="form-check ps-0 custome-form-check">
+                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault18" />
+                              <label className="form-check-label" htmlFor="flexCheckDefault18">
+                                 Plywood
+                              </label>
+                           </div>
+                        </li>
+                     </ul>
+                  </li>
                   <li className="onclick-title">
+                     <h6>Price</h6>
+                     <ul className="onclick-content">
+                        {Array(10)
+                           .fill(0)
+                           .map((item, index) => (
+                              <li key={index}>
+                                 <div className="form-check ps-0 custome-form-check">
+                                    <input
+                                       className="checkbox_animated check-it"
+                                       type="checkbox"
+                                       id="flexCheckDefault19"
+                                       onChange={() => handleCheckedPrice(index)}
+                                    />
+                                    <label className="form-check-label" htmlFor="flexCheckDefault19">
+                                       Rs. {index * 10} to Rs. {(index + 1) * 10}
+                                    </label>
+                                 </div>
+                              </li>
+                           ))}
+                     </ul>
+                  </li>
+                  {/* <li className="onclick-title">
                      <h6>Price</h6>
                      <ul className="onclick-content">
                         <li>
@@ -257,7 +337,7 @@ function FilterSearchProduct() {
                            </div>
                         </li>
                      </ul>
-                  </li>
+                  </li> */}
 
                   <li className="onclick-title">
                      <h6>Discount</h6>
@@ -329,7 +409,7 @@ function FilterSearchProduct() {
                      </ul>
                   </li>
 
-                  <li className="onclick-title">
+                  {/* <li className="onclick-title">
                      <h6>Default Sorting</h6>
                      <ul className="onclick-content">
                         <li className="dropdown-list">
@@ -373,7 +453,7 @@ function FilterSearchProduct() {
                            </div>
                         </li>
                      </ul>
-                  </li>
+                  </li> */}
                </ul>
             </div>
          </div>

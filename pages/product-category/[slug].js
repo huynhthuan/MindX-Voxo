@@ -9,7 +9,7 @@ import { fetchApi, fetchApiGetCategories } from "../../src/api/Api_vuong/fetchAp
 import BannerDetail from "../../components/component_vuong/product-category/BannerDetail";
 import Filter from "../../components/component_vuong/product-category/Filter";
 import PagePagination from "../../components/component_vuong/Common/PagePagination";
-import { errorModal, functionJquery, functionJqueryProductCategory } from "../../components/component_vuong/Common";
+import { errorModal, functionJqueryProductCategory } from "../../components/component_vuong/Common";
 import StickCompare from "../../components/component_vuong/product-category/StickCompare";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 
@@ -45,7 +45,7 @@ function ProductCategory(props) {
 
    return (
       <>
-         <Breadcrumb title="Shop Listing"/>
+         <Breadcrumb title="Shop Listing" />
          <section className="section-b-space">
             <div className="container">
                <div className="row">

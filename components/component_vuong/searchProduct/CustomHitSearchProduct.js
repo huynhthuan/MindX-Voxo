@@ -1,13 +1,11 @@
 import React from "react";
 import { Pagination, useHits, usePagination, useSearchBox } from "react-instantsearch-hooks-web";
 import ProductCard from "../../Product/ProductCard";
-import PagePagination from "../Common/PagePagination";
 
 function CustomHitSearchProduct({ hit }) {
-   const { hits, results, bindEvent, sendEvent } = useHits();
-   console.log(`  ~ hits`, hits[0])
+   const { hits, results } = useHits();
    const { query } = useSearchBox();
-   const { isFirstPage, isLastPage, canRefine, createURL, currentRefinement, nbHits, nbPages, pages, refine } = usePagination();
+   const { isFirstPage, isLastPage } = usePagination();
 
    return (
       <>
