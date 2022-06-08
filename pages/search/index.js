@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Sidebar from '../../components/Blog/Sidebar';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import PostCard from '../../components/Posts/PostCard';
+import { useSearchPosts } from '../../src/api_minhhieu/searchPostsApi';
+import { useRouter } from 'next/router';
+import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
 
 function Search() {
     useEffect(() => {
@@ -34,6 +37,58 @@ function Search() {
         feather.replace();
     }, []);
 
+    const router = useRouter();
+    const page = router.query.page ? router.query.page : 1;
+    const {keyword} = router.query;
+    const searchVal = useRef('');
+    const [requireKW, setRequireKW] = useState(false);
+    const [allowFetch, setAllowFetch] = useState(false);
+
+    const { isLoading, error, data, refetch, isFetching, isFetched } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
+
+    if (error) router.push('/notfound');
+
+    useEffect(() => {
+        if (keyword) {
+            setAllowFetch(true);
+            refetch();
+        }
+    },[keyword,page])
+
+    const handleInputChange = (event) => {
+        if (!searchVal.current.value) {
+            console.log(searchVal.current.value);
+            setRequireKW(true);
+        } else {
+            setRequireKW(false);
+        }
+    }
+
+    const handleSearch = () => {
+        if (!searchVal.current.value) {
+            setRequireKW(true);
+        } else {
+            router.push({
+                pathname:'/search',
+                query:{keyword:searchVal.current.value}
+            });
+        }
+        
+    }
+
+    const handleInputKeyDown = (event) => {
+        if (event.charCode == 13 || event.keyCode == 13) {
+            if (!searchVal.current.value) {
+                setRequireKW(true);
+            } else {
+                router.push({
+                    pathname:'/search',
+                    query:{keyword:searchVal.current.value}
+                });
+            }
+        }
+    }
+
     return (
         <>
             <section className="search-section">
@@ -46,15 +101,22 @@ function Search() {
                         </div>
                         <div className="col-lg-6 col-md-8 mx-auto">
                             <div className="search-bar">
-                                <div className="input-group search-bar w-100  mb-5">
+                                <div className="input-group search-bar w-100 mb-5 position-relative">
+                                    <div className='position-absolute bottom-100 mb-1 fw-bold theme-color' hidden={!requireKW}>
+                                        Please enter keyword 
+                                    </div>
                                     <input
+                                        ref={searchVal}
                                         type="search"
                                         className="form-control"
                                         placeholder="Search"
+                                        onChange={handleInputChange}
+                                        onKeyDown={handleInputKeyDown}
                                     />
                                     <button
                                         className="input-group-text"
                                         id="basic-addon3"
+                                        onClick={handleSearch}
                                     >
                                         <i className="fas fa-search"></i>
                                     </button>
@@ -69,104 +131,104 @@ function Search() {
                 <div className="container">
                     <div className="row g-4">
                         <div className="col-12">
-                            <h2 className="mb-2">Posts for keyword: </h2>
+                            <div className="mb-2 h2" style={{textTransform:"unset!important"}}> {keyword ? (`Posts For Keyword: ${keyword}`) : null}</div>
                         </div>
                         <div className="col-lg-9 col-md-7 ratio_square">
                             <div className="row g-4 g-xl-5 pb-5">
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
-
-                                <div className="col-12">
-                                    <PostCard />
-                                </div>
+                                {
+                                    !isFetching
+                                        ? 
+                                            data?.responseInfo.length > 0
+                                                ? 
+                                                    data.responseInfo.map( (item,index) => {
+                                                        return <div className="col-12" key={index}>
+                                                            <PostCard {...item}/>
+                                                        </div>
+                                                    })
+                                                :
+                                                    <div className="theme-color h4" hidden={keyword ? false : true}>No post found</div>
+                                        :
+                                            Array(10).fill(0).map((item, index) => {
+                                                return <NewPostBlogListSkeleton key={index}/>
+                                            })
+                                }
                             </div>
-
-                            <div className="row">
-                                <div className="col-12">
-                                    <nav className="page-section mt-0">
-                                        <ul className="pagination">
-                                            <li className="page-item">
-                                                <a
-                                                    className="page-link"
-                                                    href="undefined"
-                                                >
-                                                    <span aria-hidden="true">
-                                                        <i className="fas fa-chevron-left"></i>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li className="page-item active">
-                                                <a
-                                                    className="page-link"
-                                                    href="undefined"
-                                                >
-                                                    1
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a
-                                                    className="page-link"
-                                                    href="undefined"
-                                                >
-                                                    2
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a
-                                                    className="page-link"
-                                                    href="undefined"
-                                                >
-                                                    3
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link">
-                                                    <span aria-hidden="true">
-                                                        <i className="fas fa-chevron-right"></i>
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
+                            {
+                                data 
+                                    &&
+                                        data.totalPage*1 !== 0
+                                            &&
+                                                <div className="row">
+                                                    <div className="col-12">
+                                                        <nav className="page-section mt-0">
+                                                            <ul className="pagination">
+                                                                <li className="page-item">
+                                                                    <div
+                                                                        className="page-link"
+                                                                        onClick={() => {
+                                                                            router.push({
+                                                                                pathname:'/search',
+                                                                                query:{
+                                                                                    keyword:keyword,
+                                                                                    page: page !== 1 ?  page*1 - 1 : null
+                                                                                }
+                                                                            });
+                                                                        }}
+                                                                    >
+                                                                        <span aria-hidden="true">
+                                                                            <i className="fas fa-chevron-left"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </li>
+                                                                {
+                                                                    Array(data.totalPage*1).fill(0).map((item,index) => {
+                                                                        return <li className={"page-item " + ( index+1 == page ? "active" : "" )} key={index}>
+                                                                                <div
+                                                                                    className="page-link"
+                                                                                    onClick={
+                                                                                        () => {
+                                                                                            router.push({
+                                                                                                pathname:'/search',
+                                                                                                query:{
+                                                                                                    keyword:keyword,
+                                                                                                    page: index * 1 + 1
+                                                                                                }
+                                                                                            });
+                                                                                        } 
+                                                                                    }
+                                                                                >
+                                                                                    {index * 1 + 1}
+                                                                                </div>
+                                                                            </li>
+                                                                    })
+                                                                }
+                                                                <li className="page-item">
+                                                                    <div 
+                                                                        className="page-link" 
+                                                                        onClick={() => {
+                                                                            router.push({
+                                                                                pathname:'/search',
+                                                                                query:{
+                                                                                    keyword:keyword,
+                                                                                    page: page != data.totalPage ?  page*1 + 1 : null
+                                                                                }
+                                                                            });
+                                                                        }}
+                                                                    >
+                                                                        <span aria-hidden="true">
+                                                                            <i className="fas fa-chevron-right"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                    </div>
+                                                </div>
+                            }
                         </div>
 
                         <div className="col-lg-3 col-md-5">
-                            <Sidebar />
+                            <Sidebar showSearchBox={true}/>
                         </div>
                     </div>
                 </div>

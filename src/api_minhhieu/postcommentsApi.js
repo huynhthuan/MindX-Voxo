@@ -2,15 +2,16 @@ import { useQuery, useInfiniteQuery, useMutation, useQueryClient } from 'react-q
 import { COMMENT, CREATE_COMMENT } from '../../utils/api_minhhieu';
 import axios from 'axios';
 
-const fetchPostComments = async ({postId, pageParam = 1}) => {
+const fetchPostComments = async ({queryKey,pageParam = 1}) => {
   const result = await axios.get(COMMENT,
   {
       params: {
-        post:postId,
+        post:queryKey[1],
         page:pageParam,
         per_page:4
       }
-  });
+  }
+);
 
   return result;
 }
@@ -25,9 +26,9 @@ const addComment = (commentInfo) => {
   )
 }
 
-export const usePostComments = ({postId}) => {
+export const usePostComments = (postId) => {
   return useInfiniteQuery(
-    ['post-comments',postId], 
+    ['post-comments', postId], 
     fetchPostComments,
     {
       getNextPageParam: (_lastPage, pages) => {
@@ -45,8 +46,9 @@ export const usePostComments = ({postId}) => {
 export const useAddPostComment = () => {
   const queryClient = useQueryClient();
   return useMutation(addComment, {
-    onSuccess: () => {
+    onSuccess: res => {
       queryClient.invalidateQueries('post-comments');
+      return res;
     }
   })
 }

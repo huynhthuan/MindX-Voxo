@@ -5,10 +5,10 @@ import { RelatedPostSkeleton } from '../../components/Skeleton_minhhieu/index';
 
 function RelatedPostSlide({info}) {
 
-    const { isLoading, error, data, isFetching } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
+    const { isLoading, error, data } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
 
     useEffect(() => {
-        if (data) {
+        if (data?.length) {
             $('.slide-4').slick({
                 dots: true,
                 infinite: true,
@@ -45,19 +45,29 @@ function RelatedPostSlide({info}) {
     return (
         <section className="section-b-space block-shadow-space ratio3_2">
             <div className="container">
-                <div className="slide-4 product-wrapper slick-lg-space">
+
+                
                     {
                         isLoading || !data
                             ?
-                                Array(4).fill(0).map((item,index) => {
-                                    return <RelatedPostSkeleton key={index} />
-                                })
+                                <div className='row'>
+                                    {
+                                        Array(4).fill(0).map((item,index) => {
+                                            return <RelatedPostSkeleton key={index} />
+                                        })
+                                    } 
+                                </div>
+                                
                             :
-                                data.map((item,index) => {
-                                    return <RelatedPostsItem key={index} postId={item.id}/>
-                                })
+                                <div className="slide-4 product-wrapper slick-lg-space">
+                                    {
+                                        data.map((item,index) => {
+                                            return <RelatedPostsItem key={index} postId={item.id}/>
+                                        })
+                                    }
+                                </div>
+                                
                     }
-                </div>
             </div>
         </section>
     );

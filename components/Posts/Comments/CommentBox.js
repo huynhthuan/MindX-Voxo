@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { CREATE_COMMENT } from '../../../utils/api_minhhieu/index';
 import { useAddPostComment } from '../../../src/api_minhhieu/postcommentsApi';
 
 function CommentBox({postId}) {
@@ -12,6 +10,7 @@ function CommentBox({postId}) {
     const {user} = authState;
 
     const [comment, setComment] = useState('');
+    const [disableSubmit, setDisableSubmit] = useState(false);
     const [loginRequirement, setLoginRequirement] = useState(false);
 
     const { mutate: addComment } = useAddPostComment();

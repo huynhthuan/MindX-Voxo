@@ -9,10 +9,10 @@ const CategoryPostSkeleton = () => {
 }
 
 const NewPostBlogListSkeleton = () => {
-  return <div className="col-12 col-lg-3">
+  return <div className="col-12">
       <div className="row">
         <div className="col-lg-4">
-          <Skeleton height='20rem'/>
+          <Skeleton className="ratio ratio-4x3"/>
         </div>
         <div className="col-lg-8">
           <Skeleton height='1.5rem' width='40%'/>
@@ -56,8 +56,8 @@ const DetailPostSkeleton = () => {
 }
 
 const RelatedPostSkeleton = () => {
-  return <div>
-    <Skeleton height={'15rem'} width='100%'/>
+  return <div className="col-12 col-lg-3">
+    <Skeleton className="ratio ratio-16x9" width='100%'/>
     <Skeleton/>
     <Skeleton/>
     <Skeleton width='30%'/>
@@ -78,4 +78,71 @@ const PostCommentsSkeleton = () => {
   </div>
 }
 
-export { CategoryPostSkeleton, NewPostBlogListSkeleton, DetailPostSkeleton, RelatedPostSkeleton, PostCommentsSkeleton };
+const SideBarItemSkeleton = () => {
+  return <div className="row mb-3">
+    <div className="col-3">
+      <Skeleton className="ratio ratio-4x3"/>
+    </div>
+    <div className="col-8">
+      <Skeleton/>
+      <Skeleton/>
+      <Skeleton/>
+      <Skeleton/>
+    </div>
+  </div>
+}
+
+const TeamMemberSkeleton = () => {
+  return <div className="row">
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+    <div className="col-lg col-6">
+      <Skeleton height={'15rem'}/>
+      <Skeleton className="mt-2"/>
+      <Skeleton/>
+    </div>
+  </div>
+}
+
+const TestimonialItemSkeleton = () => {
+  return <div className="row">
+    <div className="col-12 col-lg-4">
+      <Skeleton className="ratio ratio-1x1"/>
+    </div>
+    <div className="col-12 col-lg-4">
+      <Skeleton className="ratio ratio-1x1"/>
+    </div>
+    <div className="col-12 col-lg-4">
+      <Skeleton className="ratio ratio-1x1"/>
+    </div>
+  </div>
+}
+
+export { 
+  CategoryPostSkeleton, 
+  NewPostBlogListSkeleton, 
+  DetailPostSkeleton, 
+  RelatedPostSkeleton, 
+  PostCommentsSkeleton,
+  SideBarItemSkeleton,
+  TeamMemberSkeleton,
+  TestimonialItemSkeleton
+};

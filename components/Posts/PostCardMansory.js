@@ -1,9 +1,12 @@
 import { useQuery } from 'react-query';
 import { BLOG_LIST } from '../../utils/api_minhhieu';
+import { useEffect } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import Link from 'next/link';
 
-function PostCardMansory({id,title}) {
+function PostCardMansory({id,title,excerpt}) {
     
-    const { isLoading, error, data } = useQuery('media', async () =>
+    const { isLoading, error, data, isFetching, refetch } = useQuery('media', async () =>
         {
             const res = await fetch(BLOG_LIST + id + '?_embed');
         
@@ -13,30 +16,39 @@ function PostCardMansory({id,title}) {
         }
     );
 
+    useEffect(() => {
+        refetch();
+    }, [id])
+
     if (error) 
         return 'An error has occurred: ' + error.message;
 
     return (
         <div className="card masonary-blog" style={{height:'100%'}}>
-            <a href="blog-details.html">
-                <img
-                    src={
-                        !isLoading && data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+            <Link href={`/blog/posts/${id}`}>
+                <a href="blog-details.html" className='w-100'>
+                    {
+                        isFetching
+                            ? 
+                                <Skeleton className='ratio ratio-4x3'></Skeleton>
+                            :
+                            <img
+                                src={
+                                    data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+                                }
+                                alt=""
+                                className="card-img-top blur-up lazyload"
+                            />
                     }
-                    alt=""
-                    className="card-img-top blur-up lazyload"
-                />
-            </a>
-            <div className="card-body">
-                <a href="blog-details.html">
-                    <h2 className="card-title">{title.rendered}</h2>
                 </a>
-                <p className="font-light">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                    Sapiente porro eligendi, delectus, molestias illo
-                    exercitationem sequi a, expedita error ea itaque ab. Ullam
-                    culpa, fugit magnam recusandae porro labore eligendi?
-                </p>
+            </Link>
+            <div className="card-body">
+                <Link href={`/blog/posts/${id}`}>
+                    <a href="blog-details.html">
+                        <h2 className="card-title">{title.rendered}</h2>
+                    </a>
+                </Link>
+                <p className="font-light" dangerouslySetInnerHTML={{ __html: excerpt.rendered }}></p>
                 <div className="blog-profile">
                     {
                         !isLoading
