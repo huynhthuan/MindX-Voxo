@@ -22,9 +22,10 @@ import "@sendbird/uikit-react/dist/index.css";
 import "../styles/globals.css";
 import "../styles/compare.css";
 import { InstantSearch } from "react-instantsearch-hooks-web";
-import { configSearch } from "../components/component_vuong/Common";
+import { configSearch, updateData } from "../components/component_vuong/Common";
 import algoliasearch from "algoliasearch";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient({
    defaultOptions: {
@@ -36,8 +37,14 @@ const queryClient = new QueryClient({
 
 const { appId, apikey, indexName } = configSearch;
 const searchClient = algoliasearch(appId, apikey);
+const index = searchClient.initIndex('product');
+
 function MyApp({ Component, pageProps }) {
    const router = useRouter();
+   useEffect(() => {
+      updateData(index)
+   }, [])
+   
    return (
       <Provider store={store}>
          <PersistGate loading={null} persistor={persistor}>

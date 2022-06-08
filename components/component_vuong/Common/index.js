@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { fetchApi } from "../../../src/api/Api_vuong/fetchApi";
 
 export const conventToCurrency = (price) =>
    Number(price).toLocaleString("en-US", {
@@ -49,6 +50,17 @@ export const reduceStringLength = (str = "", num = 30) => {
 export const configSearch = { appId: "IM4IS8NYBU", apikey: "8170a857ccd774d90ce8f2780527a6db", indexName: "product" };
 
 export const getListCompare = (compareProduct) => [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
+
+export const updateData = async (index) => {
+   const res = await fetchApi.get("/products?per_page=100");
+   const objects = res.data.map((item,index)=>{
+      
+   });
+   console.log(`  ~ objects`, objects);
+   // index.saveObjects(objects,{'autoGenerateObjectIDIfNotExist': true}).then(({ objectIDs }) => {
+   //    console.log(objectIDs);
+   // });
+};
 
 export const functionJquerySearchFull = () => {
    $(".search-box").on("click", function () {

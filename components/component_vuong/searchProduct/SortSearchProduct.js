@@ -4,7 +4,7 @@ import { functionJqueryProductCategory } from "../Common";
 
 function SortSearchProduct({ setHitsPerPage, hitsPerPage }) {
    const {
- 
+ hits,
       results: { nbHits },
  
    } = useHits();
