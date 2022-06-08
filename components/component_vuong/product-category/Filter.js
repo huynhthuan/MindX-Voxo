@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-function Filter({ idCategory, slug }) {
+function Filter({  slug }) {
    const [itemsPerPage, setItemsPerPage] = useState("12");
    const router = useRouter();
-   const { category, per_page, orderby, order } = router.query;
+   const {  per_page, orderby, order } = router.query;
    useEffect(() => {
       per_page && setItemsPerPage(per_page);
    }, [per_page]);
@@ -16,41 +16,6 @@ function Filter({ idCategory, slug }) {
                <button className="btn filter-btn p-0">
                   <i data-feather="align-left"></i> Filter
                </button>
-            </div>
-            <div className="col-md-12">
-               <ul className="short-name">
-                  <li>
-                     <div className="label-tag">
-                        <span>Shirts</span>
-                        <button type="button" className="btn-close" aria-label="Close"></button>
-                     </div>
-                  </li>
-                  <li>
-                     <div className="label-tag">
-                        <span>Kurtas</span>
-                        <button type="button" className="btn-close" aria-label="Close"></button>
-                     </div>
-                  </li>
-                  <li>
-                     <div className="label-tag">
-                        <span>Jackets</span>
-                        <button type="button" className="btn-close" aria-label="Close"></button>
-                     </div>
-                  </li>
-                  <li>
-                     <div className="label-tag">
-                        <span>Blazers</span>
-                        <button type="button" className="btn-close" aria-label="Close"></button>
-                     </div>
-                  </li>
-                  <li>
-                     <div className="label-tag">
-                        <a href="undefined">
-                           <span>Clear All</span>
-                        </a>
-                     </div>
-                  </li>
-               </ul>
             </div>
 
             <div className="col-12">
@@ -69,7 +34,7 @@ function Filter({ idCategory, slug }) {
                                        ...router.query,
                                        ...JSON.parse(event.target.value),
                                        slug: "",
-                                       category: idCategory,
+                                     
                                        per_page: itemsPerPage,
                                        page: "1",
                                     },

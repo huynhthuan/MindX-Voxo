@@ -2,18 +2,18 @@ import Script from "next/script";
 import { useRouter } from "next/router";
 import { fetchApiProductBySlug } from "../../src/api/Api_vuong/fetchApi";
 import { useQuery } from "react-query";
-import Breadcrumb from "../../components/component_vuong/Common/Breadcrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import ShopSection from "../../components/component_vuong/product/ShopSection";
 import ProductSection from "../../components/component_vuong/product/ProductSection";
 import ClothReview from "../../components/component_vuong/product/ClothReview";
 import { useEffect, useState } from "react";
 import PlaceHolderShopSection from "../../components/component_vuong/product/PlaceHolderShopSection";
-import { errorModal } from "../../components/component_vuong/Common";
+import { errorModal, functionJquery, functionJqueryProductCategory, functionJquerySearchFull } from "../../components/component_vuong/Common";
 import PlaceHolderClothReview from "../../components/component_vuong/product/PlaceHolderClothReview";
 import PlaceHolderProductSection from "../../components/component_vuong/product/PlaceHolderProductSection";
 import { useDispatch, useSelector } from "react-redux";
 import { addRecentlyViewedProducts } from "../../store/recentlyViewedProducts/recentlyViewedProductsSlice";
+import Breadcrumb from "../../components/Common/BreadCrumb";
 
 function ProductDetail() {
    const { slug } = useRouter().query;
@@ -30,15 +30,19 @@ function ProductDetail() {
       errorModal(isError, error);
    }, [isError, error]);
    useEffect(() => {
-      if (data.id) { 
+      if (data.id) {
          dispatch(addRecentlyViewedProducts(data));
       }
    }, [data]);
+   useEffect(() => {
+      //   functionJqueryProductCategory();
+        functionJquerySearchFull()
+     }, []);
    if (!slug) return null;
 
    return (
       <>
-         <Breadcrumb title="Product Sticky" content="Product Sticky" />
+         <Breadcrumb title="Product Sticky" />
          {isLoading || isError || isFetching ? <PlaceHolderShopSection /> : <ShopSection {...data} />}
          {isLoading || isError || isFetching ? <PlaceHolderClothReview /> : <ClothReview {...data} />}
          {isLoading || isError || isFetching ? <PlaceHolderProductSection /> : <ProductSection {...data} />}
