@@ -8,14 +8,13 @@ import HitNavbar from "../component_vuong/searchBar/HitNavbar";
 
 function SearchBar() {
    const { query, refine, clear } = useSearchBox();
-   console.log(`  ~ query`, query)
    const router = useRouter();
    useEffect(() => {
       functionJquerySearchFull();
    }, []);
 
    useEffect(() => {
-      if (query.length >0 && router.pathname !== "/search-product" && router.pathname !== "/compare") {
+      if (query.length ===1 && router.pathname !== "/search-product" && router.pathname !== "/compare") {
          router.push("/search-product/?product[query]="+query);
       }
    }, [query.length]);

@@ -21,6 +21,7 @@
     "moment": "^2.29.3",
     "next": "12.1.5",
     "nextjs-progressbar": "^0.0.14",
+    "objectid": "^3.2.1",
     "query-string": "^7.1.1",
     "react": "18.0.0",
     "react-dom": "18.0.0",
