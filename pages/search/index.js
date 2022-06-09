@@ -40,37 +40,34 @@ function Search() {
     const router = useRouter();
     const page = router.query.page ? router.query.page : 1;
     const {keyword} = router.query;
-    const searchVal = useRef('');
-    const [requireKW, setRequireKW] = useState(false);
+    const [searchVal, setSearchVal] = useState('');
     const [allowFetch, setAllowFetch] = useState(false);
 
-    const { isLoading, error, data, refetch, isFetching, isFetched } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
+    const { error, data, refetch, isFetching } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
 
-    if (error) router.push('/notfound');
+    if (error) {
+        router.push('/404');
+    }
 
     useEffect(() => {
         if (keyword) {
+            setSearchVal(keyword);
             setAllowFetch(true);
             refetch();
         }
     },[keyword,page])
 
     const handleInputChange = (event) => {
-        if (!searchVal.current.value) {
-            console.log(searchVal.current.value);
-            setRequireKW(true);
-        } else {
-            setRequireKW(false);
-        }
+        setSearchVal(event.target.value);
     }
 
     const handleSearch = () => {
-        if (!searchVal.current.value) {
-            setRequireKW(true);
+        if (!searchVal) {
+
         } else {
             router.push({
                 pathname:'/search',
-                query:{keyword:searchVal.current.value}
+                query:{keyword:searchVal}
             });
         }
         
@@ -78,12 +75,12 @@ function Search() {
 
     const handleInputKeyDown = (event) => {
         if (event.charCode == 13 || event.keyCode == 13) {
-            if (!searchVal.current.value) {
-                setRequireKW(true);
+            if (!searchVal) {
+                
             } else {
                 router.push({
                     pathname:'/search',
-                    query:{keyword:searchVal.current.value}
+                    query:{keyword:searchVal}
                 });
             }
         }
@@ -101,12 +98,9 @@ function Search() {
                         </div>
                         <div className="col-lg-6 col-md-8 mx-auto">
                             <div className="search-bar">
-                                <div className="input-group search-bar w-100 mb-5 position-relative">
-                                    <div className='position-absolute bottom-100 mb-1 fw-bold theme-color' hidden={!requireKW}>
-                                        Please enter keyword 
-                                    </div>
+                                <div className="input-group search-bar w-100 mb-5">
                                     <input
-                                        ref={searchVal}
+                                        value={searchVal}
                                         type="search"
                                         className="form-control"
                                         placeholder="Search"

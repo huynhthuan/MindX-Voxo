@@ -51,11 +51,9 @@ function Category() {
 
     const { isLoading, error, data, isFetching, refetch } = useBlogListCategory({category: category,page: page});
 
-    // useEffect(() => {
-    //     refetch();
-    // }, [page || category ]);
-
-    if (error) return 'An error has occurred: ' + error.message;
+    if (error) {
+        router.push('/404');
+    }
 
     return (
         <>

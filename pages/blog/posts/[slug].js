@@ -9,7 +9,7 @@ import CommentBox from '../../../components/Posts/Comments/CommentBox';
 import { useDetailPost } from '../../../src/api_minhhieu/detailPostApi';
 import { useRouter } from 'next/router';
 import { DetailPostSkeleton } from '../../../components/Skeleton_minhhieu/index';
-
+import { transferDate } from '../../../utils/helpers';
 
 function BlogDetail() {
 
@@ -17,16 +17,14 @@ function BlogDetail() {
     const router = useRouter();
     const { slug } = router.query;
     
-    // Hàm chuyển đổi thời gian tạo bài
-    const transferDate = (date) => {
-        const d = new Date(date);
-        return d.getDate() + '/' + (d.getMonth() * 1 + 1) + '/' + d.getFullYear() + ' - ' + d.getHours() + ':' + d.getMinutes();
-    }
-    
     //Get data bài viết 
     const { isLoading, error, data, isFetching } = useDetailPost(slug);
 
-    if (error) return 'An error has occurred: ' + error.message;
+    console.log(data);
+
+    if (error) {
+        router.push('/404');
+    }
 
     return (
         <>
@@ -88,7 +86,7 @@ function BlogDetail() {
                             <div className="row g-4">
                                 <div className="col-12">
                                     {
-                                        isLoading || !data
+                                        isFetching || !data
                                             ? 
                                                 <DetailPostSkeleton/>
                                             :
@@ -97,63 +95,33 @@ function BlogDetail() {
                                                         <div className="blog-image-box">
                                                             <img
                                                                 src={
-                                                                    data.data._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
+                                                                    data.data[0]._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
                                                                 }
                                                                 alt=""
                                                                 className="card-img-top"
                                                             />
-                                                            {/* <div className="blog-title">
-                                                                <div>
-                                                                    <div className="social-media media-center">
-                                                                        <a
-                                                                            href="https://www.facebook.com/"
-                                                                            target="new"
-                                                                        >
-                                                                            <div className="social-icon-box social-color">
-                                                                                <i className="fab fa-facebook-f"></i>
-                                                                            </div>
-                                                                        </a>
-                                                                        <a
-                                                                            href="https://twitter.com/"
-                                                                            target="new"
-                                                                        >
-                                                                            <div className="social-icon-box social-color">
-                                                                                <i className="fab fa-twitter"></i>
-                                                                            </div>
-                                                                        </a>
-                                                                        <a
-                                                                            href="https://in.pinterest.com/"
-                                                                            target="new"
-                                                                        >
-                                                                            <div className="social-icon-box social-color">
-                                                                                <i className="fab fa-pinterest-p"></i>
-                                                                            </div>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div> */}
                                                         </div>
 
                                                         <div className="blog-detail-contain">
                                                             <span className="font-light">
                                                                 {
-                                                                    transferDate(data.data.date)
+                                                                    transferDate(data.data[0].date)
                                                                 }
                                                             </span>
                                                             <h2 className="card-title">
                                                                 {
-                                                                    data.data.title.rendered
+                                                                    data.data[0].title.rendered
                                                                 }
                                                             </h2>
-                                                            <div dangerouslySetInnerHTML={{ __html: data.data.content.rendered }}></div>
+                                                            <div dangerouslySetInnerHTML={{ __html: data.data[0].content.rendered }}></div>
                                                         </div>
                                                     </div>
 
-                                                    <AuthorBox {...data.data._embedded.author[0]}/>
+                                                    <AuthorBox {...data.data[0]._embedded.author[0]}/>
                                                                 
-                                                    <CommentBox postId={data.data.id}/>
+                                                    <CommentBox postId={data.data[0].id}/>
 
-                                                    <CommentList postId={data.data.id}/>
+                                                    <CommentList postId={data.data[0].id}/>
                                                 </>
                                     }
 
@@ -173,7 +141,7 @@ function BlogDetail() {
                     ?
                         null
                     :
-                        <RelatedPostSlide info={{categoryId:data.data.categories[0],excludeId:data.data.id}}/>
+                        <RelatedPostSlide info={{categoryId:data.data[0].categories[0],excludeId:data.data[0].id}}/>
             }
 
             <SubscribeBox />

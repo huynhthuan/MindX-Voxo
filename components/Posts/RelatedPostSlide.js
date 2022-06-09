@@ -5,7 +5,7 @@ import { RelatedPostSkeleton } from '../../components/Skeleton_minhhieu/index';
 
 function RelatedPostSlide({info}) {
 
-    const { isLoading, error, data } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
+    const { error, data, isFetching } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
 
     useEffect(() => {
         if (!data || data.length === 0) {
@@ -46,15 +46,13 @@ function RelatedPostSlide({info}) {
         }
     }, [data]);
 
-    if (error) return 'An error has occurred: ' + error.message;
+    // if (error) return 'An error has occurred: ' + error.message;
 
     return (
         <section className="section-b-space block-shadow-space ratio3_2">
             <div className="container">
-
-                
                     {
-                        isLoading || !data
+                        isFetching || !data
                             ?
                                 <div className='row'>
                                     {
@@ -68,7 +66,7 @@ function RelatedPostSlide({info}) {
                                 <div className="slide-4 product-wrapper slick-lg-space">
                                     {
                                         data.map((item,index) => {
-                                            return <RelatedPostsItem key={index} postId={item.id}/>
+                                            return <RelatedPostsItem key={index} postSlug={item.slug}/>
                                         })
                                     }
                                 </div>
