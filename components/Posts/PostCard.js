@@ -26,7 +26,7 @@ function PostCard({id,title,excerpt}) {
     return (
         <div className="masonary-blog box-shadow">
             <Link href={`/blog/posts/${id}`}>
-                <a href="blog-details.html" style={{width:'30%'}}>
+                <a style={{width:'30%'}}>
                     {
                         isFetching
                             ? 
@@ -49,7 +49,7 @@ function PostCard({id,title,excerpt}) {
             <div className="card-body card-body-width">
                 <h6 className="masonary-name">PRODUCT UPDATE</h6>
                 <Link href={`/blog/posts/${id}`}>
-                    <a href="blog-details.html">
+                    <a>
                         <h2 className="card-title">{title.rendered}</h2>
                     </a>
                 </Link>

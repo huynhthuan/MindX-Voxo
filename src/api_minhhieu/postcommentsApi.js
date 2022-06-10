@@ -4,14 +4,14 @@ import axios from 'axios';
 
 const fetchPostComments = async ({queryKey,pageParam = 1}) => {
   const result = await axios.get(COMMENT,
-  {
-      params: {
-        post:queryKey[1],
-        page:pageParam,
-        per_page:4
-      }
-  }
-);
+    {
+        params: {
+          post:queryKey[1],
+          page:pageParam,
+          per_page:4
+        }
+    }
+  )
 
   return result;
 }
@@ -40,7 +40,7 @@ export const usePostComments = (postId) => {
         }
       }
     }
-  );
+  )
 }
 
 export const useAddPostComment = () => {

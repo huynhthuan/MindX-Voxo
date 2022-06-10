@@ -48,7 +48,9 @@ function Blog() {
         refetch();
     }, [page]);
 
-    if (error) return 'An error has occurred: ' + error.message;
+    if (error) {
+        router.push('/404');
+    }
 
     return (
         <>
