@@ -3,6 +3,7 @@ import { Configure } from "react-instantsearch-hooks-web";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import { functionJqueryProductCategory } from "../../components/component_vuong/Common";
+import InfoCompare from "../../components/component_vuong/compare/InfoCompare";
 import CustomHitSearchProduct from "../../components/component_vuong/searchProduct/CustomHitSearchProduct";
 import Filter from "../../components/component_vuong/searchProduct/FilterSearchProduct";
 import SortSearchProduct from "../../components/component_vuong/searchProduct/SortSearchProduct";
@@ -14,6 +15,17 @@ export default function Index(props) {
 
    useEffect(() => {
       functionJqueryProductCategory();
+      // fetchApi.get('/products?per_page=100').then(res=>{
+      //    res.data.map(item=>item.price=+item.price)
+      //    console.log(res.data);
+      // })
+   }, []);
+
+   useEffect(() => {
+      $(".search-full").addClass("open");
+      $(".search-type").focus();
+      // $(".search-type")[0].value = "";
+      return ()=>{$(".search-full").removeClass("open");}
    }, []);
 
    return (
@@ -49,15 +61,16 @@ export default function Index(props) {
                </div>
             </div>
          </section>
+         {/* <InfoCompare /> */}
 
          <SubscribeBox />
       </>
    );
 }
 
-export const getStaticProps = async () => {
-   const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
-   const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
-   const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
-   return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
-};
+// export const getStaticProps = async () => {
+//    const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
+//    const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
+//    const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
+//    return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
+// };

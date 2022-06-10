@@ -22,7 +22,9 @@ export const fetchApiGetCategories = async (query) => {
       const { slug, page } = query;
       const response = await fetchApi.get("/products/categories/?slug=" + slug);
       const responseId = response.data[0].id;
-      const url = "/products?" + convertObjectToParams({ per_page: "12", page: "1", ...query, category: responseId, slug: "" });
+      const url = "/products?" + convertObjectToParams({ per_page: "12", page: "1", ...query,
+      //  category: responseId, 
+       slug: "" });
       const data = await fetchApi.get(url);
       data.idCategory = responseId;
       return data;

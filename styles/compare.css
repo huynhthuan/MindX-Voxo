@@ -1,9 +1,32 @@
-.btn-close{
+.btn-close {
    /* background-color: red; */
    position: absolute;
    border-radius: 20px;
-   border: 1px solid ;
+   border: 1px solid;
    font-size: 6px;
    padding: 5px;
-   margin: 5px;
+   /* margin: 5px; */
+   right: 0;
+   z-index: 1054;
+}
+
+#compare-bottom{
+   z-index: 1054;
+}
+
+.compare-button-card{
+   min-height: 100px;
+   max-width: 200px;
+}
+
+@media (max-width: 768px){
+
+   .bottom-compare>.product-details{
+      display: none;
+   }
+   .bottom-compare .compare-bottom-btn{
+      display: flex;
+      justify-content: center;
+     
+   }
 }

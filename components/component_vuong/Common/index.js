@@ -52,14 +52,22 @@ export const configSearch = { appId: "IM4IS8NYBU", apikey: "8170a857ccd774d90ce8
 export const getListCompare = (compareProduct) => [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
 
 export const updateData = async (index) => {
+
    const res = await fetchApi.get("/products?per_page=100");
+   // const objects = res.data;
    const objects = res.data.map((item,index)=>{
-      
-   });
+         item.objectID=index+'a'+new Date().getMilliseconds()
+         return item
+      });
+  
    console.log(`  ~ objects`, objects);
-   // index.saveObjects(objects,{'autoGenerateObjectIDIfNotExist': true}).then(({ objectIDs }) => {
-   //    console.log(objectIDs);
-   // });
+   try {
+      index.saveObjects(objects, { autoGenerateObjectIDIfNotExist: true }).then(({ objectIDs }) => {
+         console.log(objectIDs);
+      });
+   } catch (error) {
+      console.log(`  ~ error`, error.respose);
+   }
 };
 
 export const functionJquerySearchFull = () => {

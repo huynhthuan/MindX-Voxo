@@ -7,6 +7,11 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import NextNProgress from "nextjs-progressbar";
 
 import Layout from "../components/Layout";
+import { InstantSearch } from "react-instantsearch-hooks-web";
+import { configSearch } from "../components/component_vuong/Common";
+import algoliasearch from "algoliasearch";
+import { useRouter } from "next/router";
+import InfoCompare from "../components/component_vuong/compare/InfoCompare";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -21,11 +26,7 @@ import "../styles/vendors/slick/slick-theme.css";
 import "@sendbird/uikit-react/dist/index.css";
 import "../styles/globals.css";
 import "../styles/compare.css";
-import { InstantSearch } from "react-instantsearch-hooks-web";
-import { configSearch, updateData } from "../components/component_vuong/Common";
-import algoliasearch from "algoliasearch";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import CompareModal from "../components/component_vuong/compare/CompareModal";
 
 const queryClient = new QueryClient({
    defaultOptions: {
@@ -37,25 +38,26 @@ const queryClient = new QueryClient({
 
 const { appId, apikey, indexName } = configSearch;
 const searchClient = algoliasearch(appId, apikey);
-const index = searchClient.initIndex('product');
+const index = searchClient.initIndex("product");
 
 function MyApp({ Component, pageProps }) {
    const router = useRouter();
-   useEffect(() => {
-      updateData(index)
-   }, [])
-   
+
    return (
       <Provider store={store}>
          <PersistGate loading={null} persistor={persistor}>
             <QueryClientProvider client={queryClient}>
                <NextNProgress color="#dc3545" startPosition={0.3} stopDelayMs={200} height={4} showOnShallow={true} />
-               <InstantSearch searchClient={searchClient} indexName={indexName} routing={router.pathname!=='/compare'}>
+               <InstantSearch searchClient={searchClient} indexName={indexName} routing={router.pathname !== "/compare"}>
                   <Layout>
                      <SkeletonTheme baseColor="#eaeaea" highlightColor="#fff">
                         <Component {...pageProps} />
                      </SkeletonTheme>
                   </Layout>
+                  <InfoCompare />
+               </InstantSearch>
+               <InstantSearch searchClient={searchClient} indexName={indexName}>
+                  <CompareModal />
                </InstantSearch>
                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>

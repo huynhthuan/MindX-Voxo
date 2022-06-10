@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
 import { useDispatch, useSelector } from "react-redux";
 import OnSale from "../component_vuong/product/OnSale";
+import AddCompare from "../component_vuong/compare/AddCompare";
 
 function ProductCard(props) {
    const router = useRouter();
@@ -32,22 +33,26 @@ function ProductCard(props) {
       functionJquery();
    }, [front_image]);
 
-   const handleAddCompare = () => {
-      compareProduct.length < 4 && dispatch(addProductCompare(props));
-      Swal.fire({
-         title: compareProduct.length > 3 ? "limited 4 items" : "add product " + (compareProduct.length + 1) + "/4",
-         icon: compareProduct.length > 3 ? "error" : "success",
-         showCancelButton: true,
-         cancelButtonText: "Ok",
-         cancelButtonColor: "#d90429",
-         confirmButtonText: "Compare",
-      }).then((res) => {
-         if (res.isConfirmed) {
-            router.push("/compare");
-         }
-      });
-    
-   };
+   // const handleAddCompare = () => {
+   //    if (compareProduct.length < 4) {
+   //       dispatch(addProductCompare(props));
+   //    } else {
+   //       console.log(`  ~ compareProduct.length`, compareProduct.length);
+   //    }
+   //    Swal.fire({
+   //       title: compareProduct.length > 3 ? "limited 41 items" : "add product " + (compareProduct.length + 1) + "/4",
+   //       icon: compareProduct.length > 3 ? "error" : "success",
+   //       showCancelButton: true,
+   //       cancelButtonText: "Ok",
+   //       cancelButtonColor: "#d90429",
+   //       confirmButtonText: "Compare",
+   //    }).then((res) => {
+   //       if (res.isConfirmed) {
+   //          router.push("/compare");
+   //       }
+   //    });
+   // };
+
    return (
       <div className="product-box">
          <div className="img-wrapper">
@@ -81,11 +86,7 @@ function ProductCard(props) {
                         <i data-feather="eye"></i>
                      </a>
                   </li>
-                  <li onClick={handleAddCompare}>
-                     <a>
-                        <i data-feather="refresh-cw"></i>
-                     </a>
-                  </li>
+                  <AddCompare inCard item={props}/>
                   <li>
                      <a href="wishlist.html" className="wishlist">
                         <i data-feather="heart"></i>
@@ -118,4 +119,3 @@ function ProductCard(props) {
 }
 
 export default ProductCard;
-

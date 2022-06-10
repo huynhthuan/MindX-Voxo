@@ -2,13 +2,16 @@ import { useEffect } from 'react';
 
 function MostPopular() {
     useEffect(() => {
-        $('.product-slider').slick({
+        let slick=$('.product-slider').slick({
             dots: false,
             infinite: true,
             arrows: true,
             slidesToShow: 1,
             slidesToScroll: 1,
         });
+        return () => {
+            slick.slick("unslick");
+         };
     }, []);
 
     return (

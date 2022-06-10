@@ -8,6 +8,7 @@ function SortSearchProduct({ setHitsPerPage, hitsPerPage }) {
       results: { nbHits },
  
    } = useHits();
+//  console.log(`  ~ hits`, hits[0])
 
    const { refine} = useSortBy({
       items: [

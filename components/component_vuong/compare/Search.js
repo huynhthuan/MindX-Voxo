@@ -11,7 +11,7 @@ function Search() {
 
    return (
       <div className="container">
-            <Configure hitsPerPage={4}/>
+            <Configure hitsPerPage={4} />
             {/* <CustomRefinementList attribute="attributes.options"  limit={55} operator="or" showmore/> */}
             <CustomSearchBox />
             <CustomHits />

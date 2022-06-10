@@ -8,6 +8,8 @@ function FilterSearchProduct({ resBrand, resColor = [], resSize, sortHits, setSo
    const { canRefine, createURL, refine: refineClearRefinements } = useClearRefinements();
    const { refine: refineColor, items: itemsColor } = refinementListColor;
    const { refine: refinePrice, items: itemsPrice } = refinementListPrice;
+   const rangePrice =useRange({attribute:'price'})
+   console.log(`  ~ rangePrice`, rangePrice.range.max)
 
    useEffect(() => {
       functionJqueryProductCategory();
@@ -266,7 +268,7 @@ function FilterSearchProduct({ resBrand, resColor = [], resSize, sortHits, setSo
                   <li className="onclick-title">
                      <h6>Price</h6>
                      <ul className="onclick-content">
-                        {Array(10)
+                        {Array(Math.round(rangePrice.range.max/10))
                            .fill(0)
                            .map((item, index) => (
                               <li key={index}>

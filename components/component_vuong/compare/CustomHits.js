@@ -13,7 +13,7 @@ function CustomHits() {
          ))}
          {hits.length > 0 || !query ? (
             <Pagination
-               totalPages={results.nbPages}
+               totalPages={6}
                padding={4}
                showFirst={!isFirstPage}
                showNext={false}

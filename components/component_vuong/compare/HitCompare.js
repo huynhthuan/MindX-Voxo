@@ -7,10 +7,13 @@ function HitCompare({ hit }) {
    const listCompare = Object.values(compareProduct);
 
    return (
-      <div className="d-flex my-2">
-         <MostPopularCard {...hit} className='m-0 p-0' hiddenCategories/>
-         <div className="ms-auto">
-            <AddCompare listCompare={listCompare} item={hit} />
+      <div className="d-flex mb-2 row me-1">
+         <div className="m-0 p-0 col-9">
+
+         <MostPopularCard {...hit} className='' hiddenCategories/>
+         </div>
+         <div className="ms-auto col-3">
+            <AddCompare  item={hit} />
          </div>
       </div>
    );

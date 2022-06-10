@@ -16,12 +16,14 @@ function Sidebar({ resBrand, resColor, resSize }) {
       } else {
          arrAttribute.splice(arrAttribute.indexOf(idAttribute), 1);
       }
+      delete query.page
       router.push(
          {
             pathname: pathname,
             query: {
                ...query,
                [nameAttribute]: arrAttribute.join(),
+              
             },
          },
          null,
@@ -67,7 +69,7 @@ function Sidebar({ resBrand, resColor, resSize }) {
                </div>
             </div>
 
-            <div className="accordion-item category-color">
+            <div className="accordion-item category-rating">
                <h2 className="accordion-header" id="headingThree">
                   <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
                      Color
