@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '../../components/Blog/Sidebar';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import PostCard from '../../components/Posts/PostCard';
 import { useSearchPosts } from '../../src/api_minhhieu/searchPostsApi';
 import { useRouter } from 'next/router';
 import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
+import Pagination from './Pagination';
 
 function Search() {
     useEffect(() => {
@@ -147,7 +148,7 @@ function Search() {
                                             })
                                 }
                             </div>
-                            {
+                            {/* {
                                 data 
                                     &&
                                         data.totalPage*1 !== 0
@@ -218,6 +219,17 @@ function Search() {
                                                         </nav>
                                                     </div>
                                                 </div>
+                            } */}
+                            {
+                                data && data.totalPage*1 !== 0
+                                    ? 
+                                        <div className='row mt-5'>
+                                            <div className='custom-pagination d-flex justify-content-center align-items-center'>
+                                                <Pagination itemsPerPage={15} data={data} url={{pathname:'/search',query: keyword,}}/>
+                                            </div>
+                                        </div>
+                                    : 
+                                        null
                             }
                         </div>
 
