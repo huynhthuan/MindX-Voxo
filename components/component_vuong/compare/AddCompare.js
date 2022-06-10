@@ -8,8 +8,9 @@ function AddCompare({ item = {} }) {
    const compareProduct = useSelector((state) => state.compare.entities);
    const listCompare = getListCompare(compareProduct);
    const dispatch = useDispatch();
-   const handleAddCompare = (item={}) => {
-   
+   const elementCloseModal = document.getElementById("close-modal");
+   const handleAddCompare = (item = {}) => {
+      elementCloseModal.click();
       Object.values(compareProduct).length < 4
          ? dispatch(addProductCompare(item))
          : Swal.fire({

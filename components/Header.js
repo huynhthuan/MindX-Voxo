@@ -45,7 +45,7 @@ export default function Header() {
             <title>Voxo</title>
             <link rel="preconnect" href="https://fonts.gstatic.com/" />
             
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/satellite-min.css" />
+            {/* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/satellite-min.css" /> */}
         </Head>
     );
 }

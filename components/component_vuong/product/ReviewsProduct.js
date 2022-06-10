@@ -18,10 +18,10 @@ function ReviewsProduct({ id, average_rating, rating_count }) {
       error,
       refetch,
    } = useQuery(["reviews", id], () => fetchApiReviewProduct(id), { enabled: Boolean(id) });
-
+   
    const totalItems = data.headers["x-wp-total"] || 0;
    useEffect(() => {
-      totalItems > 5 && fetchApiReviewProduct(id, totalItems).then((res) => setListReviews(res.data));
+      totalItems > 5 ? fetchApiReviewProduct(id, totalItems).then((res) => setListReviews(res.data)):setListReviews(data.data);
    }, [id, totalItems]);
 
    return (

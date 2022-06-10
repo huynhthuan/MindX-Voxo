@@ -10,6 +10,8 @@ function MostPopularCard(props) {
       price,
       regular_price,
       slug,
+      on_sale,
+      hiddenCategories,
    } = props;
    return (
       <div className="product-slider round-arrow1">
@@ -22,19 +24,21 @@ function MostPopularCard(props) {
                      </a>
                   </Link>
                   <div className="product-details">
-                     <h6 className="font-light">{categories[0].name}</h6>
+                     <h6 className="font-light" hidden={hiddenCategories}>{categories[0].name}</h6>
                      <Link href={"/product/" + slug} passHref>
-                        <a className="">
+                        <a >
                            <h3>{name}</h3>
                         </a>
                      </Link>
                      <h4 className="font-light mt-1">
-                        <del hidden={regular_price === price}>{conventToCurrency(regular_price)}</del>{" "}
-                        <span className="theme-color">{conventToCurrency(price)}</span>
+                        <del hidden={!on_sale} className="me-2">
+                           {conventToCurrency(regular_price)}
+                        </del>
+                        <span className="theme-color m-0">{conventToCurrency(price)}</span>
                      </h4>
                   </div>
+                  {props.children}
                </div>
-               {props.children}
             </div>
          </div>
       </div>

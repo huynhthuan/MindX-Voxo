@@ -40,13 +40,17 @@ function Blog() {
     }, []);
     
     const router = useRouter();
-    const {page} = router.query;
+    const page = router.query.page ? router.query.page : 1;
 
-    const { isLoading, error, data, isFetching } = useBlogListNewPost({ page: page ? page : 1 });
+    const { isLoading, error, data, isFetching, refetch } = useBlogListNewPost({ page });
+    
+    useEffect(() => {
+        refetch();
+    }, [page]);
 
-    console.log(data);
-
-    if (error) return 'An error has occurred: ' + error.message
+    if (error) {
+        router.push('/404');
+    }
 
     return (
         <>
@@ -132,14 +136,21 @@ function Blog() {
                             <nav className="page-section mt-0">
                                 <ul className="pagination">
                                     <li className="page-item">
-                                        <a
+                                        <div
                                             className="page-link"
-                                            href="undefined"
+                                            onClick={() => {
+                                                if ( page > 1 ) {
+                                                    router.push({
+                                                        pathname:'/blog',
+                                                        query: {page: page * 1 - 1}
+                                                    })
+                                                }
+                                            }}
                                         >
                                             <span aria-hidden="true">
                                                 <i className="fas fa-chevron-left"></i>
                                             </span>
-                                        </a>
+                                        </div>
                                     </li>
                                     {/* minhhieu */}
                                     {
@@ -147,22 +158,37 @@ function Blog() {
                                             && 
                                                 data?.totalPage && 
                                                     Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                                        return <li className="page-item active" key={index}>
-                                                            <a
+                                                        return <li className={"page-item " + ( index+1 == page ? "active" : "" )} key={index}>
+                                                            <div
                                                                 className="page-link"
-                                                                href={`?page=${index + 1}`}
+                                                                onClick={() => {
+                                                                    router.push({
+                                                                        pathname:'/blog',
+                                                                        query: {page: index + 1}
+                                                                    })
+                                                                }}
                                                             >
                                                                 {index+1}
-                                                            </a>
+                                                            </div>
                                                         </li>
                                                     })
                                     }
                                     <li className="page-item">
-                                        <a className="page-link">
+                                        <div 
+                                            className="page-link"
+                                            onClick={() => {
+                                                if ( page < data.totalPage * 1 ) {
+                                                    router.push({
+                                                        pathname:'/blog',
+                                                        query: {page: page * 1 + 1}
+                                                    })
+                                                }
+                                            }}
+                                        >
                                             <span aria-hidden="true">
                                                 <i className="fas fa-chevron-right"></i>
                                             </span>
-                                        </a>
+                                        </div>
                                     </li>
                                 </ul>
                             </nav>

@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
+import TeamList from '../../components/AboutUs/TeamList';
 import Breadcrumb from '../../components/Common/BreadCrumb';
 import SubscribeBox from '../../components/Common/SubscribeBox';
+import { useShopInfor } from '../../src/api_minhhieu/shopInforApi';
+import TestimonialItem from '../../components/AboutUs/TestimonialList';
+import { TeamMemberSkeleton, TestimonialItemSkeleton } from '../../components/Skeleton_minhhieu';
 
 export default function AboutUs() {
     useEffect(() => {
@@ -31,65 +35,11 @@ export default function AboutUs() {
             });
         })(jQuery);
         feather.replace();
-
-        let slideTeam = $('.slide-5_1').slick({
-            dots: true,
-            infinite: false,
-            speed: 500,
-            arrows: false,
-            slidesToShow: 5,
-            slidesToScroll: 2,
-            responsive: [
-                {
-                    breakpoint: 1200,
-                    settings: {
-                        slidesToShow: 4,
-                    },
-                },
-                {
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 2,
-                    },
-                },
-                {
-                    breakpoint: 420,
-                    settings: {
-                        slidesToShow: 2,
-                    },
-                },
-            ],
-        });
-
-        let slideTestimonial = $('.slide-3-1').slick({
-            dots: true,
-            arrows: false,
-            infinite: true,
-            slidesToShow: 3,
-            slidesToScroll: 2,
-            responsive: [
-                {
-                    breakpoint: 992,
-                    settings: {
-                        slidesToShow: 3,
-                    },
-                },
-                {
-                    breakpoint: 420,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        fade: true,
-                    },
-                },
-            ],
-        });
-
-        return () => {
-            slideTeam.slick('unslick');
-            slideTestimonial.slick('unslick');
-        };
     }, []);
+
+    const { isLoading, error, data, refetch, isFetching, isFetched } = useShopInfor();
+
+    if (error) console.log('error');
 
     return (
         <>
@@ -132,20 +82,14 @@ export default function AboutUs() {
                                     <h2>WHO WE ARE</h2>
                                     <h3>largest Online fashion destination</h3>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur
-                                        adipisicing elit. Totam, culpa!
-                                        Asperiores labore amet nemo ullam odit
-                                        atque adipisci, hic, aliquid animi
-                                        fugiat praesentium quidem. Perspiciatis,
-                                        expedita!
+                                        As a brand that sells loungewear, Voxo puts craftsmanship at the forefront 
+                                        of what makes it different. One of the best ways to use your About Us page 
+                                        is to illustrate your brand’s value proposition. 
                                     </p>
                                     <p>
-                                        Lorem ipsum dolor sit amet consectetur
-                                        adipisicing elit. Totam, culpa!
-                                        Asperiores labore amet nemo ullam odit
-                                        atque adipisci, hic, aliquid animi
-                                        fugiat praesentium quidem. Perspiciatis,
-                                        expedita!
+                                        Voxo uses a series of pictures, options of the product to showcase its careful approach to detail, 
+                                        construction, and quality. This goes along with the “show don’t tell” 
+                                        strategy that can make an About Us page so powerful
                                     </p>
                                 </div>
                             </div>
@@ -242,182 +186,13 @@ export default function AboutUs() {
                             </div>
                         </div>
                     </div>
-                    <div className="product-wrapper leader-section slick-lg-space slide-5_1 ratio_asos">
-                        <div>
-                            <div className="leader-contain">
-                                <div className="leader-image">
-                                    <img
-                                        src="/images/inner-page/review-image/1.jpg"
-                                        className="img-fluid bg-img"
-                                        alt=""
-                                    />
-                                    <ul className="social-media">
-                                        <li>
-                                            <a href="www.facebook.html">
-                                                <i className="fab fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.twitter.html">
-                                                <i className="fab fa-twitter"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.google.html">
-                                                <i className="fab fa-google-plus-g"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="leader-contain">
-                                    <h3>Jonathan Warner</h3>
-                                    <h6>CEO</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="leader-contain">
-                                <div className="leader-image">
-                                    <img
-                                        src="/images/inner-page/review-image/2.jpg"
-                                        className="img-fluid bg-img"
-                                        alt=""
-                                    />
-                                    <ul className="social-media">
-                                        <li>
-                                            <a href="www.facebook.html">
-                                                <i className="fab fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.twitter.html">
-                                                <i className="fab fa-twitter"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.google.html">
-                                                <i className="fab fa-google-plus-g"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="leader-contain">
-                                    <h3>Jonathan Warner</h3>
-                                    <h6>CEO</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="leader-contain">
-                                <div className="leader-image">
-                                    <img
-                                        src="/images/inner-page/review-image/3.jpg"
-                                        className="img-fluid bg-img"
-                                        alt=""
-                                    />
-                                    <ul className="social-media">
-                                        <li>
-                                            <a href="www.facebook.html">
-                                                <i className="fab fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.twitter.html">
-                                                <i className="fab fa-twitter"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.google.html">
-                                                <i className="fab fa-google-plus-g"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="leader-contain">
-                                    <h3>Jonathan Warner</h3>
-                                    <h6>CEO</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="leader-contain">
-                                <div className="leader-image">
-                                    <img
-                                        src="/images/inner-page/review-image/4.jpg"
-                                        className="img-fluid bg-img"
-                                        alt=""
-                                    />
-                                    <ul className="social-media">
-                                        <li>
-                                            <a href="www.facebook.html">
-                                                <i className="fab fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.twitter.html">
-                                                <i className="fab fa-twitter"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.google.html">
-                                                <i className="fab fa-google-plus-g"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="leader-contain">
-                                    <h3>Jonathan Warner</h3>
-                                    <h6>CEO</h6>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="leader-contain">
-                                <div className="leader-image">
-                                    <img
-                                        src="/images/inner-page/review-image/5.jpg"
-                                        className="img-fluid bg-img"
-                                        alt=""
-                                    />
-                                    <ul className="social-media">
-                                        <li>
-                                            <a href="www.facebook.html">
-                                                <i className="fab fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.twitter.html">
-                                                <i className="fab fa-twitter"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="www.google.html">
-                                                <i className="fab fa-google-plus-g"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div className="leader-contain">
-                                    <h3>Jonathan Warner</h3>
-                                    <h6>CEO</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        isFetching
+                            ? 
+                                <TeamMemberSkeleton/>
+                            :
+                                <TeamList {...data.data.acf}/>
+                    }
                 </div>
             </section>
             {/* leader section End */}
@@ -437,222 +212,13 @@ export default function AboutUs() {
                             </div>
                         </div>
                     </div>
-                    <div className="testimonial-slider product-wrapper slide-3-1 slick-lg-space">
-                        <div>
-                            <div className="testimonial-contain">
-                                <div className="textimonial-image">
-                                    <img
-                                        src="/images/inner-page/review-image/1.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    />
-                                </div>
-
-                                <div className="testimonial-details">
-                                    <ul className="rating">
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <h5 className="details-images">
-                                        <i className="fas fa-quote-left"></i>Lorem
-                                        ipsum dolor sit amet consectetur
-                                        adipisicing elit. Quidem cum consequatur
-                                        sit cupiditate, quaerat sint porro
-                                        deserunt voluptas eligendi impedit.
-                                        <i className="fas fa-quote-right"></i>
-                                    </h5>
-                                    <h5>
-                                        <strong>Johnkee</strong> / Apply.co
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="testimonial-contain">
-                                <div className="textimonial-image">
-                                    <img
-                                        src="/images/inner-page/review-image/2.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    />
-                                </div>
-
-                                <div className="testimonial-details">
-                                    <ul className="rating">
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <h5 className="details-images">
-                                        <i className="fas fa-quote-left"></i>Lorem
-                                        ipsum dolor sit amet consectetur
-                                        adipisicing elit. Quidem cum consequatur
-                                        sit cupiditate, quaerat sint porro
-                                        deserunt voluptas eligendi impedit.
-                                        <i className="fas fa-quote-right"></i>
-                                    </h5>
-                                    <h5>
-                                        <strong>Johnkee</strong> / Apply.co
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="testimonial-contain">
-                                <div className="textimonial-image">
-                                    <img
-                                        src="/images/inner-page/review-image/3.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    />
-                                </div>
-
-                                <div className="testimonial-details">
-                                    <ul className="rating">
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <h5 className="details-images">
-                                        <i className="fas fa-quote-left"></i>Lorem
-                                        ipsum dolor sit amet consectetur
-                                        adipisicing elit. Quidem cum consequatur
-                                        sit cupiditate, quaerat sint porro
-                                        deserunt voluptas eligendi impedit.
-                                        <i className="fas fa-quote-right"></i>
-                                    </h5>
-                                    <h5>
-                                        <strong>Johnkee</strong> / Apply.co
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="testimonial-contain">
-                                <div className="textimonial-image">
-                                    <img
-                                        src="/images/inner-page/review-image/4.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    />
-                                </div>
-
-                                <div className="testimonial-details">
-                                    <ul className="rating">
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <h5 className="details-images">
-                                        <i className="fas fa-quote-left"></i>Lorem
-                                        ipsum dolor sit amet consectetur
-                                        adipisicing elit. Quidem cum consequatur
-                                        sit cupiditate, quaerat sint porro
-                                        deserunt voluptas eligendi impedit.
-                                        <i className="fas fa-quote-right"></i>
-                                    </h5>
-                                    <h5>
-                                        <strong>Johnkee</strong> / Apply.co
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div className="testimonial-contain">
-                                <div className="textimonial-image">
-                                    <img
-                                        src="/images/inner-page/review-image/5.jpg"
-                                        className="img-fluid"
-                                        alt=""
-                                    />
-                                </div>
-
-                                <div className="testimonial-details">
-                                    <ul className="rating">
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i className="fas fa-star"></i>
-                                        </li>
-                                    </ul>
-                                    <h5 className="details-images">
-                                        <i className="fas fa-quote-left"></i>Lorem
-                                        ipsum dolor sit amet consectetur
-                                        adipisicing elit. Quidem cum consequatur
-                                        sit cupiditate, quaerat sint porro
-                                        deserunt voluptas eligendi impedit.
-                                        <i className="fas fa-quote-right"></i>
-                                    </h5>
-                                    <h5>
-                                        <strong>Johnkee</strong> / Apply.co
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        isFetching
+                            ? 
+                                <TestimonialItemSkeleton/>
+                            :
+                                <TestimonialItem {...data.data.acf}/>
+                    }
                 </div>
             </section>
             {/* testimonial section end */}
