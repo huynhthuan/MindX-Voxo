@@ -13,7 +13,6 @@ function AuthorBox({avatar_urls,name}) {
 
             <div className="image-name text-weight">
                 <h3>{name}</h3>
-                {/* <h6>15 Aug 2021</h6> */}
             </div>
         </div>
     );

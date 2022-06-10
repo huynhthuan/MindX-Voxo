@@ -5,9 +5,6 @@ import { Fragment, useState } from 'react';
 
 function CommentList({postId}) {
 
-    const [page, setPage] = useState(1);
-    const [showLoadMore, setShowLoadMore] = useState(false);
-
     const { isLoading, error, data, isFetching, hasNextPage, fetchNextPage, isFetchingNextPage } = usePostComments(postId);
 
     if (error) return 'An error has occurred: ' + error.message;
@@ -20,7 +17,7 @@ function CommentList({postId}) {
                         <div className="tab-pane">
                             <div className="customer-review-box">
                                 {
-                                   !isLoading
+                                    !isLoading
                                         &&
                                             <h4>Comments ({data.pages[0].headers['x-wp-total']})</h4> 
                                 }
@@ -53,13 +50,19 @@ function CommentList({postId}) {
                 {
                     isFetching 
                         && 
-                            !isFetchingNextPage 
+                            isFetchingNextPage 
                                 ? <PostCommentsSkeleton /> 
                                 : null
                 
                 }
             </div>
-            <div className="load-more">
+            <div className="load-more" hidden={
+                isLoading
+                    ? 
+                        true
+                    :
+                        data.pages[0].headers['x-wp-total'] > 0 ? false : true
+            }>
                 <button disabled={!hasNextPage} className="loadMore btn btn-submit btn-full" onClick={fetchNextPage}>
                     load more
                 </button>

@@ -38,7 +38,7 @@ const queryClient = new QueryClient({
 
 const { appId, apikey, indexName } = configSearch;
 const searchClient = algoliasearch(appId, apikey);
-const index = searchClient.initIndex("product");
+const index = searchClient.initIndex(indexName);
 
 function MyApp({ Component, pageProps }) {
    const router = useRouter();

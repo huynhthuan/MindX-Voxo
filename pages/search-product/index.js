@@ -68,9 +68,9 @@ export default function Index(props) {
    );
 }
 
-// export const getStaticProps = async () => {
-//    const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
-//    const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
-//    const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
-//    return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
-// };
+export const getStaticProps = async () => {
+   const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
+   const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
+   const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
+   return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
+};

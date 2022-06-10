@@ -9,7 +9,7 @@ function FilterSearchProduct({ resBrand, resColor = [], resSize, sortHits, setSo
    const { refine: refineColor, items: itemsColor } = refinementListColor;
    const { refine: refinePrice, items: itemsPrice } = refinementListPrice;
    const rangePrice =useRange({attribute:'price'})
-   console.log(`  ~ rangePrice`, rangePrice.range.max)
+   // console.log(`  ~ rangePrice`, rangePrice.range.max)
 
    useEffect(() => {
       functionJqueryProductCategory();
