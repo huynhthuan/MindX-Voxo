@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Sidebar from '../../components/Blog/Sidebar';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import PostCard from '../../components/Posts/PostCard';
 import { useSearchPosts } from '../../src/api_minhhieu/searchPostsApi';
 import { useRouter } from 'next/router';
 import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
+import Pagination from './Pagination';
 
 function Search() {
     useEffect(() => {
@@ -40,37 +41,34 @@ function Search() {
     const router = useRouter();
     const page = router.query.page ? router.query.page : 1;
     const {keyword} = router.query;
-    const searchVal = useRef('');
-    const [requireKW, setRequireKW] = useState(false);
+    const [searchVal, setSearchVal] = useState('');
     const [allowFetch, setAllowFetch] = useState(false);
 
-    const { isLoading, error, data, refetch, isFetching, isFetched } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
+    const { error, data, refetch, isFetching } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
 
-    if (error) router.push('/notfound');
+    if (error) {
+        router.push('/404');
+    }
 
     useEffect(() => {
         if (keyword) {
+            setSearchVal(keyword);
             setAllowFetch(true);
             refetch();
         }
     },[keyword,page])
 
     const handleInputChange = (event) => {
-        if (!searchVal.current.value) {
-            console.log(searchVal.current.value);
-            setRequireKW(true);
-        } else {
-            setRequireKW(false);
-        }
+        setSearchVal(event.target.value);
     }
 
     const handleSearch = () => {
-        if (!searchVal.current.value) {
-            setRequireKW(true);
+        if (!searchVal) {
+
         } else {
             router.push({
                 pathname:'/search',
-                query:{keyword:searchVal.current.value}
+                query:{keyword:searchVal}
             });
         }
         
@@ -78,12 +76,12 @@ function Search() {
 
     const handleInputKeyDown = (event) => {
         if (event.charCode == 13 || event.keyCode == 13) {
-            if (!searchVal.current.value) {
-                setRequireKW(true);
+            if (!searchVal) {
+                
             } else {
                 router.push({
                     pathname:'/search',
-                    query:{keyword:searchVal.current.value}
+                    query:{keyword:searchVal}
                 });
             }
         }
@@ -101,12 +99,9 @@ function Search() {
                         </div>
                         <div className="col-lg-6 col-md-8 mx-auto">
                             <div className="search-bar">
-                                <div className="input-group search-bar w-100 mb-5 position-relative">
-                                    <div className='position-absolute bottom-100 mb-1 fw-bold theme-color' hidden={!requireKW}>
-                                        Please enter keyword 
-                                    </div>
+                                <div className="input-group search-bar w-100 mb-5">
                                     <input
-                                        ref={searchVal}
+                                        value={searchVal}
                                         type="search"
                                         className="form-control"
                                         placeholder="Search"
@@ -154,76 +149,15 @@ function Search() {
                                 }
                             </div>
                             {
-                                data 
-                                    &&
-                                        data.totalPage*1 !== 0
-                                            &&
-                                                <div className="row">
-                                                    <div className="col-12">
-                                                        <nav className="page-section mt-0">
-                                                            <ul className="pagination">
-                                                                <li className="page-item">
-                                                                    <div
-                                                                        className="page-link"
-                                                                        onClick={() => {
-                                                                            router.push({
-                                                                                pathname:'/search',
-                                                                                query:{
-                                                                                    keyword:keyword,
-                                                                                    page: page !== 1 ?  page*1 - 1 : null
-                                                                                }
-                                                                            });
-                                                                        }}
-                                                                    >
-                                                                        <span aria-hidden="true">
-                                                                            <i className="fas fa-chevron-left"></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                                {
-                                                                    Array(data.totalPage*1).fill(0).map((item,index) => {
-                                                                        return <li className={"page-item " + ( index+1 == page ? "active" : "" )} key={index}>
-                                                                                <div
-                                                                                    className="page-link"
-                                                                                    onClick={
-                                                                                        () => {
-                                                                                            router.push({
-                                                                                                pathname:'/search',
-                                                                                                query:{
-                                                                                                    keyword:keyword,
-                                                                                                    page: index * 1 + 1
-                                                                                                }
-                                                                                            });
-                                                                                        } 
-                                                                                    }
-                                                                                >
-                                                                                    {index * 1 + 1}
-                                                                                </div>
-                                                                            </li>
-                                                                    })
-                                                                }
-                                                                <li className="page-item">
-                                                                    <div 
-                                                                        className="page-link" 
-                                                                        onClick={() => {
-                                                                            router.push({
-                                                                                pathname:'/search',
-                                                                                query:{
-                                                                                    keyword:keyword,
-                                                                                    page: page != data.totalPage ?  page*1 + 1 : null
-                                                                                }
-                                                                            });
-                                                                        }}
-                                                                    >
-                                                                        <span aria-hidden="true">
-                                                                            <i className="fas fa-chevron-right"></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </nav>
-                                                    </div>
-                                                </div>
+                                data && data.totalPage*1 !== 0
+                                    ? 
+                                        <div className='row mt-5'>
+                                            <div className='custom-pagination d-flex justify-content-center align-items-center'>
+                                                <Pagination itemsPerPage={15} data={data} url={{pathname:'/search',query: keyword,}}/>
+                                            </div>
+                                        </div>
+                                    : 
+                                        null
                             }
                         </div>
 

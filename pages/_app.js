@@ -21,6 +21,7 @@ import "../styles/vendors/slick/slick-theme.css";
 import "@sendbird/uikit-react/dist/index.css";
 import "../styles/globals.css";
 import "../styles/compare.css";
+import "../styles/style_minhhieu/index.css";
 import { InstantSearch } from "react-instantsearch-hooks-web";
 import { configSearch, updateData } from "../components/component_vuong/Common";
 import algoliasearch from "algoliasearch";

@@ -3,6 +3,7 @@ import { SideBarItemSkeleton } from '../Skeleton_minhhieu';
 import SideBarItem from './SideBarItem';
 import {useRef, useState} from 'react';
 import {useRouter} from 'next/router';
+import Link from 'next/link';
 
 function Sidebar({showSearchBox}) {
 
@@ -103,74 +104,81 @@ function Sidebar({showSearchBox}) {
                 </div>
                 <ul>
                     <li className="category-box">
-                        <a href="blog-left-sidebar.html">
-                            <div className="category-product">
-                                <div className="cate-shape">
-                                    <i className="fas fa-globe text-color"></i>
-                                </div>
+                        <Link href="/blog/category/global">
+                            <a>
+                                <div className="category-product">
+                                    <div className="cate-shape">
+                                        <i className="fas fa-globe text-color"></i>
+                                    </div>
 
-                                <div className="cate-contain">
-                                    <h5 className="text-color">Global</h5>
+                                    <div className="cate-contain">
+                                        <h5 className="text-color">Global</h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </Link>
                     </li>
                     <li className="category-box">
-                        <a href="blog-left-sidebar.html">
-                            <div className="category-product">
-                                <div className="cate-shape">
-                                    <i className="fas fa-building text-color"></i>
-                                </div>
+                        <Link href="/blog/category/business">
+                            <a>
+                                <div className="category-product">
+                                    <div className="cate-shape">
+                                        <i className="fas fa-building text-color"></i>
+                                    </div>
 
-                                <div className="cate-contain">
-                                    <h5 className="text-color">Business</h5>
+                                    <div className="cate-contain">
+                                        <h5 className="text-color">Business</h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </Link>
                     </li>
-
                     <li className="category-box">
-                        <a href="blog-left-sidebar.html">
-                            <div className="category-product">
-                                <div className="cate-shape">
-                                    <i className="fas fa-play text-color"></i>
-                                </div>
+                        <Link href="/blog/category/entertainment">
+                            <a>
+                                <div className="category-product">
+                                    <div className="cate-shape">
+                                        <i className="fas fa-play text-color"></i>
+                                    </div>
 
-                                <div className="cate-contain">
-                                    <h5 className="text-color">
-                                        Entertainmant
-                                    </h5>
+                                    <div className="cate-contain">
+                                        <h5 className="text-color">
+                                            Entertainmant
+                                        </h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </Link>
                     </li>
-
                     <li className="category-box">
-                        <a href="blog-left-sidebar.html">
-                            <div className="category-product">
-                                <div className="cate-shape">
-                                    <i className="fas fa-tshirt text-color"></i>
-                                </div>
+                        <Link href="/blog/category/sports">
+                            <a>
+                                <div className="category-product">
+                                    <div className="cate-shape">
+                                        <i className="fas fa-tshirt text-color"></i>
+                                    </div>
 
-                                <div className="cate-contain">
-                                    <h5 className="text-color">Sports</h5>
+                                    <div className="cate-contain">
+                                        <h5 className="text-color">Sports</h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </Link>
                     </li>
-
                     <li className="category-box">
-                        <a href="blog-left-sidebar.html">
-                            <div className="category-product">
-                                <div className="cate-shape">
-                                    <i className="fas fa-dumbbell text-color"></i>
-                                </div>
+                        <Link href="/blog/category/health">
+                            <a>
+                                <div className="category-product">
+                                    <div className="cate-shape">
+                                        <i className="fas fa-dumbbell text-color"></i>
+                                    </div>
 
-                                <div className="cate-contain">
-                                    <h5 className="text-color">Health</h5>
+                                    <div className="cate-contain">
+                                        <h5 className="text-color">Health</h5>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
+                        </Link>
                     </li>
                 </ul>
             </div>
