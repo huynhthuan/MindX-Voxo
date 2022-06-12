@@ -16,9 +16,14 @@ import { addRecentlyViewedProducts } from "../../store/recentlyViewedProducts/re
 import Breadcrumb from "../../components/Common/BreadCrumb";
 
 function ProductDetail() {
-   const { slug } = useRouter().query;
+   const router = useRouter();
+   const {
+      query: { slug },
+      isReady,
+   } = router;
    const recentlyViewedProducts = useSelector((state) => state.recentlyViewedProducts);
    const dispatch = useDispatch();
+
    const {
       isLoading,
       error,
@@ -26,26 +31,40 @@ function ProductDetail() {
       isError,
       isFetching,
    } = useQuery(["product", slug], () => fetchApiProductBySlug(slug), { enabled: Boolean(slug) });
+   
+   if (isReady && !slug) {
+      router.push({
+         pathname: `/404`,
+      });
+   }
    useEffect(() => {
       errorModal(isError, error);
    }, [isError, error]);
+
    useEffect(() => {
       if (data.id) {
          dispatch(addRecentlyViewedProducts(data));
       }
    }, [data]);
+
    useEffect(() => {
-      //   functionJqueryProductCategory();
-        functionJquerySearchFull()
-     }, []);
+      functionJquerySearchFull();
+   }, []);
+
    if (!slug) return null;
+   if (data.data_null) {
+      router.push("/404");
+      return;
+   }
 
    return (
       <>
          <Breadcrumb title="Product Sticky" />
+
          {isLoading || isError || isFetching ? <PlaceHolderShopSection /> : <ShopSection {...data} />}
          {isLoading || isError || isFetching ? <PlaceHolderClothReview /> : <ClothReview {...data} />}
          {isLoading || isError || isFetching ? <PlaceHolderProductSection /> : <ProductSection {...data} />}
+
          <SubscribeBox />
          <Script src="/js/sticky-cart-bottom.js" strategy="afterInteractive"></Script>
          {/* <Script src="/js/timer.js" strategy="afterInteractive"></Script> */}

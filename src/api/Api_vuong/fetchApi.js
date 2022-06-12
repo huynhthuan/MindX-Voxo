@@ -36,7 +36,7 @@ export const fetchApiGetCategories = async (query) => {
 export const fetchApiProductBySlug = async (slug) => {
    try {
       const res = await fetchApi.get("/products?slug=" + slug);
-      return res.data[0];
+      return res.data[0]||{data_null:'error'};
    } catch (error) {
       console.log("error fetchApiProductBySlug", error);
    }

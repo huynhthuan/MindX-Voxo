@@ -12,7 +12,7 @@ function SortSearchProduct({ setHitsPerPage, hitsPerPage }) {
 
    const { refine} = useSortBy({
       items: [
-         { label: "Featured", value: "product" },
+         { label: "Featured", value: "products" },
          { label: "Price (asc)", value: "price_asc" },
          { label: "Price (desc)", value: "price_desc" },
          { label: "Name (asc)", value: "name_asc" },

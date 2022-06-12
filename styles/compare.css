@@ -19,9 +19,13 @@
    max-width: 200px;
 }
 
-@media (max-width: 768px){
+.onclick-content{
+   max-height: 500px;
+   overflow: scroll;
+}
 
-   .bottom-compare>.product-details{
+@media (max-width: 768px){
+   .bottom-compare .product-details{
       display: none;
    }
    .bottom-compare .compare-bottom-btn{

@@ -5,14 +5,9 @@ import { conventToCurrency, functionJquery } from "../Common";
 import { useDispatch } from "react-redux";
 import { removeProductCompare } from "../../../store/compare/compareSlice";
 
-function CompareBottomCard({ id, price, name, regular_price, images, on_sale, slug, typeSmall, categories }) {
+function CompareBottomCard({ id, name, slug, acf }) {
    const dispatch = useDispatch();
-   const elementCompareBottom = document.getElementById("compare-bottom");
-   
-   const handleCollapse = () => {
-      console.log('ssss');
-      elementCompareBottom?.setAttribute("hidden",true);
-   };
+
    const handleRemove = (id = "", event) => {
       event.preventDefault();
       dispatch(removeProductCompare(id));
@@ -25,15 +20,15 @@ function CompareBottomCard({ id, price, name, regular_price, images, on_sale, sl
    return (
       <div>
          {!name ? (
-            <div  className="compare-button-card">
+            <div className="compare-button-card">
                <div className="d-flex justify-content-center ">
-                  <button type="button" className="btn rounded-pill mt-3  border" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={handleCollapse}>
-                     <div className="fs-4 fw-lighter">+</div>
-                  </button>
+                  <div type="button" className="btn rounded-pill mt-3 px-3  border" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                     <i className="fas fa-solid fa-plus  fs-5"></i>
+                  </div>
                </div>
             </div>
          ) : (
-            <div className="product-box position-relative compare-button-card" >
+            <div className="product-box position-relative compare-button-card">
                <button type="button" className="btn-close" onClick={(event) => handleRemove(id, event)}></button>
                <div className=" round-arrow1">
                   <div className="row g-3">
@@ -41,7 +36,7 @@ function CompareBottomCard({ id, price, name, regular_price, images, on_sale, sl
                         <div className="product-image ">
                            <Link href={"/product/" + slug}>
                               <a className="w-100 blur-up lazyload">
-                                 <img src={images[0].src} className="img-fluid bg-img blur-up lazyload" alt={images[0].alt} />
+                                 <img src={acf.front_image} className="img-fluid bg-img blur-up lazyload" alt="" />
                               </a>
                            </Link>
                            <div className="product-details" hidden={false}>

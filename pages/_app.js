@@ -8,7 +8,7 @@ import NextNProgress from "nextjs-progressbar";
 
 import Layout from "../components/Layout";
 import { InstantSearch } from "react-instantsearch-hooks-web";
-import { configSearch } from "../components/component_vuong/Common";
+import { configSearch, updateDataAlgolia } from "../components/component_vuong/Common";
 import algoliasearch from "algoliasearch";
 import { useRouter } from "next/router";
 import InfoCompare from "../components/component_vuong/compare/InfoCompare";
@@ -27,6 +27,7 @@ import "@sendbird/uikit-react/dist/index.css";
 import "../styles/globals.css";
 import "../styles/compare.css";
 import CompareModal from "../components/component_vuong/compare/CompareModal";
+import { useEffect } from "react";
 
 const queryClient = new QueryClient({
    defaultOptions: {
@@ -42,6 +43,9 @@ const index = searchClient.initIndex(indexName);
 
 function MyApp({ Component, pageProps }) {
    const router = useRouter();
+   useEffect(() => {
+      // updateDataAlgolia(index);
+   }, []);
 
    return (
       <Provider store={store}>

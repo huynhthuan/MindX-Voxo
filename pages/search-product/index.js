@@ -9,9 +9,9 @@ import Filter from "../../components/component_vuong/searchProduct/FilterSearchP
 import SortSearchProduct from "../../components/component_vuong/searchProduct/SortSearchProduct";
 import { fetchApi } from "../../src/api/Api_vuong/fetchApi";
 
-export default function Index(props) {
+export default function Index() {
    const [hitsPerPage, setHitsPerPage] = useState(null);
-   const [sortHits, setSortHits] = useState(null);
+
 
    useEffect(() => {
       functionJqueryProductCategory();
@@ -36,7 +36,7 @@ export default function Index(props) {
             <div className="container">
                <div className="row">
                   <div className="col-lg-12 col-12 ratio_30">
-                     <Filter {...props} sortHits={sortHits} setSortHits={setSortHits} />
+                     <Filter />
                      <SortSearchProduct setHitsPerPage={setHitsPerPage} hitsPerPage={hitsPerPage} />
                      <Configure hitsPerPage={hitsPerPage || 10} />
 
@@ -67,10 +67,3 @@ export default function Index(props) {
       </>
    );
 }
-
-export const getStaticProps = async () => {
-   const resBrand = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/1/terms");
-   const resColor = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/2/terms");
-   const resSize = await fetchApi("https://voxohub.xyz/wp-json/wc/v3/products/attributes/3/terms");
-   return { props: { resBrand: resBrand.data, resColor: resColor.data, resSize: resSize.data } };
-};

@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 import { useSelector } from "react-redux";
@@ -7,20 +8,20 @@ import AddCompare from "./AddCompare";
 import Search from "./Search";
 
 function CompareModal() {
-    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
-    const listRecentlyViewed = Object.values(recentlyViewed);
-    const { clear } = useSearchBox();
-    useEffect(() => {
-        functionJquery();
-     }, []);
-     useEffect(() => {
-        const elementCloseModal = document.getElementById("close-modal");
-        return () => {
-           elementCloseModal.click();
-        };
-     }, []);
-     
-     
+   const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
+   const listRecentlyViewed = Object.values(recentlyViewed);
+   const { clear } = useSearchBox();
+   const router = useRouter();
+   useEffect(() => {
+      functionJquery();
+   }, []);
+   useEffect(() => {
+      const elementCloseModal = document.getElementById("close-modal");
+      return () => {
+         elementCloseModal.click();
+      };
+   }, [router.pathname]);
+
    return (
       <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
          <div className="modal-dialog modal-xl ">

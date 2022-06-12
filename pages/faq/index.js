@@ -19,7 +19,6 @@ function Faq() {
    return (
       <>
          <Breadcrumb title={"How can we help you?"} />
-
          {/* FAQ Section Start */}
          <section className="faq-section mt-0">
             <div className="container">
