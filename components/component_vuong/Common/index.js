@@ -47,19 +47,79 @@ export const reduceStringLength = (str = "", num = 30) => {
    return str;
 };
 
-export const configSearch = { appId: "IM4IS8NYBU", apikey: "8170a857ccd774d90ce8f2780527a6db", indexName: "product" };
+export const configSearch = {
+   appId: "HGVHMVONWR",
+   // apikey: "4267d6cfb6ac730b0df0c89f95868fff",
+   apikey: "a14d12bbf16b7da5817eed5523f62d7c",
+   indexName: "products",
+};
 
 export const getListCompare = (compareProduct) => [...Object.values(compareProduct), ...Array(4 - Object.values(compareProduct).length).fill({})];
 
-export const updateData = async (index) => {
+export const updateDataAlgolia = async (index) => {
    const res = await fetchApi.get("/products?per_page=100");
-   const objects = res.data.map((item,index)=>{
-      
+   console.log(`  ~ res.data`, res.data)
+   const objects = res.data.map((item, index) => {
+      let {
+         id,
+         price,
+         slug,
+         name,
+         categories,
+         attributes,
+         regular_price,
+         average_rating,
+         on_sale,
+         featured,
+         acf: { back_image, front_image },
+         short_description,
+         date_created,
+      } = item;
+
+      regular_price = Number(regular_price);
+      average_rating = Number(average_rating).toFixed(2);
+      price = Number(price);
+      const objectID = id ;
+      const categories_product = categories.map(categorie=>categorie.name);
+      const discount = 1 - regular_price / price;
+      const attributes_color=attributes[0].options
+      const attributes_size=attributes[1].options
+      const attributes_brand=attributes[2].options
+      const material=name[0]
+
+      return {
+         id,
+         price,
+         slug,
+         name,
+         categories,
+         regular_price,
+         average_rating,
+         on_sale,
+         featured,
+         acf: { back_image, front_image },
+         short_description,
+         objectID,
+         categories_product,
+         discount,
+         attributes,
+         attributes_color,
+         attributes_size,
+         attributes_brand,
+         date:date_created,
+         material,
+      };
    });
+
    console.log(`  ~ objects`, objects);
-   // index.saveObjects(objects,{'autoGenerateObjectIDIfNotExist': true}).then(({ objectIDs }) => {
-   //    console.log(objectIDs);
-   // });
+
+   // try {
+   //    index.replaceAllObjects(objects).then(({ objectIDs }) => {
+   //       console.log(objectIDs);
+   //    });
+   // } catch (error) {
+   //    console.log(`  ~ error`, error.respose);
+   // }
 };
 
 export const functionJquerySearchFull = () => {
@@ -143,73 +203,6 @@ export const functionJqueryProductCategory = () => {
    })(jQuery);
 
    feather.replace();
-
-   $(function () {
-      var $range = $(".js-range-slider"),
-         $inputFrom = $(".js-input-from"),
-         $inputTo = $(".js-input-to"),
-         instance,
-         min = 0,
-         max = 5000,
-         from = 0,
-         to = 0;
-
-      $range.ionRangeSlider({
-         type: "double",
-         min: min,
-         max: max,
-         from: 0,
-         to: 3000,
-         prefix: "$ ",
-         onStart: updateInputs,
-         onChange: updateInputs,
-         step: 100,
-         prettify_enabled: true,
-         prettify_separator: ".",
-         values_separator: " - ",
-         force_edges: true,
-      });
-
-      instance = $range.data("ionRangeSlider");
-
-      function updateInputs(data) {
-         from = "$" + data.from;
-         to = "$" + data.to;
-
-         $inputFrom.prop("value", from);
-         $inputTo.prop("value", to);
-      }
-
-      $inputFrom.on("input", function () {
-         var val = $(this).prop("value");
-
-         // validate
-         if (val < min) {
-            val = min;
-         } else if (val > to) {
-            val = to;
-         }
-
-         instance.update({
-            from: val,
-         });
-      });
-
-      $inputTo.on("input", function () {
-         var val = $(this).prop("value");
-
-         // validate
-         if (val < from) {
-            val = from;
-         } else if (val > max) {
-            val = max;
-         }
-
-         instance.update({
-            to: val,
-         });
-      });
-   });
 
    $(".filter-btn").click(function () {
       $(".bg-overlay, .category-option").addClass("show");

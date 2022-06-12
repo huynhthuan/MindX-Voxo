@@ -32,7 +32,8 @@ function ProductCategory(props) {
    });
 
    useEffect(() => {
-      queryClient.prefetchQuery(["products", { ...query, page: +page + 1 + "" }], () => fetchApiGetCategories({ ...query, page: +page + 1 + "" }));
+      page + 1 <= totalPages &&
+         queryClient.prefetchQuery(["products", { ...query, page: +page + 1 + "" }], () => fetchApiGetCategories({ ...query, page: +page + 1 + "" }));
    }, [data, page, queryClient, query]);
 
    useEffect(functionJqueryProductCategory, [data]);

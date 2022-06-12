@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Link from "next/link";
 import { conventToCurrency, filter_meta_data, timeCoundown } from "../Common";
 import ColorImage from "./ColorImage";
 import { useRouter } from "next/router";
@@ -20,7 +21,7 @@ function ShopSection(props = {}) {
       shipping_required,
       regular_price,
       date_on_sale_to,
-      acf:{list_variation},
+      acf: { list_variation },
    } = props;
 
    return (
@@ -48,14 +49,13 @@ function ShopSection(props = {}) {
 
                               <div className="label-section">
                                  {categories.map(({ slug, name }, key) => (
-                                    <span
-                                       key={key}
-                                       className="badge badge-grey-color me-2"
-                                       role="button"
-                                       onClick={() => router.push("/product-category/" + slug)}
-                                    >
-                                       in {name}
-                                    </span>
+                                    <Link href={"/product-category/" + slug} key={key}>
+                                       <a
+                                          className="badge badge-grey-color me-2"
+                                       >
+                                          in {name}
+                                       </a>
+                                    </Link>
                                  ))}
                               </div>
 

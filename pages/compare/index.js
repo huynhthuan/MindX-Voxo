@@ -5,7 +5,7 @@ import SubscribeBox from "../../components/Common/SubscribeBox";
 import { functionJquery, getListCompare } from "../../components/component_vuong/Common";
 import ProductCard from "../../components/Product/ProductCard";
 import RatingDetails from "../../components/Product/RatingDetails";
-import CompareItem from "../../components/component_vuong/compare/CompareItem";
+import CompareItemCard from "../../components/component_vuong/compare/CompareItemCard";
 import Search from "../../components/component_vuong/compare/Search";
 import AddCompare from "../../components/component_vuong/compare/AddCompare";
 import Hit from "../../components/component_vuong/compare/HitCompare";
@@ -14,50 +14,15 @@ import { useSearchBox } from "react-instantsearch-hooks-web";
 function Compare() {
    const compareProduct = useSelector((state) => state.compare.entities);
    const listCompare = getListCompare(compareProduct);
-   const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
-   const listRecentlyViewed = Object.values(recentlyViewed);
-   const { clear } = useSearchBox();
 
    useEffect(() => {
       functionJquery();
-   }, []);
-   useEffect(() => {
-      const elementCloseModal = document.getElementById("close-modal");
-      return () => {
-         elementCloseModal.click();
-      };
    }, []);
 
    return (
       <>
          <Breadcrumb title={"Compare"} />
-         <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-xl ">
-               <div className="modal-content">
-                  <div className="modal-header">
-                     <h3 className="modal-title" id="exampleModalLabel">
-                        <div className="d-flex justify-content-center mt-3 ms-5 ">Recently Viewed Products</div>
-                     </h3>
-                     <button type="button" className="btn-close mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div className="modal-body ratio_30 ">
-                     <div className="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 mb-4 custom-gy-5 product-style-2 ratio_asos product-list-section mx-3">
-                        {listRecentlyViewed.slice(0, 4).map((item, key) => (
-                           <ProductCard {...item} key={key} disAction>
-                              <AddCompare listCompare={listCompare} item={item} />
-                           </ProductCard>
-                        ))}
-                     </div>
-                     <Search />
-                  </div>
-                  <div className="modal-footer">
-                     <button type="button" id="close-modal" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => clear()}>
-                        Close
-                     </button>
-                  </div>
-               </div>
-            </div>
-         </div>
+
          <section className="section-b-space">
             <div className="container">
                <div className="row">
@@ -69,7 +34,7 @@ function Compare() {
                                  <tr className="table-product-details">
                                     <td></td>
                                     {listCompare.map((item, index) => (
-                                       <CompareItem {...item} key={index} />
+                                       <CompareItemCard {...item} key={index} />
                                     ))}
                                  </tr>
 

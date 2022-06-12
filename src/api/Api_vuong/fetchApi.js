@@ -22,7 +22,9 @@ export const fetchApiGetCategories = async (query) => {
       const { slug, page } = query;
       const response = await fetchApi.get("/products/categories/?slug=" + slug);
       const responseId = response.data[0].id;
-      const url = "/products?" + convertObjectToParams({ per_page: "12", page: "1", ...query, category: responseId, slug: "" });
+      const url = "/products?" + convertObjectToParams({ per_page: "12", page: "1", ...query,
+      //  category: responseId, 
+       slug: "" });
       const data = await fetchApi.get(url);
       data.idCategory = responseId;
       return data;
@@ -34,7 +36,7 @@ export const fetchApiGetCategories = async (query) => {
 export const fetchApiProductBySlug = async (slug) => {
    try {
       const res = await fetchApi.get("/products?slug=" + slug);
-      return res.data[0];
+      return res.data[0]||{data_null:'error'};
    } catch (error) {
       console.log("error fetchApiProductBySlug", error);
    }

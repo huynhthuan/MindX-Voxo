@@ -1,24 +1,23 @@
-import algoliasearch from "algoliasearch";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { Configure, InstantSearch, SearchBox, useSearchBox } from "react-instantsearch-hooks-web";
-import { configSearch, functionJqueryProductCategory, functionJquerySearchFull } from "../component_vuong/Common";
+import { Configure, useSearchBox } from "react-instantsearch-hooks-web";
+import { functionJquerySearchFull } from "../component_vuong/Common";
 import CustomSearchBoxNavBar from "../component_vuong/searchBar/CustomSearchBoxNavBar";
 import HitNavbar from "../component_vuong/searchBar/HitNavbar";
 
 function SearchBar() {
-   const { query, refine, clear } = useSearchBox();
+   const { query, refine, clear, isSearchStalled } = useSearchBox();
    const router = useRouter();
+   
    useEffect(() => {
       functionJquerySearchFull();
    }, []);
 
    useEffect(() => {
-      if (query.length ===1 && router.pathname !== "/search-product" && router.pathname !== "/compare") {
-         router.push("/search-product/?product[query]="+query);
+      if (query.length >0 && router.pathname !== "/search-product") {
+         router.push("/search-product/?product[query]=" + query);
       }
    }, [query.length]);
-
 
    return (
       <div className="search-full ">

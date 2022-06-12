@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
 import { useDispatch, useSelector } from "react-redux";
 import OnSale from "../component_vuong/product/OnSale";
+import AddCompare from "../component_vuong/compare/AddCompare";
 
 function ProductCard(props) {
    const router = useRouter();
@@ -20,7 +21,6 @@ function ProductCard(props) {
       name,
       categories,
       regular_price,
-      images,
       average_rating,
       on_sale,
       featured,
@@ -32,22 +32,6 @@ function ProductCard(props) {
       functionJquery();
    }, [front_image]);
 
-   const handleAddCompare = () => {
-      compareProduct.length < 4 && dispatch(addProductCompare(props));
-      Swal.fire({
-         title: compareProduct.length > 3 ? "limited 4 items" : "add product " + (compareProduct.length + 1) + "/4",
-         icon: compareProduct.length > 3 ? "error" : "success",
-         showCancelButton: true,
-         cancelButtonText: "Ok",
-         cancelButtonColor: "#d90429",
-         confirmButtonText: "Compare",
-      }).then((res) => {
-         if (res.isConfirmed) {
-            router.push("/compare");
-         }
-      });
-    
-   };
    return (
       <div className="product-box">
          <div className="img-wrapper">
@@ -72,20 +56,16 @@ function ProductCard(props) {
             <div hidden={disAction} className="cart-wrap">
                <ul>
                   <li>
-                     <a href="undefined" className="addtocart-btn" data-bs-toggle="modal" data-bs-target="#addtocart">
+                     <a className="addtocart-btn" data-bs-toggle="modal" data-bs-target="#addtocart">
                         <i data-feather="shopping-bag"></i>
                      </a>
                   </li>
                   <li>
-                     <a href="undefined" data-bs-toggle="modal" data-bs-target="#quick-view">
+                     <a data-bs-toggle="modal" data-bs-target="#quick-view">
                         <i data-feather="eye"></i>
                      </a>
                   </li>
-                  <li onClick={handleAddCompare}>
-                     <a>
-                        <i data-feather="refresh-cw"></i>
-                     </a>
-                  </li>
+                  <AddCompare inCard item={props} />
                   <li>
                      <a href="wishlist.html" className="wishlist">
                         <i data-feather="heart"></i>
@@ -96,7 +76,9 @@ function ProductCard(props) {
          </div>
          <div className="product-details">
             <div className="rating-details">
-               <span className="font-light grid-content">{categories[0].name}</span>
+               <Link href={"/product-category/" + categories[0].slug}>
+                  <a className="font-light grid-content">{categories[0].name}</a>
+               </Link>
                <RatingDetails average_rating={average_rating} showNum />
             </div>
             <div className="main-price">
@@ -118,4 +100,3 @@ function ProductCard(props) {
 }
 
 export default ProductCard;
-

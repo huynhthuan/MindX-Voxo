@@ -5,12 +5,14 @@ import { conventToCurrency, functionJquery } from "../Common";
 import { useDispatch } from "react-redux";
 import { removeProductCompare } from "../../../store/compare/compareSlice";
 
-function CompareItem({ id, price, name, regular_price, images, on_sale, slug }) {
+function CompareItemCard({ id, price, name, regular_price, images, on_sale, slug }) {
    const dispatch = useDispatch();
+
    const handleRemove = (id = "", event) => {
       event.preventDefault();
       dispatch(removeProductCompare(id));
    };
+
    useEffect(() => {
       functionJquery();
    }, [id]);
@@ -18,13 +20,13 @@ function CompareItem({ id, price, name, regular_price, images, on_sale, slug }) 
    return (
       <td>
          {!name ? (
-            <div style={{ minHeight: "300px" }}>
+            <div style={{ minHeight: "300px" }} className='position-relative'>
                <div className="d-flex justify-content-center ">
-                  <button type="button" className="btn btn-primary mt-5" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <button type="button" className="btn btn-primary  position-absolute top-50" data-bs-toggle="modal" data-bs-target="#exampleModal" >
                      Add Product
                   </button>
                </div>
-               <div className="d-flex justify-content-center h-100 m-2 fs-6">Compare more product</div>
+               {/* <div className="d-flex justify-content-center h-100 m-2 fs-6">Compare more product</div> */}
             </div>
          ) : (
             <div className="product-box position-relative">
@@ -59,4 +61,4 @@ function CompareItem({ id, price, name, regular_price, images, on_sale, slug }) 
    );
 }
 
-export default CompareItem;
+export default CompareItemCard;

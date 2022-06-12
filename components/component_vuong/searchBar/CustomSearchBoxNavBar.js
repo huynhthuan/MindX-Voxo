@@ -1,15 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 import { functionJqueryProductCategory, functionJquerySearchFull } from "../Common";
 
 function CustomSearchBoxNavBar() {
-   const { query, refine ,clear} = useSearchBox();
+   const { query, refine, clear } = useSearchBox();
    const router = useRouter();
+   const ref = useRef();
+
    useEffect(() => {
       functionJquerySearchFull();
    }, []);
+
    useEffect(() => {
+      const refValue = ref.current.value;
+      refine(refValue);
+      
       return () => {
          clear();
       };
@@ -25,6 +31,7 @@ function CustomSearchBoxNavBar() {
             className="form-control search-type"
             placeholder="Search here.."
             defaultValue={query}
+            ref={ref}
             onChange={(e) => refine(e.target.value)}
          />
          <span className="input-group-text close-search">

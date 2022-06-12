@@ -27,6 +27,7 @@ function Navbar() {
                                     <MenuRight />
 
                                     <SearchBar />
+                                    
                                 </div>
                             </div>
                         </div>

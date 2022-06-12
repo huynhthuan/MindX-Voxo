@@ -14,8 +14,11 @@ export const compareSlice = createSlice({
       removeProductCompare: (state, { payload }) => {
          compareAdapter.removeOne(state, payload);
       },
+      removeAllProductCompare: (state, { payload }) => {
+         compareAdapter.removeAll(state)
+      },
    },
 });
-export const { addProductCompare, removeProductCompare } = compareSlice.actions;
+export const { addProductCompare, removeProductCompare,removeAllProductCompare } = compareSlice.actions;
 
 export default compareSlice.reducer;
