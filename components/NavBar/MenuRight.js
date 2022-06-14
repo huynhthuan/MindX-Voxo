@@ -5,6 +5,12 @@ import { logOut } from '../../store/auth/authSlice';
 import SmallCart from './MenuRight/SmallCart';
 import WisList from './MenuRight/WisList';
 import { useRouter } from 'next/router';
+import {
+    PopoverNotificationCenter,
+    NotificationBell,
+} from '@novu/notification-center';
+
+
 
 function MenuRight() {
     const { cookie, user } = useSelector((state) => state.auth);
@@ -43,6 +49,15 @@ function MenuRight() {
                     <div className="search-box">
                         <i data-feather="search"></i>
                     </div>
+                </li>
+                <li>
+                    <PopoverNotificationCenter
+                    // onNotificationClick={onNotificationClick}
+                    >
+                        {({ unseenCount }) => (
+                            <NotificationBell unseenCount={unseenCount} />
+                        )}
+                    </PopoverNotificationCenter>
                 </li>
                 <li className="onhover-dropdown">
                     <div className="cart-media">

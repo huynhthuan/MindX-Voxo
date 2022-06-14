@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { NovuProvider } from '@novu/notification-center';
 
 import MainMenu from './NavBar/MainMenu';
 import MenuLeft from './NavBar/MenuLeft';
@@ -42,8 +44,13 @@ function Navbar() {
         });
     }, []);
 
+    const { user } = useSelector((state) => state.auth);
+
     return (
-        <>
+        <NovuProvider
+            subscriberId={'1'}
+            applicationIdentifier={process.env.NOVU_APP_ID}
+        >
             {/* header start */}
             <header className="header-style-2" id="home">
                 <div className="main-header navbar-searchbar">
@@ -67,7 +74,7 @@ function Navbar() {
             {/* header end */}
 
             <MenuMobileBottom />
-        </>
+        </NovuProvider>
     );
 }
 
