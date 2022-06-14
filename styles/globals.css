@@ -706,9 +706,15 @@ header .category-menu .btn i {
 
 .channel-custom .sendbird-conversation {
     height: calc(100% - 51px);
-    border: none!important;
+    border: none !important;
 }
 
 .channel-custom .sendbird-conversation__messages {
     overflow: hidden;
+}
+
+.btn-notifi {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

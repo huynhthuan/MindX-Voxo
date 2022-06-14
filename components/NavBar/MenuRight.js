@@ -50,7 +50,7 @@ function MenuRight() {
                         <i data-feather="search"></i>
                     </div>
                 </li>
-                <li>
+                <li className='btn-notifi'>
                     <PopoverNotificationCenter
                     // onNotificationClick={onNotificationClick}
                     >

@@ -1,8 +1,7 @@
-import TeamMembers from "./TeamMembers";
-import { useEffect } from "react";
+import TeamMembers from './TeamMembers';
+import { useEffect } from 'react';
 
-const TeamList = ({about_us_team_list}) => {
-
+const TeamList = ({ about_us_team_list }) => {
     useEffect(() => {
         let slideTeam = $('.slide-5_1').slick({
             dots: true,
@@ -36,15 +35,15 @@ const TeamList = ({about_us_team_list}) => {
         return () => {
             slideTeam.slick('unslick');
         };
-    }, [about_us_team_list])
+    }, [about_us_team_list]);
 
-    return <div className="product-wrapper leader-section slick-lg-space slide-5_1 ratio_asos">
-        {
-            about_us_team_list.map((item, index) => {
-                return <TeamMembers key={index} {...item}/>
-            })
-        }
-    </div>
-}
+    return (
+        <div className="product-wrapper leader-section slick-lg-space slide-5_1 ratio_asos">
+            {about_us_team_list.map((item, index) => {
+                return <TeamMembers key={index} {...item} />;
+            })}
+        </div>
+    );
+};
 
 export default TeamList;
