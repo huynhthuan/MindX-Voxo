@@ -14,6 +14,7 @@ function SearchBar() {
    }, []);
 
    useEffect(() => {
+      console.log(query);
       if (query.length >0 && router.pathname !== "/search-product") {
          router.push("/search-product/?product[query]=" + query);
       }
@@ -21,7 +22,7 @@ function SearchBar() {
 
    return (
       <div className="search-full ">
-         <Configure hitsPerPage={4} />
+        
          <CustomSearchBoxNavBar />
          <HitNavbar />
       </div>

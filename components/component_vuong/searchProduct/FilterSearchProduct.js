@@ -2,47 +2,46 @@ import React, { useEffect, useState } from "react";
 import { ClearRefinements, RangeInput, useClearRefinements, useRange, useRefinementList } from "react-instantsearch-hooks-web";
 import { RefinementList } from "react-instantsearch-hooks-web";
 import { functionJqueryProductCategory } from "../Common";
+import CustomRangeSlider from "../product-category/RangeSlider";
 import RangeSlider from "../product-category/RangeSlider";
+import FilterItemsComponent from "./FilterItemsComponent";
 
 function FilterSearchProduct() {
+   const [renderRangeSlider, setRenderRangeSlider] = useState(1);
    const refinementListColor = useRefinementList({ attribute: "attributes_color", limit: Infinity });
-   const refinementListPrice = useRefinementList({ attribute: "price", limit: Infinity });
    const refinementListCategory = useRefinementList({ attribute: "categories_product", limit: Infinity });
    const refinementListMaterial = useRefinementList({ attribute: "material", limit: Infinity });
+   const refinementListDiscount = useRefinementList({ attribute: "discount", limit: Infinity });
 
-   const { canRefine, createURL, refine: refineClearRefinements } = useClearRefinements({ includedAttributes: "price" });
-   console.log(`  ~ canRefine`, canRefine);
+   const {
+      canRefine,
+      createURL,
+      refine: refineClearRefinements,
+   } = useClearRefinements({ includedAttributes: ["price", "attributes_color", "categories_product", "material"] });
 
    const { refine: refineColor, items: itemsColor } = refinementListColor;
-   const { refine: refinePrice, items: itemsPrice } = refinementListPrice;
    const { refine: refineCategory, items: itemsCategory } = refinementListCategory;
    const { refine: refineMaterial, items: itemsMaterial } = refinementListMaterial;
-
-   // const rangePrice = useRange({ attribute: "price" });
+   const { refine: refineDiscount, items: itemsDiscount } = refinementListDiscount;
 
    useEffect(() => {
       functionJqueryProductCategory();
    }, []);
 
-   const handleCheckedPrice = (index) => {
-      const price = itemsPrice
-         .map((item) => item.value)
-         .filter((price) => {
-            if (index !== 9 && price <= (index + 1) * 10 && price > index * 10) return price;
-         });
-      price.map((price) => refinePrice(price));
-      // refineRange([index*10,(index+1)*10])
-   };
    const handleClearRefinements = () => {
-      console.log("s");
       refineClearRefinements();
+      const elementChecked = document.getElementsByClassName("checkbox_animated check-it");
+      const listElement = [...elementChecked];
+      listElement.map((element, index) => {
+         element.checked = false;
+      });
+      setRenderRangeSlider(renderRangeSlider+1);
    };
 
-   const listFilter = [
-      { name: "Color", listItems: itemsColor, refine: refineColor },
-      { name: "Category", listItems: itemsCategory, refine: refineCategory },
-      { name: "Material", listItems: itemsMaterial, refine: refineMaterial },
-   ];
+   const filterColor = { name: "Color", listItems: itemsColor, refine: refineColor },
+      filterCategory = { name: "Category", listItems: itemsCategory, refine: refineCategory },
+      filterMaterial = { name: "Material", listItems: itemsMaterial, refine: refineMaterial },
+      filterDiscount = { name: "Discount", listItems: itemsDiscount, refine: refineDiscount };
 
    return (
       <div className="row gx-4 gy-5 ">
@@ -67,131 +66,27 @@ function FilterSearchProduct() {
                   <li className="filter-title">
                      <h6 className="theme-color">
                         filter :
-                        <button className="btn btn-danger rounded p-2 ms-4" onClick={() => handleClearRefinements()} hidden={!canRefine}>
+                        <button className="btn btn-danger rounded p-2 ms-4 " onClick={() => handleClearRefinements()} hidden={!canRefine}>
                            Clear All
                         </button>
                      </h6>
                   </li>
-                  {/* <ClearRefinements
-                  includedAttributes={'price'}
-                     classNames={{
-                        button: "btn btn-warning rounded  p-2",
-                        disabledButton: "btn btn-light rounded p-2",
-                     }}
-                  /> */}
-                  {listFilter.map(({ name, listItems, refine }) => (
-                     <li className="onclick-title" key={name}>
-                        <h6>{name}</h6>
-                        <ul className="onclick-content">
-                           {listItems.map(({ value, count }, index) => (
-                              <li key={index}>
-                                 <div className="form-check ps-0 custome-form-check">
-                                    <input
-                                       className="checkbox_animated check-it"
-                                       type="checkbox"
-                                       id="flexCheckDefault"
-                                       defaultChecked={false}
-                                       onChange={() => refine(value)}
-                                    />
-                                    <label className="form-check-label" htmlFor="flexCheckDefault12">
-                                       {value}
-                                    </label>
-                                    <div className="ms-auto">({count})</div>
-                                 </div>
-                              </li>
-                           ))}
-                        </ul>
-                     </li>
-                  ))}
+
+                  <FilterItemsComponent {...filterColor} />
+                  <FilterItemsComponent {...filterCategory} />
+                  <FilterItemsComponent {...filterMaterial} />
 
                   <li className="onclick-title">
                      <h6>Price</h6>
+                     {/* {1 && <RangeSlider />} */}
+                     <div className="onclick-content">
+                     <CustomRangeSlider  />
 
-                     <RangeSlider />
-
-                     {/* <RefinementList
-                        attribute="price"
-                        classNames={{
-                           list: "onclick-content",
-                           item: "form-check ps-0 custome-form-check",
-                           checkbox: "checkbox_animated check-it",
-                           label: "form-check-label",
-                        }}
-                     /> */}
-
-                     {/* <ul className="onclick-content">
-                        {Array(Math.round(rangePrice.range.max / 10))
-                           .fill(0)
-                           .map((item, index) => (
-                              <li key={index}>
-                                 <div className="form-check ps-0 custome-form-check">
-                                    <input
-                                       className="checkbox_animated check-it"
-                                       type="checkbox"
-                                       id="flexCheckDefault19"
-                                       onChange={() => handleCheckedPrice(index)}
-                                    />
-                                    <label className="form-check-label" htmlFor="flexCheckDefault19">
-                                       Rs. {index * 10} to Rs. {(index + 1) * 10}
-                                    </label>
-                                 </div>
-                              </li>
-                           ))}
-                     </ul> */}
+                     </div>
                   </li>
-                  {/* <li className="onclick-title">
-                     <h6>Price</h6>
-                     <ul className="onclick-content">
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault19" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault19">
-                                 Rs. 120 to Rs. 300
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault20" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault20">
-                                 Rs. 300 to Rs. 425
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault21" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault21">
-                                 Rs. 425 to Rs. 540
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault22" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault22">
-                                 Rs. 540 to Rs. 600
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault23" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault23">
-                                 Rs. 600 to Rs. 760
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault24" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault24">
-                                 Rs. 760 to Rs. 850
-                              </label>
-                           </div>
-                        </li>
-                     </ul>
-                  </li> */}
+
+                  {/* <FilterItemsComponent {...filterDiscount} disCount /> */}
+
                   <li className="onclick-title">
                      <h6>Discount</h6>
                      <ul className="onclick-content">

@@ -5,7 +5,7 @@ import { conventToCurrency, functionJquery } from "../Common";
 import { useDispatch } from "react-redux";
 import { removeProductCompare } from "../../../store/compare/compareSlice";
 
-function CompareItemCard({ id, price, name, regular_price, images, on_sale, slug }) {
+function CompareItemCard({ id, price, name, regular_price, images, on_sale, slug, acf }) {
    const dispatch = useDispatch();
 
    const handleRemove = (id = "", event) => {
@@ -20,9 +20,9 @@ function CompareItemCard({ id, price, name, regular_price, images, on_sale, slug
    return (
       <td>
          {!name ? (
-            <div style={{ minHeight: "300px" }} className='position-relative'>
+            <div style={{ minHeight: "300px" }} className="position-relative">
                <div className="d-flex justify-content-center ">
-                  <button type="button" className="btn btn-primary  position-absolute top-50" data-bs-toggle="modal" data-bs-target="#exampleModal" >
+                  <button type="button" className="btn btn-primary  position-absolute top-50" data-bs-toggle="modal" data-bs-target="#exampleModal">
                      Add Product
                   </button>
                </div>
@@ -30,11 +30,11 @@ function CompareItemCard({ id, price, name, regular_price, images, on_sale, slug
             </div>
          ) : (
             <div className="product-box position-relative">
-                  <button type="button" className="btn-close" onClick={(event) => handleRemove(id, event)}></button>
+               <button type="button" className="btn-close" onClick={(event) => handleRemove(id, event)}></button>
                <div className="product-image">
                   <Link href={"/product/" + slug}>
                      <a className="w-100 blur-up lazyload">
-                        <img src={images[0].src} className="img-fluid bg-img blur-up lazyload" alt={images[0].alt} />
+                        <img src={acf.front_image} className="img-fluid bg-img blur-up lazyload" alt="" />
                      </a>
                   </Link>
                </div>

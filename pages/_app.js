@@ -11,7 +11,7 @@ import { InstantSearch } from "react-instantsearch-hooks-web";
 import { configSearch, updateDataAlgolia } from "../components/component_vuong/Common";
 import algoliasearch from "algoliasearch";
 import { useRouter } from "next/router";
-import InfoCompare from "../components/component_vuong/compare/InfoCompare";
+import BottomCompare from "../components/component_vuong/compare/BottomCompare";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -26,6 +26,7 @@ import "../styles/vendors/slick/slick-theme.css";
 import "@sendbird/uikit-react/dist/index.css";
 import "../styles/globals.css";
 import "../styles/compare.css";
+
 import CompareModal from "../components/component_vuong/compare/CompareModal";
 import { useEffect } from "react";
 
@@ -58,11 +59,11 @@ function MyApp({ Component, pageProps }) {
                         <Component {...pageProps} />
                      </SkeletonTheme>
                   </Layout>
-                  <InfoCompare />
+                  <BottomCompare />
                </InstantSearch>
-               <InstantSearch searchClient={searchClient} indexName={indexName}>
+               {<InstantSearch searchClient={searchClient} indexName={indexName} >
                   <CompareModal />
-               </InstantSearch>
+               </InstantSearch>}
                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
          </PersistGate>

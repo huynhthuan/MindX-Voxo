@@ -2,18 +2,11 @@ import { useEffect } from "react";
 import { conventToCurrency, functionJquery } from "../component_vuong/Common";
 import RatingDetails from "./RatingDetails";
 import Link from "next/link";
-import Swal from "sweetalert2";
-import { useRouter } from "next/router";
-import { addProductCompare, removeProductCompare } from "../../store/compare/compareSlice";
-import { useDispatch, useSelector } from "react-redux";
 import OnSale from "../component_vuong/product/OnSale";
 import AddCompare from "../component_vuong/compare/AddCompare";
 
 function ProductCard(props) {
-   const router = useRouter();
-   const compareProduct = useSelector((state) => Object.values(state.compare.entities));
 
-   const dispatch = useDispatch();
    const {
       id,
       price,

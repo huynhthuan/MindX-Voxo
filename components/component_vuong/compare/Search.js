@@ -6,13 +6,13 @@ import CustomHits from "./CustomHits";
 import { configSearch } from "../Common";
 
 function Search() {
+ 
    const { appId, apikey, indexName } = configSearch;
    const searchClient = algoliasearch(appId, apikey);
 
    return (
       <div className="container">
             <Configure hitsPerPage={4} />
-            {/* <CustomRefinementList attribute="attributes.options"  limit={55} operator="or" showmore/> */}
             <CustomSearchBox />
             <CustomHits />
       </div>

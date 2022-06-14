@@ -47,6 +47,7 @@ function ProductCategory(props) {
    return (
       <>
          <Breadcrumb title="Shop Listing" />
+         
          <section className="section-b-space">
             <div className="container">
                <div className="row">
@@ -72,6 +73,7 @@ function ProductCategory(props) {
                </div>
             </div>
          </section>
+
          <SubscribeBox />
          <StickCompare />
       </>
