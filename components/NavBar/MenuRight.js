@@ -10,8 +10,6 @@ import {
     NotificationBell,
 } from '@novu/notification-center';
 
-
-
 function MenuRight() {
     const { cookie, user } = useSelector((state) => state.auth);
     const router = useRouter();
@@ -42,6 +40,10 @@ function MenuRight() {
         });
     }, []);
 
+    function onNotificationClick(notification) {
+        console.log(notification);
+    }
+
     return (
         <div className="menu-right">
             <ul>
@@ -50,9 +52,9 @@ function MenuRight() {
                         <i data-feather="search"></i>
                     </div>
                 </li>
-                <li className='btn-notifi'>
+                <li className="btn-notifi">
                     <PopoverNotificationCenter
-                    // onNotificationClick={onNotificationClick}
+                        onNotificationClick={onNotificationClick}
                     >
                         {({ unseenCount }) => (
                             <NotificationBell unseenCount={unseenCount} />

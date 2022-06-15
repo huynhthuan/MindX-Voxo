@@ -12,7 +12,6 @@ export default function Document() {
 
             <body className="theme-color2 light ltr">
                 <Main />
-                <NextScript />
 
                 <script src="/js/jquery-3.5.1.min.js"></script>
 
@@ -44,6 +43,8 @@ export default function Document() {
                 ></script>
 
                 <script src="https://apis.google.com/js/api:client.js"></script>
+
+                <NextScript />
 
                 <script src="/js/script.js"></script>
             </body>

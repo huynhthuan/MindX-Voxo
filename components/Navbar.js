@@ -51,7 +51,7 @@ function Navbar() {
             subscriberId={'1'}
             applicationIdentifier={process.env.NOVU_APP_ID}
         >
-            {/* header start */}
+            {/* header starwit */}
             <header className="header-style-2" id="home">
                 <div className="main-header navbar-searchbar">
                     <div className="container-fluid-lg">
