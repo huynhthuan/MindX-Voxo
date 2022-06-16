@@ -23,12 +23,12 @@ import "../styles/vendors/animate.css";
 import "../styles/vendors/ion.rangeSlider.min.css";
 import "../styles/vendors/slick/slick.css";
 import "../styles/vendors/slick/slick-theme.css";
-import "@sendbird/uikit-react/dist/index.css";
 import "../styles/globals.css";
 import "../styles/compare.css";
 
 import CompareModal from "../components/component_vuong/compare/CompareModal";
 import { useEffect } from "react";
+import ChatSupportPopup from "../components/Common/ChatSupportPopup";
 
 const queryClient = new QueryClient({
    defaultOptions: {
@@ -66,6 +66,7 @@ function MyApp({ Component, pageProps }) {
                   <Configure hitsPerPage={15} />
                   <CompareModal />
                </InstantSearch>
+               <ChatSupportPopup/>
                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
          </PersistGate>

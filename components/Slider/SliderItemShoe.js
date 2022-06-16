@@ -85,9 +85,9 @@ export default function SliderItemShoe({ slideData }) {
                         <a className="slider-shoes-image d-block">
                             <div className="relative-shoes">
                                 <img
-                                    src={product.images[0].src}
+                                    src={product.image}
                                     className="img-fluid blur-up lazyload"
-                                    alt={product.images[0].alt}
+                                    alt={'shoe'}
                                 />
                                 <div className="shoes-price">
                                     <h5>${product.regular_price}</h5>

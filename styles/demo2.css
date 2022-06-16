@@ -1460,7 +1460,7 @@ section,
     }
 }
 body {
-    font-family: Rubik, sans-serif;
+    font-family: 'Rubik', sans-serif!important;
     position: relative;
     font-size: 14px;
     color: #232323;
@@ -2191,7 +2191,7 @@ h6 {
 .tap-to-top {
     background-color: var(--theme-color);
     position: fixed;
-    bottom: 15px;
+    bottom: 100px;
     right: -60px;
     border-radius: 5px;
     overflow: hidden;

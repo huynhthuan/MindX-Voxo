@@ -4,40 +4,18 @@ import Breadcrumb from '../../components/Common/BreadCrumb';
 import SubscribeBox from '../../components/Common/SubscribeBox';
 import { useShopInfor } from '../../src/api_minhhieu/shopInforApi';
 import TestimonialItem from '../../components/AboutUs/TestimonialList';
-import { TeamMemberSkeleton, TestimonialItemSkeleton } from '../../components/Skeleton_minhhieu';
+import {
+    TeamMemberSkeleton,
+    TestimonialItemSkeleton,
+} from '../../components/Skeleton_minhhieu';
 
 export default function AboutUs() {
     useEffect(() => {
-        (function ($) {
-            'use strict';
-            $('.bg-top').parent().addClassName('b-top');
-            $('.bg-bottom').parent().addClassName('b-bottom');
-            $('.bg-center').parent().addClassName('b-center');
-            $('.bg-left').parent().addClassName('b-left');
-            $('.bg-right').parent().addClassName('b-right');
-            $('.bg_size_content').parent().addClassName('b_size_content');
-            $('.bg-img').parent().addClassName('bg-size');
-            $('.bg-img.blur-up').parent().addClassName('blur-up lazyload');
-            $('.bg-img').each(function () {
-                var el = $(this),
-                    src = el.attr('src'),
-                    parent = el.parent();
-
-                parent.css({
-                    'background-image': 'url(' + src + ')',
-                    'background-size': 'cover',
-                    'background-position': 'center',
-                    'background-repeat': 'no-repeat',
-                    display: 'block',
-                });
-
-                el.hide();
-            });
-        })(jQuery);
         feather.replace();
     }, []);
 
-    const { isLoading, error, data, refetch, isFetching, isFetched } = useShopInfor();
+    const { isLoading, error, data, refetch, isFetching, isFetched } =
+        useShopInfor();
 
     if (error) console.log('error');
 
@@ -82,14 +60,20 @@ export default function AboutUs() {
                                     <h2>WHO WE ARE</h2>
                                     <h3>largest Online fashion destination</h3>
                                     <p>
-                                        As a brand that sells loungewear, Voxo puts craftsmanship at the forefront 
-                                        of what makes it different. One of the best ways to use your About Us page 
-                                        is to illustrate your brand’s value proposition. 
+                                        As a brand that sells loungewear, Voxo
+                                        puts craftsmanship at the forefront of
+                                        what makes it different. One of the best
+                                        ways to use your About Us page is to
+                                        illustrate your brand’s value
+                                        proposition.
                                     </p>
                                     <p>
-                                        Voxo uses a series of pictures, options of the product to showcase its careful approach to detail, 
-                                        construction, and quality. This goes along with the “show don’t tell” 
-                                        strategy that can make an About Us page so powerful
+                                        Voxo uses a series of pictures, options
+                                        of the product to showcase its careful
+                                        approach to detail, construction, and
+                                        quality. This goes along with the “show
+                                        don’t tell” strategy that can make an
+                                        About Us page so powerful
                                     </p>
                                 </div>
                             </div>
@@ -127,7 +111,9 @@ export default function AboutUs() {
                                     </svg>
                                 </div>
                                 <div className="service-content">
-                                    <h3 className="mb-2">Pickup At Any Store</h3>
+                                    <h3 className="mb-2">
+                                        Pickup At Any Store
+                                    </h3>
                                     <span className="font-light">
                                         Free shipping on orders over $65.
                                     </span>
@@ -186,13 +172,11 @@ export default function AboutUs() {
                             </div>
                         </div>
                     </div>
-                    {
-                        isFetching
-                            ? 
-                                <TeamMemberSkeleton/>
-                            :
-                                <TeamList {...data.data.acf}/>
-                    }
+                    {isFetching ? (
+                        <TeamMemberSkeleton />
+                    ) : (
+                        <TeamList {...data.data.acf} />
+                    )}
                 </div>
             </section>
             {/* leader section End */}
@@ -212,13 +196,11 @@ export default function AboutUs() {
                             </div>
                         </div>
                     </div>
-                    {
-                        isFetching
-                            ? 
-                                <TestimonialItemSkeleton/>
-                            :
-                                <TestimonialItem {...data.data.acf}/>
-                    }
+                    {isFetching ? (
+                        <TestimonialItemSkeleton />
+                    ) : (
+                        <TestimonialItem {...data.data.acf} />
+                    )}
                 </div>
             </section>
             {/* testimonial section end */}

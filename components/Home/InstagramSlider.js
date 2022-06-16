@@ -113,16 +113,14 @@ function InstagramSlider({ dataProduct }) {
                                                 >
                                                     <a className="text-center">
                                                         <img
-                                                            src={
-                                                                item.images[0]
-                                                                    .src
-                                                            }
+                                                            src={item.image}
                                                             className="bg-img blur-up lazyload"
                                                             alt={item.name}
                                                         />
                                                     </a>
                                                 </Link>
                                             </div>
+
                                             <div className="insta-hover insta-spacing text-center">
                                                 <div>
                                                     <h5>New Product</h5>

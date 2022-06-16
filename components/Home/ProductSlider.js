@@ -4,7 +4,7 @@ import ProductCard from '../Product/ProductCard';
 export default function ProductSlider({ dataProduct }) {
     const { title, subtitle, products } = dataProduct;
     useEffect(() => {
-        let slider = $('.slide-4').slick({
+        let sliderProductSlider = $('.slide-4').slick({
             dots: true,
             infinite: true,
             speed: 500,
@@ -33,7 +33,9 @@ export default function ProductSlider({ dataProduct }) {
             ],
         });
 
-        return () => slider.slick('unslick');
+        return () => {
+            sliderProductSlider.slick('unslick');
+        };
     }, []);
 
     return (

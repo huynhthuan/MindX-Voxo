@@ -3,15 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@builder.io/react": "^2.0.1",
     "@hookform/resolvers": "^2.8.10",
+    "@novu/node": "^0.4.1",
+    "@novu/notification-center": "^0.4.2",
     "@reduxjs/toolkit": "^1.8.1",
-    "@sendbird/uikit-react": "^3.0.0-beta.5",
     "algoliasearch": "^4.13.1",
     "axios": "^0.27.1",
     "cookies-next": "^2.0.4",
@@ -19,7 +21,7 @@
     "form-data": "^4.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
-    "next": "12.1.5",
+    "next": "^12.1.5",
     "nextjs-progressbar": "^0.0.14",
     "query-string": "^7.1.1",
     "react": "18.0.0",
@@ -33,9 +35,11 @@
     "react-toastify": "^8.2.0",
     "redux-persist": "^6.0.0",
     "sweetalert2": "^11.4.9",
+    "talkjs": "^0.15.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "8.14.0",
     "eslint-config-next": "12.1.5"
   }

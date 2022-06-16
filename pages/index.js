@@ -1,5 +1,6 @@
 import axios from 'axios';
 import FormData from 'form-data';
+import { map } from 'lodash';
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import BannerProductCategory from '../components/Banners/BannerProductCategory';
@@ -49,36 +50,92 @@ export async function getStaticProps() {
             return {
                 type: item.type,
                 slide_data: item[item.type + '_banner'],
-                product_data: resProduct.data.filter(
-                    (product, index) =>
-                        product.id === item[item.type + '_banner'].product
-                )[0],
+                product_data: resProduct.data
+                    .filter(
+                        (product, index) =>
+                            product.id === item[item.type + '_banner'].product
+                    )
+                    .map((item, index) => ({
+                        name: item.name,
+                        average_rating: item.average_rating,
+                        on_sale: item.on_sale,
+                        price: item.price,
+                        regular_price: item.regular_price,
+                        short_description: item.short_description,
+                        image: item.images[0].src,
+                    }))[0],
             };
         }),
-        collection: acf.collection_banner,
+        collection: acf.collection_banner.map((item, index) => ({
+            ...item,
+            link_product_category: {
+                slug: item.link_product_category.slug,
+                name: item.link_product_category.name,
+            },
+        })),
         productSlider: {
             title: acf.product_slider_title,
             subtitle: acf.product_slider_subtitle,
-            products: resProduct.data.filter((product, index) =>
-                acf.product_slider.includes(product.id)
-            ),
+            products: resProduct.data
+                .filter((product, index) =>
+                    acf.product_slider.includes(product.id)
+                )
+                .map((item, index) => ({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    slug: item.slug,
+                    regular_price: item.regular_price,
+                    average_rating: item.average_rating,
+                    on_sale: item.on_sale,
+                    featured: item.featured,
+                    acf: item.acf,
+                    short_description: item.short_description,
+                    categories: item.categories,
+                })),
         },
         category_slider: {
             title: acf.title_category_slider,
             subtitle: acf.subtitle_category_slider,
-            list_category: resCategory.data,
+            list_category: resCategory.data.map((item, index) => ({
+                slug: item.slug,
+                acf: {
+                    thumbnail_home: item.acf.thumbnail_home,
+                },
+                name: item.name,
+            })),
         },
         category_grid: {
             title: acf.title_category_grid,
             subtitle: acf.subtitle_category_grid,
-            list: acf.list_category_grid,
+            list: acf.list_category_grid.map((item, index) => ({
+                ...item,
+                link: {
+                    name: item.link.name,
+                    slug: item.link.slug,
+                },
+            })),
         },
         productGrid: {
             title: acf.product_grid_title,
             subtitle: acf.product_grid_subtitle,
-            products: resProduct.data.filter((product, index) =>
-                acf.product_category_grid.includes(product.id)
-            ),
+            products: resProduct.data
+                .filter((product, index) =>
+                    acf.product_category_grid.includes(product.id)
+                )
+                .map((item, index) => ({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    slug: item.slug,
+                    regular_price: item.regular_price,
+                    average_rating: item.average_rating,
+                    on_sale: item.on_sale,
+                    featured: item.featured,
+                    acf: item.acf,
+                    short_description: item.short_description,
+                    categories: item.categories,
+                })),
         },
         sale: {
             title: acf.title_product_sale,
@@ -86,17 +143,26 @@ export async function getStaticProps() {
             time_end: acf.time_end_countdown,
             product_title: acf.product_title,
             product_subtitle: acf.product_sub_title,
-            product_data: resProduct.data.filter(
-                (product, index) => product.id === acf.product_sale
-            )[0],
+            product_data: resProduct.data
+                .filter((product, index) => product.id === acf.product_sale)
+                .map((item, index) => ({
+                    name: item.name,
+                    slug: item.slug,
+                }))[0],
             background: acf.background_sale,
         },
         instagram: {
             title: acf.title_instagram,
             subtitle: acf.subtitle_instagram,
-            product: resProduct.data.filter((product, index) =>
-                acf.product_instagram.includes(product.id)
-            ),
+            product: resProduct.data
+                .filter((product, index) =>
+                    acf.product_instagram.includes(product.id)
+                )
+                .map((item, index) => ({
+                    name: item.name,
+                    slug: item.slug,
+                    image: item.images[0].src,
+                })),
         },
         footer: {
             phone: acf.phone_footer,
@@ -116,6 +182,12 @@ export async function getStaticProps() {
 
 export default function Home({ dataHome }) {
     const dispatch = useDispatch();
+
+    dispatch(
+        setWebData({
+            footer: dataHome.footer,
+        })
+    );
 
     useEffect(() => {
         (function ($) {
@@ -146,35 +218,24 @@ export default function Home({ dataHome }) {
         })(jQuery);
         feather.replace();
 
-        dispatch(
-            setWebData({
-                footer: dataHome.footer,
-            })
-        );
+        const test = async () => {};
+
+        test();
     }, []);
 
     return (
         <Fragment>
             <Slider dataSliser={dataHome.slider} />
-
             <BannerProductCategory dataBanner={dataHome.collection} />
-
             <ProductSlider dataProduct={dataHome.productSlider} />
-
             <CategorySlider dataCategorySlider={dataHome.category_slider} />
-
             <BannerProductCategoryGrid
                 dataBannerProduct={dataHome.category_grid}
             />
-
             <ProductGrid dataProduct={dataHome.productGrid} />
-
             <BannerTimer dataTimer={dataHome.sale} />
-
             <InstagramSlider dataProduct={dataHome.instagram} />
-
             <Services />
-
             <NewsletterModal />
         </Fragment>
     );
