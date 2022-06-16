@@ -1,11 +1,22 @@
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 import { useSelector } from "react-redux";
 import ProductCard from "../../Product/ProductCard";
 import { functionJquery, getListCompare } from "../Common";
 import AddCompare from "./AddCompare";
 import Search from "./Search";
+
+// function CompareModal() {
+//    const [render, setRender] = useState(false);
+//    console.log(`  ~ render`, render);
+//    return <CompareModalChildren />;
+//    return (
+//       <div className="" id="render-compare-modal" onClick={() => setRender(true)}>
+//          {/* {render && <CompareModalChildren />} */}
+//       </div>
+//    );
+// }
 
 function CompareModal() {
    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
@@ -23,8 +34,6 @@ function CompareModal() {
          elementCloseModal.click();
       };
    }, [router.pathname]);
-
-   const elementExampleModal = document.getElementById("exampleModal");
 
    return (
       <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

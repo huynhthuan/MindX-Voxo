@@ -13,16 +13,16 @@ function HitNavbar() {
    } = useHits();
    const { query, refine, clear } = useSearchBox();
 
-   const {pathname} = useRouter();
+   const { pathname } = useRouter();
 
    return (
-      <div className="search-suggestion" hidden={pathname==='/search-product'}>
+      <div className="search-suggestion" hidden={pathname === "/search-product"}>
          <ul className="custom-scroll row">
-            {hits.slice(0, 4).map(({ name, acf: { front_image}, price, slug, average_rating }, index) => (
+            {hits.slice(0, 4).map(({ name, front_image, acf, price, slug, average_rating }, index) => (
                <li key={index} className="col-lg-3 col-xl-3 col-md-6 col-12">
                   <div className="product-cart media">
                      <Link href={"/product/" + slug} passHref>
-                        <img src={front_image} role="button" className="img-fluid blur-up lazyload" alt="" />
+                        <img src={front_image || acf.front_image} role="button" className="img-fluid blur-up lazyload" alt="" />
                      </Link>
                      <div className="media-body">
                         <Link href={"/product/" + slug}>

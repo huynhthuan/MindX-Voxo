@@ -1,26 +1,23 @@
-import React, { useEffect } from "react";
-import { useHits, useSortBy } from "react-instantsearch-hooks-web";
+import React, { useEffect, useState } from "react";
+import { Configure, useHits, useSortBy } from "react-instantsearch-hooks-web";
 import { functionJqueryProductCategory } from "../Common";
 
-function SortSearchProduct({ setHitsPerPage, hitsPerPage }) {
+function SortSearchProduct({ itemPerPage }) {
+   const [hitsPerPage, setHitsPerPage] = useState(null);
    const {
- hits,
       results: { nbHits },
- 
    } = useHits();
-//  console.log(`  ~ hits`, hits[0])
 
-   const { refine} = useSortBy({
+   const { refine } = useSortBy({
       items: [
          { label: "Featured", value: "products" },
-         { label: "Price (asc)", value: "price_asc" },
-         { label: "Price (desc)", value: "price_desc" },
-         { label: "Name (asc)", value: "name_asc" },
-         { label: "Name (desc)", value: "name_desc" },
-         { label: "Date (asc)", value: "date-asc" },
-         { label: "Date (desc)", value: "date-desc" },
+         { label: "Name (asc)", value: "name-asc" },
+         { label: "Name (desc)", value: "name-desc" },
+         { label: "Price (asc)", value: "price-asc" },
+         { label: "Price (desc)", value: "price-desc" },
       ],
    });
+
    useEffect(() => {
       functionJqueryProductCategory();
    }, []);
@@ -31,7 +28,8 @@ function SortSearchProduct({ setHitsPerPage, hitsPerPage }) {
 
    return (
       <div className="row g-4">
-         <h3>{nbHits} Results Found</h3>
+         <h3 hidden={itemPerPage === 12}>{nbHits} Results Found</h3>
+         {hitsPerPage && <Configure hitsPerPage={hitsPerPage} />}
 
          <div className="col-12">
             <div className="filter-options">
@@ -49,23 +47,17 @@ function SortSearchProduct({ setHitsPerPage, hitsPerPage }) {
                            Sort Items
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                           <li role='button' onClick={() => handleSort("name-asc")}>
+                           <li role="button" onClick={() => handleSort("name-asc")}>
                               <a className="dropdown-item">Alphabetically A-Z</a>
                            </li>
-                           <li role='button' onClick={() => handleSort("name-desc")}>
+                           <li role="button" onClick={() => handleSort("name-desc")}>
                               <a className="dropdown-item">Alphabetically Z-A</a>
                            </li>
-                           <li role='button' onClick={() => handleSort("price-asc")}>
-                              <a className="dropdown-item">Price, High To Low</a>
-                           </li>
-                           <li role='button' onClick={() => handleSort("price-desc")}>
+                           <li role="button" onClick={() => handleSort("price-asc")}>
                               <a className="dropdown-item">Price, Low To High</a>
                            </li>
-                           <li role='button' onClick={() => handleSort("date-asc")}>
-                              <a className="dropdown-item">Date, Old To New</a>
-                           </li>
-                           <li role='button' onClick={() => handleSort("date-desc")}>
-                              <a className="dropdown-item">Date, New To Old</a>
+                           <li role="button" onClick={() => handleSort("price-desc")}>
+                              <a className="dropdown-item">Price, High To Low</a>
                            </li>
                         </ul>
                      </div>
@@ -75,7 +67,7 @@ function SortSearchProduct({ setHitsPerPage, hitsPerPage }) {
                         {hitsPerPage} Page per view
                      </button>
                      <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        {[10, 20, 40].map((num, index) => (
+                        {[itemPerPage, itemPerPage * 2, itemPerPage * 4].map((num, index) => (
                            <li key={index} onClick={() => setHitsPerPage(num)} role="button">
                               <a className="dropdown-item">{num} Page per view</a>
                            </li>
@@ -86,27 +78,27 @@ function SortSearchProduct({ setHitsPerPage, hitsPerPage }) {
                <div className="grid-options d-sm-inline-block d-none">
                   <ul className="d-flex">
                      <li className="two-grid">
-                        <a >
+                        <a>
                            <img src="/svg/grid-2.svg" className="img-fluid blur-up lazyload" alt="" />
                         </a>
                      </li>
                      <li className="three-grid d-md-inline-block d-none">
-                        <a >
+                        <a>
                            <img src="/svg/grid-3.svg" className="img-fluid blur-up lazyload" alt="" />
                         </a>
                      </li>
-                     <li className="grid-btn d-lg-inline-block d-none">
-                        <a >
+                     <li className={"grid-btn d-lg-inline-block d-none" + (itemPerPage === 12 && " active")}>
+                        <a>
                            <img src="/svg/grid.svg" className="img-fluid blur-up lazyload" alt="" />
                         </a>
                      </li>
-                     <li className="five-grid active d-xl-inline-block d-none">
-                        <a >
+                     <li className="five-grid active d-xl-inline-block d-none" hidden={itemPerPage === 12}>
+                        <a>
                            <img src="/svg/grid-5.svg" className="img-fluid blur-up lazyload" alt="" />
                         </a>
                      </li>
                      <li className="list-btn">
-                        <a >
+                        <a>
                            <img src="/svg/list.svg" className="img-fluid blur-up lazyload" alt="" />
                         </a>
                      </li>

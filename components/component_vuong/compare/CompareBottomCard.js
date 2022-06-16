@@ -5,17 +5,17 @@ import { conventToCurrency, functionJquery } from "../Common";
 import { useDispatch } from "react-redux";
 import { removeProductCompare } from "../../../store/compare/compareSlice";
 
-function CompareBottomCard({ id, name, slug, acf }) {
+function CompareBottomCard({ id, name, slug, acf, front_image ,objectID}) {
    const dispatch = useDispatch();
 
-   const handleRemove = (id = "", event) => {
+   const handleRemove = (id , event) => {
       event.preventDefault();
       dispatch(removeProductCompare(id));
    };
 
    useEffect(() => {
       functionJquery();
-   }, [id]);
+   }, [id,objectID]);
 
    const handleHideBottomCompare = () => {
       const elementCompareBottom = document.getElementById("compare-bottom");
@@ -41,14 +41,14 @@ function CompareBottomCard({ id, name, slug, acf }) {
          ) : (
             <div className="product-box ">
                <div className="position-relative compare-button-card ">
-                  <button type="button" className="btn-close" onClick={(event) => handleRemove(id, event)}></button>
+                  <button type="button" className="btn-close mt-3" onClick={(event) => handleRemove(id||objectID, event)}></button>
                   <div className=" round-arrow1">
                      <div className="row g-3">
                         <div className="col-12">
                            <div className="product-image ">
                               <Link href={"/product/" + slug}>
                                  <a className="w-100 blur-up lazyload">
-                                    <img src={acf.front_image} className="img-fluid bg-img blur-up lazyload" alt="" />
+                                    <img src={front_image || acf.front_image} className="img-fluid bg-img blur-up lazyload" alt="" />
                                  </a>
                               </Link>
                               <div className="product-details" hidden={false}>

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { useRange, useSearchBox } from "react-instantsearch-hooks-web";
-import { functionJqueryProductCategory } from "../Common";
+import { useRange} from "react-instantsearch-hooks-web";
 
 let rangeSlice = "";
 
@@ -11,6 +10,7 @@ function RangeSlider() {
       canRefine,
       start: [minHandle, maxHandle],
    } = useRange({ attribute: "price" });
+   
    let $range = $(".js-range-slider");
 
    useEffect(() => {

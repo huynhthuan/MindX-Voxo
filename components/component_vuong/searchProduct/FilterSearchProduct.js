@@ -1,28 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { ClearRefinements, RangeInput, useClearRefinements, useRange, useRefinementList } from "react-instantsearch-hooks-web";
-import { RefinementList } from "react-instantsearch-hooks-web";
+import React, { useEffect } from "react";
+import { useClearRefinements } from "react-instantsearch-hooks-web";
+import AccordionDiscount from "../../ProductCategory/AccordionDiscount";
 import { functionJqueryProductCategory } from "../Common";
-import CustomRangeSlider from "../product-category/RangeSlider";
 import RangeSlider from "../product-category/RangeSlider";
 import FilterItemsComponent from "./FilterItemsComponent";
 
 function FilterSearchProduct() {
-   const [renderRangeSlider, setRenderRangeSlider] = useState(1);
-   const refinementListColor = useRefinementList({ attribute: "attributes_color", limit: Infinity });
-   const refinementListCategory = useRefinementList({ attribute: "categories_product", limit: Infinity });
-   const refinementListMaterial = useRefinementList({ attribute: "material", limit: Infinity });
-   const refinementListDiscount = useRefinementList({ attribute: "discount", limit: Infinity });
-
    const {
       canRefine,
       createURL,
       refine: refineClearRefinements,
-   } = useClearRefinements({ includedAttributes: ["price", "attributes_color", "categories_product", "material"] });
-
-   const { refine: refineColor, items: itemsColor } = refinementListColor;
-   const { refine: refineCategory, items: itemsCategory } = refinementListCategory;
-   const { refine: refineMaterial, items: itemsMaterial } = refinementListMaterial;
-   const { refine: refineDiscount, items: itemsDiscount } = refinementListDiscount;
+   } = useClearRefinements({ includedAttributes: ["price", "attributes_color", "categories_product", "material",'discount'] });
 
    useEffect(() => {
       functionJqueryProductCategory();
@@ -35,13 +23,7 @@ function FilterSearchProduct() {
       listElement.map((element, index) => {
          element.checked = false;
       });
-      setRenderRangeSlider(renderRangeSlider+1);
    };
-
-   const filterColor = { name: "Color", listItems: itemsColor, refine: refineColor },
-      filterCategory = { name: "Category", listItems: itemsCategory, refine: refineCategory },
-      filterMaterial = { name: "Material", listItems: itemsMaterial, refine: refineMaterial },
-      filterDiscount = { name: "Discount", listItems: itemsDiscount, refine: refineDiscount };
 
    return (
       <div className="row gx-4 gy-5 ">
@@ -72,90 +54,20 @@ function FilterSearchProduct() {
                      </h6>
                   </li>
 
-                  <FilterItemsComponent {...filterColor} />
-                  <FilterItemsComponent {...filterCategory} />
-                  <FilterItemsComponent {...filterMaterial} />
+                  <FilterItemsComponent attribute="attributes_color" name="Color" />
+                  <FilterItemsComponent attribute="categories_product" name="Category" />
+                  <FilterItemsComponent attribute="material" name="Material" />
 
                   <li className="onclick-title">
                      <h6>Price</h6>
-                     {/* {1 && <RangeSlider />} */}
                      <div className="onclick-content">
-                     <CustomRangeSlider  />
-
+                        <RangeSlider />
                      </div>
                   </li>
 
-                  {/* <FilterItemsComponent {...filterDiscount} disCount /> */}
-
-                  <li className="onclick-title">
-                     <h6>Discount</h6>
-                     <ul className="onclick-content">
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault25" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault25">
-                                 10% and above
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault26" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault26">
-                                 20% and above
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault27" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault27">
-                                 30% and above
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault28" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault28">
-                                 40% and above
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault29" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault29">
-                                 50% and above
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault30" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault30">
-                                 60% and above
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault31" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault31">
-                                 70% and above
-                              </label>
-                           </div>
-                        </li>
-                        <li>
-                           <div className="form-check ps-0 custome-form-check">
-                              <input className="checkbox_animated check-it" type="checkbox" id="flexCheckDefault32" />
-                              <label className="form-check-label" htmlFor="flexCheckDefault32">
-                                 80% and above
-                              </label>
-                           </div>
-                        </li>
-                     </ul>
-                  </li>
+                  <FilterItemsComponent attribute="discount" name="Discount">
+                     <AccordionDiscount />
+                  </FilterItemsComponent>
                </ul>
             </div>
          </div>

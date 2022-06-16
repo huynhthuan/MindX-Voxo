@@ -5,6 +5,7 @@ function Filter({  slug }) {
    const [itemsPerPage, setItemsPerPage] = useState("12");
    const router = useRouter();
    const {  per_page, orderby, order } = router.query;
+   
    useEffect(() => {
       per_page && setItemsPerPage(per_page);
    }, [per_page]);

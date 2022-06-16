@@ -6,7 +6,6 @@ import OnSale from "../component_vuong/product/OnSale";
 import AddCompare from "../component_vuong/compare/AddCompare";
 
 function ProductCard(props) {
-
    const {
       id,
       price,
@@ -17,13 +16,16 @@ function ProductCard(props) {
       average_rating,
       on_sale,
       featured,
-      acf: { back_image, front_image },
+      back_image,
+      front_image,
+      acf={},
       short_description,
       disAction,
+     
    } = props;
    useEffect(() => {
       functionJquery();
-   }, [front_image]);
+   }, [front_image,acf]);
 
    return (
       <div className="product-box">
@@ -31,14 +33,14 @@ function ProductCard(props) {
             <div className="front">
                <Link href={"/product/" + slug} passHref>
                   <a>
-                     <img src={front_image} className="bg-img blur-up lazyload" alt="" />
+                     <img src={front_image||acf.front_image} className="bg-img blur-up lazyload" alt="" />
                   </a>
                </Link>
             </div>
             <div className="back">
                <Link href={"/product/" + slug} passHref>
                   <a>
-                     <img src={back_image} className="bg-img blur-up lazyload" alt="" />
+                     <img src={back_image||acf.back_image} className="bg-img blur-up lazyload" alt="" />
                   </a>
                </Link>
             </div>

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductCompare } from "../../../store/compare/compareSlice";
 import { getListCompare } from "../Common";
-import { ToastContainer, toast, Slide } from "react-toastify";
 
 function AddCompare({ item = {}, inCard }) {
    const compareProduct = useSelector((state) => state.compare.entities);
@@ -41,8 +40,12 @@ function AddCompare({ item = {}, inCard }) {
             </li>
          ) : (
             <div className="d-flex justify-content-center mt-3 ">
-               <button disabled={listCompare.map((product) => product.id).includes(item.id)} className="btn btn-warning " onClick={handleAddCompare}>
-                  {listCompare.map((product) => product.id).includes(item.id) ? "In Compare" : "Add Compare"}
+               <button
+                  disabled={listCompare.map(({ objectID, id }) => objectID || id).includes(item.objectID || item.id)}
+                  className="btn btn-warning "
+                  onClick={handleAddCompare}
+               >
+                  {listCompare.map(({ objectID, id }) => objectID || id).includes(item.objectID || item.id) ? "In Compare" : "Add Compare"}
                </button>
             </div>
          )}

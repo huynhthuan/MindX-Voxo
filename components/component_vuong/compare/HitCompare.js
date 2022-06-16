@@ -8,12 +8,11 @@ function HitCompare({ hit }) {
 
    return (
       <div className="d-flex mb-2 row me-1">
-         <div className="m-0 p-0 col-9">
-
-         <MostPopularCard {...hit} className='' hiddenCategories/>
+         <div className="col-9">
+            <MostPopularCard {...hit} hiddenCategories />
          </div>
          <div className="ms-auto col-3">
-            <AddCompare  item={hit} />
+            <AddCompare item={hit} />
          </div>
       </div>
    );
