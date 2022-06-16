@@ -2,17 +2,23 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 
+let timer = 0;
+
 function CustomSearchBox() {
    const { query, refine, clear, isSearchStalled } = useSearchBox();
 
    const elementInput = document.getElementById("input-search");
-   const handleSearch = () => {
-      refine(elementInput.value);
+   const handleSearch = (e) => {
+      timer && clearTimeout(timer);
+      timer = setTimeout(() => {
+         refine(elementInput.value);
+      }, 500);
    };
-   
+ 
+
    return (
       <>
-         <section  className="search-section  p-0">
+         <section className="search-section  p-0">
             <div className="container">
                <div className="row">
                   <div className="col-12">
@@ -29,9 +35,7 @@ function CustomSearchBox() {
                               className="form-control"
                               placeholder="Search"
                               defaultValue={query}
-                              onChange={(e) => {
-                                 refine(e.target.value);
-                              }}
+                              onChange={(e) => handleSearch(e)}
                            />
                            <button className="input-group-text" id="basic-addon3" onClick={handleSearch}>
                               <i className="fas fa-search"></i>

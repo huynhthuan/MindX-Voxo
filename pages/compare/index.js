@@ -42,7 +42,8 @@ function Compare() {
                                     <td></td>
                                     {listCompare.map((item, key) => (
                                        <td key={key}>
-                                          {item.id && (
+                                          {/* {console.log(item)} */}
+                                          {item.id ||item.objectID && (
                                              <a href="cart.html" className="btn btn-solid-blue">
                                                 + Add to cart
                                              </a>
@@ -62,8 +63,8 @@ function Compare() {
 
                                  <tr>
                                     <td>BRAND</td>
-                                    {listCompare.map(({ attributes }, key) => (
-                                       <td key={key}>{attributes && attributes[2].options[0]}</td>
+                                    {listCompare.map(({ attributes,pa_brand }, key) => (
+                                       <td key={key}>{pa_brand||attributes && attributes[2].options[0]}</td>
                                     ))}
                                  </tr>
 
@@ -89,9 +90,9 @@ function Compare() {
                                  </tr>
 
                                  <tr>
-                                    <td>color</td>
-                                    {listCompare.map(({ attributes }, key) => (
-                                       <td key={key}>{attributes && attributes[0].options.join(", ")}</td>
+                                    <td>Color</td>
+                                    {listCompare.map(({ attributes ,pa_color}, key) => (
+                                       <td key={key}>{pa_color ||attributes && attributes[0].options.join(", ")}</td>
                                     ))}
                                  </tr>
 

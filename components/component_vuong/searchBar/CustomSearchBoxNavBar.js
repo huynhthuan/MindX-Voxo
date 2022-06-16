@@ -2,6 +2,9 @@ import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 import { functionJqueryProductCategory, functionJquerySearchFull } from "../Common";
+import _ from "lodash";
+
+let timer = 0;
 
 function CustomSearchBoxNavBar() {
    const { query, refine, clear } = useSearchBox();
@@ -12,14 +15,21 @@ function CustomSearchBoxNavBar() {
       functionJquerySearchFull();
    }, []);
 
-   useEffect(() => {
-      const refValue = ref.current.value;
-      refine(refValue);
-      
-      return () => {
-         clear();
-      };
-   }, [router.pathname]);
+   // useEffect(() => {
+   //    const refValue = ref.current.value;
+   //    refine(refValue);
+
+   //    return () => {
+   //       clear();
+   //    };
+   // }, [router.pathname]);
+
+   const handleSearch = (e) => {
+      timer && clearTimeout(timer);
+      timer = setTimeout(() => {
+         refine(e.target.value);
+      }, 500);
+   };
 
    return (
       <div className="input-group">
@@ -32,7 +42,7 @@ function CustomSearchBoxNavBar() {
             placeholder="Search here.."
             defaultValue={query}
             ref={ref}
-            onChange={(e) => refine(e.target.value)}
+            onChange={(e) => handleSearch(e)}
          />
          <span className="input-group-text close-search">
             <i data-feather="x" className="font-light"></i>

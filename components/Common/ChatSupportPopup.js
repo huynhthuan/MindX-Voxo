@@ -75,10 +75,10 @@ export default function ChatSupportPopup() {
     return (
         <div className="chat-popup-main">
             <div className="chat-popup-body">
-                <ul class="nav nav-pills" id="pills-tab" role="tablist">
-                    <li class="nav-item" role="presentation">
+                <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                    <li className="nav-item" role="presentation">
                         <button
-                            class="nav-link active"
+                            className="nav-link active"
                             id="pills-list-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-list"
@@ -90,9 +90,9 @@ export default function ChatSupportPopup() {
                             list
                         </button>
                     </li>
-                    <li class="nav-item" role="presentation">
+                    <li className="nav-item" role="presentation">
                         <button
-                            class="nav-link"
+                            className="nav-link"
                             id="pills-chat-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-chat"
@@ -106,9 +106,9 @@ export default function ChatSupportPopup() {
                     </li>
                 </ul>
 
-                <div class="tab-content" id="pills-tabContent">
+                <div className="tab-content" id="pills-tabContent">
                     <div
-                        class="tab-pane fade show active"
+                        className="tab-pane fade show active"
                         id="pills-list"
                         role="tabpanel"
                         aria-labelledby="pills-list-tab"
@@ -142,7 +142,7 @@ export default function ChatSupportPopup() {
                         </div>
                     </div>
                     <div
-                        class="tab-pane fade"
+                        className="tab-pane fade"
                         id="pills-chat"
                         role="tabpanel"
                         aria-labelledby="pills-chat-tab"

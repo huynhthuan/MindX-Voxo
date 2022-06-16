@@ -2,6 +2,7 @@ import { Pagination, useHits, usePagination, useSearchBox } from "react-instants
 import HitCompare from "./HitCompare";
 
 function CustomHits() {
+ 
    const { hits, results, bindEvent, sendEvent } = useHits();
    const { query } = useSearchBox();
    const { isFirstPage, isLastPage, canRefine, createURL, currentRefinement, nbHits, nbPages, pages, refine } = usePagination();

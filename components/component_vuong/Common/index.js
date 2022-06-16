@@ -48,9 +48,8 @@ export const reduceStringLength = (str = "", num = 30) => {
 };
 
 export const configSearch = {
-   appId: "HGVHMVONWR",
-   // apikey: "4267d6cfb6ac730b0df0c89f95868fff",
-   apikey: "a14d12bbf16b7da5817eed5523f62d7c",
+   appId: "GJJ9P4ABOH",
+   apikey: "84439436976189584f7af70550bdf206",
    indexName: "products",
 };
 

@@ -4,7 +4,8 @@ import Link from "next/link";
 
 function MostPopularCard(props) {
    const {
-      acf: { front_image },
+      acf,
+      front_image,
       categories,
       name,
       price,
@@ -20,7 +21,7 @@ function MostPopularCard(props) {
                <div className="product-image">
                   <Link href={"/product/" + slug} passHref>
                      <a>
-                        <img src={front_image} className="blur-up lazyload" alt="" />
+                        <img src={front_image||acf.front_image} className="blur-up lazyload" alt="" />
                      </a>
                   </Link>
                   <div className="product-details">

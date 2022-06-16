@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 
 const compareAdapter = createEntityAdapter({
-   selectId: (item) => item.id,
+   selectId: ({id,objectID}) => objectID || id,
 });
 
 export const compareSlice = createSlice({
@@ -15,10 +15,10 @@ export const compareSlice = createSlice({
          compareAdapter.removeOne(state, payload);
       },
       removeAllProductCompare: (state, { payload }) => {
-         compareAdapter.removeAll(state)
+         compareAdapter.removeAll(state);
       },
    },
 });
-export const { addProductCompare, removeProductCompare,removeAllProductCompare } = compareSlice.actions;
+export const { addProductCompare, removeProductCompare, removeAllProductCompare } = compareSlice.actions;
 
 export default compareSlice.reducer;

@@ -7,11 +7,11 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import NextNProgress from "nextjs-progressbar";
 
 import Layout from "../components/Layout";
-import { InstantSearch } from "react-instantsearch-hooks-web";
+import { Configure, InstantSearch } from "react-instantsearch-hooks-web";
 import { configSearch, updateDataAlgolia } from "../components/component_vuong/Common";
 import algoliasearch from "algoliasearch";
 import { useRouter } from "next/router";
-import InfoCompare from "../components/component_vuong/compare/InfoCompare";
+import BottomCompare from "../components/component_vuong/compare/BottomCompare";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -25,6 +25,7 @@ import "../styles/vendors/slick/slick.css";
 import "../styles/vendors/slick/slick-theme.css";
 import "../styles/globals.css";
 import "../styles/compare.css";
+
 import CompareModal from "../components/component_vuong/compare/CompareModal";
 import { useEffect } from "react";
 import ChatSupportPopup from "../components/Common/ChatSupportPopup";
@@ -53,14 +54,16 @@ function MyApp({ Component, pageProps }) {
             <QueryClientProvider client={queryClient}>
                <NextNProgress color="#dc3545" startPosition={0.3} stopDelayMs={200} height={4} showOnShallow={true} />
                <InstantSearch searchClient={searchClient} indexName={indexName} routing={router.pathname !== "/compare"}>
+                  <Configure hitsPerPage={12} />
                   <Layout>
                      <SkeletonTheme baseColor="#eaeaea" highlightColor="#fff">
                         <Component {...pageProps} />
                      </SkeletonTheme>
                   </Layout>
-                  <InfoCompare />
+                  <BottomCompare />
                </InstantSearch>
                <InstantSearch searchClient={searchClient} indexName={indexName}>
+                  <Configure hitsPerPage={15} />
                   <CompareModal />
                </InstantSearch>
                <ChatSupportPopup/>
