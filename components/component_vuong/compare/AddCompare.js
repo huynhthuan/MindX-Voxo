@@ -8,17 +8,53 @@ function AddCompare({ item = {}, inCard }) {
    const listCompare = getListCompare(compareProduct);
    const dispatch = useDispatch();
    const elementCloseModal = document.getElementById("close-modal");
-   let elementInfoCompare = document.getElementById("info-compare");
-   const infoCompareHTML = `<div class="bg-dark text-white p-3 rounded ">Please remove products to continue comparing!</div>`;
+   const infoCompareHTML = `<div class="bg-dark text-white p-3 m-2 rounded ">Please remove products to continue comparing!</div>`;
    const elementCompareBottom = document.getElementById("compare-bottom");
+   const {
+      id,
+      price,
+      slug,
+      name,
+      categories,
+      regular_price,
+      average_rating,
+      on_sale,
+      featured,
+      back_image,
+      front_image,
+      acf,
+      short_description,
+      objectID,
+      images,
+   } = item;
 
    const handleAddCompare = () => {
+      let elementInfoCompare = document.getElementById("info-compare");
+      const elementCompareBottom = document.getElementById("compare-bottom");
       !inCard && elementCloseModal.click();
       if (Object.values(compareProduct).length < 4) {
-         dispatch(addProductCompare(item));
-         elementCompareBottom && elementCompareBottom.removeAttribute("hidden");
+         dispatch(
+            addProductCompare({
+               id,
+               price,
+               slug,
+               name,
+               categories,
+               average_rating,
+               on_sale,
+               featured,
+               back_image,
+               front_image,
+               acf,
+               short_description,
+               objectID,
+               regular_price,
+               images,
+            })
+         );
+         elementCompareBottom.removeAttribute("hidden");
       } else {
-         elementCompareBottom && elementCompareBottom.removeAttribute("hidden");
+         elementCompareBottom.removeAttribute("hidden");
          elementInfoCompare.innerHTML = infoCompareHTML;
          setTimeout(() => (elementInfoCompare.innerHTML = ""), 2000);
       }

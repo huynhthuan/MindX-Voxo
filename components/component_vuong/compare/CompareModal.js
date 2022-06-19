@@ -1,27 +1,14 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useSearchBox } from "react-instantsearch-hooks-web";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import ProductCard from "../../Product/ProductCard";
-import { functionJquery, getListCompare } from "../Common";
+import { functionJquery } from "../Common";
 import AddCompare from "./AddCompare";
-import Search from "./Search";
-
-// function CompareModal() {
-//    const [render, setRender] = useState(false);
-//    console.log(`  ~ render`, render);
-//    return <CompareModalChildren />;
-//    return (
-//       <div className="" id="render-compare-modal" onClick={() => setRender(true)}>
-//          {/* {render && <CompareModalChildren />} */}
-//       </div>
-//    );
-// }
+import SearchModal from "./SearchModal";
 
 function CompareModal() {
    const recentlyViewed = useSelector((state) => state.recentlyViewedProducts.entities);
    const listRecentlyViewed = Object.values(recentlyViewed);
-   const { clear } = useSearchBox();
    const router = useRouter();
 
    useEffect(() => {
@@ -36,12 +23,12 @@ function CompareModal() {
    }, [router.pathname]);
 
    return (
-      <div className="modal fade " id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
          <div className="modal-dialog modal-xl ">
             <div className="modal-content">
                <div className="modal-header">
-                  <h3 className="modal-title" id="exampleModalLabel">
-                     <div className="d-flex justify-content-center mt-3 ms-5 ">Recently Viewed Products</div>
+                  <h3 className="modal-title" id="exampleModalLabel" hidden={!listRecentlyViewed[0]}>
+                     <div className="d-flex justify-content-center mt-3 ms-5 " >Recently Viewed Products</div>
                   </h3>
                   <button type="button" className="btn-close mt-2" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
@@ -55,10 +42,10 @@ function CompareModal() {
                   </div>
 
                   {/* Search compare */}
-                  <Search />
+                  <SearchModal />
                </div>
                <div className="modal-footer">
-                  <button type="button" id="close-modal" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => clear()}>
+                  <button type="button" id="close-modal" className="btn btn-secondary" data-bs-dismiss="modal" onClick={() => {}}>
                      Close
                   </button>
                </div>

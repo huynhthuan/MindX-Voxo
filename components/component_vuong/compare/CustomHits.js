@@ -2,10 +2,9 @@ import { Pagination, useHits, usePagination, useSearchBox } from "react-instants
 import HitCompare from "./HitCompare";
 
 function CustomHits() {
- 
-   const { hits, results, bindEvent, sendEvent } = useHits();
+   const { hits } = useHits();
    const { query } = useSearchBox();
-   const { isFirstPage, isLastPage, canRefine, createURL, currentRefinement, nbHits, nbPages, pages, refine } = usePagination();
+   const { isFirstPage, isLastPage } = usePagination();
 
    return (
       <>
@@ -13,21 +12,25 @@ function CustomHits() {
             <HitCompare key={index} hit={item} />
          ))}
          {hits.length > 0 || !query ? (
-            <Pagination
-               totalPages={6}
-               padding={4}
-               showFirst={!isFirstPage}
-               showNext={false}
-               showPrevious={false}
-               showLast={!isLastPage}
-               classNames={{
-                  root: "page-section mb-3",
-                  list: "pagination",
-                  item: "page-item",
-                  selectedItem: "page-item active",
-                  link: "page-link",
-               }}
-            />
+            <div className="row">
+               <div className="col-12">
+                  <Pagination
+                     totalPages={6}
+                     padding={4}
+                     showFirst={!isFirstPage}
+                     showNext={false}
+                     showPrevious={false}
+                     showLast={!isLastPage}
+                     classNames={{
+                        root: "page-section mb-3 ",
+                        list: "pagination",
+                        item: "page-item",
+                        selectedItem: "page-item active",
+                        link: "page-link",
+                     }}
+                  />
+               </div>
+            </div>
          ) : (
             <p className="alert alert-warning mt-3 w-100 text-center ">There is no result</p>
          )}

@@ -63,7 +63,7 @@ function Navbar() {
                                     <MainMenu />
 
                                     <MenuRight />
-
+ 
                                     <SearchBar />
                                 </div>
                             </div>

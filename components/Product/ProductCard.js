@@ -18,14 +18,13 @@ function ProductCard(props) {
       featured,
       back_image,
       front_image,
-      acf={},
+      acf = {},
       short_description,
       disAction,
-     
    } = props;
    useEffect(() => {
       functionJquery();
-   }, [front_image,acf]);
+   }, [front_image, acf]);
 
    return (
       <div className="product-box">
@@ -33,14 +32,14 @@ function ProductCard(props) {
             <div className="front">
                <Link href={"/product/" + slug} passHref>
                   <a>
-                     <img src={front_image||acf.front_image} className="bg-img blur-up lazyload" alt="" />
+                     <img src={front_image || acf.front_image} className="bg-img blur-up lazyload" alt="" />
                   </a>
                </Link>
             </div>
             <div className="back">
                <Link href={"/product/" + slug} passHref>
                   <a>
-                     <img src={back_image||acf.back_image} className="bg-img blur-up lazyload" alt="" />
+                     <img src={back_image || acf.back_image} className="bg-img blur-up lazyload" alt="" />
                   </a>
                </Link>
             </div>
@@ -77,9 +76,11 @@ function ProductCard(props) {
                <RatingDetails average_rating={average_rating} showNum />
             </div>
             <div className="main-price">
-               <div onClick={() => handleClick(slug, id)} role="button" className="font-default">
-                  <h5>{name}</h5>
-               </div>
+               <Link href={"/product/" + slug}>
+                  <a role="button" className="font-default">
+                     <h5>{name}</h5>
+                  </a>
+               </Link>
                <div className="listing-content">
                   <span className="font-light">Jacket</span>
                   <p className="font-light" dangerouslySetInnerHTML={{ __html: short_description }}></p>

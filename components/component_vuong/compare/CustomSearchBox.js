@@ -1,20 +1,26 @@
-import React, { useEffect } from "react";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { useSearchBox } from "react-instantsearch-hooks-web";
 
 let timer = 0;
 
 function CustomSearchBox() {
-   const { query, refine, clear, isSearchStalled } = useSearchBox();
-
+   const { refine } = useSearchBox();
+   const [valueInput, setvalueInput] = useState("");
    const elementInput = document.getElementById("input-search");
-   const handleSearch = (e) => {
+   const handleSearch = () => {
+      setvalueInput(elementInput.value);
+   };
+   useEffect(() => {
       timer && clearTimeout(timer);
       timer = setTimeout(() => {
-         refine(elementInput.value);
+         refine(valueInput);
       }, 500);
-   };
- 
+   }, [valueInput]);
+
+   const myModalEl = document.getElementById("exampleModal");
+   myModalEl.addEventListener("hidden.bs.modal", function (event) {
+      setvalueInput("");
+   });
 
    return (
       <>
@@ -34,8 +40,8 @@ function CustomSearchBox() {
                               type="search"
                               className="form-control"
                               placeholder="Search"
-                              defaultValue={query}
-                              onChange={(e) => handleSearch(e)}
+                              value={valueInput}
+                              onChange={() => handleSearch()}
                            />
                            <button className="input-group-text" id="basic-addon3" onClick={handleSearch}>
                               <i className="fas fa-search"></i>

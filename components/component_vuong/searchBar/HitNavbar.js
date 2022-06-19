@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import { useHits, useSearchBox } from "react-instantsearch-hooks-web";
-import MostPopularCard from "../product-category/MostPopularCard";
-import { conventToCurrency, functionJquerySearchFull, reduceStringLength } from "../Common";
+import { conventToCurrency, reduceStringLength } from "../Common";
 import RatingDetails from "../../Product/RatingDetails";
 import { useRouter } from "next/router";
 

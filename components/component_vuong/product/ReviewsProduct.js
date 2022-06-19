@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { fetchApiPostReviewProduct, fetchApiReviewProduct } from "../../../src/api/Api_vuong/fetchApi";
+import { fetchApiReviewProduct } from "../../../src/api/Api_vuong/fetchApi";
 import LoadMore from "../../Common/LoadMore";
 import RatingDetails from "../../Product/RatingDetails";
-import RatingChange from "../../Product/RatingChange";
-import { convertObjectToParams } from "../Common";
 import moment from "moment";
 import CustomReviews from "./CustomReviews";
 import ReviewPost from "./ReviewPost";

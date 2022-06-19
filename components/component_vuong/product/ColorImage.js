@@ -1,10 +1,5 @@
-import React, { useEffect } from "react";
-import { useQuery } from "react-query";
-import { fetchApiColorImage } from "../../../src/api/Api_vuong/fetchApi";
-import { useRouter } from "next/router";
-import Skeleton from "react-loading-skeleton";
-import PlaceHolderColorImage from "./PlaceHolderColorImage";
-import { errorModal } from "../Common";
+import React from "react";
+
 
 function ColorImage({ list_variation = [] }) {
    const handleClick = (e) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReviewsProduct from "./ReviewsProduct";
 
 function ClothReview({ description, average_rating, rating_count, id, acf: { question_and_answers, specifications, guide } }) {
