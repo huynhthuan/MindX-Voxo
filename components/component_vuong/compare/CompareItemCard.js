@@ -1,14 +1,15 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import OnSale from "../product/OnSale";
 import { conventToCurrency, functionJquery } from "../Common";
 import { useDispatch } from "react-redux";
 import { removeProductCompare } from "../../../store/compare/compareSlice";
+import AddProduct from "./AddProduct";
 
-function CompareItemCard({ id,objectID, price, name, regular_price, images, on_sale, slug, acf ,front_image}) {
+function CompareItemCard({ id, objectID, price, name, regular_price, images, on_sale, slug, acf, front_image }) {
    const dispatch = useDispatch();
 
-   const handleRemove = (id , event) => {
+   const handleRemove = (id, event) => {
       event.preventDefault();
       dispatch(removeProductCompare(id));
    };
@@ -20,30 +21,23 @@ function CompareItemCard({ id,objectID, price, name, regular_price, images, on_s
    return (
       <td>
          {!name ? (
-            <div style={{ minHeight: "300px" }} className="position-relative">
-               <div className="d-flex justify-content-center ">
-                  <button type="button" className="btn btn-primary  position-absolute top-50" data-bs-toggle="modal" data-bs-target="#exampleModal" >
-                     Add Product
-                  </button>
-               </div>
-               {/* <div className="d-flex justify-content-center h-100 m-2 fs-6">Compare more product</div> */}
-            </div>
+            <AddProduct />
          ) : (
             <div className="product-box position-relative">
-               <button type="button" className="btn-close" onClick={(event) => handleRemove(id||objectID, event)}></button>
+               <button type="button" className="btn-close m-1" onClick={(event) => handleRemove(id || objectID, event)}></button>
                <div className="product-image">
                   <Link href={"/product/" + slug}>
                      <a className="w-100 blur-up lazyload">
-                        <img src={front_image||acf.front_image} className="img-fluid bg-img blur-up lazyload" alt="" />
+                        <img src={front_image || acf.front_image} className="img-fluid bg-img blur-up lazyload" alt="" />
                      </a>
                   </Link>
                </div>
                <div className="product-details">
-                  <div>
+                  <Link href={"/product/" + slug}>
                      <a>
                         <h6 className="fw-bold">{name}</h6>
                      </a>
-                  </div>
+                  </Link>
 
                   <div className="price-details mt-2">
                      <h6 className="font-green">

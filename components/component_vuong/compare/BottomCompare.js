@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ProductCard from "../../Product/ProductCard";
 import { functionJquery, getListCompare } from "../Common";
-import MostPopularCard from "../product-category/MostPopularCard";
-import AddCompare from "./AddCompare";
-import CompareItem from "./CompareItemCard";
 import Link from "next/link";
 import { removeAllProductCompare } from "../../../store/compare/compareSlice";
 import CompareBottomCard from "./CompareBottomCard";
@@ -36,7 +32,6 @@ function BottomCompare() {
          {router.pathname !== "/compare" && (
             <div className=" position-fixed bottom-0 container" id="compare-bottom" hidden>
                <div className="d-flex">
-                  {/* <i className="btn-close p-2 me-2" role='button' onClick={handleCollapse}></i> */}
                   <div className=" border rounded ms-auto p-1 bg-warning" role="button" onClick={handleCollapse}>
                      Close
                   </div>
@@ -46,9 +41,9 @@ function BottomCompare() {
                      {listCompare.map((item, index) => (
                         <CompareBottomCard {...item} key={index} typeSmall />
                      ))}
-                  </div>
+                  </div> 
 
-                  <div className="compare-bottom-btn">
+                  <div className="compare-bottom-btn"> 
                      <div className="">
                         <Link href="/compare" passHref>
                            <button className="btn btn-warning p-2">Compare now</button>

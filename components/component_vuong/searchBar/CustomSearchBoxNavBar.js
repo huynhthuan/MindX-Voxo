@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { useSearchBox } from "react-instantsearch-hooks-web";
-import { functionJqueryProductCategory, functionJquerySearchFull } from "../Common";
+import {  functionJquerySearchFull } from "../Common";
 import _ from "lodash";
 
 let timer = 0;
@@ -40,7 +40,7 @@ function CustomSearchBoxNavBar() {
             type="text"
             className="form-control search-type"
             placeholder="Search here.."
-            defaultValue={query}
+            defaultValue={query} 
             ref={ref}
             onChange={(e) => handleSearch(e)}
          />

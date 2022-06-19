@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect } from "react";
+import React, {  useEffect } from "react";
 import Link from "next/link";
-import OnSale from "../product/OnSale";
-import { conventToCurrency, functionJquery } from "../Common";
+import {  functionJquery } from "../Common";
 import { useDispatch } from "react-redux";
 import { removeProductCompare } from "../../../store/compare/compareSlice";
+import AddProduct from "./AddProduct";
 
 function CompareBottomCard({ id, name, slug, acf, front_image ,objectID}) {
    const dispatch = useDispatch();
@@ -17,27 +17,12 @@ function CompareBottomCard({ id, name, slug, acf, front_image ,objectID}) {
       functionJquery();
    }, [id,objectID]);
 
-   const handleHideBottomCompare = () => {
-      const elementCompareBottom = document.getElementById("compare-bottom");
-      elementCompareBottom.setAttribute("hidden", true);
-   };
+
 
    return (
       <>
          {!name ? (
-            <div className="compare-button-card">
-               <div className="d-flex justify-content-center ">
-                  <div
-                     type="button"
-                     className="btn rounded-pill mt-3 px-3  border"
-                     data-bs-toggle="modal"
-                     data-bs-target="#exampleModal"
-                     onClick={() => handleHideBottomCompare()}
-                  >
-                     <i className="fas fa-solid fa-plus  fs-5"></i>
-                  </div>
-               </div>
-            </div>
+            <AddProduct bottom/>
          ) : (
             <div className="product-box ">
                <div className="position-relative compare-button-card ">

@@ -19,13 +19,13 @@ function MenuRight() {
     const signOut = () => {
         dispatch(logOut());
         if (router.pathname !== '/') {
-            router.push('/');
+            router.push('/'); 
         }
     };
 
     useEffect(() => {
         $('.search-box').on('click', function () {
-            $('.search-full').addClass('open');
+            $('.open-input-search').click()
         });
         $(window).on('load resize', function () {
             // open searchbox

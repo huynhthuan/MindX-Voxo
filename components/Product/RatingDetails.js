@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 function RatingDetails({ average_rating ,showNum ,rating_count}) {
+   console.log(`  ~ rating_count`, rating_count)
    return (
       <ul className="rating my-2 d-inline-block ">
          {Array(5)

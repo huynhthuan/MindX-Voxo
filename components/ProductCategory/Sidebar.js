@@ -1,11 +1,7 @@
-import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect } from "react";
 import MostPopular from "./MostPopular";
 import RangeSlider from "../component_vuong/product-category/RangeSlider";
-import { Configure, RefinementList, useRefinementList } from "react-instantsearch-hooks-web";
-import FilterItemsComponent from "../component_vuong/searchProduct/FilterItemsComponent";
 import AccordionCategory from "./AccordionCategory";
-import RatingDetails from "../Product/RatingDetails";
 import AccordionRating from "./AccordionRating";
 import { functionJqueryProductCategory } from "../component_vuong/Common";
 import AccordionDiscount from "./AccordionDiscount";
@@ -15,6 +11,7 @@ function Sidebar() {
    useEffect(() => {
       functionJqueryProductCategory();
    }, []);
+
    return (
       <div className="category-option">
          <div className="button-close mb-3">

@@ -12,7 +12,7 @@ function SelectSize({ attributes }) {
             id="selectSize"
             className="addeffect-section product-description border-product"
         >
-            <h6 class="product-title product-title-2 d-block">Size</h6>
+            <h6 className="product-title product-title-2 d-block">Size</h6>
             <div className="size-box">
                 <ul>
                     {attributes

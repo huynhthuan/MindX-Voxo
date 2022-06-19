@@ -54,7 +54,6 @@ function MyApp({ Component, pageProps }) {
             <QueryClientProvider client={queryClient}>
                <NextNProgress color="#dc3545" startPosition={0.3} stopDelayMs={200} height={4} showOnShallow={true} />
                <InstantSearch searchClient={searchClient} indexName={indexName} routing={router.pathname !== "/compare"}>
-                  <Configure hitsPerPage={12} />
                   <Layout>
                      <SkeletonTheme baseColor="#eaeaea" highlightColor="#fff">
                         <Component {...pageProps} />
@@ -63,10 +62,9 @@ function MyApp({ Component, pageProps }) {
                   <BottomCompare />
                </InstantSearch>
                <InstantSearch searchClient={searchClient} indexName={indexName}>
-                  <Configure hitsPerPage={15} />
                   <CompareModal />
                </InstantSearch>
-               <ChatSupportPopup/>
+               <ChatSupportPopup />
                <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
          </PersistGate>

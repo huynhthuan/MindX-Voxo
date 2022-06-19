@@ -3,13 +3,8 @@ import { useSelector } from "react-redux";
 import Breadcrumb from "../../components/Common/BreadCrumb";
 import SubscribeBox from "../../components/Common/SubscribeBox";
 import { functionJquery, getListCompare } from "../../components/component_vuong/Common";
-import ProductCard from "../../components/Product/ProductCard";
 import RatingDetails from "../../components/Product/RatingDetails";
 import CompareItemCard from "../../components/component_vuong/compare/CompareItemCard";
-import Search from "../../components/component_vuong/compare/Search";
-import AddCompare from "../../components/component_vuong/compare/AddCompare";
-import Hit from "../../components/component_vuong/compare/HitCompare";
-import { useSearchBox } from "react-instantsearch-hooks-web";
 
 function Compare() {
    const compareProduct = useSelector((state) => state.compare.entities);
@@ -42,8 +37,7 @@ function Compare() {
                                     <td></td>
                                     {listCompare.map((item, key) => (
                                        <td key={key}>
-                                          {/* {console.log(item)} */}
-                                          {item.id ||item.objectID && (
+                                          {(item.id || item.objectID) && (
                                              <a href="cart.html" className="btn btn-solid-blue">
                                                 + Add to cart
                                              </a>
@@ -54,17 +48,19 @@ function Compare() {
 
                                  <tr>
                                     <td>Customer Rating</td>
-                                    {listCompare.map(({ average_rating, rating_count }, key) => (
+                                    {listCompare.map(({ average_rating, count_rating }, key) => (
                                        <td key={key}>
-                                          {average_rating && <RatingDetails average_rating={average_rating} rating_count={rating_count} />}
+                                          {average_rating > -1 && (
+                                             <RatingDetails average_rating={average_rating} rating_count={ count_rating} />
+                                          )}
                                        </td>
                                     ))}
                                  </tr>
 
                                  <tr>
                                     <td>BRAND</td>
-                                    {listCompare.map(({ attributes,pa_brand }, key) => (
-                                       <td key={key}>{pa_brand||attributes && attributes[2].options[0]}</td>
+                                    {listCompare.map(({ attributes, pa_brand }, key) => (
+                                       <td key={key}>{pa_brand || (attributes && attributes[2].options[0])}</td>
                                     ))}
                                  </tr>
 
@@ -91,8 +87,8 @@ function Compare() {
 
                                  <tr>
                                     <td>Color</td>
-                                    {listCompare.map(({ attributes ,pa_color}, key) => (
-                                       <td key={key}>{pa_color ||attributes && attributes[0].options.join(", ")}</td>
+                                    {listCompare.map(({ attributes, pa_color }, key) => (
+                                       <td key={key}>{pa_color?.join(", ") || (attributes && attributes[0].options.join(", "))}</td>
                                     ))}
                                  </tr>
 
