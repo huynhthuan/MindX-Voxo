@@ -3,9 +3,11 @@ import { useRelatedPosts } from '../../src/api_minhhieu/relatedPostsApi';
 import RelatedPostsItem from './RelatedPostsItem';
 import { RelatedPostSkeleton } from '../../components/Skeleton_minhhieu/index';
 
-function RelatedPostSlide({info}) {
-
-    const { error, data, isFetching } = useRelatedPosts({ categoryId:info.categoryId, excludeId:info.excludeId });
+function RelatedPostSlide({ info }) {
+    const { error, data, isFetching } = useRelatedPosts({
+        categoryId: info.categoryId,
+        excludeId: info.excludeId,
+    });
 
     useEffect(() => {
         if (!data || data.length === 0) {
@@ -14,7 +16,7 @@ function RelatedPostSlide({info}) {
 
         let slideRelatedPost = $('.slide-4').slick({
             dots: true,
-            infinite: true,
+            infinite: false,
             speed: 500,
             arrows: false,
             slidesToShow: 4,
@@ -43,7 +45,7 @@ function RelatedPostSlide({info}) {
 
         return () => {
             slideRelatedPost.slick('unslick');
-        }
+        };
     }, [data]);
 
     // if (error) return 'An error has occurred: ' + error.message;
@@ -51,27 +53,26 @@ function RelatedPostSlide({info}) {
     return (
         <section className="section-b-space block-shadow-space ratio3_2">
             <div className="container">
-                    {
-                        isFetching || !data
-                            ?
-                                <div className='row'>
-                                    {
-                                        Array(4).fill(0).map((item,index) => {
-                                            return <RelatedPostSkeleton key={index} />
-                                        })
-                                    } 
-                                </div>
-                                
-                            :
-                                <div className="slide-4 product-wrapper slick-lg-space">
-                                    {
-                                        data.map((item,index) => {
-                                            return <RelatedPostsItem key={index} postSlug={item.slug}/>
-                                        })
-                                    }
-                                </div>
-                                
-                    }
+                {isFetching || !data ? (
+                    <div className="row">
+                        {Array(4)
+                            .fill(0)
+                            .map((item, index) => {
+                                return <RelatedPostSkeleton key={index} />;
+                            })}
+                    </div>
+                ) : (
+                    <div className="slide-4 product-wrapper slick-lg-space">
+                        {data.map((item, index) => {
+                            return (
+                                <RelatedPostsItem
+                                    key={index}
+                                    postSlug={item.slug}
+                                />
+                            );
+                        })}
+                    </div>
+                )}
             </div>
         </section>
     );

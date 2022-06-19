@@ -8,43 +8,17 @@ import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
 import Pagination from './Pagination';
 
 function Search() {
-    useEffect(() => {
-        (function ($) {
-            'use strict';
-            $('.bg-top').parent().addClass('b-top');
-            $('.bg-bottom').parent().addClass('b-bottom');
-            $('.bg-center').parent().addClass('b-center');
-            $('.bg-left').parent().addClass('b-left');
-            $('.bg-right').parent().addClass('b-right');
-            $('.bg_size_content').parent().addClass('b_size_content');
-            $('.bg-img').parent().addClass('bg-size');
-            $('.bg-img.blur-up').parent().addClass('blur-up lazyload');
-            $('.bg-img').each(function () {
-                var el = $(this),
-                    src = el.attr('src'),
-                    parent = el.parent();
-
-                parent.css({
-                    'background-image': 'url(' + src + ')',
-                    'background-size': 'cover',
-                    'background-position': 'center',
-                    'background-repeat': 'no-repeat',
-                    display: 'block',
-                });
-
-                el.hide();
-            });
-        })(jQuery);
-        feather.replace();
-    }, []);
-
     const router = useRouter();
     const page = router.query.page ? router.query.page : 1;
-    const {keyword} = router.query;
+    const { keyword } = router.query;
     const [searchVal, setSearchVal] = useState('');
     const [allowFetch, setAllowFetch] = useState(false);
 
-    const { error, data, refetch, isFetching } = useSearchPosts({ keyword:keyword, page: page, allowFetch: allowFetch });
+    const { error, data, refetch, isFetching } = useSearchPosts({
+        keyword: keyword,
+        page: page,
+        allowFetch: allowFetch,
+    });
 
     if (error) {
         router.push('/404');
@@ -56,36 +30,33 @@ function Search() {
             setAllowFetch(true);
             refetch();
         }
-    },[keyword,page])
+    }, [keyword, page]);
 
     const handleInputChange = (event) => {
         setSearchVal(event.target.value);
-    }
+    };
 
     const handleSearch = () => {
         if (!searchVal) {
-
         } else {
             router.push({
-                pathname:'/search',
-                query:{keyword:searchVal}
+                pathname: '/search',
+                query: { keyword: searchVal },
             });
         }
-        
-    }
+    };
 
     const handleInputKeyDown = (event) => {
         if (event.charCode == 13 || event.keyCode == 13) {
             if (!searchVal) {
-                
             } else {
                 router.push({
-                    pathname:'/search',
-                    query:{keyword:searchVal}
+                    pathname: '/search',
+                    query: { keyword: searchVal },
                 });
             }
         }
-    }
+    };
 
     return (
         <>
@@ -126,43 +97,68 @@ function Search() {
                 <div className="container">
                     <div className="row g-4">
                         <div className="col-12">
-                            <div className="mb-2 h2" style={{textTransform:"unset!important"}}> {keyword ? (`Posts For Keyword: ${keyword}`) : null}</div>
+                            <div
+                                className="mb-2 h2"
+                                style={{ textTransform: 'unset!important' }}
+                            >
+                                {' '}
+                                {keyword
+                                    ? `Posts For Keyword: ${keyword}`
+                                    : null}
+                            </div>
                         </div>
                         <div className="col-lg-9 col-md-7 ratio_square">
                             <div className="row g-4 g-xl-5 pb-5">
-                                {
-                                    !isFetching
-                                        ? 
-                                            data?.responseInfo.length > 0
-                                                ? 
-                                                    data.responseInfo.map( (item,index) => {
-                                                        return <div className="col-12" key={index}>
-                                                            <PostCard {...item}/>
-                                                        </div>
-                                                    })
-                                                :
-                                                    <div className="theme-color h4" hidden={keyword ? false : true}>No post found</div>
-                                        :
-                                            Array(10).fill(0).map((item, index) => {
-                                                return <NewPostBlogListSkeleton key={index}/>
-                                            })
-                                }
-                            </div>
-                            {
-                                data && data.totalPage*1 !== 0
-                                    ? 
-                                        <div className='row mt-5'>
-                                            <div className='custom-pagination d-flex justify-content-center align-items-center'>
-                                                <Pagination itemsPerPage={15} data={data} url={{pathname:'/search',query: keyword,}}/>
-                                            </div>
+                                {!isFetching ? (
+                                    data?.responseInfo.length > 0 ? (
+                                        data.responseInfo.map((item, index) => {
+                                            return (
+                                                <div
+                                                    className="col-12"
+                                                    key={index}
+                                                >
+                                                    <PostCard {...item} />
+                                                </div>
+                                            );
+                                        })
+                                    ) : (
+                                        <div
+                                            className="theme-color h4"
+                                            hidden={keyword ? false : true}
+                                        >
+                                            No post found
                                         </div>
-                                    : 
-                                        null
-                            }
+                                    )
+                                ) : (
+                                    Array(10)
+                                        .fill(0)
+                                        .map((item, index) => {
+                                            return (
+                                                <NewPostBlogListSkeleton
+                                                    key={index}
+                                                />
+                                            );
+                                        })
+                                )}
+                            </div>
+                            {data && data.totalPage * 1 !== 0 ? (
+                                <div className="row mt-5">
+                                    <div className="custom-pagination d-flex justify-content-center align-items-center">
+                                        <Pagination
+                                            itemsPerPage={15}
+                                            data={data}
+                                            url={{
+                                                pathname: '/search',
+                                                query: keyword,
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            ) : null}
                         </div>
 
                         <div className="col-lg-3 col-md-5">
-                            <Sidebar showSearchBox={true}/>
+                            <Sidebar showSearchBox={true} />
                         </div>
                     </div>
                 </div>

@@ -10,14 +10,14 @@ import { useDetailPost } from '../../../src/api_minhhieu/detailPostApi';
 import { useRouter } from 'next/router';
 import { DetailPostSkeleton } from '../../../components/Skeleton_minhhieu/index';
 import { transferDate } from '../../../utils/helpers';
+import Breadcrumb from '../../../components/Common/BreadCrumb';
 
 function BlogDetail() {
-
     // Lấy id bài viết từ url
     const router = useRouter();
     const { slug } = router.query;
-    
-    //Get data bài viết 
+
+    //Get data bài viết
     const { isLoading, error, data, isFetching } = useDetailPost(slug);
 
     console.log(data);
@@ -29,54 +29,10 @@ function BlogDetail() {
     return (
         <>
             <Head>
-                <title>Blog details</title>
+                <title>{data?.data[0].title.rendered}</title>
             </Head>
-            {/* Breadcrumb section start */}
-            <section className="breadcrumb-section section-b-space">
-                <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h3>Blog Details</h3>
-                            <nav>
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item">
-                                        <a href="index.html">
-                                            <i className="fas fa-home"></i>
-                                        </a>
-                                    </li>
-                                    <li
-                                        className="breadcrumb-item"
-                                        aria-current="page"
-                                    >
-                                        <Link href="/blog">
-                                            <a>Blog /</a>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        className="breadcrumb-item active"
-                                        aria-current="page"
-                                    >
-                                        Blog Details
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Breadcrumb section end */}
+
+            <Breadcrumb title={data?.data[0].title.rendered}></Breadcrumb>
 
             {/* Details Blog Section Start */}
             <section className="masonary-blog-section">
@@ -85,46 +41,63 @@ function BlogDetail() {
                         <div className="col-lg-9 col-md-8 order-md-1 ratio_square">
                             <div className="row g-4">
                                 <div className="col-12">
-                                    {
-                                        isFetching || !data
-                                            ? 
-                                                <DetailPostSkeleton/>
-                                            :
-                                                <>
-                                                    <div className="blog-details">
-                                                        <div className="blog-image-box">
-                                                            <img
-                                                                src={
-                                                                    data.data[0]._embedded["wp:featuredmedia"][0].media_details.sizes.medium_large.source_url
-                                                                }
-                                                                alt=""
-                                                                className="card-img-top"
-                                                            />
-                                                        </div>
+                                    {isFetching || !data ? (
+                                        <DetailPostSkeleton />
+                                    ) : (
+                                        <>
+                                            <div className="blog-details">
+                                                <div className="blog-image-box">
+                                                    <img
+                                                        src={
+                                                            data.data[0]
+                                                                ._embedded[
+                                                                'wp:featuredmedia'
+                                                            ][0].media_details
+                                                                .sizes
+                                                                .medium_large
+                                                                .source_url
+                                                        }
+                                                        alt=""
+                                                        className="card-img-top"
+                                                    />
+                                                </div>
 
-                                                        <div className="blog-detail-contain">
-                                                            <span className="font-light">
-                                                                {
-                                                                    transferDate(data.data[0].date)
-                                                                }
-                                                            </span>
-                                                            <h2 className="card-title">
-                                                                {
-                                                                    data.data[0].title.rendered
-                                                                }
-                                                            </h2>
-                                                            <div dangerouslySetInnerHTML={{ __html: data.data[0].content.rendered }}></div>
-                                                        </div>
-                                                    </div>
+                                                <div className="blog-detail-contain">
+                                                    <span className="font-light">
+                                                        {transferDate(
+                                                            data.data[0].date
+                                                        )}
+                                                    </span>
+                                                    <h2 className="card-title">
+                                                        {
+                                                            data.data[0].title
+                                                                .rendered
+                                                        }
+                                                    </h2>
+                                                    <div
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: data.data[0]
+                                                                .content
+                                                                .rendered,
+                                                        }}
+                                                    ></div>
+                                                </div>
+                                            </div>
 
-                                                    <AuthorBox {...data.data[0]._embedded.author[0]}/>
-                                                                
-                                                    <CommentBox postId={data.data[0].id}/>
+                                            <AuthorBox
+                                                {...data.data[0]._embedded
+                                                    .author[0]}
+                                            />
 
-                                                    <CommentList postId={data.data[0].id}/>
-                                                </>
-                                    }
+                                            <CommentBox
+                                                postId={data.data[0].id}
+                                            />
 
+                                            <CommentList
+                                                postId={data.data[0].id}
+                                            />
+                                        </>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -135,14 +108,15 @@ function BlogDetail() {
                     </div>
                 </div>
             </section>
-            {/* Details Blog Section End */}
-            {
-                isLoading || !data
-                    ?
-                        null
-                    :
-                        <RelatedPostSlide info={{categoryId:data.data[0].categories[0],excludeId:data.data[0].id}}/>
-            }
+
+            {isLoading || !data ? null : (
+                <RelatedPostSlide
+                    info={{
+                        categoryId: data.data[0].categories[0],
+                        excludeId: data.data[0].id,
+                    }}
+                />
+            )}
 
             <SubscribeBox />
         </>

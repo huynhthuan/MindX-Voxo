@@ -1,6 +1,3 @@
-import axios from 'axios';
-import FormData from 'form-data';
-import { map } from 'lodash';
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import BannerProductCategory from '../components/Banners/BannerProductCategory';
@@ -63,6 +60,13 @@ export async function getStaticProps() {
                         regular_price: item.regular_price,
                         short_description: item.short_description,
                         image: item.images[0].src,
+                        categories: item.categories,
+                        tags: item.tags.map((items, index) => items.name),
+                        images: item.images.map((item, index) => item.src),
+                        attributes: item.attributes,
+                        date_created: item.date_created,
+                        stock_status: item.stock_status,
+                        slug: item.slug
                     }))[0],
             };
         }),
@@ -92,6 +96,11 @@ export async function getStaticProps() {
                     acf: item.acf,
                     short_description: item.short_description,
                     categories: item.categories,
+                    images: item.images.map((item, index) => item.src),
+                    tags: item.tags.map((items, index) => items.name),
+                    attributes: item.attributes,
+                    date_created: item.date_created,
+                    stock_status: item.stock_status,
                 })),
         },
         category_slider: {
@@ -135,6 +144,11 @@ export async function getStaticProps() {
                     acf: item.acf,
                     short_description: item.short_description,
                     categories: item.categories,
+                    tags: item.tags.map((items, index) => items.name),
+                    attributes: item.attributes,
+                    date_created: item.date_created,
+                    images: item.images.map((item, index) => item.src),
+                    stock_status: item.stock_status,
                 })),
         },
         sale: {
@@ -181,13 +195,9 @@ export async function getStaticProps() {
 }
 
 export default function Home({ dataHome }) {
-    const dispatch = useDispatch();
+    console.log(dataHome);
 
-    dispatch(
-        setWebData({
-            footer: dataHome.footer,
-        })
-    );
+    const dispatch = useDispatch();
 
     useEffect(() => {
         (function ($) {
@@ -218,9 +228,11 @@ export default function Home({ dataHome }) {
         })(jQuery);
         feather.replace();
 
-        const test = async () => {};
-
-        test();
+        dispatch(
+            setWebData({
+                footer: dataHome.footer,
+            })
+        );
     }, []);
 
     return (

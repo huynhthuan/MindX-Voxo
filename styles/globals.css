@@ -824,3 +824,55 @@ header .category-menu .btn i {
 .chat-item {
     margin-bottom: 15px;
 }
+
+.product-box .cart-wrap a:hover {
+    cursor: pointer;
+}
+
+.wishlist.liked svg {
+    fill: red;
+    stroke: red;
+}
+
+.product-box .cart-wrap a.wishlist.liked:hover {
+    background-color: white;
+}
+
+.wishlist-table.cart-table tbody tr td a.icon:hover {
+    cursor: pointer;
+}
+
+li.btn-notifi svg {
+    width: 23px !important;
+}
+
+li.btn-notifi svg path {
+    stroke: #000;
+}
+
+.masonary-blog-section .masonary-blog .card-body h2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.page-section .pagination .page-item .page-link:hover {
+    cursor: pointer;
+}
+
+.breadcrumb-section h3,
+.breadcrumb-item + .breadcrumb-item {
+    text-transform: capitalize;
+}
+
+head title {
+    text-transform: capitalize;
+}
+
+.blog-categority .card-body h2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

@@ -26,8 +26,16 @@ export async function getStaticProps({ req, res }) {
                     acf_format: 'standard',
                 });
                 result.push({
-                    cateParent: category,
-                    cateChild: childCategory,
+                    cateParent: {
+                        acf: category.acf,
+                        name: category.name,
+                        slug: category.slug,
+                    },
+                    cateChild: childCategory.map((item, index) => ({
+                        acf: item.acf,
+                        name: item.name,
+                        slug: item.slug,
+                    })),
                 });
             })
         );
@@ -41,6 +49,7 @@ export async function getStaticProps({ req, res }) {
 }
 
 function ProductCategoryList({ productCategories }) {
+    console.log(productCategories);
     return (
         <Fragment>
             <Breadcrumb title={'Shop Category'} />

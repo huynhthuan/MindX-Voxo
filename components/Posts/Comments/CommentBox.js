@@ -85,8 +85,8 @@ function CommentBox({postId}) {
             </div>
 
             <div className="col-12" hidden={user.id ? true : false}>
-                <div className="d-flex ">
-                    <p className="alert alert-warning">
+                <div className="d-flex w-100">
+                    <p className="alert alert-warning w-100">
                         You must{' '}
                         <b>
                             <Link href="/login">

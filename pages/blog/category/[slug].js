@@ -6,9 +6,9 @@ import Link from 'next/link';
 import Head from 'next/head';
 import { CategoryPostSkeleton } from '../../../components/Skeleton_minhhieu';
 import { useBlogListCategory } from '../../../src/api_minhhieu/bloglistcategoryApi';
+import Breadcrumb from '../../../components/Common/BreadCrumb';
 
 function Category() {
-
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -35,12 +35,6 @@ function Category() {
 
                 el.hide();
             });
-
-            setTimeout(() => {
-                $('.grid').isotope({
-                    itemSelector: '.grid-item',
-                });
-            }, 100);
         })(jQuery);
         feather.replace();
     }, []);
@@ -49,7 +43,9 @@ function Category() {
     const page = router.query.page ? router.query.page : 1;
     const category = router.query.slug;
 
-    const { isLoading, error, data, isFetching, refetch } = useBlogListCategory({category: category,page: page});
+    const { isLoading, error, data, isFetching, refetch } = useBlogListCategory(
+        { category: category, page: page }
+    );
 
     if (error) {
         router.push('/404');
@@ -58,74 +54,38 @@ function Category() {
     return (
         <>
             <Head>
-                <title>Blog Listing</title>
+                <title>Blog {category}</title>
             </Head>
-            {/* Breadcrumb section start */}
-            <section className="breadcrumb-section section-b-space">
-                <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h3 style={{textTransform: 'capitalize'}}>Blog {category}</h3>
-                            <nav>
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item">
-                                        <a href="index.html">
-                                            <i className="fas fa-home"></i>
-                                        </a>
-                                    </li>
-                                    <li
-                                        className="breadcrumb-item"
-                                        aria-current="page"
-                                    >
-                                        <Link href="/blog">
-                                            <a>Blog /</a>
-                                        </Link>
-                                    </li>
-                                    <li
-                                        className="breadcrumb-item active"
-                                        aria-current="page"
-                                        style={{textTransform: 'capitalize'}}
-                                    >
-                                        {category}
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Breadcrumb section end */}
+
+            <Breadcrumb title={category}></Breadcrumb>
 
             {/* Masonary Blog Section Start */}
             <section className="masonary-blog-section section-b-space">
                 <div className="container">
-                    <div className="row g-4 d-flex mt-3" style={{ 'height': "unset !important"}}>
+                    <div
+                        className="row g-4 d-flex mt-3"
+                        style={{ height: 'unset !important' }}
+                    >
                         {/* minhhieu */}
-                        {
-                            isFetching 
-                                ?   
-                                    Array(12).fill(0).map((item, index) => {
-                                        return <CategoryPostSkeleton key = {index} />
-                                    })
-                                : 
-                                    data.responseInfo && data.responseInfo.map( (item,index) => {
-                                        return <div className="col-lg-3 col-md-4 col-sm-6" key={index}>
-                                            <PostCardMansory {...item}/>
-                                        </div>
-                                    })
-                        }
+                        {isFetching
+                            ? Array(12)
+                                  .fill(0)
+                                  .map((item, index) => {
+                                      return (
+                                          <CategoryPostSkeleton key={index} />
+                                      );
+                                  })
+                            : data.responseInfo &&
+                              data.responseInfo.map((item, index) => {
+                                  return (
+                                      <div
+                                          className="col-lg-3 col-md-4 col-sm-6"
+                                          key={index}
+                                      >
+                                          <PostCardMansory {...item} />
+                                      </div>
+                                  );
+                              })}
                     </div>
                 </div>
             </section>
@@ -141,11 +101,21 @@ function Category() {
                                         <div
                                             className="page-link"
                                             onClick={() => {
-                                                if ( page > 1 ) {
-                                                    router.push({
-                                                        pathname:`/blog/category/${category}`,
-                                                        query: {page: page * 1 - 1}
-                                                    })
+                                                if (page > 1) {
+                                                    router.push(
+                                                        {
+                                                            pathname: `/blog/category/${category}`,
+                                                            query: {
+                                                                page:
+                                                                    page * 1 -
+                                                                    1,
+                                                            },
+                                                        },
+                                                        null,
+                                                        {
+                                                            scroll: false,
+                                                        }
+                                                    );
                                                 }
                                             }}
                                         >
@@ -155,33 +125,62 @@ function Category() {
                                         </div>
                                     </li>
                                     {/* minhhieu */}
-                                    {
-                                        !isLoading &&
-                                            data.totalPage && Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                                return <li className={"page-item " + ( index + 1 == page ? "active" : "" )} key={index}>
-                                                    <div
-                                                        className="page-link"
-                                                        onClick={() => {
-                                                            router.push({
-                                                                pathname:`/blog/category/${category}`,
-                                                                query: {page: index + 1}
-                                                            })
-                                                        }}
+                                    {!isLoading &&
+                                        data.totalPage &&
+                                        Array(data.totalPage * 1)
+                                            .fill(0)
+                                            .map((item, index) => {
+                                                return (
+                                                    <li
+                                                        className={
+                                                            'page-item ' +
+                                                            (index + 1 == page
+                                                                ? 'active'
+                                                                : '')
+                                                        }
+                                                        key={index}
                                                     >
-                                                        {index+1}
-                                                    </div>
-                                                </li>
-                                            })
-                                    }
+                                                        <div
+                                                            className="page-link"
+                                                            onClick={() => {
+                                                                router.push(
+                                                                    {
+                                                                        pathname: `/blog/category/${category}`,
+                                                                        query: {
+                                                                            page:
+                                                                                index +
+                                                                                1,
+                                                                        },
+                                                                    },
+                                                                    null,
+                                                                    {
+                                                                        scroll: false,
+                                                                    }
+                                                                );
+                                                            }}
+                                                        >
+                                                            {index + 1}
+                                                        </div>
+                                                    </li>
+                                                );
+                                            })}
                                     <li className="page-item">
                                         <div
                                             className="page-link"
                                             onClick={() => {
-                                                if ( page < data.totalPage * 1 ) {
-                                                    router.push({
-                                                        pathname:`/blog/category/${category}`,
-                                                        query: {page: page * 1 + 1}
-                                                    })
+                                                if (page < data.totalPage * 1) {
+                                                    router.push(
+                                                        {
+                                                            pathname: `/blog/category/${category}`,
+                                                            query: {
+                                                                page:
+                                                                    page * 1 +
+                                                                    1,
+                                                            },
+                                                        },
+                                                        null,
+                                                        { scroll: false }
+                                                    );
                                                 }
                                             }}
                                         >

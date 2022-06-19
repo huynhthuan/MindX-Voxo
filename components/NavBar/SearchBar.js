@@ -15,7 +15,6 @@ function SearchBar() {
    }, []);
 
    useEffect(() => {
-      console.log(query);
       if (query.length > 0 && router.pathname !== "/search-product") {
          router.push("/search-product/?product[query]=" + query);
       }

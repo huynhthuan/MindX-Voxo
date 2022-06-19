@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../store/auth/authSlice';
 import SmallCart from './MenuRight/SmallCart';
-import WisList from './MenuRight/WisList';
+import WishList from './MenuRight/WishList';
 import { useRouter } from 'next/router';
 import {
     PopoverNotificationCenter,
@@ -131,7 +131,7 @@ function MenuRight() {
                     </div>
                 </li>
                 <li className="onhover-dropdown wislist-dropdown">
-                    <WisList />
+                    <WishList />
                 </li>
                 <li className="onhover-dropdown cart-dropdown">
                     <SmallCart />
