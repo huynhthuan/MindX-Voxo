@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function RatingDetails({ average_rating ,showNum ,rating_count}) {
+function RatingDetails({ average_rating ,showNum ,count_rating}) {
    return (
       <ul className="rating my-2 d-inline-block ">
          {Array(5)
@@ -17,7 +17,7 @@ function RatingDetails({ average_rating ,showNum ,rating_count}) {
                )
             )}
          {showNum&&<>({average_rating === "0.00" ? 0 : Number(average_rating).toFixed(1)})</>}
-         {rating_count ? <> ({rating_count} reviews)</> : null}
+         {count_rating ? <> ({count_rating} reviews)</> : null}
       </ul>
    );
 }

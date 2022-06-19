@@ -25,6 +25,10 @@ function AddCompare({ item = {}, inCard }) {
       acf,
       short_description,
       objectID,
+      pa_color,
+      pa_brand,
+      pa_size,
+      count_rating,
       images,
    } = item;
 
@@ -48,6 +52,10 @@ function AddCompare({ item = {}, inCard }) {
                acf,
                short_description,
                objectID,
+               pa_color,
+               pa_brand,
+               pa_size,
+               count_rating,
                regular_price,
                images,
             })

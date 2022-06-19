@@ -48,9 +48,11 @@ function Compare() {
 
                                  <tr>
                                     <td>Customer Rating</td>
-                                    {listCompare.map(({ average_rating, rating_count }, key) => (
+                                    {listCompare.map(({ average_rating, count_rating }, key) => (
                                        <td key={key}>
-                                          {average_rating > -1 && <RatingDetails average_rating={average_rating} rating_count={rating_count} />}
+                                          {average_rating > -1 && (
+                                             <RatingDetails average_rating={average_rating} rating_count={ count_rating} />
+                                          )}
                                        </td>
                                     ))}
                                  </tr>
@@ -86,8 +88,7 @@ function Compare() {
                                  <tr>
                                     <td>Color</td>
                                     {listCompare.map(({ attributes, pa_color }, key) => (
-                                   
-                                       <td key={key}>{pa_color?.join(', ')|| (attributes && attributes[0].options.join(", "))}{ console.log(`  ~ pa_color`, pa_color)}</td>
+                                       <td key={key}>{pa_color?.join(", ") || (attributes && attributes[0].options.join(", "))}</td>
                                     ))}
                                  </tr>
 

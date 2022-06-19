@@ -33,11 +33,11 @@ function CompareItemCard({ id, objectID, price, name, regular_price, images, on_
                   </Link>
                </div>
                <div className="product-details">
-                  <div>
+                  <Link href={"/product/" + slug}>
                      <a>
                         <h6 className="fw-bold">{name}</h6>
                      </a>
-                  </div>
+                  </Link>
 
                   <div className="price-details mt-2">
                      <h6 className="font-green">
