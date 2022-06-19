@@ -31,8 +31,6 @@ export default function Document() {
 
                 <script src="/js/ion.rangeSlider.min.js"></script>
 
-                {/* <script src="/js/cart_modal_resize.js"></script> */}
-
                 <script src="/js/bootstrap/bootstrap-notify.min.js"></script>
 
                 <script

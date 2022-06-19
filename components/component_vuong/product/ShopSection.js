@@ -50,11 +50,7 @@ function ShopSection(props = {}) {
                               <div className="label-section">
                                  {categories.map(({ slug, name }, key) => (
                                     <Link href={"/product-category/" + slug} key={key}>
-                                       <a
-                                          className="badge badge-grey-color me-2"
-                                       >
-                                          in {name}
-                                       </a>
+                                       <a className="badge badge-grey-color me-2">in {name}</a>
                                     </Link>
                                  ))}
                               </div>
@@ -97,28 +93,13 @@ function ShopSection(props = {}) {
                                  <div className="product-icon">
                                     <ul className="product-social">
                                        <li>
-                                          <a href="https://www.facebook.com/">
+                                          <a href={"https://www.facebook.com/sharer/sharer.php?u=" + window.location.href} target="_blank">
                                              <i className="fab fa-facebook-f"></i>
                                           </a>
                                        </li>
                                        <li>
-                                          <a href="https://www.google.com/">
-                                             <i className="fab fa-google-plus-g"></i>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a href="https://twitter.com/">
+                                          <a target="_blank" href={`http://twitter.com/share?text=${name}&url=${window.location.href}`}>
                                              <i className="fab fa-twitter"></i>
-                                          </a>
-                                       </li>
-                                       <li>
-                                          <a href="https://www.instagram.com/">
-                                             <i className="fab fa-instagram"></i>
-                                          </a>
-                                       </li>
-                                       <li className="pe-0">
-                                          <a href="https://www.google.com/">
-                                             <i className="fas fa-rss"></i>
                                           </a>
                                        </li>
                                     </ul>

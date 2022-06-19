@@ -95,11 +95,11 @@ function InstagramSlider({ dataProduct }) {
                                     <div key={index}>
                                         <div className="product-box">
                                             <div className="img-wrapper">
-                                                <div className="top-wishlist product-color">
+                                                {/* <div className="top-wishlist product-color">
                                                     <a className="heart-wishlist heart-color ms-auto">
                                                         <i className="far fa-heart"></i>
                                                     </a>
-                                                </div>
+                                                </div> */}
                                                 <div className="share share-box share-opacity">
                                                     <span className="share-plus share-plus-color">
                                                         +

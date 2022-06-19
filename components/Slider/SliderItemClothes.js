@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 export default function SliderItemClothes({ slideData }) {
     const { product_data: product, slide_data } = slideData;
+    console.log(product);
     return (
         <div>
             <div className="home-slider">
@@ -62,12 +63,6 @@ export default function SliderItemClothes({ slideData }) {
                                             View product
                                         </a>
                                     </Link>
-                                    <a
-                                        href="undefined"
-                                        className="btn btn-solid-default ms-2"
-                                    >
-                                        <i className="fas fa-heart"></i>
-                                    </a>
                                 </div>
                                 <div className="share-icons">
                                     <span>share with</span>

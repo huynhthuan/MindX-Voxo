@@ -1,6 +1,7 @@
 import React from 'react'
 
 function BannerDetail() {
+   
   return (
     <div className="banner-deatils">
     <div className="banner-image">

@@ -4,8 +4,13 @@ import RatingDetails from "./RatingDetails";
 import Link from "next/link";
 import OnSale from "../component_vuong/product/OnSale";
 import AddCompare from "../component_vuong/compare/AddCompare";
+import { productAdded, productRemove } from "../../store/user/productLiked";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function ProductCard(props) {
+   const dispatch = useDispatch();
+   const productLikedState = useSelector((state) => state.productLiked);
    const {
       id,
       price,
@@ -21,10 +26,52 @@ function ProductCard(props) {
       acf = {},
       short_description,
       disAction,
+      images,
+      tags,
+      attributes,
+      stock_status,
    } = props;
    useEffect(() => {
       functionJquery();
    }, [front_image, acf]);
+
+   const addWislistHandle = () => {
+      let isLiked = productLikedState.ids.includes(id);
+      if (isLiked) {
+         dispatch(productRemove(id));
+         toast.warning("Remove product wishlist successfully!", {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+         });
+         return;
+      }
+
+      dispatch(
+         productAdded({
+            id,
+            image: images[0],
+            name,
+            price,
+            stock_status,
+            slug,
+         })
+      );
+
+      toast.success("Add product to wishlist successfully!", {
+         position: "top-right",
+         autoClose: 2000,
+         hideProgressBar: true,
+         closeOnClick: true,
+         pauseOnHover: true,
+         draggable: true,
+         progress: undefined,
+      });
+   };
 
    return (
       <div className="product-box">
@@ -50,18 +97,30 @@ function ProductCard(props) {
             <div hidden={disAction} className="cart-wrap">
                <ul>
                   <li>
-                     <a className="addtocart-btn" data-bs-toggle="modal" data-bs-target="#addtocart">
-                        <i data-feather="shopping-bag"></i>
-                     </a>
-                  </li>
-                  <li>
-                     <a data-bs-toggle="modal" data-bs-target="#quick-view">
+                     <a
+                        data-bs-toggle="modal"
+                        data-bs-target="#quick-view"
+                        data-product={JSON.stringify({
+                           images,
+                           name,
+                           slug,
+                           price,
+                           regular_price,
+                           on_sale,
+                           categories,
+                           average_rating,
+                           tags,
+                           attributes,
+                           short_description,
+                           acf,
+                        })}
+                     >
                         <i data-feather="eye"></i>
                      </a>
                   </li>
                   <AddCompare inCard item={props} />
                   <li>
-                     <a href="wishlist.html" className="wishlist">
+                     <a onClick={addWislistHandle} className={`wishlist ${productLikedState.ids.includes(id) ? "liked" : ""}`}>
                         <i data-feather="heart"></i>
                      </a>
                   </li>
@@ -83,7 +142,12 @@ function ProductCard(props) {
                </Link>
                <div className="listing-content">
                   <span className="font-light">Jacket</span>
-                  <p className="font-light" dangerouslySetInnerHTML={{ __html: short_description }}></p>
+                  <p
+                     className="font-light"
+                     dangerouslySetInnerHTML={{
+                        __html: short_description,
+                     }}
+                  ></p>
                </div>
                <h3 className="theme-color">{conventToCurrency(price)}</h3>
                <button className="btn listing-content">Add To Cart</button>

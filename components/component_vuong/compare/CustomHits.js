@@ -15,7 +15,6 @@ function CustomHits() {
             <div className="row">
                <div className="col-12">
                   <Pagination
-                     totalPages={6}
                      padding={4}
                      showFirst={!isFirstPage}
                      showNext={false}

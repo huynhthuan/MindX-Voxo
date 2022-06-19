@@ -208,11 +208,7 @@
     /*=====================
        7. modal function
        ==========================*/
-    $("#quick-view").on("show.bs.modal", function (event) {
-        $(window).trigger("resize");
-        $(".quick-view-slider").slick("slickNext");
-        $(".quick-nav").slick("slickNext");
-    });
+   
 
     /*=====================
        8. Add to cart

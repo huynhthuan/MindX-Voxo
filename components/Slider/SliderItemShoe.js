@@ -80,40 +80,6 @@ export default function SliderItemShoe({ slideData }) {
                 <div className="sugestion-product d-xl-block d-none">
                     <h3>{slide_data.title}</h3>
                     <h6>{slide_data.subtitle}</h6>
-
-                    <Link href={'/product/' + product.slug}>
-                        <a className="slider-shoes-image d-block">
-                            <div className="relative-shoes">
-                                <img
-                                    src={product.image}
-                                    className="img-fluid blur-up lazyload"
-                                    alt={'shoe'}
-                                />
-                                <div className="shoes-price">
-                                    <h5>${product.regular_price}</h5>
-                                    <h6>{product.name}</h6>
-                                    <ul className="rating d-flex">
-                                        {new Array(5)
-                                            .fill(null)
-                                            .map((value, index) => (
-                                                <li key={index}>
-                                                    <i
-                                                        className={`fas fa-star ${
-                                                            index + 1 <=
-                                                            Number(
-                                                                product.average_rating
-                                                            )
-                                                                ? 'theme-color'
-                                                                : ''
-                                                        }`}
-                                                    ></i>
-                                                </li>
-                                            ))}
-                                    </ul>
-                                </div>
-                            </div>
-                        </a>
-                    </Link>
                 </div>
 
                 <div className="price-number">

@@ -1,13 +1,14 @@
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductCompare } from "../../../store/compare/compareSlice";
 import { getListCompare } from "../Common";
 
 function AddCompare({ item = {}, inCard }) {
+   const router = useRouter();
    const compareProduct = useSelector((state) => state.compare.entities);
    const listCompare = getListCompare(compareProduct);
    const dispatch = useDispatch();
-   const elementCloseModal = document.getElementById("close-modal");
    const infoCompareHTML = `<div class="bg-dark text-white p-3 m-2 rounded ">Please remove products to continue comparing!</div>`;
    const elementCompareBottom = document.getElementById("compare-bottom");
    const {
@@ -35,6 +36,8 @@ function AddCompare({ item = {}, inCard }) {
    const handleAddCompare = () => {
       let elementInfoCompare = document.getElementById("info-compare");
       const elementCompareBottom = document.getElementById("compare-bottom");
+      const elementCloseModal = document.getElementById("close-modal");
+
       !inCard && elementCloseModal.click();
       if (Object.values(compareProduct).length < 4) {
          dispatch(
@@ -60,7 +63,7 @@ function AddCompare({ item = {}, inCard }) {
                images,
             })
          );
-         elementCompareBottom.removeAttribute("hidden");
+         router.pathname !== "/compare" && elementCompareBottom.removeAttribute("hidden");
       } else {
          elementCompareBottom.removeAttribute("hidden");
          elementInfoCompare.innerHTML = infoCompareHTML;
@@ -77,7 +80,7 @@ function AddCompare({ item = {}, inCard }) {
    return (
       <>
          {inCard ? (
-            <li onClick={handleAddCompare} role="button">
+            <li onClick={handleAddCompare} role="button" className="mx-2">
                <a>
                   <i data-feather="refresh-cw"></i>
                </a>
