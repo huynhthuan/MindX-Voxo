@@ -57,7 +57,7 @@ export const getListCompare = (compareProduct) => [...Object.values(compareProdu
 
 export const updateDataAlgolia = async (index) => {
    const res = await fetchApi.get("/products?per_page=100");
-   console.log(`  ~ res.data`, res.data)
+   console.log(`  ~ res.data`, res.data);
    const objects = res.data.map((item, index) => {
       let {
          id,
@@ -78,13 +78,13 @@ export const updateDataAlgolia = async (index) => {
       regular_price = Number(regular_price);
       average_rating = Number(average_rating).toFixed(2);
       price = Number(price);
-      const objectID = id ;
-      const categories_product = categories.map(categorie=>categorie.name);
+      const objectID = id;
+      const categories_product = categories.map((categorie) => categorie.name);
       const discount = 1 - regular_price / price;
-      const attributes_color=attributes[0].options
-      const attributes_size=attributes[1].options
-      const attributes_brand=attributes[2].options
-      const material=name[0]
+      const attributes_color = attributes[0].options;
+      const attributes_size = attributes[1].options;
+      const attributes_brand = attributes[2].options;
+      const material = name[0];
 
       return {
          id,
@@ -105,7 +105,7 @@ export const updateDataAlgolia = async (index) => {
          attributes_color,
          attributes_size,
          attributes_brand,
-         date:date_created,
+         date: date_created,
          material,
       };
    });

@@ -15,15 +15,6 @@ function CustomSearchBoxNavBar() {
       functionJquerySearchFull();
    }, []);
 
-   // useEffect(() => {
-   //    const refValue = ref.current.value;
-   //    refine(refValue);
-
-   //    return () => {
-   //       clear();
-   //    };
-   // }, [router.pathname]);
-
    const handleSearch = (e) => {
       timer && clearTimeout(timer);
       timer = setTimeout(() => {
