@@ -6,7 +6,7 @@ const RelatedPostsItem = ({ postSlug }) => {
     const { error, data, isFetching } = useDetailPost(postSlug);
 
     if (error) return 'An error has occurred: ' + error.message;
-
+    console.log(data);
     return (
         <div>
             {isFetching || !data ? null : (
@@ -14,13 +14,8 @@ const RelatedPostsItem = ({ postSlug }) => {
                     <Link href={'/blog/posts/' + data?.data[0].slug}>
                         <a className="blog-img">
                             <img
-                                src={
-                                    data.data[0]._embedded[
-                                        'wp:featuredmedia'
-                                    ][0].media_details.sizes.medium_large
-                                        .source_url
-                                }
-                                alt=""
+                                src={data.data[0].feature_image_url}
+                                alt={data.data[0].title.rendered}
                                 className="card-img-top blur-up lazyload bg-img"
                             />
                         </a>

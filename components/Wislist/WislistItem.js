@@ -29,14 +29,20 @@ export default function WislistItem({
     return (
         <tr>
             <td>
-                <a href="product-left-sidebar.html">
-                    <img src={image} className="blur-up lazyload" alt={name} />
-                </a>
+                <Link href={'/product/' + slug}>
+                    <a>
+                        <img
+                            src={image}
+                            className="blur-up lazyload"
+                            alt={name}
+                        />
+                    </a>
+                </Link>
             </td>
             <td>
-                <a href={'/product/' + slug} className="font-light">
-                    {name}
-                </a>
+                <Link href={'/product/' + slug}>
+                    <a className="font-light">{name}</a>
+                </Link>
                 <div className="mobile-cart-content row">
                     <div className="col">
                         <p>{stock_status}</p>

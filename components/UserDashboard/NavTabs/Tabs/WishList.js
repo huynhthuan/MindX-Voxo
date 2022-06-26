@@ -1,61 +1,9 @@
-import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { toast } from 'react-toastify';
-import {
-    useMyWishList,
-    useProducts,
-    useProductVariations,
-} from '../../../../reactQueryHook';
+import { useSelector } from 'react-redux';
 import WishListItem from './WishList/WishListItem';
 
 function WishList() {
-    const { isLoading, isError, error, data, isFetching } = useMyWishList();
-    const {
-        isLoading: isLoadingProduct,
-        isError: isErrorProduct,
-        error: errorProduct,
-        data: dataProducts,
-        isFetching: isFetchingProduct,
-    } = useProducts({
-        include: data?.data.map((item, index) => item.product_id),
-    });
-
-    const orderProductQueries = useProductVariations(
-        data?.data.map((item, index) => {
-            return {
-                productId: item.product_id,
-                productVariationId: item.variation_id,
-            };
-        })
-    );
-
-    useEffect(() => {
-        if (isError) {
-            toast.error(error, {
-                position: 'bottom-left',
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
-    }, [isError]);
-
-    useEffect(() => {
-        if (isErrorProduct) {
-            toast.error(errorProduct, {
-                position: 'bottom-left',
-                autoClose: 2000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
-        }
-    }, [isErrorProduct]);
+    const wishListState = useSelector((state) => state.productLiked);
 
     return (
         <div
@@ -77,22 +25,12 @@ function WishList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {isLoadingProduct ||
-                        isFetchingProduct ||
-                        isErrorProduct ? (
-                            <tr>
-                                <td colSpan={5}>
-                                    <Skeleton count={1} />
-                                </td>
-                            </tr>
-                        ) : orderProductQueries.length > 0 ? (
-                            orderProductQueries.map((query, index) => (
-                                <WishListItem
-                                    key={index}
-                                    productQuery={query}
-                                    productsWishList={dataProducts}
-                                />
-                            ))
+                        {wishListState.ids.length > 0 ? (
+                            Object.values(wishListState.entities).map(
+                                (item, index) => (
+                                    <WishListItem key={index} item={item} />
+                                )
+                            )
                         ) : (
                             <tr>
                                 <td colSpan={5}>
@@ -102,6 +40,7 @@ function WishList() {
                                 </td>
                             </tr>
                         )}
+                        {}
                     </tbody>
                 </table>
             </div>

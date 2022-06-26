@@ -6,9 +6,9 @@ import PostCard from '../../components/Posts/PostCard';
 import Sidebar from '../../components/Blog/Sidebar';
 import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
 import { useBlogListNewPost } from '../../src/api_minhhieu/bloglistApi';
+import Breadcrumb from '../../components/Common/BreadCrumb';
 
 function Blog() {
-
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -38,12 +38,14 @@ function Blog() {
         })(jQuery);
         feather.replace();
     }, []);
-    
+
     const router = useRouter();
     const page = router.query.page ? router.query.page : 1;
 
-    const { isLoading, error, data, isFetching, refetch } = useBlogListNewPost({ page });
-    
+    const { isLoading, error, data, isFetching, refetch } = useBlogListNewPost({
+        page,
+    });
+
     useEffect(() => {
         refetch();
     }, [page]);
@@ -57,45 +59,7 @@ function Blog() {
             <Head>
                 <title>Blog Listing</title>
             </Head>
-            {/* Breadcrumb section start */}
-            <section className="breadcrumb-section section-b-space">
-                <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <h3>New Post</h3>
-                            <nav>
-                                <ol className="breadcrumb">
-                                    <li className="breadcrumb-item">
-                                        <a href="index.html">
-                                            <i className="fas fa-home"></i>
-                                        </a>
-                                    </li>
-                                    <li
-                                        className="breadcrumb-item active"
-                                        aria-current="page"
-                                    >
-                                        New Post
-                                    </li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            {/* Breadcrumb section end */}
-
+            <Breadcrumb title={'Blog'} />
             {/* Blog Section Start */}
             <section className="left-sidebar-section masonary-blog-section">
                 <div className="container">
@@ -103,20 +67,27 @@ function Blog() {
                         <div className="col-lg-9 col-md-7 order-md-1 ratio_square">
                             <div className="row g-4 g-xl-5">
                                 {/* minhhieu */}
-                                {
-                                    isLoading
-                                        ?
-                                            Array(8).fill(0).map((item, index) => {
-                                                return <NewPostBlogListSkeleton key={index}/>
-                                            })
-                                        :
-
-                                            data.responseInfo && data.responseInfo.map( (item,index) => {
-                                                return <div className="col-12" key={index}>
-                                                    <PostCard {...item}/>
-                                                </div>
-                                            })
-                                }
+                                {isLoading
+                                    ? Array(8)
+                                          .fill(0)
+                                          .map((item, index) => {
+                                              return (
+                                                  <NewPostBlogListSkeleton
+                                                      key={index}
+                                                  />
+                                              );
+                                          })
+                                    : data.responseInfo &&
+                                      data.responseInfo.map((item, index) => {
+                                          return (
+                                              <div
+                                                  className="col-12"
+                                                  key={index}
+                                              >
+                                                  <PostCard {...item} />
+                                              </div>
+                                          );
+                                      })}
                             </div>
                         </div>
 
@@ -139,11 +110,13 @@ function Blog() {
                                         <div
                                             className="page-link"
                                             onClick={() => {
-                                                if ( page > 1 ) {
+                                                if (page > 1) {
                                                     router.push({
-                                                        pathname:'/blog',
-                                                        query: {page: page * 1 - 1}
-                                                    })
+                                                        pathname: '/blog',
+                                                        query: {
+                                                            page: page * 1 - 1,
+                                                        },
+                                                    });
                                                 }
                                             }}
                                         >
@@ -153,35 +126,51 @@ function Blog() {
                                         </div>
                                     </li>
                                     {/* minhhieu */}
-                                    {
-                                        !isLoading
-                                            && 
-                                                data?.totalPage && 
-                                                    Array(data.totalPage * 1).fill(0).map((item, index) => {
-                                                        return <li className={"page-item " + ( index+1 == page ? "active" : "" )} key={index}>
-                                                            <div
-                                                                className="page-link"
-                                                                onClick={() => {
-                                                                    router.push({
-                                                                        pathname:'/blog',
-                                                                        query: {page: index + 1}
-                                                                    })
-                                                                }}
-                                                            >
-                                                                {index+1}
-                                                            </div>
-                                                        </li>
-                                                    })
-                                    }
+                                    {!isLoading &&
+                                        data?.totalPage &&
+                                        Array(data.totalPage * 1)
+                                            .fill(0)
+                                            .map((item, index) => {
+                                                return (
+                                                    <li
+                                                        className={
+                                                            'page-item ' +
+                                                            (index + 1 == page
+                                                                ? 'active'
+                                                                : '')
+                                                        }
+                                                        key={index}
+                                                    >
+                                                        <div
+                                                            className="page-link"
+                                                            onClick={() => {
+                                                                router.push({
+                                                                    pathname:
+                                                                        '/blog',
+                                                                    query: {
+                                                                        page:
+                                                                            index +
+                                                                            1,
+                                                                    },
+                                                                });
+                                                            }}
+                                                        >
+                                                            {index + 1}
+                                                        </div>
+                                                    </li>
+                                                );
+                                            })}
                                     <li className="page-item">
-                                        <div 
+                                        <div
                                             className="page-link"
                                             onClick={() => {
-                                                if ( page < data.totalPage * 1 ) {
+                                                if (page < data.totalPage * 1) {
                                                     router.push({
-                                                        pathname:'/blog',
-                                                        query: {page: page * 1 + 1}
-                                                    })
+                                                        pathname: '/blog',
+                                                        query: {
+                                                            page: page * 1 + 1,
+                                                        },
+                                                    });
                                                 }
                                             }}
                                         >

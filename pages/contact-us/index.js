@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import Breadcrumb from '../../components/Common/BreadCrumb';
 import SubscribeBox from '../../components/Common/SubscribeBox';
-import {CONTACT_US} from '../../utils/api_minhhieu/index';
+import { CONTACT_US } from '../../utils/api_minhhieu/index';
 import axios from 'axios';
-
 
 function ContactUs() {
     useEffect(() => {
@@ -37,63 +36,63 @@ function ContactUs() {
     }, []);
 
     const [contactForm, setContactForm] = useState({
-        'first-name':'',
-        'last-name':'',
-        'your-email':'',
-        'your-confirm-email':'',
-        'your-comment':''
+        'first-name': '',
+        'last-name': '',
+        'your-email': '',
+        'your-confirm-email': '',
+        'your-comment': '',
     });
     const [formErrors, setFormErrors] = useState({});
     const [isSubmit, setIsSubmit] = useState(false);
     const [disableSubmit, setDisableSubmit] = useState(false);
     const [submitResult, setSubmitResult] = useState({
-        text:'',
-        showResult:false
+        text: '',
+        showResult: false,
     });
     const [showLoading, setShowLoading] = useState(false);
 
     useEffect(() => {
-
         if (Object.keys(formErrors).length === 0 && isSubmit) {
-            setDisableSubmit(true);   
-            setShowLoading(true);                                              
+            setDisableSubmit(true);
+            setShowLoading(true);
 
-            let data = new FormData();
-            data.append("first-name", 'sdfjhdsf');
-            data.append("last-name", 'sdfsdfsd');
-            data.append("your-email", 'hieudm112@gmail.com');
-            data.append("your-comment", 'skjdfkjdf');
+            let formData = new FormData();
+            formData.append('first-name', contactForm['first-name']);
+            formData.append('last-name', contactForm['last-name']);
+            formData.append('your-email', contactForm['your-email']);
+            formData.append('your-comment', contactForm['your-comment']);
 
-            axios({
-                method: 'POST',
-                url: CONTACT_US,
-                data: data
+            fetch(CONTACT_US, {
+                body: formData,
+                method: 'post',
             })
-            .then( res => {
-                setDisableSubmit(false);
-                setShowLoading(false);  
-                if (res.status === 200) {
-                    if (res.data.status === "mail_sent") {
-                        console.log("Submit contact successed");
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data);
+                    setDisableSubmit(false);
+                    setShowLoading(false);
+                    if (data.status === 'mail_sent') {
+                        console.log('Submit contact successed');
                         setContactForm({
-                                'first-name':'',
-                                'last-name':'',
-                                'your-email':'',
-                                'your-confirm-email':'',
-                                'your-comment':''
+                            'first-name': '',
+                            'last-name': '',
+                            'your-email': '',
+                            'your-confirm-email': '',
+                            'your-comment': '',
                         });
-                        setSubmitResult({text:'Sending email successed',showResult:true});
+                        setSubmitResult({
+                            text: 'Sending email successed',
+                            showResult: true,
+                        });
                     } else {
-                        console.log("Submit contact failed");
-                        setSubmitResult({text:'Sending email failed, please try later',showResult:true});
+                        console.log('Submit contact failed');
+                        setSubmitResult({
+                            text: 'Sending email failed, please try later',
+                            showResult: true,
+                        });
                     }
-                } else {
-                    setSubmitResult({text:'Email can not be send, please try later',showResult:true});
-                }
-            })
+                });
         }
-
-
     }, [formErrors]);
 
     const validate = (values) => {
@@ -101,11 +100,10 @@ function ContactUs() {
         const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         setDisableSubmit(false);
 
-        if (!values['first-name']) 
+        if (!values['first-name'])
             errors['first-name'] = 'First name is required';
 
-        if (!values['last-name'])
-            errors['last-name'] = 'Last name is required';
+        if (!values['last-name']) errors['last-name'] = 'Last name is required';
 
         if (!values['your-email']) {
             errors['your-email'] = 'Email is required';
@@ -115,7 +113,7 @@ function ContactUs() {
 
         if (!values['your-confirm-email']) {
             errors['your-confirm-email'] = 'Confirm email is required';
-        } else  if (values['your-confirm-email'] !== values['your-email']) {
+        } else if (values['your-confirm-email'] !== values['your-email']) {
             errors['your-confirm-email'] = 'Confirm email is incorrect';
         }
 
@@ -123,19 +121,19 @@ function ContactUs() {
             errors['your-comment'] = 'Enter your comment to submit';
 
         return errors;
-    }
+    };
 
     const handlecontactFormPropertiesChange = (e) => {
-        const {name,value} = e.target;
-        setContactForm({...contactForm, [name]:value}); 
-    }
+        const { name, value } = e.target;
+        setContactForm({ ...contactForm, [name]: value });
+    };
 
     const handleSubmit = () => {
-        setSubmitResult({...submitResult,showResult:false});
+        setSubmitResult({ ...submitResult, showResult: false });
         setDisableSubmit(true);
         setFormErrors(validate(contactForm));
         setIsSubmit(true);
-    }
+    };
 
     return (
         <>
@@ -163,7 +161,7 @@ function ContactUs() {
                                             htmlFor="first"
                                             className="form-label"
                                         >
-                                            First Name 
+                                            First Name
                                         </label>
                                         <input
                                             value={contactForm['first-name']}
@@ -171,18 +169,22 @@ function ContactUs() {
                                             className="form-control"
                                             id="first"
                                             placeholder="Enter Your First Name"
-                                            name='first-name'
+                                            name="first-name"
                                             required
-                                            onChange={handlecontactFormPropertiesChange}
+                                            onChange={
+                                                handlecontactFormPropertiesChange
+                                            }
                                         />
-                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['first-name']}</div>
+                                        <div className="position-absolute top-100 theme-color mt-1">
+                                            {formErrors['first-name']}
+                                        </div>
                                     </div>
                                     <div className="col-md-6 position-relative">
                                         <label
                                             htmlFor="last"
                                             className="form-label"
                                         >
-                                            Last Name 
+                                            Last Name
                                         </label>
                                         <input
                                             value={contactForm['last-name']}
@@ -191,17 +193,21 @@ function ContactUs() {
                                             id="last"
                                             placeholder="Enter Your Last Name"
                                             required
-                                            name='last-name'
-                                            onChange={handlecontactFormPropertiesChange}
+                                            name="last-name"
+                                            onChange={
+                                                handlecontactFormPropertiesChange
+                                            }
                                         />
-                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['last-name']}</div>
+                                        <div className="position-absolute top-100 theme-color mt-1">
+                                            {formErrors['last-name']}
+                                        </div>
                                     </div>
                                     <div className="col-md-6 pt-lg-2 position-relative">
                                         <label
                                             htmlFor="email"
                                             className="form-label"
                                         >
-                                            Email 
+                                            Email
                                         </label>
                                         <input
                                             value={contactForm['your-email']}
@@ -210,10 +216,14 @@ function ContactUs() {
                                             id="email"
                                             placeholder="Enter Your Email Address"
                                             required
-                                            name='your-email'
-                                            onChange={handlecontactFormPropertiesChange}
+                                            name="your-email"
+                                            onChange={
+                                                handlecontactFormPropertiesChange
+                                            }
                                         />
-                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['your-email']}</div>
+                                        <div className="position-absolute top-100 theme-color mt-1">
+                                            {formErrors['your-email']}
+                                        </div>
                                     </div>
                                     <div className="col-md-6 pt-lg-2 position-relative">
                                         <label
@@ -223,16 +233,24 @@ function ContactUs() {
                                             Confirm Email
                                         </label>
                                         <input
-                                            value={contactForm['your-confirm-email']}
+                                            value={
+                                                contactForm[
+                                                    'your-confirm-email'
+                                                ]
+                                            }
                                             type="email"
                                             className="form-control"
                                             id="email2"
                                             placeholder="Enter Your Confirm Email Address"
                                             required
-                                            name='your-confirm-email'
-                                            onChange={handlecontactFormPropertiesChange}
+                                            name="your-confirm-email"
+                                            onChange={
+                                                handlecontactFormPropertiesChange
+                                            }
                                         />
-                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['your-confirm-email']}</div>
+                                        <div className="position-absolute top-100 theme-color mt-1">
+                                            {formErrors['your-confirm-email']}
+                                        </div>
                                     </div>
 
                                     <div className="col-12 position-relative pt-2">
@@ -248,10 +266,14 @@ function ContactUs() {
                                             id="comment"
                                             rows="5"
                                             required
-                                            name='your-comment'
-                                            onChange={handlecontactFormPropertiesChange}
+                                            name="your-comment"
+                                            onChange={
+                                                handlecontactFormPropertiesChange
+                                            }
                                         ></textarea>
-                                        <div className='position-absolute top-100 theme-color mt-1'>{formErrors['your-comment']}</div>
+                                        <div className="position-absolute top-100 theme-color mt-1">
+                                            {formErrors['your-comment']}
+                                        </div>
                                     </div>
                                     <div className="col-auto pt-2 position-relative">
                                         <button
@@ -262,13 +284,24 @@ function ContactUs() {
                                         >
                                             Submit
                                         </button>
-                                        <div hidden={!showLoading} className='position-absolute start-100 top-50 mt-2 ms-2 translate-middle-y'>
-                                            <div className="spinner-border text-secondary" role="status">
-                                                <span className="visually-hidden">Loading...</span>
+                                        <div
+                                            hidden={!showLoading}
+                                            className="position-absolute start-100 top-50 mt-2 ms-2 translate-middle-y"
+                                        >
+                                            <div
+                                                className="spinner-border text-secondary"
+                                                role="status"
+                                            >
+                                                <span className="visually-hidden">
+                                                    Loading...
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='col-12' hidden={!submitResult.showResult}>
+                                    <div
+                                        className="col-12"
+                                        hidden={!submitResult.showResult}
+                                    >
                                         <div className="alert alert-warning">
                                             {submitResult.text}
                                         </div>

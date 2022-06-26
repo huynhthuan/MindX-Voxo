@@ -17,22 +17,21 @@ function Footer() {
                             <div className="col-xl-3 col-lg-4 col-md-6">
                                 <div className="footer-contact">
                                     <div className="brand-logo">
-                                        <a
-                                            href="index.html"
-                                            className="footer-logo"
-                                        >
-                                            <svg className="svg-icon">
-                                                <use
-                                                    className="fill-color"
-                                                    xlinkHref="/svg/icons.svg#logo"
-                                                ></use>
-                                            </svg>
-                                            <img
-                                                src="/images/logo.png"
-                                                className="img-fluid blur-up lazyload"
-                                                alt="logo"
-                                            />
-                                        </a>
+                                        <Link href={'/'}>
+                                            <a className="footer-logo">
+                                                <svg className="svg-icon">
+                                                    <use
+                                                        className="fill-color"
+                                                        xlinkHref="/svg/icons.svg#logo"
+                                                    ></use>
+                                                </svg>
+                                                <img
+                                                    src="/images/logo.png"
+                                                    className="img-fluid blur-up lazyload"
+                                                    alt="logo"
+                                                />
+                                            </a>
+                                        </Link>
                                     </div>
                                     <ul className="contact-lists">
                                         <li>
@@ -181,31 +180,10 @@ function Footer() {
                             <div className="col-xl-3 col-lg-4 col-sm-6 d-none d-sm-block">
                                 <div className="footer-newsletter">
                                     <h3>Let’s stay in touch</h3>
-                                    <form
-                                        className="form-newsletter  needs-validation"
-                                        method="post"
-                                        id="mc-embedded-subscribe-form"
-                                        name="mc-embedded-subscribe-form"
-                                        target="_blank"
-                                    >
-                                        <div className="input-group mb-4">
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="Your Email Address"
-                                            />
-                                            <span
-                                                className="input-group-text"
-                                                id="basic-addon4"
-                                            >
-                                                <i className="fas fa-arrow-right"></i>
-                                            </span>
-                                        </div>
-                                        <p className="font-dark mb-0">
-                                            Keep up to date with our latest news
-                                            and special offers.
-                                        </p>
-                                    </form>
+                                    <p className="font-dark mb-0">
+                                        Keep up to date with our latest news and
+                                        special offers.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -265,25 +243,6 @@ function Footer() {
                 </div>
             </footer>
             {/* footer end */}
-
-            {/* recently purchase product */}
-            <div className="recently-purchase d-md-flex d-none">
-                <img
-                    src="/images/fashion/instagram/3.jpg"
-                    alt="img-fluid blur-up lazyload"
-                />
-                <div className="media-body">
-                    <div>
-                        <h4>Some recently purchase this item</h4>
-                        <a href="undefined">
-                            <span className="product-name">Floral Dress</span>
-                        </a>
-                        <small className="timeAgo">50 minutes ago</small>
-                    </div>
-                </div>
-                <a href="undefined" className="close-popup fa fa-times"></a>
-            </div>
-            {/* recently purchase product */}
 
             {/* Quick view modal start */}
             <ModalQuickView />

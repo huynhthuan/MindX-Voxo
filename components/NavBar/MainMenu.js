@@ -73,6 +73,13 @@ function MainMenu() {
                                 </a>
                             </Link>
                         </li>
+                        <li>
+                            <Link href="/about-us">
+                                <a className="nav-link menu-title">
+                                    About us
+                                </a>
+                            </Link>
+                        </li>
                         <li className="mobile-poster d-flex d-xl-none">
                             <img
                                 src="/images/pwa.png"

@@ -66,6 +66,24 @@ const wooApi = {
             params,
         });
     },
+    getCoupon: (params) => {
+        const url = '/coupons';
+        return wooClient.get(url, { params });
+    },
+    getPaymentMethods: () => {
+        const url = '/payment_gateways';
+        return wooClient.get(url);
+    },
+
+    createOrder: (params) => {
+        const url = '/orders';
+        return wooClient.post(url, params);
+    },
+
+    createOrderNote: (orderId, params) => {
+        const url = '/orders/' + orderId + '/notes';
+        return wooClient.post(url, null, { params });
+    },
 };
 
 export default wooApi;

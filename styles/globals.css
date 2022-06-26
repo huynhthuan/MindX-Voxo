@@ -876,3 +876,68 @@ head title {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.left-side .popular-post .popular-image .popular-contain h3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.left-side .popular-post .popular-image .popular-contain {
+    flex: 1;
+}
+
+.page-section {
+    padding: 5px 0;
+}
+
+.masonary-blog-section .masonary-blog img {
+    height: 244px;
+}
+
+.form-control:focus {
+    background-color: white;
+}
+
+.related-post .blog-categority .blog-img {
+    height: 211px;
+}
+
+.details-items .color-image .image-select .image-section {
+    width: unset;
+}
+
+.details-items .color-image .image-select .image-section li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.details-items .color-image .image-select .image-section li.active {
+    box-shadow: 0 1px 6px rgb(0 0 0);
+}
+
+.cart-menu .custom-scroll {
+    max-height: 450px;
+    overflow-y: auto;
+}
+
+.cart-table tbody tr td a:hover,
+.btn-remove-product-cart {
+    color: #e22454;
+    cursor: pointer;
+}
+
+.btn-remove-all:hover {
+    cursor: pointer;
+}
+
+.btn-remove-coupon:hover {
+    color: #e22454;
+    cursor: pointer;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    background-color: #e22454;
+}

@@ -1,12 +1,48 @@
-import React from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 
-function SelectSize({ attributes }) {
+function SelectSize({ attributes }, ref) {
+    const [sizeSelect, setSizeSelect] = useState('');
+    const [qty, setQty] = useState(1);
     const handleClick = (item, key, e) => {
+        setSizeSelect(item);
         const element = document.getElementsByClassName('size-item');
         Array.from(element).map((item) => item.classList.remove('active'));
         e.target.parentElement.classList.add('active');
-        // router.push("/product/" + slug + "?id=" + id);
     };
+
+    useImperativeHandle(ref, () => ({
+        getSize: () => sizeSelect,
+        getQty: () => qty,
+    }));
+
+    const plusQty = () => {
+        setQty((prev) => {
+            if (prev >= 99) {
+                return 99;
+            } else {
+                return prev + 1;
+            }
+        });
+    };
+
+    const minusQty = () => {
+        setQty((prev) => {
+            if (prev <= 1) {
+                return 1;
+            } else {
+                return prev - 1;
+            }
+        });
+    };
+
+    const changeQty = (qtyNumber) => {
+        if (qtyNumber >= 99) {
+            setQty(99);
+        } else {
+            setQty(qtyNumber);
+        }
+    };
+
     return (
         <div
             id="selectSize"
@@ -39,6 +75,7 @@ function SelectSize({ attributes }) {
                             className="btn quantity-left-minus"
                             data-type="minus"
                             data-field=""
+                            onClick={minusQty}
                         >
                             <i className="fas fa-minus"></i>
                         </button>
@@ -47,7 +84,10 @@ function SelectSize({ attributes }) {
                         type="text"
                         name="quantity"
                         className="form-control input-number"
-                        defaultValue="1"
+                        value={qty}
+                        onChange={(e) => {
+                            changeQty(Number(e.target.value));
+                        }}
                     />
                     <span className="input-group-prepend">
                         <button
@@ -55,6 +95,7 @@ function SelectSize({ attributes }) {
                             className="btn quantity-right-plus"
                             data-type="plus"
                             data-field=""
+                            onClick={plusQty}
                         >
                             <i className="fas fa-plus"></i>
                         </button>
@@ -65,4 +106,4 @@ function SelectSize({ attributes }) {
     );
 }
 
-export default SelectSize;
+export default forwardRef(SelectSize);

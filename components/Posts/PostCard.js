@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 function PostCard({ id, title, excerpt, slug }) {
-    const { isLoading, error, data, refetch, isFetching } = useQuery(
-        'media',
+    const { isLoading, error, data, isFetching } = useQuery(
+        ['media', id],
         async () => {
             const res = await fetch(BLOG_LIST + id + '?_embed');
 
@@ -39,10 +39,6 @@ function PostCard({ id, title, excerpt, slug }) {
         }
     }, [isLoading, isFetching]);
 
-    useEffect(() => {
-        refetch();
-    }, [slug]);
-
     if (error) return 'An error has occurred: ' + error.message;
 
     return (
@@ -62,7 +58,7 @@ function PostCard({ id, title, excerpt, slug }) {
             )}
 
             <div className="card-body card-body-width">
-                <h6 className="masonary-name">PRODUCT UPDATE</h6>
+                {/* <h6 className="masonary-name">PRODUCT UPDATE</h6> */}
                 <Link href={`/blog/posts/${slug}`}>
                     <a>
                         <h2 className="card-title">{title.rendered}</h2>

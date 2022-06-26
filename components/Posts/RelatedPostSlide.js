@@ -51,7 +51,7 @@ function RelatedPostSlide({ info }) {
     // if (error) return 'An error has occurred: ' + error.message;
 
     return (
-        <section className="section-b-space block-shadow-space ratio3_2">
+        <section className="section-b-space block-shadow-space ratio3_2 related-post">
             <div className="container">
                 {isFetching || !data ? (
                     <div className="row">

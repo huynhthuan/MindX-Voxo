@@ -13,6 +13,7 @@ import Slider from '../components/Home/Slider';
 import wooApi from '../src/api/woocommerce/wooApi';
 import customApi from '../src/api/wordpress/customApi';
 import { setWebData } from '../store/webData/webDataSlice';
+import axios from 'axios';
 
 export async function getStaticProps() {
     const res = await customApi.GetHomeData();
@@ -66,7 +67,7 @@ export async function getStaticProps() {
                         attributes: item.attributes,
                         date_created: item.date_created,
                         stock_status: item.stock_status,
-                        slug: item.slug
+                        slug: item.slug,
                     }))[0],
             };
         }),

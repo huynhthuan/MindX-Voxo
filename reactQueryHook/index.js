@@ -170,3 +170,23 @@ export const useUserUpdateAddress = () => {
         }
     );
 };
+
+export const useCoupon = (code) => {
+    return useQuery(
+        ['Coupon', code],
+        async () =>
+            await wooApi.getCoupon({
+                code,
+            }),
+        {
+            select: (data) => (!data.data[0] ? null : data.data[0]),
+        }
+    );
+};
+
+export const usePaymentMethods = () => {
+    return useQuery(
+        ['PaymentMethods'],
+        async () => await wooApi.getPaymentMethods()
+    );
+};

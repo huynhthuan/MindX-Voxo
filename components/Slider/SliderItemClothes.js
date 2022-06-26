@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function SliderItemClothes({ slideData }) {
     const { product_data: product, slide_data } = slideData;
-    console.log(product);
+
     return (
         <div>
             <div className="home-slider">

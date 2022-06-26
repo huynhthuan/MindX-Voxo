@@ -2,26 +2,7 @@ import { Fragment, useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { getAttributeValueByKey } from '../../../../../utils/helpers';
 
-function LineItem({ itemQuery, lineItems }) {
-    const { isLoading, isError, isFetching, error, data } = itemQuery;
-    const [productData, setProductData] = useState(undefined);
-
-    useEffect(() => {
-        if (data && lineItems) {
-            const { id, sku, image } = data.data;
-            const lineItem = lineItems.filter(
-                (item, index) => item.variation_id === id
-            )[0];
-
-            setProductData({
-                id,
-                sku,
-                image,
-                lineItem,
-            });
-        }
-    }, [data, lineItems]);
-
+function LineItem({ item, linesItem }) {
     useEffect(() => {
         (function ($) {
             'use strict';
@@ -51,60 +32,41 @@ function LineItem({ itemQuery, lineItems }) {
         })(jQuery);
 
         feather.replace();
-    }, [productData]);
+    }, [item]);
 
-    return isLoading || isError || isFetching || !productData ? (
+    let currentItem = linesItem.filter(
+        (product, index) => product.product_id === item.id
+    )[0];
+
+    return !item ? (
         <Skeleton />
     ) : (
         <div className="order-left-image ratio_asos mb-3">
             <div className="tracking-product-image">
                 <img
-                    src={productData.image.src}
+                    src={item.images[0].src}
                     className="img-fluid bg-img blur-up lazyload"
-                    alt={productData.lineItem.name}
+                    alt={item.name}
                 />
             </div>
 
             <div className="order-image-contain">
-                <h4>{productData.lineItem.name}</h4>
+                <h4>{item.name}</h4>
 
                 <div className="tracker-number">
                     <div className="row">
                         <div className="col-md-4">
                             <p className="font-light">
-                                Sku:<span>{productData.sku}</span>
+                                Sku:<span>{item.sku}</span>
                             </p>
                             <p className="font-light">
                                 Quantity:
-                                <span>{productData.lineItem.quantity}</span>
+                                <span>{currentItem.quantity}</span>
                             </p>
                         </div>
                         <div className="col-md-4">
-                            <p className="font-light">
-                                Brand:<span>Van Heusen</span>
-                            </p>
                             <p className="font-light mb-0">
-                                Price:<span>${productData.lineItem.subtotal}</span>
-                            </p>
-                        </div>
-                        <div className="col-md-4">
-                            <p className="font-light">
-                                Size:
-                                <span>
-                                    {getAttributeValueByKey(
-                                        'pa_size',
-                                        productData.lineItem.meta_data
-                                    )}
-                                </span>
-                            </p>
-                            <p className="font-light mb-0">
-                                Color:
-                                <span>
-                                    {getAttributeValueByKey(
-                                        'pa_color',
-                                        productData.lineItem.meta_data
-                                    )}
-                                </span>
+                                Subtotal:<span>${currentItem.subtotal}</span>
                             </p>
                         </div>
                     </div>

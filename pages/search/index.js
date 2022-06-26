@@ -5,7 +5,7 @@ import PostCard from '../../components/Posts/PostCard';
 import { useSearchPosts } from '../../src/api_minhhieu/searchPostsApi';
 import { useRouter } from 'next/router';
 import { NewPostBlogListSkeleton } from '../../components/Skeleton_minhhieu';
-import Pagination from './Pagination';
+import Pagination from '../../components/Blog/Pagination';
 
 function Search() {
     const router = useRouter();

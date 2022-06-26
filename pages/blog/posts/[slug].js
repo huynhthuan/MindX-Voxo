@@ -20,8 +20,6 @@ function BlogDetail() {
     //Get data bài viết
     const { isLoading, error, data, isFetching } = useDetailPost(slug);
 
-    console.log(data);
-
     if (error) {
         router.push('/404');
     }

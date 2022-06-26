@@ -1,55 +1,56 @@
 import { useRef, useState } from 'react';
 import axios from 'axios';
-import {SUBSCRIBE_EMAIL} from '../../utils/api_minhhieu/index';
+import { SUBSCRIBE_EMAIL } from '../../utils/api_minhhieu/index';
 import AlertNotification from './AlertNotification';
 
 function SubscribeBox() {
-
     const userEmail = useRef();
     const [emailInvalid, setEmailInValid] = useState(false);
-    const [alertInfor,setAlertInfo] = useState({
-        result:false,
-        text:'',
-        displayTime:0
-    }) ;
+    const [alertInfor, setAlertInfo] = useState({
+        result: false,
+        text: '',
+        displayTime: 0,
+    });
 
     const handleSubcribe = () => {
-        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(userEmail.current.value))
-        {
+        if (
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+                userEmail.current.value
+            )
+        ) {
             setEmailInValid(false);
             const formData = new FormData();
-            formData.append("your-email",userEmail.current.value);
-            axios({
-                url: SUBSCRIBE_EMAIL,
-                data: formData,
-                method: 'POST',
-                headers: { "Content-Type": "multipart/form-data" },
+            formData.append('your-email', userEmail.current.value);
+
+            fetch(SUBSCRIBE_EMAIL, {
+                body: formData,
+                method: 'post',
             })
-            .then( res => {
-                if (res.status === 200) {
-                    console.log(res);
-                    setAlertInfo({
-                        result:true,
-                        text:'Subscribe successfull',
-                        displayTime:3000
-                    })
-                } else {
-                    setAlertInfo({
-                        result:false,
-                        text:'Subscribe Failed',
-                        displayTime:3000
-                    })
-                }
-            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.status === 'mail_sent') {
+                        userEmail.current.value = '';
+                        setAlertInfo({
+                            result: true,
+                            text: 'Subscribe successfull',
+                            displayTime: 3000,
+                        });
+                    } else {
+                        setAlertInfo({
+                            result: false,
+                            text: 'Subscribe Failed',
+                            displayTime: 3000,
+                        });
+                    }
+                });
         } else {
             setEmailInValid(true);
         }
-        
-    }
+    };
 
     return (
         <section className="subscribe-section section-b-space">
-            <AlertNotification alertInfor={alertInfor}/>
+            <AlertNotification alertInfor={alertInfor} />
             <div className="container">
                 <div className="row">
                     <div className="col-lg-8 col-md-6">
@@ -65,7 +66,12 @@ function SubscribeBox() {
                     <div className="col-lg-4 col-md-6 mt-md-0 mt-3">
                         <div className="subsribe-input">
                             <div className="input-group position-relative">
-                                <div className='theme-color position-absolute bottom-100' hidden={!emailInvalid}>Email is invalid</div>
+                                <div
+                                    className="theme-color position-absolute bottom-100"
+                                    hidden={!emailInvalid}
+                                >
+                                    Email is invalid
+                                </div>
                                 <input
                                     ref={userEmail}
                                     type="text"
