@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function ModalQuickView() {
     const [product, setProduct] = useState({});
-
+ 
     useEffect(() => {
         $('#quick-view').on('show.bs.modal', function (event) {
             $(window).trigger('resize');
@@ -19,6 +19,8 @@ export default function ModalQuickView() {
             $('#quick-view').off('show.bs.modal');
         };
     }, []);
+
+    console.log(product);
 
     return (
         <div className="modal fade quick-view-modal" id="quick-view">
@@ -40,7 +42,7 @@ export default function ModalQuickView() {
                                         regular_price={product.regular_price}
                                     />
                                     <ModalSliderQuickView
-                                        image={product?.acf?.front_image}
+                                        image={product.images && product?.images[0]}
                                     />
                                 </div>
                             </div>

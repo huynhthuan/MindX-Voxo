@@ -190,3 +190,17 @@ export const usePaymentMethods = () => {
         async () => await wooApi.getPaymentMethods()
     );
 };
+
+export const useProductCategories = (params) => {
+    return useQuery(
+        ['ProductCategories', { ...params }],
+        async () =>
+            await wooApi.getCategories({
+                ...params,
+            }),
+        {
+            enabled: !!params.slug,
+            select: (data) => data.data,
+        }
+    );
+};

@@ -64,14 +64,25 @@ function SmallCart() {
                             }
                         ).toFixed(2)}
                     </h6>
-                    <Link href="/cart">
-                        <button
-                            type="button"
-                            className="btn btn-solid-default btn-block"
-                        >
-                            Proceed to payment
-                        </button>
-                    </Link>
+                    {cartState.ids.length === 0 ? (
+                        <Link href="/product-category">
+                            <button
+                                type="button"
+                                className="btn btn-solid-default btn-block"
+                            >
+                                View more product
+                            </button>
+                        </Link>
+                    ) : (
+                        <Link href="/cart">
+                            <button
+                                type="button"
+                                className="btn btn-solid-default btn-block"
+                            >
+                                Proceed to payment
+                            </button>
+                        </Link>
+                    )}
                 </div>
             </div>
         </>

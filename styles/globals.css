@@ -941,3 +941,8 @@ head title {
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
     background-color: #e22454;
 }
+
+.quick-view-image .label{
+    position: absolute;
+    z-index: 999;
+}

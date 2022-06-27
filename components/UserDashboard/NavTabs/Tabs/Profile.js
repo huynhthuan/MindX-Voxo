@@ -196,7 +196,7 @@ function Profile() {
                 </li>
             </ul>
 
-            <div className="box-head mt-lg-5 mt-3">
+            {/* <div className="box-head mt-lg-5 mt-3">
                 <h3>Settings</h3>
             </div>
 
@@ -227,7 +227,7 @@ function Profile() {
                         <div className="label-switch ms-2">Light</div>
                     </div>
                 </li>
-            </ul>
+            </ul> */}
         </div>
     );
 }

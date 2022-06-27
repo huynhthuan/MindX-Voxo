@@ -56,20 +56,20 @@ function Dash() {
                             <h3>Account Information</h3>
                         </div>
                         <div className="row">
-                            <div className="col-sm-6">
+                            <div className="col-12">
                                 <div className="box">
-                                    <div className="box-title">
+                                    {/* <div className="box-title">
                                         <h4>Contact Information</h4>
                                         <button className="btn btn-danger btn-sm">
                                             Edit
                                         </button>
-                                    </div>
+                                    </div> */}
                                     <div className="box-content">
                                         <ContactInfor />
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-sm-6">
+                            {/* <div className="col-sm-6">
                                 <div className="box">
                                     <div className="box-title">
                                         <h4>Newsletters</h4>
@@ -84,7 +84,7 @@ function Dash() {
                                         </h6>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div>
                             <div className="box address-box">

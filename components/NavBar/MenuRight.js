@@ -52,7 +52,7 @@ function MenuRight() {
                         <i data-feather="search"></i>
                     </div>
                 </li>
-                <li className="btn-notifi">
+                {/* <li className="btn-notifi">
                     <PopoverNotificationCenter
                         onNotificationClick={onNotificationClick}
                     >
@@ -60,7 +60,7 @@ function MenuRight() {
                             <NotificationBell unseenCount={unseenCount} />
                         )}
                     </PopoverNotificationCenter>
-                </li>
+                </li> */}
                 <li className="onhover-dropdown">
                     <div className="cart-media">
                         {cookie ? (

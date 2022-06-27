@@ -196,7 +196,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ dataHome }) {
-    console.log(dataHome);
+    // console.log(dataHome);
 
     const dispatch = useDispatch();
 

@@ -244,9 +244,7 @@ function Footer() {
             </footer>
             {/* footer end */}
 
-            {/* Quick view modal start */}
             <ModalQuickView />
-            {/* Quick view modal end */}
 
             {/* tap to top Section Start */}
             <div className="tap-to-top">

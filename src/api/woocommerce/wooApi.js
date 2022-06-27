@@ -79,7 +79,6 @@ const wooApi = {
         const url = '/orders';
         return wooClient.post(url, params);
     },
-
     createOrderNote: (orderId, params) => {
         const url = '/orders/' + orderId + '/notes';
         return wooClient.post(url, null, { params });
