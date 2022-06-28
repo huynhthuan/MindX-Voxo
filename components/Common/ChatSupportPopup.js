@@ -1,81 +1,69 @@
-import { uniqueId } from 'lodash';
-import React, { useEffect, useRef } from 'react';
+import _, { uniqueId } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { useSelector } from 'react-redux';
 import Talk from 'talkjs';
+import { useSalesChat } from '../../reactQueryHook';
 import ChatSupportItem from './ChatSupportItem';
 
 export default function ChatSupportPopup() {
     const { user: currentUser } = useSelector((state) => state.auth);
     const chatPopup = useRef();
-    // useEffect(() => {
-    // Talk.ready.then(() => {
-    //     let me;
-    //     if (currentUser.id) {
-    //         me = new Talk.User({
-    //             id: currentUser.id,
-    //             name: currentUser.nicename,
-    //             email: currentUser.email,
-    //             photoUrl: currentUser.avatar,
-    //             welcomeMessage: 'Hey there! How are you? :-)',
-    //             role: 'default',
-    //         });
-    //     } else {
-    //         me = new Talk.User({
-    //             id: 'guest_' + uniqueId(),
-    //             name: 'guest_name_' + uniqueId(),
-    //             email: 'guest_email@gmail.com',
-    //             photoUrl:
-    //                 'https://pickaface.net/gallery/avatar/20160625_050020_889_FAKE.png',
-    //             welcomeMessage: 'Hey there! How are you? :-)',
-    //             role: 'guest',
-    //         });
-    //     }
-    //     window.talkSession = new Talk.Session({
-    //         appId: process.env.TALKJS_APP_ID,
-    //         me: me,
-    //     });
-    //     let other = new Talk.User({
-    //         id: '654321',
-    //         name: 'Sebastian',
-    //         email: 'Sebastian@example.com',
-    //         photoUrl:
-    //             'https://pickaface.net/gallery/avatar/20120409_230759_3646_Fake.png',
-    //         welcomeMessage: 'Hey, how can I help?',
-    //         role: 'default',
-    //     });
-    //     let conversation = window.talkSession.getOrCreateConversation(
-    //         Talk.oneOnOneId(me, other)
-    //     );
-    //     conversation.setParticipant(me);
-    //     conversation.setParticipant(other);
-    //     let popup = window.talkSession.createPopup();
-    //     popup.select(conversation);
-    //     popup.mount({ show: false });
-    // });
-    // }, []);
+    const [me, setMe] = useState({});
+    useEffect(() => {
+        Talk.ready.then(() => {
+            let me;
+            if (currentUser.id) {
+                me = new Talk.User({
+                    id: currentUser.id,
+                    name: currentUser.nicename,
+                    email: currentUser.email,
+                    photoUrl: currentUser.avatar,
+                    welcomeMessage: 'Hey there! How are you? :-)',
+                    role: 'default',
+                });
+            } else {
+                me = new Talk.User({
+                    id: 'guest_' + uniqueId(),
+                    name: 'guest_name_' + uniqueId(),
+                    email: 'guest_email@gmail.com',
+                    photoUrl:
+                        'https://pickaface.net/gallery/avatar/20160625_050020_889_FAKE.png',
+                    welcomeMessage: 'Hey there! How are you? :-)',
+                    role: 'guest',
+                });
+            }
+
+            setMe(me);
+
+            window.talkSession = new Talk.Session({
+                appId: process.env.TALKJS_APP_ID,
+                me: me,
+            });
+        });
+    }, []);
+
+    const { data, isFetching, isError, isLoading, error } = useSalesChat();
 
     useEffect(() => {
-        let tabListEl = document.querySelector('.btn-back-list');
-        let tabList = new bootstrap.Tab(tabListEl);
-
         $('.chat-popup-btn').click(() => {
+            console.log(123);
             $('.chat-popup-main').toggleClass('active');
         });
 
-        $('.btn-back-list').click(() => {
-            tabList.show();
-        });
-
-        let tabChatEl = document.querySelector('#btn-pills-chat');
-        let tabChat = new bootstrap.Tab(tabChatEl);
-
-        // tabChat.show();
+        return () => {
+            $('.chat-popup-btn').off('click');
+        };
     }, []);
 
     return (
         <div className="chat-popup-main">
             <div className="chat-popup-body">
-                <ul className="nav nav-pills" id="pills-tab" role="tablist">
+                <ul
+                    className="nav nav-pills d-none"
+                    id="pills-tab"
+                    role="tablist"
+                >
                     <li className="nav-item" role="presentation">
                         <button
                             className="nav-link active"
@@ -134,9 +122,21 @@ export default function ChatSupportPopup() {
                             </div>
                             <div className="chat-list">
                                 <div className="chat-list-scroll">
-                                    <ChatSupportItem />
-                                    <ChatSupportItem />
-                                    <ChatSupportItem />
+                                    {isLoading || isFetching ? (
+                                        <Skeleton
+                                            count={4}
+                                            height={50}
+                                            style={{ marginBottom: 15 }}
+                                        />
+                                    ) : (
+                                        data.map((item, index) => (
+                                            <ChatSupportItem
+                                                data={item}
+                                                key={index}
+                                                meConverstation={me}
+                                            />
+                                        ))
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -148,7 +148,14 @@ export default function ChatSupportPopup() {
                         aria-labelledby="pills-chat-tab"
                     >
                         <div className="inchat-header">
-                            <button className="btn btn-back-list">Back</button>
+                            <button
+                                className="btn btn-back-list"
+                                onClick={() => {
+                                    $('#pills-list-tab').tab('show');
+                                }}
+                            >
+                                Back
+                            </button>
                         </div>
                         <div className="current-converstation"></div>
                     </div>

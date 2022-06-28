@@ -799,6 +799,12 @@ header .category-menu .btn i {
 .chat-item {
     display: flex;
     align-items: center;
+    padding: 4px 2px;
+    border-radius: 6px;
+}
+
+.chat-item:hover {
+    background-color: #001265;
 }
 
 .chat-ava {
@@ -809,12 +815,19 @@ header .category-menu .btn i {
     margin-right: 14px;
 }
 
+.chat-ava img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .chat-meta {
     width: calc(100% - 64px);
 }
 
 .chat-meta-desc {
     display: flex;
+    align-items: center;
 }
 
 .chat-list {
@@ -938,11 +951,27 @@ head title {
     cursor: pointer;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
     background-color: #e22454;
 }
 
-.quick-view-image .label{
+.quick-view-image .label {
     position: absolute;
     z-index: 999;
+}
+
+.status-icon {
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
+}
+
+.chat-item-name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.chat-meta-desc {
+    font-size: 12px;
 }

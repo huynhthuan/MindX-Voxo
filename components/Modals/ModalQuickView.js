@@ -20,8 +20,6 @@ export default function ModalQuickView() {
         };
     }, []);
 
-    console.log(product);
-
     return (
         <div className="modal fade quick-view-modal" id="quick-view">
             <div className="modal-dialog modal-lg modal-dialog-centered">

@@ -1,5 +1,6 @@
 import { useMutation, useQueries, useQuery, useQueryClient } from 'react-query';
 import { useSelector } from 'react-redux';
+import chatApi from '../src/api/chatApi';
 import userApi from '../src/api/userApi';
 import wooApi from '../src/api/woocommerce/wooApi';
 
@@ -203,4 +204,10 @@ export const useProductCategories = (params) => {
             select: (data) => data.data,
         }
     );
+};
+
+export const useSalesChat = () => {
+    return useQuery(['Sales'], async () => await chatApi.getSales(), {
+        select: (data) => data.supporter,
+    });
 };
