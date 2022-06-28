@@ -21,13 +21,13 @@ export default function ChatSupportItem({ data, meConverstation }) {
                     Talk.oneOnOneId(meConverstation, other)
                 );
 
-                let chatbox = window.talkSession.createChatbox();
+                window.chatbox = window.talkSession.createChatbox();
 
                 conversation.setParticipant(meConverstation);
                 conversation.setParticipant(other);
 
-                chatbox.select(conversation);
-                chatbox.mount($('.current-converstation'));
+                window.chatbox.select(conversation);
+                window.chatbox.mount($('.current-converstation'));
             }}
         >
             <div className="chat-ava">

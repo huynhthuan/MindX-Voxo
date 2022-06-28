@@ -1,16 +1,20 @@
-import _, { uniqueId } from 'lodash';
+import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useSelector } from 'react-redux';
 import Talk from 'talkjs';
 import { useSalesChat } from '../../reactQueryHook';
 import ChatSupportItem from './ChatSupportItem';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ChatSupportPopup() {
     const { user: currentUser } = useSelector((state) => state.auth);
     const chatPopup = useRef();
     const [me, setMe] = useState({});
+    const [showChat, setShowChat] = useState(false);
+
     useEffect(() => {
+        $('#pills-list-tab').tab('show');
         Talk.ready.then(() => {
             let me;
             if (currentUser.id) {
@@ -20,13 +24,25 @@ export default function ChatSupportPopup() {
                     email: currentUser.email,
                     photoUrl: currentUser.avatar,
                     welcomeMessage: 'Hey there! How are you? :-)',
-                    role: 'default',
+                    role: currentUser.role[0],
                 });
             } else {
+                let localGuestId = localStorage.getItem('user_local_id');
+                if (!localGuestId) {
+                    localStorage.setItem(
+                        'user_local_id',
+                        'user_local_' + uuidv4()
+                    );
+
+                    localGuestId = localStorage.getItem('user_local_id');
+                }
+
+                console.log(localGuestId);
+
                 me = new Talk.User({
-                    id: 'guest_' + uniqueId(),
-                    name: 'guest_name_' + uniqueId(),
-                    email: 'guest_email@gmail.com',
+                    id: localGuestId,
+                    name: localGuestId,
+                    email: localGuestId + '@gmail.com',
                     photoUrl:
                         'https://pickaface.net/gallery/avatar/20160625_050020_889_FAKE.png',
                     welcomeMessage: 'Hey there! How are you? :-)',
@@ -40,14 +56,28 @@ export default function ChatSupportPopup() {
                 appId: process.env.TALKJS_APP_ID,
                 me: me,
             });
+
+            setShowChat(true);
+
+            window.talkSession.unreads.on('change', function (conversationIds) {
+                let amountOfUnreads = conversationIds.length;
+
+                // update the text and hide the badge if there are
+                // no unreads.
+                $('.chat-count').text(amountOfUnreads);
+            });
         });
-    }, []);
+
+        return () => {
+            window.talkSession.destroy();
+            $('#pills-list-tab').tab('show');
+        };
+    }, [currentUser]);
 
     const { data, isFetching, isError, isLoading, error } = useSalesChat();
 
     useEffect(() => {
         $('.chat-popup-btn').click(() => {
-            console.log(123);
             $('.chat-popup-main').toggleClass('active');
         });
 
@@ -57,7 +87,7 @@ export default function ChatSupportPopup() {
     }, []);
 
     return (
-        <div className="chat-popup-main">
+        <div className={`chat-popup-main ${showChat ? '' : 'd-none'}`}>
             <div className="chat-popup-body">
                 <ul
                     className="nav nav-pills d-none"
@@ -109,7 +139,8 @@ export default function ChatSupportPopup() {
                                 </div>
                                 <div className="header-desc">
                                     <div className="header-short">
-                                        We are ready to help. Please select a
+                                        Hi! <b>{currentUser.nicename}</b>. We
+                                        are ready to help. Please select a
                                         support agent to start chatting
                                     </div>
                                 </div>
@@ -123,11 +154,18 @@ export default function ChatSupportPopup() {
                             <div className="chat-list">
                                 <div className="chat-list-scroll">
                                     {isLoading || isFetching ? (
-                                        <Skeleton
-                                            count={4}
-                                            height={50}
-                                            style={{ marginBottom: 15 }}
-                                        />
+                                        <div
+                                            style={{
+                                                paddingLeft: 15,
+                                                paddingRight: 15,
+                                            }}
+                                        >
+                                            <Skeleton
+                                                count={4}
+                                                height={50}
+                                                style={{ marginBottom: 15 }}
+                                            />
+                                        </div>
                                     ) : (
                                         data.map((item, index) => (
                                             <ChatSupportItem
@@ -152,9 +190,10 @@ export default function ChatSupportPopup() {
                                 className="btn btn-back-list"
                                 onClick={() => {
                                     $('#pills-list-tab').tab('show');
+                                    window.chatbox.destroy();
                                 }}
                             >
-                                Back
+                                <i className="fas fa-angle-left"></i> Back
                             </button>
                         </div>
                         <div className="current-converstation"></div>

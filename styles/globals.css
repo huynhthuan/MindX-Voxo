@@ -702,7 +702,7 @@ header .category-menu .btn i {
     transition: all 0.4s;
     background-color: #028be5;
     z-index: 999995;
-    min-height: 450px;
+    min-height: 540px;
 }
 
 .chat-popup-btn {
@@ -717,7 +717,7 @@ header .category-menu .btn i {
     cursor: pointer;
     box-shadow: 0 2px 6px rgb(0 0 0 / 6%), 0 3px 32px rgb(0 0 0 / 16%);
     transition: all 0.4s;
-    background-color: #028be5;
+    background-color: #e22454;
     z-index: 999995;
 }
 
@@ -726,7 +726,7 @@ header .category-menu .btn i {
     width: 20px;
     height: 20px;
     text-align: center;
-    background: #ca3434;
+    background: #000;
     color: #fff;
     border-radius: 100%;
     font-weight: 500;
@@ -738,7 +738,7 @@ header .category-menu .btn i {
     animation: sb-fade-animation 0.3s;
 }
 
-.chat-btn-content img {
+.chat-popup-btn img {
     max-width: 100%;
     width: 60px;
     height: 60px;
@@ -752,14 +752,18 @@ header .category-menu .btn i {
     transition: all 0.4s;
 }
 
-.chat-btn-content .sb-close {
+.chat-popup-btn .sb-close {
     opacity: 0;
     transform: rotate(90deg);
 }
 
-.chat-popup-main.active .chat-btn-content .sb-close {
+.chat-popup-main.active .chat-popup-btn .sb-close {
     transform: rotate(0deg);
     opacity: 1;
+}
+
+.chat-popup-main.active .chat-popup-btn .sb-icon {
+    opacity: 0;
 }
 
 .chat-popup-body {
@@ -775,15 +779,29 @@ header .category-menu .btn i {
     z-index: 99995;
     text-align: left;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
     transition: all 0.4s;
 }
 
 .chat-popup-main.active .chat-popup-body {
-    display: flex;
+    display: block;
     animation: sb-chat-open-animation 0.4s;
 }
 
+.chat-popup-body .tab-content {
+    height: 100%;
+}
+
+#pills-chat.active {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.current-converstation {
+    flex: 1;
+    overflow: hidden;
+}
 @keyframes sb-chat-open-animation {
     0% {
         opacity: 0;
@@ -799,12 +817,13 @@ header .category-menu .btn i {
 .chat-item {
     display: flex;
     align-items: center;
-    padding: 4px 2px;
+    padding: 4px 15px;
     border-radius: 6px;
+    margin-bottom: 15px;
 }
 
 .chat-item:hover {
-    background-color: #001265;
+    background-color: #f5f7fa;
 }
 
 .chat-ava {
@@ -828,14 +847,6 @@ header .category-menu .btn i {
 .chat-meta-desc {
     display: flex;
     align-items: center;
-}
-
-.chat-list {
-    padding: 0 15px;
-}
-
-.chat-item {
-    margin-bottom: 15px;
 }
 
 .product-box .cart-wrap a:hover {
@@ -974,4 +985,28 @@ head title {
 
 .chat-meta-desc {
     font-size: 12px;
+}
+
+.inlist-header {
+    padding: 15px;
+    text-align: center;
+    background-color: #e22454;
+    color: white;
+}
+
+.chat-list-header {
+    padding: 15px;
+    font-weight: bold;
+    background-color: #000;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.btn-back-list {
+    padding: 15px;
+}
+
+.btn-back-list:hover {
+    background-color: #e22454;
+    color: white;
 }
