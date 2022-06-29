@@ -1010,3 +1010,14 @@ head title {
     background-color: #e22454;
     color: white;
 }
+
+.cloth-review
+    .tab-pane
+    .customer-review-box
+    .customer-section
+    .customer-profile
+    img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

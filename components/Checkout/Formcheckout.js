@@ -83,14 +83,14 @@ export default function Formcheckout({ data }) {
                 progress: undefined,
             });
 
-            dispatch(productCartRemoveAll());
-            dispatch(cartCouponRemove());
-
             if (payment === 'other_payment') {
                 window.open('/payment/orderId=' + orderId, '_blank');
             }
-            
+
             router.push('/order-tracking/' + orderId);
+
+            dispatch(productCartRemoveAll());
+            dispatch(cartCouponRemove());
         } catch (error) {
             setLoading(false);
             toast.error(JSON.stringify(error), {
@@ -321,7 +321,7 @@ export default function Formcheckout({ data }) {
 
             <hr className="my-lg-5 my-4" />
 
-            <h3 className="mb-3">Payment {payment}</h3>
+            <h3 className="mb-3">Payment</h3>
 
             {isLoading || isFetching ? (
                 <>
@@ -419,17 +419,6 @@ export default function Formcheckout({ data }) {
                                 {parse(item.description)}
                             </div>
                         ))}
-                        <div
-                            className={`tab-pane fade ${
-                                payment === 'other_payment' ? 'active show' : ''
-                            }`}
-                            id="pills-other_payment"
-                            role="tabpanel"
-                            aria-labelledby="pills-other_payment-tab"
-                        >
-                            Checkout order with payment method online like
-                            Paypal, Stripe, VnPay, Momo,....
-                        </div>
                     </div>
                 </div>
             )}

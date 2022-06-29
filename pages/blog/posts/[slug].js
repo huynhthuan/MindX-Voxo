@@ -24,13 +24,23 @@ function BlogDetail() {
         router.push('/404');
     }
 
+    console.log(data);
+
     return (
         <>
             <Head>
                 <title>{data?.data[0].title.rendered}</title>
             </Head>
 
-            <Breadcrumb title={data?.data[0].title.rendered}></Breadcrumb>
+            <Breadcrumb
+                title={data?.data[0].title.rendered}
+                bredcrumbList={[
+                    {
+                        title: 'Blog',
+                        href: '/blog',
+                    },
+                ]}
+            ></Breadcrumb>
 
             {/* Details Blog Section Start */}
             <section className="masonary-blog-section">
@@ -48,12 +58,7 @@ function BlogDetail() {
                                                     <img
                                                         src={
                                                             data.data[0]
-                                                                ._embedded[
-                                                                'wp:featuredmedia'
-                                                            ][0].media_details
-                                                                .sizes
-                                                                .medium_large
-                                                                .source_url
+                                                                .feature_image_url
                                                         }
                                                         alt=""
                                                         className="card-img-top"
@@ -83,8 +88,7 @@ function BlogDetail() {
                                             </div>
 
                                             <AuthorBox
-                                                {...data.data[0]._embedded
-                                                    .author[0]}
+                                                {...data.data[0].author_meta}
                                             />
 
                                             <CommentBox

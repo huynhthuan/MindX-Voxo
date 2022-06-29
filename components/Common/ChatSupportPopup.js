@@ -202,7 +202,7 @@ export default function ChatSupportPopup() {
             </div>
 
             <div className="chat-popup-btn">
-                <div className="chat-count">0</div>
+                {/* <div className="chat-count">0</div> */}
                 <img
                     className="sb-icon"
                     alt=""

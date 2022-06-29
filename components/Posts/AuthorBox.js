@@ -1,18 +1,16 @@
-function AuthorBox({avatar_urls,name}) {
+function AuthorBox({ author_avatar, author_name }) {
     return (
         <div className="blog-profile box-center mb-lg-5 mb-4">
             <div className="image-profile">
                 <img
-                    src={
-                        avatar_urls['24']
-                    }
+                    src={author_avatar}
                     className="img-fluid blur-up lazyload"
                     alt=""
                 />
             </div>
 
             <div className="image-name text-weight">
-                <h3>{name}</h3>
+                <h3>{author_name}</h3>
             </div>
         </div>
     );
