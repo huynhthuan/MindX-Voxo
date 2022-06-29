@@ -83,6 +83,10 @@ const wooApi = {
         const url = '/orders/' + orderId + '/notes';
         return wooClient.post(url, null, { params });
     },
+    getOrder: (orderId) => {
+        const url = '/orders/' + orderId;
+        return wooClient.get(url);
+    },
 };
 
 export default wooApi;

@@ -26,6 +26,24 @@ export const useMyOrders = (params) => {
     );
 };
 
+export const userGetOrderToPayment = (params) => {
+    const { user } = useSelector((state) => state.auth);
+    const paramQuery = params ? params : '';
+
+    return useQuery(
+        ['getOrderToPayment', { ...paramQuery }],
+        async () =>
+            await wooApi.getOrders({
+                customer: user.id,
+                ...params,
+            }),
+        {
+            enabled: !!params.include && !!user.id,
+            select: (data) => data.data,
+        }
+    );
+};
+
 export const useMyOrdersPending = () => {
     const { user } = useSelector((state) => state.auth);
     return useQuery(

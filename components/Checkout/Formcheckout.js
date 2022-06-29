@@ -11,10 +11,11 @@ import { useRouter } from 'next/router';
 import { productCartRemoveAll } from '../../store/cart/cartSlice';
 
 const paymentMethodData = {
-    'bacs': 'Direct bank transfer',
-    'cheque': 'Check payments',
-    'cod': 'Cash on delivery',
-}
+    bacs: 'Direct bank transfer',
+    cheque: 'Check payments',
+    cod: 'Cash on delivery',
+    other_payment: 'Payment method online',
+};
 
 export default function Formcheckout({ data }) {
     const router = useRouter();
@@ -82,10 +83,14 @@ export default function Formcheckout({ data }) {
                 progress: undefined,
             });
 
-            router.push('/order-tracking/' + orderId);
-
             dispatch(productCartRemoveAll());
             dispatch(cartCouponRemove());
+
+            if (payment === 'other_payment') {
+                window.open('/payment/orderId=' + orderId, '_blank');
+            }
+            
+            router.push('/order-tracking/' + orderId);
         } catch (error) {
             setLoading(false);
             toast.error(JSON.stringify(error), {
@@ -382,6 +387,23 @@ export default function Formcheckout({ data }) {
                                 Cash on delivery
                             </button>
                         </li>
+                        <li className="nav-item" role="presentation">
+                            <button
+                                className={`nav-link ${
+                                    payment === 'other_payment' ? 'active' : ''
+                                }`}
+                                id="pills-other_payment-tab"
+                                data-bs-toggle="pill"
+                                data-bs-target="#pills-other_payment"
+                                type="button"
+                                role="tab"
+                                aria-controls="pills-other_payment"
+                                aria-selected="false"
+                                data-payment-method="other_payment"
+                            >
+                                Payment online
+                            </button>
+                        </li>
                     </ul>
                     <div className="tab-content" id="pills-tabContent">
                         {dataPayment.data.map((item, index) => (
@@ -397,6 +419,17 @@ export default function Formcheckout({ data }) {
                                 {parse(item.description)}
                             </div>
                         ))}
+                        <div
+                            className={`tab-pane fade ${
+                                payment === 'other_payment' ? 'active show' : ''
+                            }`}
+                            id="pills-other_payment"
+                            role="tabpanel"
+                            aria-labelledby="pills-other_payment-tab"
+                        >
+                            Checkout order with payment method online like
+                            Paypal, Stripe, VnPay, Momo,....
+                        </div>
                     </div>
                 </div>
             )}
