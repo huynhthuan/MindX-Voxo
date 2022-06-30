@@ -15,21 +15,16 @@ export default function StripeMethod({ orderId }) {
         theme: 'stripe',
     };
 
-    const options = {
-        clientSecret,
-        appearance,
-    };
-
     const [clientSecret, setClientSecret] = useState('');
 
     const createPaymentIntent = async () => {
-        let resut = await paymentApi.createPaymentIntentStripe({
+        let result = await paymentApi.createPaymentIntentStripe({
             orderId,
             customerId: user.id,
-            description: `Payment for order #${orderId} via Stripe`,
+            description: `Payment for order #${orderId} via Stripe of customer ${user.id}`,
         });
 
-        setClientSecret(resut.data.clientSecret);
+        setClientSecret(result.data.clientSecret);
     };
 
     useEffect(() => {
@@ -39,7 +34,13 @@ export default function StripeMethod({ orderId }) {
     }, [orderId]);
 
     return clientSecret ? (
-        <Elements stripe={stripePromise} options={options}>
+        <Elements
+            stripe={stripePromise}
+            options={{
+                clientSecret,
+                appearance,
+            }}
+        >
             <Stripe />
         </Elements>
     ) : (

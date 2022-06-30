@@ -10,14 +10,10 @@ export default function Payment() {
     const { query } = router;
     const { orderId } = query;
 
-    console.log(orderId);
-
     const { data, error, isLoading, isFetching, isError } =
         userGetOrderToPayment({
             include: orderId,
         });
-
-    console.log(isLoading, isFetching);
 
     return (
         <>
@@ -81,7 +77,7 @@ export default function Payment() {
                                                         <div className="col-lg-6">
                                                             <PaypalMethod
                                                                 orderId={
-                                                                    data.id
+                                                                    data[0].id
                                                                 }
                                                             />
                                                         </div>
@@ -113,7 +109,7 @@ export default function Payment() {
                                             >
                                                 <div className="accordion-body">
                                                     <StripeMethod
-                                                        orderId={data.id}
+                                                        orderId={data[0].id}
                                                     />
                                                 </div>
                                             </div>

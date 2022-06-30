@@ -5,7 +5,7 @@ const stripe = require('stripe')('sk_test_ZWrvOr86Tg0FvE2oetjePW8N00N6yh4R9f');
 const calculateOrderAmount = async (orderId) => {
     let result = await wooApi.getOrder(orderId);
     let order = result.data;
-    return Number(order.total) + 100;
+    return Number(order.total) * 100;
 };
 
 export default async function handler(req, res) {
@@ -19,18 +19,17 @@ export default async function handler(req, res) {
         });
     }
 
-    const { orderId, customerId, description } = req.body;
+    const { orderId, customerId, description } = req.query;
 
     let amountOrder = await calculateOrderAmount(orderId);
 
-    // Create a PaymentIntent with the order amount and currency
+    // // Create a PaymentIntent with the order amount and currency
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: amountOrder,
+        amount: amountOrder.toString(),
         currency: 'usd',
         automatic_payment_methods: {
             enabled: true,
         },
-        customer: customerId,
         description,
     });
 
