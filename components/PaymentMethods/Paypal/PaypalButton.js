@@ -1,34 +1,30 @@
-import {
-    PayPalButtons,
-    usePayPalScriptReducer,
-} from '@paypal/react-paypal-js';
+import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import React from 'react';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
-const amount = '2';
-const currency = 'USD';
 const style = { layout: 'vertical' };
 
-export default function PaypalButton({ currency, showSpinner }) {
-    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-
-    useEffect(() => {
-        dispatch({
-            type: 'resetOptions',
-            value: {
-                ...options,
-                currency: currency,
-            },
-        });
-    }, [currency, showSpinner]);
+export default function PaypalButton({
+    currency,
+    showSpinner,
+    currentOrderId,
+    amount,
+}) {
+    const [{ isPending }] = usePayPalScriptReducer();
+    const { user } = useSelector((state) => state.auth);
 
     return (
         <>
-            {showSpinner && isPending && <div className="spinner" />}
+            {showSpinner && isPending && (
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
+            )}
             <PayPalButtons
                 style={style}
                 disabled={false}
-                forceReRender={[amount, currency, style]}
+                forceReRender={[currentOrderId, user]}
                 fundingSource={undefined}
                 createOrder={async (data, actions) => {
                     const orderId = await actions.order.create({
@@ -38,6 +34,9 @@ export default function PaypalButton({ currency, showSpinner }) {
                                     currency_code: currency,
                                     value: amount,
                                 },
+                                custom_id: user.id,
+                                description: `Payment order #${currentOrderId} of customer ${user.id} via paypal.`,
+                                invoice_id: currentOrderId,
                             },
                         ],
                     });

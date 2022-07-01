@@ -42,6 +42,14 @@ export default function Payment() {
                                     </p>
                                 </div>
                             </div>
+                        ) : data[0].status !== 'pending' ? (
+                            <div className="row">
+                                <div className="col-12">
+                                    <p className="alert alert-warning text-center">
+                                        Order has been successfully paid.
+                                    </p>
+                                </div>
+                            </div>
                         ) : (
                             <div className="row">
                                 <div className="col-md-6">
@@ -79,6 +87,10 @@ export default function Payment() {
                                                                 orderId={
                                                                     data[0].id
                                                                 }
+                                                                amount={
+                                                                    data[0]
+                                                                        .total
+                                                                }
                                                             />
                                                         </div>
                                                     </div>
@@ -110,6 +122,7 @@ export default function Payment() {
                                                 <div className="accordion-body">
                                                     <StripeMethod
                                                         orderId={data[0].id}
+                                                        amount={data[0].total}
                                                     />
                                                 </div>
                                             </div>
