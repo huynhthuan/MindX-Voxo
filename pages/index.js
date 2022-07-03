@@ -68,6 +68,15 @@ export async function getStaticProps() {
                         date_created: item.date_created,
                         stock_status: item.stock_status,
                         slug: item.slug,
+                        pa_brand: item.attributes
+                            .filter((item, index) => item.name === 'Brand')
+                            .map((item, index) => item.options)[0],
+                        pa_color: item.attributes
+                            .filter((item, index) => item.name === 'Brand')
+                            .map((item, index) => item.options)[0],
+                        pa_size: item.attributes
+                            .filter((item, index) => item.name === 'Brand')
+                            .map((item, index) => item.options)[0],
                     }))[0],
             };
         }),
@@ -102,6 +111,15 @@ export async function getStaticProps() {
                     attributes: item.attributes,
                     date_created: item.date_created,
                     stock_status: item.stock_status,
+                    pa_brand: item.attributes
+                        .filter((item, index) => item.name === 'Brand')
+                        .map((item, index) => item.options)[0],
+                    pa_color: item.attributes
+                        .filter((item, index) => item.name === 'Color')
+                        .map((item, index) => item.options)[0],
+                    pa_size: item.attributes
+                        .filter((item, index) => item.name === 'Size')
+                        .map((item, index) => item.options)[0],
                 })),
         },
         category_slider: {
@@ -150,6 +168,15 @@ export async function getStaticProps() {
                     date_created: item.date_created,
                     images: item.images.map((item, index) => item.src),
                     stock_status: item.stock_status,
+                    pa_brand: item.attributes
+                        .filter((item, index) => item.name === 'Brand')
+                        .map((item, index) => item.options)[0],
+                    pa_color: item.attributes
+                        .filter((item, index) => item.name === 'Color')
+                        .map((item, index) => item.options)[0],
+                    pa_size: item.attributes
+                        .filter((item, index) => item.name === 'Size')
+                        .map((item, index) => item.options)[0],
                 })),
         },
         sale: {
@@ -196,7 +223,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ dataHome }) {
-    // console.log(dataHome);
+    console.log(dataHome);
 
     const dispatch = useDispatch();
 

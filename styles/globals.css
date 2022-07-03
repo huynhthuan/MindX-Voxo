@@ -1021,3 +1021,38 @@ head title {
     height: 100%;
     object-fit: cover;
 }
+
+#compare-bottom .product-image a {
+    width: 60px !important;
+}
+
+#compare-bottom .product-details {
+    width: calc(100% - 60px);
+    margin: 0;
+    padding: 10px;
+}
+
+#compare-bottom .product-details h3 {
+    font-size: 14px;
+}
+
+#compare-bottom .product-box {
+    width: 25%;
+}
+
+#compare-bottom .product-box .compare-button-card {
+    width: 100%;
+    max-width: unset;
+}
+
+.modal-compare .rating i {
+    font-size: 10px !important;
+}
+
+.modal-compare .product-details h5 {
+    font-size: 12px;
+}
+
+.modal-compare .page-section{
+    margin: 20px 0;
+}
