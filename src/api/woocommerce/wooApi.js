@@ -74,10 +74,14 @@ const wooApi = {
         const url = '/payment_gateways';
         return wooClient.get(url);
     },
-
     createOrder: (params) => {
         const url = '/orders';
         return wooClient.post(url, params);
+    },
+    updateOrder: (orderId, params) => {
+        const url = '/orders/' + orderId;
+
+        return wooClient.post(url, null, { params });
     },
     createOrderNote: (orderId, params) => {
         const url = '/orders/' + orderId + '/notes';
@@ -87,6 +91,7 @@ const wooApi = {
         const url = '/orders/' + orderId;
         return wooClient.get(url);
     },
+    
 };
 
 export default wooApi;

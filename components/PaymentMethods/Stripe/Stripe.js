@@ -4,14 +4,14 @@ import {
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js';
-import Skeleton from 'react-loading-skeleton';
 
-export default function Stripe() {
+export default function Stripe({ orderId }) {
     const stripe = useStripe();
     const elements = useElements();
 
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isReadyStripePayment, setIsReadyStripePayment] = useState(false);
 
     const handleSubmit = async (event) => {
         // We don't want to let default form submission happen here,
@@ -30,8 +30,9 @@ export default function Stripe() {
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: 'http://localhost:3000',
+                return_url: 'order-tracking/' + orderId,
             },
+            redirect: 'if_required',
         });
 
         if (error.type === 'card_error' || error.type === 'validation_error') {
@@ -78,23 +79,53 @@ export default function Stripe() {
 
     return (
         <>
-            <PaymentElement id="payment-element" />
-            <button
-                disabled={isLoading || !stripe || !elements}
-                id="submit"
-                type="button"
-                onClick={handleSubmit}
-            >
-                <span id="button-text">
+            {isReadyStripePayment ? (
+                <></>
+            ) : (
+                <div className="text-center w-100">
+                    <div
+                        className="spinner-border text-primary my-auto"
+                        role="status"
+                    >
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
+
+            <PaymentElement
+                onReady={() => {
+                    setIsReadyStripePayment(true);
+                }}
+                id="payment-element"
+            />
+
+            {isReadyStripePayment ? (
+                <button
+                    disabled={isLoading || !stripe || !elements}
+                    id="submit"
+                    type="button"
+                    onClick={handleSubmit}
+                    className={'btn btn-primary w-100 mt-3 rounded text-center'}
+                >
                     {isLoading ? (
-                        <Skeleton circle={true} count={1} />
+                        <div
+                            className="spinner-border text-primary"
+                            role="status"
+                        >
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
                     ) : (
-                        'Pay now'
+                        <span id="button-text text-center">Pay now</span>
                     )}
-                </span>
-            </button>
+                </button>
+            ) : (
+                <></>
+            )}
+
             {/* Show any error or success messages */}
-            {message && <div id="payment-message">{message}</div>}
+            {message && (
+                <div className="alert alert-warning w-100 mt-2">{message}</div>
+            )}
         </>
     );
 }

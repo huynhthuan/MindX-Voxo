@@ -162,6 +162,7 @@ export default function Formcheckout({ data }) {
                         </p>
                     )}
                 </div>
+
                 <div className="col-md-6">
                     <label htmlFor="last_name" className="form-label">
                         Last Name
@@ -181,6 +182,7 @@ export default function Formcheckout({ data }) {
                         </p>
                     )}
                 </div>
+
                 <div className="col-md-6">
                     <label htmlFor="email" className="form-label">
                         Email address
@@ -279,6 +281,7 @@ export default function Formcheckout({ data }) {
                         </p>
                     )}
                 </div>
+
                 <div className="col-md-6">
                     <label htmlFor="state" className="form-label">
                         State
@@ -298,6 +301,7 @@ export default function Formcheckout({ data }) {
                         </p>
                     )}
                 </div>
+                
                 <div className="col-md-6">
                     <label htmlFor="postcode" className="form-label">
                         Zip

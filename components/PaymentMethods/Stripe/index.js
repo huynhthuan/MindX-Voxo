@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import Stripe from './Stripe';
-import Skeleton from 'react-loading-skeleton';
 import { useSelector } from 'react-redux';
 import paymentApi from '../../../src/api/paymentApi';
 
@@ -41,9 +40,13 @@ export default function StripeMethod({ orderId }) {
                 appearance,
             }}
         >
-            <Stripe />
+            <Stripe orderID={orderId} />
         </Elements>
     ) : (
-        <Skeleton circle={true} count={1} />
+        <div className="text-center">
+            <div className="spinner-border text-primary" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
     );
 }

@@ -1,7 +1,10 @@
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import React from 'react';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import wooApi from '../../../src/api/woocommerce/wooApi';
+import { useQueryClient } from 'react-query';
+import { useRouter } from 'next/router';
 
 const style = { layout: 'vertical' };
 
@@ -13,6 +16,8 @@ export default function PaypalButton({
 }) {
     const [{ isPending }] = usePayPalScriptReducer();
     const { user } = useSelector((state) => state.auth);
+    const queryClient = useQueryClient();
+    const router = useRouter();
 
     return (
         <>
@@ -25,7 +30,6 @@ export default function PaypalButton({
                 style={style}
                 disabled={false}
                 forceReRender={[currentOrderId, user]}
-                fundingSource={undefined}
                 createOrder={async (data, actions) => {
                     const orderId = await actions.order.create({
                         purchase_units: [
@@ -44,7 +48,50 @@ export default function PaypalButton({
                 }}
                 onApprove={async function (data, actions) {
                     let rerulst = await actions.order.capture();
-                    console.log(rerulst);
+
+                    console.log('Paypal result', rerulst);
+
+                    let updateResult = await wooApi.updateOrder(
+                        currentOrderId,
+                        {
+                            status: 'processing',
+                        }
+                    );
+
+                    console.log('Update result', updateResult);
+
+                    let updateOrderNote = await wooApi.createOrderNote(
+                        currentOrderId,
+                        {
+                            note: `Payment successfully via Paypal <br> Invoice ID: ${rerulst.id} <br> Create time: ${rerulst.create_time} <br> Update time: ${rerulst.update_time}`,
+                        }
+                    );
+
+                    console.log('Update order note', updateOrderNote);
+
+                    router.push('/order-tracking/' + currentOrderId);
+                }}
+                onCancel={async function (data) {
+                    toast.warn('Cancel payment.', {
+                        position: 'top-right',
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }}
+                onError={async function (err) {
+                    toast.error('Payment error! Please try again.', {
+                        position: 'top-right',
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
                 }}
             />
         </>

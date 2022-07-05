@@ -1056,3 +1056,7 @@ head title {
 .modal-compare .page-section{
     margin: 20px 0;
 }
+
+header.nav-down .navbar-searchbar{
+    z-index: 99999;
+}
