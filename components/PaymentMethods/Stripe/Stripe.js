@@ -4,21 +4,32 @@ import {
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js';
+import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
+import wooApi from '../../../src/api/woocommerce/wooApi';
+import moment from 'moment';
+import { useQueryClient } from 'react-query';
 
-export default function Stripe({ orderId }) {
+export default function Stripe({ orderID }) {
+    const router = useRouter();
+    const { payment_intent_client_secret: clientSecret } = router.query;
+
     const stripe = useStripe();
     const elements = useElements();
 
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isReadyStripePayment, setIsReadyStripePayment] = useState(false);
+    const [isUpdateOrder, setIsUpdateOrder] = useState(false);
+
+    const queryClient = useQueryClient();
 
     const handleSubmit = async (event) => {
         // We don't want to let default form submission happen here,
         // which would refresh the page.
         event.preventDefault();
 
-        console.log(event);
+        setIsLoading(true);
 
         if (!stripe || !elements) {
             // Stripe.js has not yet loaded.
@@ -30,9 +41,8 @@ export default function Stripe({ orderId }) {
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: 'order-tracking/' + orderId,
+                return_url: 'http://localhost:3000/payment?orderId=' + orderID,
             },
-            redirect: 'if_required',
         });
 
         if (error.type === 'card_error' || error.type === 'validation_error') {
@@ -44,14 +54,29 @@ export default function Stripe({ orderId }) {
         setIsLoading(false);
     };
 
+    const updateStatusOrder = async (currentOrderId, paymentIntent) => {
+        console.log(paymentIntent);
+        let updateResult = await wooApi.updateOrder(currentOrderId, {
+            status: 'processing',
+        });
+
+        console.log('Update result', updateResult);
+
+        let updateOrderNote = await wooApi.createOrderNote(currentOrderId, {
+            note: `Payment successfully via Stripe <br> Payment ID: <b>${
+                paymentIntent.id
+            }</b> <br> Create time: ${moment
+                .unix(paymentIntent.created)
+                .format('DD-MM-YYYY')}`,
+        });
+
+        console.log('Update order note', updateOrderNote);
+    };
+
     useEffect(() => {
         if (!stripe) {
             return;
         }
-
-        const clientSecret = new URLSearchParams(window.location.search).get(
-            'payment_intent_client_secret'
-        );
 
         if (!clientSecret) {
             return;
@@ -60,18 +85,37 @@ export default function Stripe({ orderId }) {
         stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
             switch (paymentIntent.status) {
                 case 'succeeded':
-                    setMessage('Payment succeeded!');
+                    setIsUpdateOrder(true);
+                    updateStatusOrder(orderID, paymentIntent).then(() => {
+                        setIsUpdateOrder(false);
+                        queryClient.invalidateQueries('getOrderToPayment');
+                        Swal.fire({
+                            title: 'Payment via Stripe',
+                            text: 'Payment succeeded!',
+                            icon: 'success',
+                        });
+                    });
                     break;
                 case 'processing':
-                    setMessage('Your payment is processing.');
+                    Swal.fire({
+                        title: 'Payment via Stripe',
+                        text: 'Your payment is processing!',
+                        icon: 'info',
+                    });
                     break;
                 case 'requires_payment_method':
-                    setMessage(
-                        'Your payment was not successful, please try again.'
-                    );
+                    Swal.fire({
+                        title: 'Payment via Stripe',
+                        text: 'Your payment was not successful, please try again!',
+                        icon: 'warning',
+                    });
                     break;
                 default:
-                    setMessage('Something went wrong.');
+                    Swal.fire({
+                        title: 'Payment via Stripe',
+                        text: 'Something went wrong, please try again!',
+                        icon: 'error',
+                    });
                     break;
             }
         });
@@ -92,24 +136,32 @@ export default function Stripe({ orderId }) {
                 </div>
             )}
 
-            <PaymentElement
-                onReady={() => {
-                    setIsReadyStripePayment(true);
-                }}
-                id="payment-element"
-            />
+            {isUpdateOrder ? (
+                <div className="text-center w-100 alert alert-warning mt-2">
+                    Updating your order...
+                </div>
+            ) : (
+                <PaymentElement
+                    onReady={() => {
+                        setIsReadyStripePayment(true);
+                    }}
+                    id="payment-element"
+                />
+            )}
 
             {isReadyStripePayment ? (
                 <button
-                    disabled={isLoading || !stripe || !elements}
+                    disabled={
+                        isLoading || !stripe || !elements || isUpdateOrder
+                    }
                     id="submit"
                     type="button"
                     onClick={handleSubmit}
                     className={'btn btn-primary w-100 mt-3 rounded text-center'}
                 >
-                    {isLoading ? (
+                    {isLoading || isUpdateOrder ? (
                         <div
-                            className="spinner-border text-primary"
+                            className="spinner-border text-light spinner-border-sm"
                             role="status"
                         >
                             <span className="visually-hidden">Loading...</span>
@@ -120,11 +172,6 @@ export default function Stripe({ orderId }) {
                 </button>
             ) : (
                 <></>
-            )}
-
-            {/* Show any error or success messages */}
-            {message && (
-                <div className="alert alert-warning w-100 mt-2">{message}</div>
             )}
         </>
     );

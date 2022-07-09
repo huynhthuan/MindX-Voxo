@@ -84,10 +84,10 @@ export default function Formcheckout({ data }) {
             });
 
             if (payment === 'other_payment') {
-                window.open('/payment/orderId=' + orderId, '_blank');
+                router.push('/payment?orderId=' + orderId);
+            } else {
+                router.push('/order-tracking/' + orderId);
             }
-
-            router.push('/order-tracking/' + orderId);
 
             dispatch(productCartRemoveAll());
             dispatch(cartCouponRemove());
@@ -301,7 +301,7 @@ export default function Formcheckout({ data }) {
                         </p>
                     )}
                 </div>
-                
+
                 <div className="col-md-6">
                     <label htmlFor="postcode" className="form-label">
                         Zip

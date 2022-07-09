@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import wooApi from '../../../src/api/woocommerce/wooApi';
 import { useQueryClient } from 'react-query';
 import { useRouter } from 'next/router';
+import Swal from 'sweetalert2';
 
 const style = { layout: 'vertical' };
 
@@ -63,13 +64,13 @@ export default function PaypalButton({
                     let updateOrderNote = await wooApi.createOrderNote(
                         currentOrderId,
                         {
-                            note: `Payment successfully via Paypal <br> Invoice ID: ${rerulst.id} <br> Create time: ${rerulst.create_time} <br> Update time: ${rerulst.update_time}`,
+                            note: `Payment successfully via Paypal <br> Transaction ID: <b>${rerulst.purchase_units[0].payments.captures[0].id}</b> <br> Create time: ${rerulst.create_time} <br> Update time: ${rerulst.update_time}`,
                         }
                     );
 
                     console.log('Update order note', updateOrderNote);
-
-                    router.push('/order-tracking/' + currentOrderId);
+                 
+                    queryClient.invalidateQueries('getOrderToPayment');
                 }}
                 onCancel={async function (data) {
                     toast.warn('Cancel payment.', {

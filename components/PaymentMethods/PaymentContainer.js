@@ -43,10 +43,23 @@ export function OrderPaymentNotAlready({ orderId }) {
     );
 }
 
+export function OrderPaymentProcessing({ orderId }) {
+    return (
+        <div className="row">
+            <div className="col-12">
+                <p className="alert alert-success text-center">
+                    Order payment successfully. Please tracking order at{' '}
+                    <Link href={`/order-tracking/${orderId}`}>link here</Link>.
+                </p>
+            </div>
+        </div>
+    );
+}
+
 export default function PaymentContainer() {
     const router = useRouter();
     const { query } = router;
-    const { orderId } = query;
+    const { orderId, payment_intent_client_secret: clientSecret } = query;
 
     const { data, error, isLoading, isFetching, isError } =
         userGetOrderToPayment({
@@ -65,16 +78,18 @@ export default function PaymentContainer() {
         return <OrderPaymentNotExits />;
     }
 
+    if (data[0].status == 'processing') {
+        return <OrderPaymentProcessing orderId={orderId} />;
+    }
+
     if (data[0].status !== 'pending') {
         return <OrderPaymentNotAlready orderId={orderId} />;
     }
 
-    console.log(data);
-
     return (
         <div className="row">
             <div className="col-md-6">
-                <h3 class="mb-3 d-flex text-capitalize">
+                <h3 className="mb-3 d-flex text-capitalize">
                     Select payment online
                 </h3>
 
@@ -82,7 +97,7 @@ export default function PaymentContainer() {
                     <div className="accordion-item">
                         <h2 className="accordion-header" id="headingPaypal">
                             <button
-                                className="accordion-button"
+                                className="accordion-button collapsed"
                                 type="button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#collapsePaypal"
@@ -94,7 +109,7 @@ export default function PaymentContainer() {
                         </h2>
                         <div
                             id="collapsePaypal"
-                            className="accordion-collapse collapse show"
+                            className="accordion-collapse collapse"
                             aria-labelledby="headingPaypal"
                             data-bs-parent="#accordionExample"
                         >
@@ -114,7 +129,11 @@ export default function PaymentContainer() {
                     <div className="accordion-item">
                         <h2 className="accordion-header" id="headingStripe">
                             <button
-                                className="accordion-button collapsed"
+                                className={
+                                    clientSecret
+                                        ? 'accordion-button'
+                                        : 'accordion-button collapsed'
+                                }
                                 type="button"
                                 data-bs-toggle="collapse"
                                 data-bs-target="#collapseStripe"
@@ -126,7 +145,11 @@ export default function PaymentContainer() {
                         </h2>
                         <div
                             id="collapseStripe"
-                            className="accordion-collapse collapse"
+                            className={
+                                clientSecret
+                                    ? 'accordion-collapse show'
+                                    : 'accordion-collapse collapse'
+                            }
                             aria-labelledby="headingStripe"
                             data-bs-parent="#accordionExample"
                         >
@@ -220,7 +243,8 @@ export default function PaymentContainer() {
                                 showAttribute={false}
                             />
                         ))}
-                        {data[0]?.coupon_lines ? (
+                        {data[0]?.coupon_lines &&
+                        data[0]?.coupon_lines.length !== 0 ? (
                             <li className="list-group-item d-flex justify-content-between lh-condensed active">
                                 <div className="text-dark">
                                     <h6 className="my-0">Coupon code</h6>

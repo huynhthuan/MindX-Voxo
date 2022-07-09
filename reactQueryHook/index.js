@@ -22,7 +22,10 @@ export const useMyOrders = (params) => {
             await wooApi.getOrders({
                 customer: user.id,
                 ...params,
-            })
+            }),
+        {
+            refetchOnWindowFocus: true,
+        }
     );
 };
 

@@ -49,11 +49,6 @@ export default function Payment() {
     const { query } = router;
     const { orderId } = query;
 
-    const { data, error, isLoading, isFetching, isError } =
-        userGetOrderToPayment({
-            include: orderId,
-        });
-
     return (
         <>
             <Breadcrumb

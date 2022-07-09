@@ -20,7 +20,7 @@ export default function StripeMethod({ orderId }) {
         let result = await paymentApi.createPaymentIntentStripe({
             orderId,
             customerId: user.id,
-            description: `Payment for order #${orderId} via Stripe of customer ${user.id}`,
+            description: `Payment for order #${orderId} via Stripe of customer #${user.id} - ${user.username}`,
         });
 
         setClientSecret(result.data.clientSecret);

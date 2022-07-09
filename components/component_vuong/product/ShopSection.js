@@ -83,7 +83,7 @@ function ShopSection(props = {}) {
         if (!color) {
             toast.error('You must choose the color!', {
                 position: 'top-right',
-                autoClose: 2000,
+                autoClose: 500,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -97,7 +97,7 @@ function ShopSection(props = {}) {
         if (!size) {
             toast.error('You must choose the size!', {
                 position: 'top-right',
-                autoClose: 2000,
+                autoClose: 500,
                 hideProgressBar: true,
                 closeOnClick: true,
                 pauseOnHover: true,

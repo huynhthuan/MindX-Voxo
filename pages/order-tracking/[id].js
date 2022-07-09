@@ -16,6 +16,7 @@ import {
 
 import moment from 'moment';
 import { useQueryClient } from 'react-query';
+import Link from 'next/link';
 
 function OrderTracking() {
     const router = useRouter();
@@ -129,6 +130,19 @@ function OrderTracking() {
                                                 >
                                                     Refresh
                                                 </button>
+                                                {data.data[0].status ===
+                                                    'pending' && (
+                                                    <Link
+                                                        href={
+                                                            '/payment?orderId=' +
+                                                            id
+                                                        }
+                                                    >
+                                                        <button className="btn btn-report btn-sm btn-success ms-2">
+                                                            Payment order
+                                                        </button>
+                                                    </Link>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
