@@ -47,10 +47,7 @@ function Navbar() {
     const { user } = useSelector((state) => state.auth);
 
     return (
-        <NovuProvider
-            subscriberId={'1'}
-            applicationIdentifier={process.env.NOVU_APP_ID}
-        >
+        <>
             {/* header starwit */}
             <header className="header-style-2" id="home">
                 <div className="main-header navbar-searchbar">
@@ -63,7 +60,7 @@ function Navbar() {
                                     <MainMenu />
 
                                     <MenuRight />
- 
+
                                     <SearchBar />
                                 </div>
                             </div>
@@ -74,7 +71,7 @@ function Navbar() {
             {/* header end */}
 
             <MenuMobileBottom />
-        </NovuProvider>
+        </>
     );
 }
 

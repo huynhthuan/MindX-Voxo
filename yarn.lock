@@ -3593,6 +3593,11 @@
   dependencies:
     "clsx" "^1.1.1"
 
+"react-use-googlelogin@^0.12.5":
+  "integrity" "sha512-30TF9rJyhDx7mO5T+BVChaKxd4xztLMMRCkG2/gdk8o9+JMfipSvBM26OJCDnG7Ug3KxBSNR+9uKgtQ4FCI0fg=="
+  "resolved" "https://registry.npmjs.org/react-use-googlelogin/-/react-use-googlelogin-0.12.5.tgz"
+  "version" "0.12.5"
+
 "react@^16 || ^17 || ^18", "react@^16.8 || ^17.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^17.0.2 || ^18.0.0-0", "react@^18.0.0", "react@>= 16.0.0", "react@>= 16.8.0", "react@>= 16.8.0 < 19", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", "react@>=16", "react@>=16.0.0", "react@>=16.3.0", "react@>=16.8", "react@>=16.8.0", "react@>=17.0.1", "react@0.14 || 15 || 16 || 17 || 18", "react@18.0.0":
   "integrity" "sha512-x+VL6wbT4JRVPm7EGxXhZ8w8LTROaxPXOqhlGyVSrv0sB1jkyFGgXxJ8LVoPRLvPR6/CIZGFmfzqUa2NYeMr2A=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.0.0.tgz"

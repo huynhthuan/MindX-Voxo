@@ -11,7 +11,9 @@ import Header from './Header';
 
 function Layout({ children }) {
     const router = useRouter();
-    let { cookie_expiration, cookie } = useSelector((state) => state.auth);
+    let { cookie_expiration, cookie, login_method } = useSelector(
+        (state) => state.auth
+    );
     let dispatch = useDispatch();
     const { theme } = useSelector((state) => state.webSetting);
     useEffect(() => {
@@ -30,6 +32,13 @@ function Layout({ children }) {
                     draggable: true,
                     progress: undefined,
                 });
+
+                if (login_method === 'facebook') {
+                    FB.logout(function (response) {
+                        console.log('Logout fb');
+                    });
+                }
+
                 dispatch(logOut());
                 clearInterval(cookieCheck);
             }

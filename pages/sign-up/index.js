@@ -6,11 +6,17 @@ import axios from 'axios';
 import { GET_NONE, REGISTER_ACCOUNT } from '../../utils/api';
 import Swal from 'sweetalert2';
 import authApi from '../../src/api/authApi';
+import { useGoogleLogin } from 'react-use-googlelogin';
 
 function SignUp() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingFb, setIsLoadingFb] = useState(false);
+    const [isLoadingGg, setIsLoadingGg] = useState(false);
+
+    const { signIn: signInGoogle } = useGoogleLogin({
+        clientId: '60776063801-jmdmevmoaab8bmta0bnf90f58rbp6u24',
+    });
 
     useEffect(() => {
         $(function () {
@@ -76,8 +82,6 @@ function SignUp() {
                 },
             });
 
-            console.log(res.data);
-
             setIsLoading(false);
 
             let dataResRegister = res.data;
@@ -122,58 +126,26 @@ function SignUp() {
                 appId: '980758382812999',
                 cookie: true, // Enable cookies to allow the server to access the session.
                 xfbml: true, // Parse social plugins on this webpage.
-                version: 'v13.0', // Use this Graph API version for this call.
+                version: 'v14.0', // Use this Graph API version for this call.
             });
         };
 
-        let googleUser = {};
-        let auth2;
-        let startApp = function () {
-            gapi.load('auth2', function () {
-                // Retrieve the singleton for the GoogleAuth library and set up the client.
-                auth2 = gapi.auth2.init({
-                    client_id:
-                        '60776063801-jmdmevmoaab8bmta0bnf90f58rbp6u24.apps.googleusercontent.com',
-                    cookiepolicy: 'single_host_origin',
-                });
-                attachSignin(document.getElementById('signup-google'));
-            });
-        };
-
-        startApp();
-
-        function attachSignin(element) {
-            auth2.attachClickHandler(
-                element,
-                {},
-                function (googleUser) {
-                    setIsLoadingFb(false);
-                    let profile = googleUser.getBasicProfile();
-                    authApi.RegisterWithGoogle({
-                        email: profile.getEmail(),
-                        given_name: profile.getGivenName(),
-                        family_name: profile.getFamilyName(),
-                        id: profile.getId(),
-                        full_name: profile.getName(),
-                    });
-                },
-                function (error) {
-                    setIsLoadingFb(false);
-                    Swal.fire({
-                        title: 'Error!',
-                        text: error,
-                        icon: 'error',
-                        confirmButtonText: 'Close',
-                    });
-                }
-            );
-        }
+        (function (d, s, id) {
+            var js,
+                fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'facebook-jssdk');
     }, []);
 
-    const registerFb = (e) => {
+    const registerFb = () => {
         setIsLoadingFb(true);
         try {
-            e.preventDefault();
             FB.login(async function (response) {
                 console.log(response);
                 // handle the response
@@ -190,9 +162,12 @@ function SignUp() {
                     return;
                 }
 
-                let res = await authApi.LoginWithFb({
+                let res = await authApi.RegisterWithFb({
                     access_token: authResponse.accessToken,
+                    userID: authResponse.userID,
                 });
+
+                console.log(res);
 
                 if (res.error && res.error !== null && res.error !== '') {
                     setIsLoadingFb(false);
@@ -205,32 +180,16 @@ function SignUp() {
                     return;
                 }
 
-                let { cookie_name, cookie, user, cookie_expiration } = res;
-
-                let resWishList = await wooApi.getWishList(user.id);
-
-                const { share_key } = resWishList.data[0];
-
-                dispatch(
-                    loginSuccess({
-                        cookie,
-                        cookie_expiration,
-                        cookie_name,
-                        user,
-                        share_key,
-                    })
-                );
-
                 setIsLoadingFb(false);
 
                 Swal.fire({
-                    title: `Login success!`,
-                    text: 'Welcome back VOXO SHOP',
+                    title: `Register successfully!`,
+                    text: res.msg,
                     icon: 'success',
                     showConfirmButton: false,
                 });
 
-                router.push('/');
+                router.push('/login');
             });
         } catch (error) {
             setIsLoadingFb(false);
@@ -241,6 +200,38 @@ function SignUp() {
                 confirmButtonText: 'Close',
             });
         }
+    };
+
+    const registerGg = async () => {
+        setIsLoadingGg(true);
+
+        let googleUser = await signInGoogle();
+
+        let res = await authApi.RegisterWithGoogle({
+            id_token: googleUser.tokenId,
+        });
+
+        if (res.error && res.error !== null && res.error !== '') {
+            setIsLoadingGg(false);
+            Swal.fire({
+                title: 'Error!',
+                text: res.error,
+                icon: 'error',
+                confirmButtonText: 'Close',
+            });
+            return;
+        }
+
+        setIsLoadingGg(false);
+
+        Swal.fire({
+            title: `Register successfully!`,
+            text: res.msg,
+            icon: 'success',
+            showConfirmButton: false,
+        });
+
+        router.push('/login');
     };
 
     return (
@@ -386,7 +377,11 @@ function SignUp() {
 
                             <div className="row gx-md-3 gy-3">
                                 <div className="col-md-6">
-                                    <a href="#" onClick={registerFb}>
+                                    <button
+                                        type="button"
+                                        className="btn p-0 w-100"
+                                        onClick={registerFb}
+                                    >
                                         <div
                                             className="social-media fb-media"
                                             style={{ height: 51.36 }}
@@ -411,22 +406,40 @@ function SignUp() {
                                                 </>
                                             )}
                                         </div>
-                                    </a>
+                                    </button>
                                 </div>
                                 <div className="col-md-6">
-                                    <a href="#">
+                                    <button
+                                        type="button"
+                                        className="btn p-0 w-100"
+                                        onClick={registerGg}
+                                    >
                                         <div
                                             className="social-media google-media"
                                             id="signup-google"
+                                            style={{ height: 51.36 }}
                                         >
-                                            <img
-                                                src="/images/inner-page/google.png"
-                                                className="img-fluid blur-up lazyload"
-                                                alt=""
-                                            />
-                                            <h6>Google</h6>
+                                            {isLoadingGg ? (
+                                                <div
+                                                    className="spinner-border text-dark spinner-border-sm"
+                                                    role="status"
+                                                >
+                                                    <span className="sr-only">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <img
+                                                        src="/images/inner-page/google.png"
+                                                        className="img-fluid blur-up lazyload"
+                                                        alt=""
+                                                    />
+                                                    <h6>Google</h6>
+                                                </>
+                                            )}
                                         </div>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                             <p>

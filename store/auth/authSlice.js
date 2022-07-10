@@ -21,6 +21,7 @@ const initialState = {
         avatar: null,
     },
     wishlist_key: null,
+    login_method: null
 };
 
 export const authSlice = createSlice({

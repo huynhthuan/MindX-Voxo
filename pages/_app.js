@@ -47,9 +47,6 @@ const index = searchClient.initIndex(indexName);
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
-    useEffect(() => {
-        // updateDataAlgolia(index);
-    }, []);
 
     return (
         <Provider store={store}>

@@ -11,21 +11,26 @@ import {
 } from '@novu/notification-center';
 
 function MenuRight() {
-    const { cookie, user } = useSelector((state) => state.auth);
+    const { cookie, user, login_method } = useSelector((state) => state.auth);
     const router = useRouter();
 
     const dispatch = useDispatch();
 
     const signOut = () => {
+        if (login_method === 'facebook') {
+            FB.logout(function (response) {
+                console.log('Logout fb');
+            });
+        }
         dispatch(logOut());
         if (router.pathname !== '/') {
-            router.push('/'); 
+            router.push('/');
         }
     };
 
     useEffect(() => {
         $('.search-box').on('click', function () {
-            $('.open-input-search').click()
+            $('.open-input-search').click();
         });
         $(window).on('load resize', function () {
             // open searchbox

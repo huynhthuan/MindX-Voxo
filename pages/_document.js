@@ -27,20 +27,11 @@ export default function Document() {
 
                 <script src="/js/isotope.pkgd.min.js"></script>
 
-                <script src="/js/newsletter.js"></script>
+                {/* <script src="/js/newsletter.js"></script> */}
 
                 <script src="/js/ion.rangeSlider.min.js"></script>
 
                 <script src="/js/bootstrap/bootstrap-notify.min.js"></script>
-
-                <script
-                    async
-                    defer
-                    crossOrigin="anonymous"
-                    src="https://connect.facebook.net/en_US/sdk.js"
-                ></script>
-
-                <script src="https://apis.google.com/js/api:client.js"></script>
 
                 <NextScript />
 

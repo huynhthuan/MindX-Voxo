@@ -276,7 +276,6 @@ export default function Home({ dataHome }) {
             <BannerTimer dataTimer={dataHome.sale} />
             <InstagramSlider dataProduct={dataHome.instagram} />
             <Services />
-            <NewsletterModal />
         </Fragment>
     );
 }

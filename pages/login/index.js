@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
@@ -7,15 +7,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import authApi from '../../src/api/authApi';
 import { loginSuccess } from '../../store/auth/authSlice';
 import wooApi from '../../src/api/woocommerce/wooApi';
-import userApi from '../../src/api/userApi';
 import { setCookies } from 'cookies-next';
+import { useGoogleLogin } from 'react-use-googlelogin';
 
 function Login() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [isLoadingFb, setIsLoadingFb] = useState(false);
+    const [isLoadingGg, setIsLoadingGg] = useState(false);
 
     const auth = useSelector((state) => state.auth);
+
+    const { signIn: signInGoogle } = useGoogleLogin({
+        clientId: '60776063801-jmdmevmoaab8bmta0bnf90f58rbp6u24',
+    });
 
     const { cookie } = auth;
     const dispatch = useDispatch();
@@ -108,6 +113,7 @@ function Login() {
                     cookie_name,
                     user,
                     share_key,
+                    login_method: 'web',
                 })
             );
 
@@ -142,70 +148,90 @@ function Login() {
                 version: 'v14.0', // Use this Graph API version for this call.
             });
         };
+
+        (function (d, s, id) {
+            var js,
+                fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'facebook-jssdk');
     }, []);
 
-    const loginFb = (e) => {
+    const loginFb = () => {
         setIsLoadingFb(true);
-        e.preventDefault();
         try {
-            FB.login(async function (response) {
-                console.log(response);
-                // handle the response
-                const { authResponse, status } = response;
+            FB.login(
+                async function (response) {
+                    console.log(response);
+                    // handle the response
+                    const { authResponse, status } = response;
 
-                if (status !== 'connected') {
-                    setIsLoadingFb(false);
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'An error occurred, please try again.',
-                        icon: 'error',
-                        confirmButtonText: 'Close',
+                    if (status !== 'connected') {
+                        setIsLoadingFb(false);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred, please try again.',
+                            icon: 'error',
+                            confirmButtonText: 'Close',
+                        });
+                        return;
+                    }
+
+                    let res = await authApi.LoginWithFb({
+                        access_token: authResponse.accessToken,
+                        userID: authResponse.userID,
                     });
-                    return;
-                }
 
-                let res = await authApi.LoginWithFb({
-                    access_token: authResponse.accessToken,
-                });
+                    if (res.error && res.error !== null && res.error !== '') {
+                        setIsLoadingFb(false);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: res.error,
+                            icon: 'error',
+                            confirmButtonText: 'Close',
+                        });
+                        return;
+                    }
 
-                if (res.error && res.error !== null && res.error !== '') {
-                    setIsLoadingFb(false);
-                    Swal.fire({
-                        title: 'Error!',
-                        text: res.error,
-                        icon: 'error',
-                        confirmButtonText: 'Close',
+                    let { cookie_name, cookie, user, cookie_expiration } = res;
+
+                    let resWishList = await wooApi.getWishList(user.id);
+
+                    const { share_key } = resWishList.data[0];
+
+                    setCookies('wordpress_login', cookie, {
+                        expires: new Date(cookie_expiration * 1000),
                     });
-                    return;
-                }
 
-                let { cookie_name, cookie, user, cookie_expiration } = res;
+                    dispatch(
+                        loginSuccess({
+                            cookie,
+                            cookie_expiration,
+                            cookie_name,
+                            user,
+                            share_key,
+                            login_method: 'facebook',
+                        })
+                    );
 
-                let resWishList = await wooApi.getWishList(user.id);
+                    setIsLoadingFb(false);
 
-                const { share_key } = resWishList.data[0];
+                    Swal.fire({
+                        title: `Login success!`,
+                        text: 'Welcome back VOXO SHOP',
+                        icon: 'success',
+                        showConfirmButton: false,
+                    });
 
-                dispatch(
-                    loginSuccess({
-                        cookie,
-                        cookie_expiration,
-                        cookie_name,
-                        user,
-                        share_key,
-                    })
-                );
-
-                setIsLoadingFb(false);
-
-                Swal.fire({
-                    title: `Login success!`,
-                    text: 'Welcome back VOXO SHOP',
-                    icon: 'success',
-                    showConfirmButton: false,
-                });
-
-                router.push('/');
-            });
+                    router.push('/');
+                },
+                { scope: 'public_profile,email' }
+            );
         } catch (error) {
             console.log(error);
             setIsLoadingFb(false);
@@ -216,6 +242,58 @@ function Login() {
                 confirmButtonText: 'Close',
             });
         }
+    };
+
+    const loginGoogle = async (e) => {
+        setIsLoadingGg(true);
+        let googleUser = await signInGoogle();
+
+        let res = await authApi.LoginWithGoogle({
+            id_token: googleUser.tokenId,
+        });
+
+        if (res.error && res.error !== null && res.error !== '') {
+            setIsLoadingGg(false);
+            Swal.fire({
+                title: 'Error!',
+                text: res.error,
+                icon: 'error',
+                confirmButtonText: 'Close',
+            });
+            return;
+        }
+
+        let { cookie_name, cookie, user, cookie_expiration } = res;
+
+        let resWishList = await wooApi.getWishList(user.id);
+
+        const { share_key } = resWishList.data[0];
+
+        setCookies('wordpress_login', cookie, {
+            expires: new Date(cookie_expiration * 1000),
+        });
+
+        dispatch(
+            loginSuccess({
+                cookie,
+                cookie_expiration,
+                cookie_name,
+                user,
+                share_key,
+                login_method: 'google',
+            })
+        );
+
+        setIsLoadingGg(false);
+
+        Swal.fire({
+            title: `Login success!`,
+            text: 'Welcome back VOXO SHOP',
+            icon: 'success',
+            showConfirmButton: false,
+        });
+
+        router.push('/');
     };
 
     return (
@@ -298,7 +376,11 @@ function Login() {
 
                             <div className="row gx-md-3 gy-3">
                                 <div className="col-md-6">
-                                    <a href="#" onClick={loginFb}>
+                                    <button
+                                        type="button"
+                                        className="btn p-0 w-100"
+                                        onClick={loginFb}
+                                    >
                                         <div
                                             className="social-media fb-media"
                                             style={{ height: 51.36 }}
@@ -323,19 +405,39 @@ function Login() {
                                                 </>
                                             )}
                                         </div>
-                                    </a>
+                                    </button>
                                 </div>
                                 <div className="col-md-6">
-                                    <a href="www.gmail.html">
-                                        <div className="social-media google-media">
-                                            <img
-                                                src="/images/inner-page/google.png"
-                                                className="img-fluid blur-up lazyload"
-                                                alt=""
-                                            />
-                                            <h6>Google</h6>
+                                    <button
+                                        type="button"
+                                        className="btn p-0 w-100"
+                                        onClick={loginGoogle}
+                                    >
+                                        <div
+                                            className="social-media google-media"
+                                            style={{ height: 51.36 }}
+                                        >
+                                            {isLoadingGg ? (
+                                                <div
+                                                    className="spinner-border text-dark spinner-border-sm"
+                                                    role="status"
+                                                >
+                                                    <span className="sr-only">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <img
+                                                        src="/images/inner-page/google.png"
+                                                        className="img-fluid blur-up lazyload"
+                                                        alt=""
+                                                    />
+                                                    <h6>Google</h6>
+                                                </>
+                                            )}
                                         </div>
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
 
