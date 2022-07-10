@@ -17,12 +17,19 @@ function NavLeft() {
                 let tabTarget = triggerEl
                     .getAttribute('data-bs-target')
                     .replace('#', '');
-                
+
                 if (tabTarget === tab) {
                     tabTrigger.show();
                 }
             });
         }
+
+        $('.filter-btn').click(function () {
+            $('.bg-overlay, .category-option').addClass('show');
+        });
+        $('.button-close, .bg-overlay').click(function () {
+            $('.bg-overlay, .category-option').removeClass('show');
+        });
     }, [tab]);
 
     return (

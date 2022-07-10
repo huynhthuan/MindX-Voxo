@@ -8,6 +8,7 @@ import Profile from './Tabs/Profile';
 import Security from './Tabs/Security';
 
 function NavRight() {
+    
     return (
         <div className="col-lg-9">
             <div className="filter-button dash-filter dashboard">

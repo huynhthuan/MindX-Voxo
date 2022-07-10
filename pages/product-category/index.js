@@ -56,7 +56,7 @@ function ProductCategoryList({ productCategories }) {
 
             <section className="section-b-space">
                 <div className="container">
-                    <div className="row g-4 product-style-1 mb-5 d-md-flex d-none">
+                    <div className="row g-4 product-style-1 mb-5 d-flex">
                         {productCategories.map((categoryList, index) => (
                             <div className="col-xl-4 col-md-6" key={index}>
                                 <ProductCateBoxItem

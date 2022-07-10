@@ -16,7 +16,7 @@ function Login() {
     const [isLoadingFb, setIsLoadingFb] = useState(false);
 
     const auth = useSelector((state) => state.auth);
-    
+
     const { cookie } = auth;
     const dispatch = useDispatch();
 
@@ -139,7 +139,7 @@ function Login() {
                 appId: '980758382812999',
                 cookie: true, // Enable cookies to allow the server to access the session.
                 xfbml: true, // Parse social plugins on this webpage.
-                version: 'v13.0', // Use this Graph API version for this call.
+                version: 'v14.0', // Use this Graph API version for this call.
             });
         };
     }, []);
@@ -207,6 +207,7 @@ function Login() {
                 router.push('/');
             });
         } catch (error) {
+            console.log(error);
             setIsLoadingFb(false);
             Swal.fire({
                 title: 'Error!',

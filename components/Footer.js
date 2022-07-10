@@ -2,10 +2,47 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import dynamic from 'next/dynamic';
 import ModalQuickView from './Modals/ModalQuickView';
+import React from 'react';
 
 function Footer() {
     const webData = useSelector((state) => state.webData);
     const { footer } = webData;
+
+    React.useEffect(() => {
+        var contentwidth = $(window).width();
+        if (contentwidth < '576') {
+            $('.footer-title h5').append(
+                '<span class="according-menu"><i class="fas fa-chevron-down"></i></span>'
+            );
+            $('.footer-title').on('click', function () {
+                $('.footer-title')
+                    .removeClass('active')
+                    .find('span')
+                    .replaceWith(
+                        '<span class="according-menu"><i class="fas fa-chevron-down"></i></span>'
+                    );
+                $('.footer-content').slideUp('normal');
+                if ($(this).next().is(':hidden') == true) {
+                    $(this).addClass('active');
+                    $(this)
+                        .find('span')
+                        .replaceWith(
+                            '<span class="according-menu"><i class="fas fa-chevron-up"></i></span>'
+                        );
+                    $(this).next().slideDown('normal');
+                } else {
+                    $(this)
+                        .find('span')
+                        .replaceWith(
+                            '<span class="according-menu"><i class="fas fa-chevron-down"></i></span>'
+                        );
+                }
+            });
+            $('.footer-content').hide();
+        } else {
+            $('.footer-content').show();
+        }
+    }, []);
 
     return (
         <>

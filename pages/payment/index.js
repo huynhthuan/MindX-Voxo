@@ -55,6 +55,12 @@ export default function Payment() {
                 title={
                     'Payment for order ' + (orderId ? '#' + orderId : '....')
                 }
+                bredcrumbList={[
+                    {
+                        href: '/order-tracking/' + orderId,
+                        title: 'Order tracking',
+                    },
+                ]}
             />
 
             <section className="section-b-space">

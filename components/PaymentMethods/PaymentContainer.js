@@ -164,60 +164,6 @@ export default function PaymentContainer() {
                             </div>
                         </div>
                     </div>
-                    <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingVNPay">
-                            <button
-                                className="accordion-button collapsed"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseVNPay"
-                                aria-expanded="false"
-                                aria-controls="collapseVNPay"
-                            >
-                                VNPay
-                            </button>
-                        </h2>
-                        <div
-                            id="collapseVNPay"
-                            className="accordion-collapse collapse"
-                            aria-labelledby="headingVNPay"
-                            data-bs-parent="#accordionExample"
-                        >
-                            <div className="accordion-body">
-                                <p className="alert alert-warning w-100">
-                                    Payment order via VNPay.
-                                </p>
-                                VNPay
-                            </div>
-                        </div>
-                    </div>
-                    <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingMomo">
-                            <button
-                                className="accordion-button collapsed"
-                                type="button"
-                                data-bs-toggle="collapse"
-                                data-bs-target="#collapseMomo"
-                                aria-expanded="false"
-                                aria-controls="collapseMomo"
-                            >
-                                Momo
-                            </button>
-                        </h2>
-                        <div
-                            id="collapseMomo"
-                            className="accordion-collapse collapse"
-                            aria-labelledby="headingMomo"
-                            data-bs-parent="#accordionExample"
-                        >
-                            <div className="accordion-body">
-                                <p className="alert alert-warning w-100">
-                                    Payment order via Momo.
-                                </p>
-                                Momo
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div className="col-md-6">

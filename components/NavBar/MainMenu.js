@@ -1,6 +1,156 @@
 import Link from 'next/link';
+import React from 'react';
 
 function MainMenu() {
+    React.useEffect(() => {
+        $('.toggle-nav, .sidebar-toggle').on('click', function () {
+            $('.nav-menu').css('right', '0px');
+            $('.mobile-poster').css('right', '0px');
+            $('.bg-overlay').addClass('show');
+        });
+        $('.back-btn, .bg-overlay').on('click', function () {
+            $('.nav-menu').css('right', '-410px');
+            $('.mobile-poster').css('right', '-410px');
+            $('.bg-overlay').removeClass('show');
+        });
+
+        var contentwidth = $(window).width();
+        if (contentwidth < '1200') {
+            $('.dropdown .menu-title').append(
+                '<span class="according-menu">+</span>'
+            );
+            $('.menu-title').on('click', function () {
+                $('.menu-title')
+                    .removeClass('active')
+                    .find('span')
+                    .replaceWith('<span class="according-menu">+</span>');
+                $('.menu-content').slideUp('normal');
+                if ($(this).next().is(':hidden') == true) {
+                    $(this).addClass('active');
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">-</span>');
+                    $(this).next().slideDown('normal');
+                } else {
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">+</span>');
+                }
+            });
+            $('.menu-content').hide();
+        }
+
+        var contentwidth = $(window).width();
+        if (contentwidth < '1200') {
+            $('.menu-title-level1').append(
+                '<span class="according-menu">+</span>'
+            );
+            $('.menu-title-level1').on('click', function () {
+                $('.menu-title-level1')
+                    .removeClass('active')
+                    .find('span')
+                    .replaceWith('<span class="according-menu">+</span>');
+                $('.level1').slideUp('normal');
+                if ($(this).next().is(':hidden') == true) {
+                    $(this).addClass('active');
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">-</span>');
+                    $(this).next().slideDown('normal');
+                } else {
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">+</span>');
+                }
+            });
+            $('.nav-sub-childmenu .level1').hide();
+        }
+
+        var contentwidth = $(window).width();
+        if (contentwidth < '1200') {
+            $('.submenu-title').append('<span class="according-menu">+</span>');
+            $('.submenu-title').on('click', function () {
+                $('.submenu-title')
+                    .removeClass('active')
+                    .find('span')
+                    .replaceWith('<span class="according-menu">+</span>');
+                $('.submenu-content').slideUp('normal');
+                if ($(this).next().is(':hidden') == true) {
+                    $(this).addClass('active');
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">-</span>');
+                    $(this).next().slideDown('normal');
+                } else {
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">+</span>');
+                }
+            });
+            $('.submenu-content').hide();
+        }
+
+        // $('.toggle-category').on('click', function () {
+        //     $('.category-dropdown').addClass('open');
+        //     $('.bg-overlay').addClass('show');
+        // });
+        $('.back-category, .bg-overlay').on('click', function () {
+            $('.category-dropdown').removeClass('open');
+            $('.bg-overlay').removeClass('show');
+        });
+        var contentwidth = $(window).width();
+        if (contentwidth < '1200') {
+            $('.category-menu li.submenu >a').append(
+                '<span class="according-menu">+</span>'
+            );
+            $('.category-menu li.submenu >a').on('click', function () {
+                $('.category-menu li.submenu >a')
+                    .removeClass('active')
+                    .find('span')
+                    .replaceWith('<span class="according-menu">+</span>');
+                $('.category-mega-menu').slideUp('normal');
+                if ($(this).next().is(':hidden') == true) {
+                    $(this).addClass('active');
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">-</span>');
+                    $(this).next().slideDown('normal');
+                } else {
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">+</span>');
+                }
+            });
+            $('.category-mega-menu').hide();
+        }
+
+        var contentwidth = $(window).width();
+        if (contentwidth < '1200') {
+            $('.title-category').append(
+                '<span class="according-menu">+</span>'
+            );
+            $('.title-category').on('click', function () {
+                $('.title-category')
+                    .removeClass('active')
+                    .find('span')
+                    .replaceWith('<span class="according-menu">+</span>');
+                $('.category-childmenu ul').slideUp('normal');
+                if ($(this).next().is(':hidden') == true) {
+                    $(this).addClass('active');
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">-</span>');
+                    $(this).next().slideDown('normal');
+                } else {
+                    $(this)
+                        .find('span')
+                        .replaceWith('<span class="according-menu">+</span>');
+                }
+            });
+            $('.category-childmenu ul').hide();
+        }
+    }, []);
+
     return (
         <nav>
             <div className="main-navbar">
@@ -75,9 +225,7 @@ function MainMenu() {
                         </li>
                         <li>
                             <Link href="/about-us">
-                                <a className="nav-link menu-title">
-                                    About us
-                                </a>
+                                <a className="nav-link menu-title">About us</a>
                             </Link>
                         </li>
                         <li className="mobile-poster d-flex d-xl-none">
@@ -92,13 +240,15 @@ function MainMenu() {
                                     With this Screen option you can use Website
                                     like an App.
                                 </p>
-                                <a
-                                    href="undefined"
-                                    id="installApp"
-                                    className="btn btn-solid-default btn-spacing w-100"
-                                >
-                                    ADD TO HOMESCREEN
-                                </a>
+                                <Link href={'https://www.google.com'}>
+                                    <a
+                                        target="_blank"
+                                        id="installApp"
+                                        className="btn btn-solid-default btn-spacing w-100"
+                                    >
+                                        Download App
+                                    </a>
+                                </Link>
                             </div>
                         </li>
                     </ul>

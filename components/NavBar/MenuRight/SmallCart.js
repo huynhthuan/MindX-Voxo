@@ -8,7 +8,7 @@ function SmallCart() {
 
     return (
         <>
-            <Link href={'/cart'}>
+            <Link href={'/cart'} >
                 <button
                     type="button"
                     className="btn btn-solid-default btn-spacing"

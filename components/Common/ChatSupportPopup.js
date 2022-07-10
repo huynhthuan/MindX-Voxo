@@ -37,8 +37,6 @@ export default function ChatSupportPopup() {
                     localGuestId = localStorage.getItem('user_local_id');
                 }
 
-                console.log(localGuestId);
-
                 me = new Talk.User({
                     id: localGuestId,
                     name: localGuestId,

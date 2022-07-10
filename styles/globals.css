@@ -1,5 +1,11 @@
 @import './demo2.css';
 
+body,
+.cloth-review,
+#__next {
+    overflow-x: hidden;
+}
+
 .banner-poster {
     height: 850px;
     background-color: #eff2f7;
@@ -684,7 +690,7 @@ header .category-menu .btn i {
     position: fixed;
     bottom: 100px;
     right: 30px;
-    z-index: 99995;
+    z-index: 9;
     color: #24272a;
 }
 
@@ -1053,10 +1059,105 @@ head title {
     font-size: 12px;
 }
 
-.modal-compare .page-section{
+.modal-compare .page-section {
     margin: 20px 0;
 }
 
-header.nav-down .navbar-searchbar{
-    z-index: 99999;
+header.nav-down .navbar-searchbar {
+    z-index: 99;
+}
+
+.category-image .category-contain {
+    width: unset;
+    flex: 1;
+}
+
+.according-menu {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+::-webkit-scrollbar {
+    height: 3px;
+}
+
+.header .cart-dropdown .onhover-div {
+    z-index: 99;
+}
+
+.payment-tabs .nav-link {
+    background-color: #eaeaea;
+}
+
+.payment-tabs ul {
+    justify-content: space-around;
+    margin: 0 -5px;
+}
+
+.payment-tabs .tab-content .tab-pane {
+    padding: 5px 10px;
+    background-color: #ffc107;
+    border-radius: 6px;
+}
+
+@media (max-width: 576px) {
+    .category-image .category-contain .product-list {
+        padding-left: 0;
+    }
+
+    .category-image .category-contain .product-list li a {
+        font-size: 13px;
+    }
+
+    .category-image .category-contain .product-list li {
+        padding-right: 10px;
+        list-style-type: none;
+    }
+
+    .cart-media span:last-child {
+        display: none;
+    }
+
+    header .cart-dropdown:hover .onhover-div {
+        display: none;
+    }
+
+    .chat-popup-btn,
+    .chat-popup-btn img {
+        width: 45px;
+        height: 45px;
+    }
+
+    .chat-popup-btn {
+        bottom: 80px;
+    }
+
+    .payment-tabs .nav-link {
+        font-size: 12px;
+        padding: 6px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .payment-tabs li {
+        width: calc(50% - 10px);
+        margin-bottom: 10px;
+    }
+
+    .your-cart-box {
+        margin-top: 20px;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group .order-meta {
+        margin-bottom: 10px;
+    }
 }
