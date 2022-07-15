@@ -10,7 +10,7 @@ const calculateOrderAmount = async (orderId) => {
     return Number(order.total) * 100;
 };
 
-const  handler = (req, res) => {
+const handler = async (req, res) => {
     if (req.method !== 'POST') {
         res.status(405).send({ message: 'Method Not Allowed.' });
     }
@@ -38,6 +38,6 @@ const  handler = (req, res) => {
     res.json({
         clientSecret: paymentIntent.client_secret,
     });
-}
+};
 
 export default withSentry(handler);
