@@ -1,3 +1,5 @@
+import { withSentry } from '@sentry/nextjs';
+
 import wooApi from '../../../src/api/woocommerce/wooApi';
 
 const stripe = require('stripe')('sk_test_ZWrvOr86Tg0FvE2oetjePW8N00N6yh4R9f');
@@ -8,7 +10,7 @@ const calculateOrderAmount = async (orderId) => {
     return Number(order.total) * 100;
 };
 
-export default async function handler(req, res) {
+const  handler = (req, res) => {
     if (req.method !== 'POST') {
         res.status(405).send({ message: 'Method Not Allowed.' });
     }
@@ -37,3 +39,5 @@ export default async function handler(req, res) {
         clientSecret: paymentIntent.client_secret,
     });
 }
+
+export default withSentry(handler);
