@@ -180,8 +180,9 @@ function ShopSection(props = {}) {
                                         </div>
 
                                         <div className="label-section">
-                                            {categories.map(
-                                                ({ slug, name }, key) => (
+                                            {categories
+                                                .slice(0, 1)
+                                                .map(({ slug, name }, key) => (
                                                     <Link
                                                         href={
                                                             '/product-category/' +
@@ -193,8 +194,7 @@ function ShopSection(props = {}) {
                                                             in {name}
                                                         </a>
                                                     </Link>
-                                                )
-                                            )}
+                                                ))}
                                         </div>
 
                                         <h3 className="price-detail">
@@ -297,6 +297,7 @@ function ShopSection(props = {}) {
                                                                     .href
                                                             }
                                                             target="_blank"
+                                                            rel="noreferrer"
                                                         >
                                                             <i className="fab fa-facebook-f"></i>
                                                         </a>
@@ -305,6 +306,7 @@ function ShopSection(props = {}) {
                                                         <a
                                                             target="_blank"
                                                             href={`http://twitter.com/share?text=${name}&url=${window.location.href}`}
+                                                            rel="noreferrer"
                                                         >
                                                             <i className="fab fa-twitter"></i>
                                                         </a>

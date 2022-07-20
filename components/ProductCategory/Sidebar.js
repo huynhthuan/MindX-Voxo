@@ -32,7 +32,7 @@ function Sidebar() {
                <AccordionDiscount/>
             </AccordionCategory>
 
-            <MostPopular />
+            {/* <MostPopular /> */}
          </div>
       </div>
    );

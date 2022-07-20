@@ -33,7 +33,7 @@ function Layout({ children }) {
                     progress: undefined,
                 });
 
-                if (login_method === 'facebook') {
+                if (login_method === 'facebook' && typeof FB !== 'undefined') {
                     FB.logout(function (response) {
                         console.log('Logout fb');
                     });
