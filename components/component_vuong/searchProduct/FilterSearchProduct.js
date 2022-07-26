@@ -54,9 +54,9 @@ function FilterSearchProduct() {
                      </h6>
                   </li>
 
-                  <FilterItemsComponent attribute="attributes_color" name="Color" />
-                  <FilterItemsComponent attribute="categories_product" name="Category" />
-                  <FilterItemsComponent attribute="material" name="Material" />
+                  <FilterItemsComponent attribute="pa_color" name="Color" />
+                  <FilterItemsComponent attribute="categories.name" name="Category" />
+                  <FilterItemsComponent attribute="pa_brand" name="Brand" />
 
                   <li className="onclick-title">
                      <h6>Price</h6>
