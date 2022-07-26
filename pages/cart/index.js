@@ -125,7 +125,7 @@ function Cart() {
                                         <tr>
                                             <td colSpan={6}>
                                                 <p className="alert alert-warning w-100">
-                                                    No product in cart.
+                                                    No products in cart.
                                                 </p>
                                             </td>
                                         </tr>
