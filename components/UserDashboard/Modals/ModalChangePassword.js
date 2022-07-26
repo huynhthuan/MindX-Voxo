@@ -49,11 +49,11 @@ function ModalChangePassword() {
             showConfirmButton: false,
         });
 
-        if (login_method === 'facebook') {
-            FB.logout(function (response) {
-                console.log('Logout fb');
-            });
-        }
+        // if (login_method === 'facebook') {
+        //     FB.logout(function (response) {
+        //         console.log('Logout fb');
+        //     });
+        // }
 
         dispatch(logOut());
     };
